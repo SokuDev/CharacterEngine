@@ -7,12 +7,12 @@
 
 #define VER_COMPANYNAME_STR         "SokuDev\0"
 #define VER_FILEDESCRIPTION_STR     "Example mod for Touhou 12.3\0"
-#define VER_INTERNALNAME_STR        "ModTemplate\0"
+#define VER_INTERNALNAME_STR        "CharacterEngine\0"
 #define VER_LEGALCOPYRIGHT_STR      "PinkySmile,SokuDev\0"
 #define VER_LEGALTRADEMARKS1_STR    "\0"
 #define VER_LEGALTRADEMARKS2_STR    "\0"
-#define VER_ORIGINALFILENAME_STR    "ModTemplate.dll\0"
-#define VER_PRODUCTNAME_STR         "ModTemplate\0"
+#define VER_ORIGINALFILENAME_STR    "CharacterEngine.dll\0"
+#define VER_PRODUCTNAME_STR         "CharacterEngine\0"
 
 // Define this to 0 if not a pre release
 #define VER_PRERELEASE VS_FF_PRERELEASE

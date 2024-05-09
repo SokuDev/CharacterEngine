@@ -3,62 +3,157 @@
 //
 
 #include <SokuLib.hpp>
+#include "tewi/Tewi.hpp"
+#include "log.hpp"
 
-static bool init = false;
-static int (SokuLib::BattleManager::*ogBattleMgrOnProcess)();
-static void (SokuLib::BattleManager::*ogBattleMgrOnRender)();
-static SokuLib::DrawUtils::Sprite text;
-static SokuLib::SWRFont font;
+static int (SokuLib::Select::*og_SelectOnProcess)();
+static SokuLib::Dequeue<unsigned short> cards;
+static const char *names[] = {
+	"momiji",
+	"clownpiece",
+	"flandre",
+	"orin",
+	"yuuka",
+	"kaguya",
+	"mokou",
+	"mima",
+	"shou",
+	"murasa",
+	"sekibanki",
+	"satori",
+	"ran",
+	"tewi"
+};
+static SokuLib::Sprite extraSprites[sizeof(names) / sizeof(*names)];
 
-int __fastcall CBattleManager_OnRender(SokuLib::BattleManager *This)
+FILE *file;
+
+static const unsigned createCustomCharacter_hook_ret = 0x46DE25;
+
+static SokuLib::v2::Player *createCustomCharacter(int id, SokuLib::PlayerInfo *info)
 {
-	(This->*ogBattleMgrOnRender)();
-	text.draw();
-	return 0;
+	if (id == SokuLib::CHARACTER_TEWI)
+		return new Tewi(*info);
+	return nullptr;
 }
 
-void loadFont()
+static void __declspec(naked) createCustomCharacter_hook()
 {
-	SokuLib::FontDescription desc;
-
-	// Pink
-	desc.r1 = 255;
-	desc.g1 = 155;
-	desc.b1 = 155;
-	// Light green
-	desc.r2 = 155;
-	desc.g2 = 255;
-	desc.b2 = 155;
-	desc.height = 24;
-	desc.weight = FW_BOLD;
-	desc.italic = 0;
-	desc.shadow = 4;
-	desc.bufferSize = 1000000;
-	desc.charSpaceX = 0;
-	desc.charSpaceY = 0;
-	desc.offsetX = 0;
-	desc.offsetY = 0;
-	desc.useOffset = 0;
-	strcpy(desc.faceName, "MonoSpatialModSWR");
-	font.create();
-	font.setIndirect(desc);
-}
-
-int __fastcall CBattleManager_OnProcess(SokuLib::BattleManager *This)
-{
-	if (!init) {
-		SokuLib::Vector2i realSize;
-
-		loadFont();
-		text.texture.createFromText("Hello, world!", font, {300, 300}, &realSize);
-		text.setPosition(SokuLib::Vector2i{320 - realSize.x / 2, 240 - realSize.y / 2});
-		text.setSize(realSize.to<unsigned>());
-		text.rect.width = realSize.x;
-		text.rect.height = realSize.y;
-		init = true;
+	__asm {
+		PUSH ECX
+		PUSH EDX
+		PUSH EDI
+		PUSH EAX
+		CALL createCustomCharacter
+		ADD ESP, 8
+		POP EDX
+		POP ECX
+		JMP [createCustomCharacter_hook_ret]
 	}
-	text.setRotation(text.getRotation() + 0.01f);
-	return (This->*ogBattleMgrOnProcess)();
+}
+
+static SokuLib::Dequeue<unsigned short> *selectDeckSlot(SokuLib::Profile *profile, int chr, char subdeck)
+{
+	if (chr < 20)
+		return &profile->cards[chr][subdeck];
+	if (!cards.data)
+		for (int i = 0; i < 20; i++)
+			cards.push_back(i);
+	return &cards;
+}
+
+static void __declspec(naked) selectDeckSlot_hook()
+{
+	__asm {
+		PUSH ECX
+		PUSH EBX
+		PUSH EDI
+		PUSH ESI
+		CALL selectDeckSlot
+		ADD ESP, 12
+		POP ECX
+		RET
+	}
+}
+
+static const unsigned getCreateCustomCharacterName_hook_ret = 0x43F3F8;
+
+static void __declspec(naked) getCreateCustomCharacterName_hook()
+{
+	__asm {
+		MOV ECX, [ESP + 0x4]
+		CMP ECX, 22
+		JGE custom
+
+		SUB ESP, 8
+		PUSH ESI
+		LEA EAX, [ESP + 0x10]
+		JMP [getCreateCustomCharacterName_hook_ret]
+
+	custom:
+		SUB ECX, 22
+		MOV EAX, [names + ECX * 4]
+		RET
+	}
+}
+
+static const unsigned chrSelectPortrait_hook_ret1 = 0x4212B3;
+static const unsigned chrSelectPortrait_hook_ret2 = 0x4212A3;
+static const unsigned chrSelectPortrait_hook_ret3 = 0x4212CC;
+static bool initSpritesDone = false;
+
+static void initSprites()
+{
+	if (initSpritesDone)
+		return;
+
+	int i = 0;
+
+	initSpritesDone = true;
+	for (auto &sprite : extraSprites) {
+		SokuLib::DrawUtils::Texture t;
+
+		if (t.loadFromGame(("data/scene/select/character/01b_name/name_" + std::to_string(i + 22) + ".bmp").c_str()))
+			sprite.init(t.releaseHandle(), 0, 0, t.getSize().x, t.getSize().y);
+		i++;
+	}
+}
+
+static void __declspec(naked) chrSelectPortrait_hook()
+{
+	__asm {
+		FADD dword ptr [EAX + 0xc]
+		PUSH EAX
+		PUSH ECX
+		CALL initSprites
+		POP ECX
+		POP EAX
+		MOV EDX, [ECX + EBP + 0x8]
+		CMP EDX, 22
+		JGE ret3
+
+		CMP byte ptr [ESI + ECX + 0x4c], 0x0
+		JNZ ret2
+		JMP [chrSelectPortrait_hook_ret1]
+	ret2:
+		JMP [chrSelectPortrait_hook_ret2]
+	ret3:
+		SUB EDX, 22
+		IMUL EDX, EDX, 0x94
+		LEA ECX, [extraSprites + EDX]
+		JMP [chrSelectPortrait_hook_ret3]
+	}
+}
+
+static int __fastcall SelectOnProcess(SokuLib::Select *This)
+{
+	int ret = (This->*og_SelectOnProcess)();
+
+	if (This->leftKeys && This->leftKeys->input.spellcard == 1)
+		SokuLib::leftChar = SokuLib::CHARACTER_TEWI;
+	if (This->rightKeys && This->rightKeys->input.spellcard == 1)
+		SokuLib::rightChar = SokuLib::CHARACTER_TEWI;
+	return ret;
 }
 
 // We check if the game version is what we target (in our case, Soku 1.10a).
@@ -80,12 +175,31 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 	freopen_s(&_, "CONOUT$", "w", stdout);
 	freopen_s(&_, "CONOUT$", "w", stderr);
 #endif
+	file = fopen("character_log.log", "a+");
 
 	puts("Hello, world!");
 	VirtualProtect((PVOID)RDATA_SECTION_OFFSET, RDATA_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
-	ogBattleMgrOnRender  = SokuLib::TamperDword(&SokuLib::VTable_BattleManager.onRender,  CBattleManager_OnRender);
-	ogBattleMgrOnProcess = SokuLib::TamperDword(&SokuLib::VTable_BattleManager.onProcess, CBattleManager_OnProcess);
+	og_SelectOnProcess = SokuLib::TamperDword(&SokuLib::VTable_Select.onProcess, SelectOnProcess);
 	VirtualProtect((PVOID)RDATA_SECTION_OFFSET, RDATA_SECTION_SIZE, old, &old);
+
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+	SokuLib::TamperNearJmp(0x43F3F0, getCreateCustomCharacterName_hook);
+	SokuLib::TamperNearJmpOpr(0x46DA71, createCustomCharacter_hook);
+	SokuLib::TamperNearJmp(0x42129E, chrSelectPortrait_hook);
+	memset((void *)0x4356B5, 0x90, 16);
+	memset((void *)0x4356CB, 0x90, 16);
+	*(char *)0x4356DB = 0x5F;
+	SokuLib::TamperNearCall(0x4356B5, selectDeckSlot_hook);
+	SokuLib::TamperNearCall(0x4356CB, selectDeckSlot_hook);
+	//*(char *)0x46DA6F = 0x12;
+
+	// Filesystem first patch
+	*(char *)0x40D1FB = 0xEB;
+	*(char *)0x40D27A = 0x74;
+	*(char *)0x40D27B = 0x91;
+	*(char *)0x40D245 = 0x1C;
+	memset((char *)0x40D27C, 0x90, 7);
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
 
 	FlushInstructionCache(GetCurrentProcess(), nullptr, 0);
 	return true;

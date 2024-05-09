@@ -1,0 +1,42 @@
+//
+// Created by PinkySmile on 08/05/24.
+//
+
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include "Hammer.hpp"
+
+void Hammer::update()
+{
+	if (this->frameState.sequenceId == 0) {
+		this->renderInfos.zRotation = fmod(this->renderInfos.zRotation + 30, 360);
+		this->position += this->speed;
+		this->speed.y -= 1;
+	} else
+		this->renderInfos.zRotation = 0;
+	this->advanceFrame();
+	if (this->frameState.sequenceId != 0)
+		return;
+	if (this->position.x <= 40 && this->speed.x < 0) {
+		this->position.x = 40;
+		this->speed.x = -this->speed.x * 0.8f;
+	}
+	if (this->position.x >= 1240 && this->speed.x > 0) {
+		this->position.x = 1240;
+		this->speed.x = -this->speed.x * 0.8f;
+	}
+	if (this->position.y <= 0 && this->speed.y < 0) {
+		this->setSequence(1);
+		this->speed.x = 0;
+		this->speed.y = 0;
+		this->position.y = 0;
+		return;
+	}
+}
+
+bool Hammer::initializeAction()
+{
+	this->speed.x = cos(this->customData[0] * M_PI / 180) * this->customData[1];
+	this->speed.y = sin(this->customData[0] * M_PI / 180) * this->customData[1];
+	return true;
+}
