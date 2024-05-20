@@ -3,6 +3,7 @@
 //
 
 #include <SokuLib.hpp>
+#include "Memory.hpp"
 #include "tewi/Tewi.hpp"
 #include "log.hpp"
 
@@ -30,10 +31,10 @@ FILE *file;
 
 static const unsigned createCustomCharacter_hook_ret = 0x46DE25;
 
-static SokuLib::v2::Player *createCustomCharacter(int id, SokuLib::PlayerInfo *info)
+static SokuLib::v2::Player *createCustomCharacter(int id, SokuLib::PlayerInfo &info)
 {
 	if (id == SokuLib::CHARACTER_TEWI)
-		return new Tewi(*info);
+		return new Tewi(info);
 	return nullptr;
 }
 

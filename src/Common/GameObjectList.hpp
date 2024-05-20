@@ -12,15 +12,15 @@
 template<typename Factory>
 class GameObjectList : public SokuLib::v2::IGameObjectList {
 private:
-	// RIV+ doesn't use the interface getList(), it grabs the list directly from the offset
-	// so we ensure that the list is still at the right place so it doesn't crash.
-	char padding[84];
+	char padding[80];
 	SokuLib::List<SokuLib::v2::GameObject *> _list;
 	std::list<std::unique_ptr<SokuLib::v2::GameObject>> _objects;
 	SokuLib::v2::Player *_player;
 
 public:
-	inline GameObjectList(SokuLib::v2::Player* player) : _player(player) {
+	inline GameObjectList(SokuLib::v2::Player* player) :
+		_player(player)
+	{
 		static_assert(offsetof(SokuLib::v2::GameObjectList<SokuLib::v2::GameObject>, objectList) == offsetof(GameObjectList<Factory>, _list));
 	}
 	~GameObjectList() override = default;

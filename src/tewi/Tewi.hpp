@@ -11,6 +11,8 @@
 
 class Tewi : public SokuLib::v2::Player {
 private:
+	SokuLib::v2::GameObject *_hammer = nullptr;
+
 	static constexpr float MAX_DASH_HOLD = 0x2D;
 	static constexpr float WALK_SPEED = 4;
 	static constexpr float FORWARD_WALK_SPEED_X = 12;
@@ -39,6 +41,16 @@ private:
 	static constexpr float BAD_SPEED_Y = 4;
 	static constexpr float BAD_GRAVITY = 0.45;
 
+	bool _processAGrounded();
+	bool _processBGrounded();
+	bool _processCGrounded();
+	void _processInputsGrounded();
+
+	bool _processCAirborne();
+	void _processInputsAirborne();
+
+	bool _tryPickUpHammer();
+	bool _canPickUpHammer();
 	bool _checkDashSlide();
 	void _jumpUpdate(float xSpeed);
 	void _highJumpUpdate(float xSpeed, float ySpeed, float gravity);
@@ -49,11 +61,12 @@ public:
 
 	void update() override;
 	bool initializeAction() override;
-	void processInputsGrounded();
 	void handleInputs() override;
 	void VUnknown58() override;
 	void VUnknown5C() override;
 	bool VUnknown60(int a) override;
+
+	bool setAction(short action) override;
 };
 
 

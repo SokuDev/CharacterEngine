@@ -24,6 +24,7 @@ void Hammer::update()
 	if (this->position.x >= 1240 && this->speed.x > 0) {
 		this->position.x = 1240;
 		this->speed.x = -this->speed.x * 0.8f;
+		this->speed.y = this->speed.y * 0.8f;
 	}
 	if (this->position.y <= 0 && this->speed.y < 0) {
 		this->setSequence(1);
@@ -36,6 +37,7 @@ void Hammer::update()
 
 bool Hammer::initializeAction()
 {
+	this->collisionLimit = 1;
 	this->speed.x = cos(this->customData[0] * M_PI / 180) * this->customData[1];
 	this->speed.y = sin(this->customData[0] * M_PI / 180) * this->customData[1];
 	return true;
