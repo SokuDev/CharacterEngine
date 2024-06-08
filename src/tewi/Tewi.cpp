@@ -31,6 +31,7 @@
 #define ACTION_BE6_NO_HAMMER                                231
 #define ACTION_BE4_NO_HAMMER                                232
 
+#define ACTION_5AAA6A                          ACTION_5AAAAA
 #define ACTION_5A_HAMMER                       310
 #define ACTION_5AA_HAMMER                      319
 #define ACTION_5AAA_HAMMER                     312
@@ -40,12 +41,12 @@
 #define ACTION_3A_HAMMER                       316
 #define ACTION_6A_HAMMER                       317
 #define ACTION_f5A_HAMMER                      318
-#define ACTION_j5A_HAMMER                      323
-#define ACTION_j6A_HAMMER                      324
-#define ACTION_j2A_HAMMER                      325
-#define ACTION_j8A_HAMMER                      326
-#define ACTION_66B_HAMMER                      327
-#define ACTION_66C_HAMMER                      328
+#define ACTION_j5A_HAMMER                      331
+#define ACTION_j6A_HAMMER                      332
+#define ACTION_j2A_HAMMER                      333
+#define ACTION_j8A_HAMMER                      334
+#define ACTION_66B_HAMMER                      335
+#define ACTION_66C_HAMMER                      336
 #define ACTION_STAND_PICKUP_HAMMER_FROM_AIR    420
 #define ACTION_STAND_PICKUP_HAMMER_FROM_GROUND 421
 #define ACTION_AIR_PICKUP_HAMMER_FROM_AIR      422
@@ -736,6 +737,29 @@ void Tewi::update()
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 2)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_LIGHT_ATTACK);
 		break;
+	case SokuLib::ACTION_6A:
+		this->applyGroundMechanics();
+		if (this->frameState.sequenceId < 1 && this->inputData.keyInput.a == 0)
+			this->chargedAttack = false;
+		if (this->speed.x > 0)
+			this->speed.x -= 0.5;
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 1) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			return;
+		}
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0) {
+			if (this->frameState.poseId == 4 && this->chargedAttack) {
+				this->nextSequence();
+				this->createEffect(0x3E, (float)(this->direction * 120) + this->position.x, this->position.y + 122.0, this->direction, 1);
+			}
+			if (this->frameState.poseId == 5)
+				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 1)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+		break;
 	case SokuLib::ACTION_3A:
 		this->applyGroundMechanics();
 		if (this->frameState.sequenceId < 1 && this->inputData.keyInput.a == 0)
@@ -751,7 +775,7 @@ void Tewi::update()
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0) {
 			if (this->frameState.poseId == 2 && this->chargedAttack) {
 				this->nextSequence();
-				this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 172.0, this->direction, 1);
+				this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 122.0, this->direction, 1);
 			}
 			if (this->frameState.poseId == 3) {
 				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
@@ -784,6 +808,7 @@ void Tewi::update()
 	case SokuLib::ACTION_66A:
 	case SokuLib::ACTION_f5A:
 	case SokuLib::ACTION_5AAA:
+	case SokuLib::ACTION_5AAAA:
 		this->applyGroundMechanics();
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
@@ -792,7 +817,23 @@ void Tewi::update()
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 		break;
+	case ACTION_j2A_HAMMER:
+		if (this->gravity.y == 0)
+			this->gravity.y = FALLING_GRAVITY;
+		this->speed -= this->gravity;
+		if (this->applyAirMechanics()) {
+			this->setAction(SokuLib::ACTION_LANDING);
+			this->position.y = this->getGroundHeight();
+			this->resetForces();
+			break;
+		}
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+		break;
 	case SokuLib::ACTION_66B:
+	case SokuLib::ACTION_5AAA3A:
 		this->applyGroundMechanics();
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_CROUCHED);
@@ -802,7 +843,7 @@ void Tewi::update()
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
 		break;
 	case SokuLib::ACTION_66C:
-	case SokuLib::ACTION_5AAAA:
+	case SokuLib::ACTION_5AAA6A:
 		if (this->frameState.sequenceId == 1) {
 			this->speed.y -= this->gravity.y;
 			if (this->applyAirMechanics()) {
@@ -1090,6 +1131,20 @@ void Tewi::update()
 
 bool Tewi::setAction(short action)
 {
+	// You can cancel h.5AA(1) right after the hitstop, where you are still considered on the ground
+	// into a grounded bullet (h.xB or h.xC). However, you keep the vertical momentum which causes you to go in the air
+	// and the cancel the grounded bullet immediately. It allows for some funky stuff which isn't a problem by itself
+	// but the spirit cost is applied when the bullets spawn, not when the move is started. Here we just make sure
+	// that doing this still costs one orb.
+	if (
+		this->frameState.actionId == ACTION_5AA_HAMMER &&
+		this->frameState.sequenceId == 0 &&
+		this->frameState.poseId == 7 &&
+		this->frameState.poseFrame == 1 &&
+		action >= SokuLib::ACTION_5A
+	)
+		this->consumeSpirit(200, 60);
+
 	short realAction = action;
 
 	if (this->_hammer) {
@@ -1157,6 +1212,9 @@ bool Tewi::initializeAction()
 	case SokuLib::ACTION_66A:
 	case SokuLib::ACTION_66B:
 	case SokuLib::ACTION_66C:
+	case SokuLib::ACTION_5AAAA:
+	case SokuLib::ACTION_5AAA6A:
+	case SokuLib::ACTION_5AAA3A:
 		this->speed.x = 14;
 		this->collisionType = 0;
 		this->collisionLimit = 1;
@@ -1176,6 +1234,11 @@ bool Tewi::initializeAction()
 		this->collisionType = 0;
 		this->collisionLimit = 1;
 		break;
+	case ACTION_j2A_HAMMER:
+		this->collisionType = 0;
+		this->collisionLimit = 1;
+		break;
+	case SokuLib::ACTION_6A:
 	case SokuLib::ACTION_3A:
 		this->chargedAttack = true;
 	case ACTION_3A_HAMMER:
@@ -1190,7 +1253,6 @@ bool Tewi::initializeAction()
 	case SokuLib::ACTION_5A:
 	case SokuLib::ACTION_f2A:
 	case SokuLib::ACTION_5AA:
-	case SokuLib::ACTION_5AAAA:
 	case ACTION_5AAA_HAMMER:
 		this->collisionType = 0;
 		this->collisionLimit = 1;
@@ -1250,6 +1312,100 @@ bool Tewi::_tryPickUpHammer()
 	return true;
 }
 
+bool Tewi::_processAAirborne()
+{
+	auto hKeys = this->inputData.keyInput.horizontalAxis * this->direction;
+	auto hBuffKeys = this->inputData.bufferedKeyInput.horizontalAxis * this->direction;
+
+
+	if ((this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == 0 || this->collisionType == 3)) || this->currentSpirit < 200)
+		return false;
+
+	if (this->_hammer) {
+		if (
+			(this->inputData.keyInput.verticalAxis < 0 || this->inputData.bufferedKeyInput.verticalAxis < 0) &&
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_j8A)
+		) {
+			this->renderInfos.zRotation = 0.0;
+			this->setAction(SokuLib::ACTION_j8A);
+			return true;
+		}
+		if (
+			(this->inputData.keyInput.verticalAxis > 0 || this->inputData.bufferedKeyInput.verticalAxis > 0) &&
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_j2A)
+		) {
+			this->renderInfos.zRotation = 0.0;
+			this->setAction(SokuLib::ACTION_j2A);
+			return true;
+		}
+
+		if (
+			(hKeys > 0 || hBuffKeys > 0) &&
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_j6A)
+		) {
+			this->renderInfos.zRotation = 0.0;
+			this->setAction(SokuLib::ACTION_j6A);
+			return true;
+		}
+
+		bool ok = false;
+		unsigned short action = SokuLib::ACTION_j5A;
+
+		switch (this->frameState.actionId) {
+		case SokuLib::ACTION_j5A:
+			action = SokuLib::ACTION_j5A;
+			ok = true;
+			break;
+		case SokuLib::ACTION_j5AA:
+			return false;
+		}
+
+		if (this->gameData.sequenceData->actionLock <= this->getMoveLock(action) || ok) {
+			this->renderInfos.zRotation = 0.0;
+			this->setAction(action);
+			return true;
+		}
+	} else {
+		if (
+			(this->inputData.keyInput.verticalAxis < 0 || this->inputData.bufferedKeyInput.verticalAxis < 0) &&
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_j8A_HAMMER)
+		) {
+			this->renderInfos.zRotation = 0.0;
+			this->setAction(ACTION_j8A_HAMMER);
+			return true;
+		}
+		if (
+			(this->inputData.keyInput.verticalAxis > 0 || this->inputData.bufferedKeyInput.verticalAxis > 0) &&
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_j2A_HAMMER)
+		) {
+			this->renderInfos.zRotation = 0.0;
+			this->setAction(ACTION_j2A_HAMMER);
+			return true;
+		}
+
+		if (
+			(hKeys > 0 || hBuffKeys > 0) &&
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_j6A_HAMMER)
+		) {
+			this->renderInfos.zRotation = 0.0;
+			this->setAction(ACTION_j6A_HAMMER);
+			return true;
+		}
+
+		if (this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_j5A_HAMMER)) {
+			this->renderInfos.zRotation = 0.0;
+			this->setAction(ACTION_j5A_HAMMER);
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Tewi::_processBAirborne()
+{
+	return false;
+}
+
 bool Tewi::_processCAirborne()
 {
 	/*uVar8 = this->frameState.actionId;
@@ -1303,6 +1459,16 @@ void Tewi::_processInputsAirborne()
 	if (
 		((this->inputData.keyUpC != 0 && this->inputData.keyUpC <= 2) || this->inputData.keyInput.c == 2 || this->inputData.bufferedKeyInput.c != 0) &&
 		this->_processCAirborne()
+	)
+		return;
+	if (
+		((this->inputData.keyUpB != 0 && this->inputData.keyUpB <= 2) || this->inputData.keyInput.b == 2 || this->inputData.bufferedKeyInput.b != 0) &&
+		this->_processBAirborne()
+	)
+		return;
+	if (
+		((this->inputData.keyUpA != 0 && this->inputData.keyUpA <= 2) || this->inputData.keyInput.a == 2 || this->inputData.bufferedKeyInput.a != 0) &&
+		this->_processAAirborne()
 	)
 		return;
 }
@@ -1387,10 +1553,17 @@ bool Tewi::_processAGrounded()
 			ok = true;
 			break;
 		case SokuLib::ACTION_5AAA:
-			action = SokuLib::ACTION_5AAAA;
+			if (hKeys <= 0 && hBuffKeys <= 0)
+				action = SokuLib::ACTION_5AAAA;
+			else if (this->inputData.keyInput.verticalAxis > 0 || this->inputData.bufferedKeyInput.verticalAxis > 0)
+				action = SokuLib::ACTION_5AAA3A;
+			else
+				action = SokuLib::ACTION_5AAA6A;
 			ok = true;
 			break;
 		case SokuLib::ACTION_5AAAA:
+		case SokuLib::ACTION_5AAA6A:
+		case SokuLib::ACTION_5AAA3A:
 			return false;
 		}
 

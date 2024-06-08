@@ -20,7 +20,7 @@ private:
 	static constexpr float BACKDASH_IMPULSE = -17.0;
 
 	static constexpr float HAMMER_FAR_RANGE = 125;
-	static constexpr float NO_HAMMER_FAR_RANGE = 100;
+	static constexpr float NO_HAMMER_FAR_RANGE = 80;
 
 	static constexpr float MAX_DASH_HOLD = 45;
 
@@ -75,6 +75,8 @@ private:
 	bool _processCGrounded();
 	void _processInputsGrounded();
 
+	bool _processAAirborne();
+	bool _processBAirborne();
 	bool _processCAirborne();
 	void _processInputsAirborne();
 
