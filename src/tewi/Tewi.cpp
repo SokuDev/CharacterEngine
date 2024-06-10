@@ -45,8 +45,8 @@
 #define ACTION_j6A_HAMMER                      332
 #define ACTION_j2A_HAMMER                      333
 #define ACTION_j8A_HAMMER                      334
-#define ACTION_66B_HAMMER                      335
-#define ACTION_66C_HAMMER                      336
+#define ACTION_66B_HAMMER                      327
+#define ACTION_66C_HAMMER                      328
 #define ACTION_STAND_PICKUP_HAMMER_FROM_AIR    420
 #define ACTION_STAND_PICKUP_HAMMER_FROM_GROUND 421
 #define ACTION_AIR_PICKUP_HAMMER_FROM_AIR      422
@@ -817,9 +817,22 @@ void Tewi::update()
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 		break;
+	case ACTION_j8A_HAMMER:
+		this->speed -= this->gravity;
+		if (this->applyAirMechanics()) {
+			this->setAction(SokuLib::ACTION_LANDING);
+			this->position.y = this->getGroundHeight();
+			this->resetForces();
+			break;
+		}
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 4) {
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+			this->speed.y = 4;
+		}
+		break;
 	case ACTION_j2A_HAMMER:
-		if (this->gravity.y == 0)
-			this->gravity.y = FALLING_GRAVITY;
 		this->speed -= this->gravity;
 		if (this->applyAirMechanics()) {
 			this->setAction(SokuLib::ACTION_LANDING);
@@ -1234,7 +1247,9 @@ bool Tewi::initializeAction()
 		this->collisionType = 0;
 		this->collisionLimit = 1;
 		break;
+	case ACTION_j8A_HAMMER:
 	case ACTION_j2A_HAMMER:
+		this->gravity.y = FALLING_GRAVITY;
 		this->collisionType = 0;
 		this->collisionLimit = 1;
 		break;
