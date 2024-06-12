@@ -817,6 +817,40 @@ void Tewi::update()
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 		break;
+	case SokuLib::ACTION_j5A:
+		this->speed -= this->gravity;
+		if (this->applyAirMechanics()) {
+			this->setAction(SokuLib::ACTION_LANDING);
+			this->position.y = this->getGroundHeight();
+			this->resetForces();
+			break;
+		}
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
+		break;
+	case SokuLib::ACTION_j8A:
+		this->speed -= this->gravity;
+		if (this->frameState.sequenceId == 1) {
+			this->applyGroundMechanics();
+			if (this->advanceFrame())
+				this->setAction(SokuLib::ACTION_IDLE);
+			break;
+		}
+		if (this->applyAirMechanics()) {
+			this->nextSequence();
+			this->position.y = this->getGroundHeight();
+			this->resetForces();
+			break;
+		}
+		if (this->advanceFrame() || this->frameState.sequenceId == 1)
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+			this->speed.y = 5;
+		}
+		break;
 	case ACTION_j8A_HAMMER:
 		this->speed -= this->gravity;
 		if (this->applyAirMechanics()) {
@@ -829,7 +863,7 @@ void Tewi::update()
 			this->setAction(SokuLib::ACTION_FALLING);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 4) {
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
-			this->speed.y = 4;
+			this->speed.y = 15;
 		}
 		break;
 	case ACTION_j2A_HAMMER:
@@ -844,6 +878,34 @@ void Tewi::update()
 			this->setAction(SokuLib::ACTION_FALLING);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+		break;
+	case ACTION_j6A_HAMMER:
+		this->speed -= this->gravity;
+		if (this->applyAirMechanics()) {
+			this->setAction(SokuLib::ACTION_LANDING);
+			this->position.y = this->getGroundHeight();
+			this->resetForces();
+			break;
+		}
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId == 0 && (this->frameState.poseId == 3 || this->frameState.poseId == 4))
+			this->speed.y = 0;
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 4)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+		break;
+	case ACTION_j5A_HAMMER:
+		this->speed -= this->gravity;
+		if (this->applyAirMechanics()) {
+			this->setAction(SokuLib::ACTION_LANDING);
+			this->position.y = this->getGroundHeight();
+			this->resetForces();
+			break;
+		}
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 		break;
 	case SokuLib::ACTION_66B:
 	case SokuLib::ACTION_5AAA3A:
@@ -878,7 +940,7 @@ void Tewi::update()
 		this->applyGroundMechanics();
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_CROUCHED);
-		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 4)
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 		break;
 	case ACTION_4A_HAMMER:
@@ -1247,8 +1309,12 @@ bool Tewi::initializeAction()
 		this->collisionType = 0;
 		this->collisionLimit = 1;
 		break;
+	case SokuLib::ACTION_j5A:
+	case SokuLib::ACTION_j8A:
+	case ACTION_j5A_HAMMER:
 	case ACTION_j8A_HAMMER:
 	case ACTION_j2A_HAMMER:
+	case ACTION_j6A_HAMMER:
 		this->gravity.y = FALLING_GRAVITY;
 		this->collisionType = 0;
 		this->collisionLimit = 1;
@@ -1366,14 +1432,14 @@ bool Tewi::_processAAirborne()
 		bool ok = false;
 		unsigned short action = SokuLib::ACTION_j5A;
 
-		switch (this->frameState.actionId) {
+		/*switch (this->frameState.actionId) {
 		case SokuLib::ACTION_j5A:
-			action = SokuLib::ACTION_j5A;
+			action = SokuLib::ACTION_j5AA;
 			ok = true;
 			break;
 		case SokuLib::ACTION_j5AA:
 			return false;
-		}
+		}*/
 
 		if (this->gameData.sequenceData->actionLock <= this->getMoveLock(action) || ok) {
 			this->renderInfos.zRotation = 0.0;
