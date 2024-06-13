@@ -279,7 +279,7 @@ void Tewi::update()
 		break;
 	case SokuLib::ACTION_FALLING:
 		if (this->gravity.y == 0)
-			this->gravity.y = FALLING_GRAVITY;
+			this->gravity.y = this->_hammer ? FALLING_GRAVITY : HAMMER_FALLING_GRAVITY;
 		this->speed -= this->gravity;
 		if (!this->applyAirMechanics()) {
 			this->advanceFrame();
@@ -715,20 +715,35 @@ void Tewi::update()
 		break;
 	case SokuLib::ACTION_BE2:
 	case SokuLib::ACTION_NEUTRAL_HIGH_JUMP:
-		this->_highJumpUpdate(0, HIGH_JUMP_SPEED_NEUTRAL_Y, HIGH_JUMP_GRAVITY);
+		if (this->_hammer)
+			this->_highJumpUpdate(0, HIGH_JUMP_SPEED_NEUTRAL_Y, HIGH_JUMP_GRAVITY);
+		else
+			this->_highJumpUpdate(0, HAMMER_HIGH_JUMP_SPEED_NEUTRAL_Y, HAMMER_HIGH_JUMP_GRAVITY);
 		break;
 	case SokuLib::ACTION_FORWARD_HIGH_JUMP:
-		this->_highJumpUpdate(HIGH_JUMP_SPEED_X, HIGH_JUMP_SPEED_Y, HIGH_JUMP_GRAVITY);
+		if (this->_hammer)
+			this->_highJumpUpdate(HIGH_JUMP_SPEED_X, HIGH_JUMP_SPEED_Y, HIGH_JUMP_GRAVITY);
+		else
+			this->_highJumpUpdate(HAMMER_HIGH_JUMP_SPEED_X, HAMMER_HIGH_JUMP_SPEED_Y, HAMMER_HIGH_JUMP_GRAVITY);
 		break;
 	case SokuLib::ACTION_BE1:
 	case SokuLib::ACTION_BACKWARD_HIGH_JUMP:
-		this->_highJumpUpdate(-HIGH_JUMP_SPEED_X, HIGH_JUMP_SPEED_Y, HIGH_JUMP_GRAVITY);
+		if (this->_hammer)
+			this->_highJumpUpdate(-HIGH_JUMP_SPEED_X, HIGH_JUMP_SPEED_Y, HIGH_JUMP_GRAVITY);
+		else
+			this->_highJumpUpdate(-HAMMER_HIGH_JUMP_SPEED_X, HAMMER_HIGH_JUMP_SPEED_Y, HAMMER_HIGH_JUMP_GRAVITY);
 		break;
 	case SokuLib::ACTION_NEUTRAL_HIGH_JUMP_FROM_GROUND_DASH:
-		this->_highJumpUpdate(N_HIGH_JUMP_FD_SPEED_X, HIGH_JUMP_SPEED_NEUTRAL_Y, HIGH_JUMP_GRAVITY);
+		if (this->_hammer)
+			this->_highJumpUpdate(N_HIGH_JUMP_FD_SPEED_X, HIGH_JUMP_SPEED_NEUTRAL_Y, HIGH_JUMP_GRAVITY);
+		else
+			this->_highJumpUpdate(HAMMER_N_HIGH_JUMP_FD_SPEED_X, HAMMER_HIGH_JUMP_SPEED_NEUTRAL_Y, HAMMER_HIGH_JUMP_GRAVITY);
 		break;
 	case SokuLib::ACTION_FORWARD_HIGH_JUMP_FROM_GROUND_DASH:
-		this->_highJumpUpdate(F_HIGH_JUMP_FD_SPEED_X, HIGH_JUMP_SPEED_Y, HIGH_JUMP_GRAVITY);
+		if (this->_hammer)
+			this->_highJumpUpdate(F_HIGH_JUMP_FD_SPEED_X, HIGH_JUMP_SPEED_Y, HIGH_JUMP_GRAVITY);
+		else
+			this->_highJumpUpdate(HAMMER_F_HIGH_JUMP_FD_SPEED_X, HAMMER_HIGH_JUMP_SPEED_Y, HAMMER_HIGH_JUMP_GRAVITY);
 		break;
 	case SokuLib::ACTION_2A:
 		this->applyGroundMechanics();
@@ -851,6 +866,60 @@ void Tewi::update()
 			this->speed.y = 5;
 		}
 		break;
+	case SokuLib::ACTION_j2A:
+		this->speed -= this->gravity;
+		if (this->frameState.sequenceId == 1) {
+			this->applyGroundMechanics();
+			if (this->advanceFrame())
+				this->setAction(SokuLib::ACTION_IDLE);
+			break;
+		}
+		if (this->applyAirMechanics()) {
+			this->nextSequence();
+			this->position.y = this->getGroundHeight();
+			this->resetForces();
+			break;
+		}
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseId < 3) {
+			if (this->speed.y > 2)
+				this->speed.y -= 0.5;
+			else if (this->speed.y < 2)
+				this->speed.y += 0.5;
+			if (this->speed.x > 4)
+				this->speed.x -= 0.5;
+		}
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+			this->speed.y = 5;
+		}
+		break;
+	case SokuLib::ACTION_j6A:
+		this->speed -= this->gravity;
+		if (this->frameState.sequenceId == 1) {
+			this->applyGroundMechanics();
+			if (this->advanceFrame())
+				this->setAction(SokuLib::ACTION_IDLE);
+			break;
+		}
+		if (this->applyAirMechanics()) {
+			this->nextSequence();
+			this->position.y = this->getGroundHeight();
+			this->resetForces();
+			break;
+		}
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseId < 3)
+			this->speed = {0, 0};
+		else if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+			this->speed.x = 10;
+			this->speed.y = 6;
+		} else if (this->frameState.sequenceId == 0 && this->frameState.poseId >= 4 && this->speed.x > 0)
+			this->speed.x -= 0.5;
+		break;
 	case ACTION_j8A_HAMMER:
 		this->speed -= this->gravity;
 		if (this->applyAirMechanics()) {
@@ -889,10 +958,10 @@ void Tewi::update()
 		}
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_FALLING);
-		if (this->frameState.sequenceId == 0 && (this->frameState.poseId == 3 || this->frameState.poseId == 4))
-			this->speed.y = 0;
-		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 4)
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+			this->speed = {-4, 10};
+		}
 		break;
 	case ACTION_j5A_HAMMER:
 		this->speed -= this->gravity;
@@ -1309,13 +1378,19 @@ bool Tewi::initializeAction()
 		this->collisionType = 0;
 		this->collisionLimit = 1;
 		break;
+	case SokuLib::ACTION_j6A:
+	case SokuLib::ACTION_j2A:
 	case SokuLib::ACTION_j5A:
 	case SokuLib::ACTION_j8A:
+		this->gravity.y = FALLING_GRAVITY;
+		this->collisionType = 0;
+		this->collisionLimit = 1;
+		break;
 	case ACTION_j5A_HAMMER:
 	case ACTION_j8A_HAMMER:
 	case ACTION_j2A_HAMMER:
 	case ACTION_j6A_HAMMER:
-		this->gravity.y = FALLING_GRAVITY;
+		this->gravity.y = HAMMER_FALLING_GRAVITY;
 		this->collisionType = 0;
 		this->collisionLimit = 1;
 		break;
