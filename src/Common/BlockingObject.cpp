@@ -6,7 +6,6 @@
 
 void BlockingObject::update()
 {
-	this->renderInfos.zRotation += 4;
 	this->renderInfos.color.a -= 15;
 	this->parentPlayer->blockObjectSpawned = true;
 	if (SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN <= this->parentPlayer->frameState.actionId && this->parentPlayer->frameState.actionId <= SokuLib::ACTION_AIR_GUARD) {
@@ -32,14 +31,4 @@ bool BlockingObject::initializeAction()
 {
 	this->renderInfos.yRotation = 60;
 	return false;
-}
-
-SokuLib::v2::GameObject *BlockingObject::createObject(short action, float x, float y, SokuLib::Direction direction, char layer, float *extraData, unsigned int extraDataSize)
-{
-	return nullptr;
-}
-
-SokuLib::v2::GameObject *BlockingObject::createChild(short action, float x, float y, SokuLib::Direction direction, char layer, float *extraData, unsigned int extraDataSize)
-{
-	return nullptr;
 }

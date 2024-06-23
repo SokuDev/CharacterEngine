@@ -27,7 +27,7 @@ void Hammer::update()
 		this->speed.y = this->speed.y * 0.8f;
 	}
 	if (this->position.y <= 0 && this->speed.y < 0) {
-		this->setSequence(1);
+		this->nextSequence();
 		this->speed.x = 0;
 		this->speed.y = 0;
 		this->position.y = 0;

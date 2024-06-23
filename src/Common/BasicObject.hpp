@@ -10,6 +10,11 @@
 #include "Memory.hpp"
 
 class BasicObject : public SokuLib::v2::GameObject {
+private:
+#if defined(OBJECT_MEMORY_SIZE) && OBJECT_MEMORY_SIZE > 0
+	char data[OBJECT_MEMORY_SIZE];
+#endif
+
 public:
 	BasicObject() = default;
 	~BasicObject() override = default;

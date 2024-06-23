@@ -80,6 +80,12 @@ private:
 	static constexpr float BAD_SPEED_Y = 4;
 	static constexpr float BAD_GRAVITY = 0.45;
 
+	static constexpr float HAMMER_B_BULLET_SPEED = 15;
+	static constexpr float HAMMER_B_BULLET_SLOW_DOWN = 0.5;
+	static constexpr float B_BULLET_SPEED = 20;
+	static constexpr float B_BULLET_SLOW_DOWN = 1;
+
+
 	bool _processAGrounded();
 	bool _processBGrounded();
 	bool _processCGrounded();

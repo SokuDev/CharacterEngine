@@ -1,0 +1,46 @@
+//
+// Created by PinkySmile on 22/06/24.
+//
+
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include "AnglableObject.hpp"
+
+void AnglableObject::update()
+{
+	this->position += this->speed;
+	this->advanceFrame();
+	if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 0) {
+		this->lifetime = 0;
+		return;
+	}
+	if (this->frameState.sequenceId == 1)
+		this->renderInfos.color.a -= 255 / this->frameState.poseDuration;
+	if (this->customData[1] > this->customData[2]) {
+		this->customData[1] = this->customData[1] - this->customData[2];
+		this->speed = {
+			this->speed.x = cos(this->customData[0] * M_PI / 180) * this->customData[1] * this->direction,
+			this->speed.y = sin(this->customData[0] * M_PI / 180) * this->customData[1]
+		};
+	} else {
+		this->customData[1] = 0;
+		this->speed = {0, 0};
+	}
+	if (this->frameState.sequenceId != 0)
+		return;
+	if (this->collisionLimit == 0) {
+		this->nextSequence();
+		return;
+	}
+}
+
+bool AnglableObject::initializeAction()
+{
+	this->renderInfos.zRotation = -this->customData[0];
+	this->boxData;
+	this->speed = {
+		this->speed.x = cos(this->customData[0] * M_PI / 180) * this->customData[1] * this->direction,
+		this->speed.y = sin(this->customData[0] * M_PI / 180) * this->customData[1]
+	};
+	return true;
+}

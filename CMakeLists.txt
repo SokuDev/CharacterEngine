@@ -35,8 +35,10 @@ add_library(
         src/tewi/TewiObject.hpp
         src/tewi/TewiObjectFactory.cpp
         src/tewi/TewiObjectFactory.hpp
-        src/Common/BlockingObject.cpp
-        src/Common/BlockingObject.hpp
+	src/Common/RotatingBlockingObject.cpp
+	src/Common/RotatingBlockingObject.hpp
+	src/Common/BlockingObject.cpp
+	src/Common/BlockingObject.hpp
         src/Common/DefaultFactory.cpp
         src/Common/DefaultFactory.hpp
         src/tewi/Hammer.cpp
@@ -45,9 +47,11 @@ add_library(
         src/Common/BasicObject.hpp
         src/Common/Memory.cpp
         src/Common/Memory.hpp
+	src/Common/AnglableObject.cpp
+	src/Common/AnglableObject.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
-target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG>)
+target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG> -DBLOCK_OBJECT=RotatingBlockingObject)
 target_include_directories("${PROJECT_NAME}" PRIVATE include SokuLib/directx "src/Common/")
 target_link_directories("${PROJECT_NAME}" PRIVATE lib)
 target_link_libraries(
