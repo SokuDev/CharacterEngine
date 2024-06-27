@@ -495,6 +495,7 @@ void Tewi::update()
 			return;
 		}
 		break;
+	case SokuLib::ACTION_jBE6:
 	case SokuLib::ACTION_FORWARD_AIRDASH:
 		this->speed.y -= this->gravity.y;
 		if (this->applyAirMechanics()) {
@@ -525,6 +526,7 @@ void Tewi::update()
 			return;
 		}
 		break;
+	case SokuLib::ACTION_jBE4:
 	case SokuLib::ACTION_BACKWARD_AIRDASH:
 		this->speed.y -= this->gravity.y;
 		if (this->applyAirMechanics()) {
