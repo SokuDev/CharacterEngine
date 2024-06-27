@@ -12,9 +12,13 @@
 template<typename Factory>
 class GameObjectList : public SokuLib::v2::IGameObjectList {
 private:
-	char padding[80];
+	void *_;
+	SokuLib::Vector<std::unique_ptr<SokuLib::v2::GameObject>> _objects;
+	SokuLib::Vector<unsigned int> _usedIndexes;
+	SokuLib::List<unsigned int> _unusedIndexes;
+	unsigned int _nextBase = 0;
+	SokuLib::CriticalSection _mutex;
 	SokuLib::List<SokuLib::v2::GameObject *> _list;
-	std::list<std::unique_ptr<SokuLib::v2::GameObject>> _objects;
 	SokuLib::v2::Player *_player;
 
 public:
@@ -25,7 +29,7 @@ public:
 	}
 	~GameObjectList() override = default;
 
-	SokuLib::v2::GameObject* createObject(SokuLib::v2::GameObject* parentObj, SokuLib::v2::Player* owner, short action, float x, float y, SokuLib::Direction dir, char layer, void *data, unsigned int dataSize) override
+	SokuLib::v2::GameObject *createObject(SokuLib::v2::GameObject* parentObj, SokuLib::v2::Player* owner, short action, float x, float y, SokuLib::Direction dir, char layer, void *data, unsigned int dataSize) override
 	{
 		SokuLib::v2::GameObject *obj = Factory::construct(this->_player, action);
 

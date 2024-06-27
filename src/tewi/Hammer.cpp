@@ -27,11 +27,17 @@ void Hammer::update()
 		this->speed.y = this->speed.y * 0.8f;
 	}
 	if (this->position.y <= 0 && this->speed.y < 0) {
-		this->nextSequence();
-		this->speed.x = 0;
-		this->speed.y = 0;
-		this->position.y = 0;
-		return;
+		if (this->customData[2] == 0) {
+			this->nextSequence();
+			this->speed.x = 0;
+			this->speed.y = 0;
+			this->position.y = 0;
+		} else {
+			this->customData[2]--;
+			this->position.y = 0;
+			this->speed.x = this->speed.x * 0.8f;
+			this->speed.y = -this->speed.y * 0.8f;
+		}
 	}
 }
 

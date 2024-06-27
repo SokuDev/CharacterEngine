@@ -1112,7 +1112,7 @@ void Tewi::update()
 		case 4:
 			if (this->frameState.poseFrame == 0) {
 				this->gravity.y = 0.75;
-				this->speed.y = this->gravity.y * (4 + 4 + 8 + 4) / 2.f;
+				this->speed.y = this->gravity.y * (4 + 4 + 16 + 8 + 4) / 2.f;
 			}
 			this->speed.y -= this->gravity.y;
 			break;
@@ -1127,12 +1127,12 @@ void Tewi::update()
 			if (this->speed.x > 0)
 				this->speed.x -= 0.5;
 			if (this->frameState.poseFrame == 0) {
-				float hammerParams[2] = {90.f, 30};
+				float hammerParams[3] = {90.f, 30, 0};
 
 				this->consumeSpirit(200, 60);
 				this->addCardMeter(50);
 				this->_hammerPickTimer = 20;
-				this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams, 2);
+				this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams);
 				this->_hammer->collisionType = 1;
 				this->speed.y = this->gravity.y * -2;
 			}
@@ -1400,7 +1400,7 @@ void Tewi::update()
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0) {
 			if (this->frameState.poseId == 4) {
-				float hammerParams[2] = {90.f - 45 * this->direction, 20};
+				float hammerParams[3] = {90.f - 45 * this->direction, 20, 0};
 
 				this->consumeSpirit(200, 60);
 				this->collisionType = 1;
@@ -1421,7 +1421,7 @@ void Tewi::update()
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0) {
 			if (this->frameState.poseId == 5) {
-				float hammerParams[2] = {90.f - 80 * this->direction, 25};
+				float hammerParams[3] = {90.f - 80 * this->direction, 25};
 
 				this->consumeSpirit(200, 60);
 				this->collisionType = 1;
@@ -1448,7 +1448,7 @@ void Tewi::update()
 				this->createEffect(0x3e,(float)(this->direction * 0xc) + this->position.x, this->position.y + 172.0, this->direction,1);
 			}*/
 			if (this->frameState.poseId == 4) {
-				float hammerParams[2] = {90.f - 10 * this->direction, 30};
+				float hammerParams[3] = {90.f - 10 * this->direction, 30};
 
 				this->consumeSpirit(200, 60);
 				this->collisionType = 1;
@@ -1489,6 +1489,49 @@ void Tewi::update()
 		bVar3 = this->direction;
 		mmObjectHandler_mSpawnBullet(this,0x321,(float)((char)bVar3 * 0x74) + this->state.position.x,this->state.position.y + 105.0,(uint)bVar3,'\x01',&fStack_350,3);*/
 		break;
+	case SokuLib::ACTION_j5C:
+	case SokuLib::ACTION_j6C:
+	case SokuLib::ACTION_j2C:
+		if (this->frameState.sequenceId == 2) {
+			this->applyGroundMechanics();
+			if (this->advanceFrame())
+				this->setAction(SokuLib::ACTION_FALLING);
+			break;
+		}
+		this->advanceFrame();
+		if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId != 0) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			return;
+		}
+		if (this->applyAirMechanics()) {
+			this->setSequence(2);
+			this->position.y = this->getGroundHeight();
+			this->resetForces();
+			break;
+		}
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
+			float hammerParams[3] = {-90.f + 45.f * this->direction, 30, 1};
+
+			if (this->frameState.actionId == SokuLib::ACTION_j6C) {
+				hammerParams[0] = 90.f - 75.f * this->direction;
+				hammerParams[2] = 0;
+			} else if (this->frameState.actionId == SokuLib::ACTION_j2C)
+				hammerParams[0] = -90.f;
+
+			this->consumeSpirit(200, 60);
+			this->collisionType = 1;
+			this->addCardMeter(50);
+			this->playSFX(0);
+			this->_hammerPickTimer = 20;
+			this->speed.y = 12;
+			this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 200, this->direction, 1, hammerParams);
+		}
+		if (this->frameState.poseId >= 3)
+			this->speed -= this->gravity;
+		else if (std::abs(this->speed.y) > 3)
+			this->speed.y = std::copysign(3, this->speed.y);
+		break;
+
 	case ACTION_STAND_PICKUP_HAMMER_FROM_AIR:
 	case ACTION_STAND_PICKUP_HAMMER_FROM_GROUND:
 		this->applyGroundMechanics();
@@ -1737,7 +1780,7 @@ bool Tewi::_processAAirborne()
 	auto hBuffKeys = this->inputData.bufferedKeyInput.horizontalAxis * this->direction;
 
 
-	if ((this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == 0 || this->collisionType == 3)) || this->currentSpirit < 200)
+	if (this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == 0 || this->collisionType == 3))
 		return false;
 
 	if (this->_hammer) {
@@ -1882,47 +1925,44 @@ bool Tewi::_processBAirborne()
 
 bool Tewi::_processCAirborne()
 {
-	/*uVar8 = this->frameState.actionId;
-	if (((((short)uVar8 < 300) || (iVar10 = (this->base).field11_0x190, iVar10 == 0)) || (iVar10 == 3)) && (299 < (short)uVar8)) {
-		return;
-	}
-	if ((((this->inputData.keyInput.verticalAxis < 1) && (this->inputData.bufferedKeyInput.verticalAxis < 1)) ||
-	     (((iVar10 = (int)this->direction, this->inputData.keyInput.horizontalAxis * iVar10 < 1 && (this->inputData.bufferedKeyInput.horizontalAxis * iVar10 < 1)) || (((short)this->currentSpirit < 200 || (sVar7 = getActionLock(this,0x1a0), sVar7 < lock)))))) &&
-	    (((this->inputData.keyInput.verticalAxis < 1 && (this->inputData.bufferedKeyInput.verticalAxis < 1)) || (((short)this->currentSpirit < 200 || (sVar7 = getActionLock(this,0x1a0), sVar7 < lock)))))) {
-		if ((this->inputData.keyInput.verticalAxis == 0) && ((iVar10 = (int)this->direction, 0 < this->inputData.keyInput.horizontalAxis * iVar10 || (0 < this->inputData.bufferedKeyInput.horizontalAxis * iVar10)))) {
-			if ((short)this->currentSpirit < 200) {
-				return;
-			}
-			sVar7 = getActionLock(this,0x19f);
-			if (lock <= sVar7) {
-				pvVar11 = this->vtable;
-				this->renderInfos.zRotation = 0.0;
-				uVar13 = 0x19f;
-				goto LAB_0067f65e;
-			}
-		}
-		if ((short)this->currentSpirit < 200) {
-			return;
-		}
-		sVar7 = getActionLock(this,0x19e);
-		if (sVar7 < lock) {
-			return;
-		}
-		uVar8 = this->frameState.actionId;
-		if (((((short)uVar8 < 300) || (iVar10 = (this->base).field11_0x190, iVar10 == 0)) || (iVar10 == 3)) && (299 < (short)uVar8)) {
-			return;
-		}
-		pvVar11 = this->vtable;
+	auto hKeys = this->inputData.keyInput.horizontalAxis * this->direction;
+	auto hBuffKeys = this->inputData.bufferedKeyInput.horizontalAxis * this->direction;
+
+	if (this->_hammer)
+		return false;
+
+	if (
+		(
+			this->frameState.actionId >= SokuLib::ACTION_5A &&
+			(this->collisionType == 0 || this->collisionType == 3)
+		) ||
+		this->currentSpirit < 200
+	)
+		return false;
+
+	if (
+		(this->inputData.keyInput.verticalAxis > 0 || this->inputData.bufferedKeyInput.verticalAxis > 0) &&
+		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_j2C)
+	) {
 		this->renderInfos.zRotation = 0.0;
-		uVar13 = 0x19e;
+		this->setAction(SokuLib::ACTION_j2C);
+		return true;
 	}
-	else {
-		pvVar11 = this->vtable;
+
+	if (
+		(hKeys > 0 || hBuffKeys > 0) &&
+		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_j6C)
+	) {
 		this->renderInfos.zRotation = 0.0;
-		uVar13 = 0x1a0;
+		this->setAction(SokuLib::ACTION_j6C);
+		return true;
 	}
-	(**(code **)((int)pvVar11 + 8))(uVar13);
-	FUN_0046cac0();*/
+
+	if (this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_j5C)) {
+		this->renderInfos.zRotation = 0.0;
+		this->setAction(SokuLib::ACTION_j5C);
+		return true;
+	}
 	return false;
 }
 
@@ -1964,7 +2004,7 @@ bool Tewi::_processAGrounded()
 		return true;
 	}
 
-	if ((this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == 0 || this->collisionType == 3)) || this->currentSpirit < 200)
+	if (this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == 0 || this->collisionType == 3))
 		return false;
 
 	if (this->_hammer) {

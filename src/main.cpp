@@ -6,8 +6,12 @@
 #include "Memory.hpp"
 #include "tewi/Tewi.hpp"
 #include "log.hpp"
+#include "tewi/TewiObject.hpp"
 
 static int (SokuLib::Select::*og_SelectOnProcess)();
+static int (SokuLib::SelectClient::*og_SelectCLOnProcess)();
+static int (SokuLib::SelectServer::*og_SelectSVOnProcess)();
+
 static SokuLib::Dequeue<unsigned short> cards;
 static const char *names[] = {
 	"momiji",
@@ -157,6 +161,30 @@ static int __fastcall SelectOnProcess(SokuLib::Select *This)
 	return ret;
 }
 
+static int __fastcall SelectCLOnProcess(SokuLib::SelectClient *This)
+{
+	int ret = (This->*og_SelectCLOnProcess)();
+
+	if (This->base.leftKeys && This->base.leftKeys->input.spellcard == 1)
+		SokuLib::leftChar = SokuLib::CHARACTER_TEWI;
+	if (This->base.rightKeys && This->base.rightKeys->input.spellcard == 1)
+		SokuLib::rightChar = SokuLib::CHARACTER_TEWI;
+	return ret;
+}
+
+static int __fastcall SelectSVOnProcess(SokuLib::SelectServer *This)
+{
+	int ret = (This->*og_SelectSVOnProcess)();
+
+	if (This->base.leftKeys && This->base.leftKeys->input.spellcard == 1)
+		SokuLib::leftChar = SokuLib::CHARACTER_TEWI;
+	if (This->base.rightKeys && This->base.rightKeys->input.spellcard == 1)
+		SokuLib::rightChar = SokuLib::CHARACTER_TEWI;
+	return ret;
+}
+
+
+
 // We check if the game version is what we target (in our case, Soku 1.10a).
 extern "C" __declspec(dllexport) bool CheckVersion(const BYTE hash[16])
 {
@@ -178,9 +206,42 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 #endif
 	file = fopen("character_log.log", "a+");
 
+	auto gr = LoadLibraryA("giuroll");
+
+	if (!gr) {
+		/*if (MessageBoxA(
+			nullptr,
+			"Netplay rollback not supported. This mod supports giuroll 0.6.12+, which wasn't found.\n"
+			"If you are using it, make sure the line for giuroll is above the line for CharacterEngine in SWRSToys.ini.\n"
+			"If you are using a rollback mod, playing online now will cause desyncs. Do you want to disable the mod now?",
+			"CustomWeathers",
+			MB_ICONWARNING | MB_YESNO
+		) == IDYES)
+			return false;*/
+	} else {
+		auto fct1 = GetProcAddress(gr, "set_char_data_size");
+		auto fct2 = GetProcAddress(gr, "set_char_data_pos");
+
+		if (!fct1 || !fct2) {
+			if (MessageBoxA(
+				nullptr,
+				"Netplay rollback not supported. This mod supports giuroll 0.6.12+, which wasn't found.\n"
+				"A different (and not supported) giuroll version is in use. Please use version 0.6.12 or greater, or otherwise one that is compatible.\n"
+				"Playing online now will cause desyncs. Do you want to disable the mod now?",
+				"CustomWeathers",
+				MB_ICONWARNING | MB_YESNO
+			) == IDYES)
+				return false;
+		}
+		reinterpret_cast<void (*)(size_t)>(fct1)(SokuLib::CHARACTER_TEWI + 1);
+		reinterpret_cast<void (*)(size_t, size_t, size_t)>(fct2)(SokuLib::CHARACTER_TEWI, sizeof(Tewi), sizeof(TewiObject));
+	}
+
 	puts("Hello, world!");
 	VirtualProtect((PVOID)RDATA_SECTION_OFFSET, RDATA_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
 	og_SelectOnProcess = SokuLib::TamperDword(&SokuLib::VTable_Select.onProcess, SelectOnProcess);
+	og_SelectCLOnProcess = SokuLib::TamperDword(&SokuLib::VTable_SelectClient.onProcess, SelectCLOnProcess);
+	og_SelectSVOnProcess = SokuLib::TamperDword(&SokuLib::VTable_SelectServer.onProcess, SelectSVOnProcess);
 	VirtualProtect((PVOID)RDATA_SECTION_OFFSET, RDATA_SECTION_SIZE, old, &old);
 
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
