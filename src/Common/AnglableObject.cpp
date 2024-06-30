@@ -2,7 +2,6 @@
 // Created by PinkySmile on 22/06/24.
 //
 
-#define _USE_MATH_DEFINES
 #include <cmath>
 #include "AnglableObject.hpp"
 
@@ -37,7 +36,6 @@ void AnglableObject::update()
 bool AnglableObject::initializeAction()
 {
 	this->renderInfos.zRotation = -this->customData[0];
-	this->boxData;
 	this->speed = {
 		this->speed.x = cos(this->customData[0] * M_PI / 180) * this->customData[1] * this->direction,
 		this->speed.y = sin(this->customData[0] * M_PI / 180) * this->customData[1]

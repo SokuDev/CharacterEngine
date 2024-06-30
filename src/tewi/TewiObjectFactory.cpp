@@ -3,15 +3,16 @@
 //
 
 #include "TewiObjectFactory.hpp"
-#include "TewiObject.hpp"
+#include "BasicObject.hpp"
 #include "DefaultFactory.hpp"
 #include "Hammer.hpp"
 #include "AnglableObject.hpp"
+#include "RotatingBlockingObject.hpp"
 
 SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner, short action)
 {
 	printf("TewiObjectFactory::construct(%i)\n", action);
-	auto obj = DefaultFactory::construct(owner, action);
+	auto obj = DefaultFactory<RotatingBlockingObject>::construct(owner, action);
 
 	if (obj)
 		return obj;
@@ -21,6 +22,6 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 	case 801:
 		return new AnglableObject();
 	default:
-		return new TewiObject();
+		return new BasicObject();
 	}
 }

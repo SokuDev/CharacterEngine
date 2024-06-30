@@ -2,7 +2,6 @@
 // Created by PinkySmile on 08/05/24.
 //
 
-#define _USE_MATH_DEFINES
 #include <cmath>
 #include "Hammer.hpp"
 

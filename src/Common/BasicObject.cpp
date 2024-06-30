@@ -13,3 +13,15 @@ SokuLib::v2::GameObject* BasicObject::createChild(short action, float x, float y
 {
 	return this->parentPlayerB->objectList->createObject(this, this->gameData.ally, action, x, y, direction, layer, extraData, extraDataSize);
 }
+
+void BasicObject::update()
+{
+	// Update common objects
+	((void (__thiscall *)(SokuLib::v2::GameObject *))0x48DB20)(this);
+}
+
+bool BasicObject::initializeAction()
+{
+	// Init common objects
+	return ((bool (__thiscall *)(SokuLib::v2::GameObject *))0x48D000)(this);
+}

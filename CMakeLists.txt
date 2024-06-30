@@ -31,16 +31,13 @@ add_library(
         src/tewi/Tewi.hpp
         src/tewi/Tewi.cpp
         src/Common/GameObjectList.hpp
-        src/tewi/TewiObject.cpp
-        src/tewi/TewiObject.hpp
-        src/tewi/TewiObjectFactory.cpp
+	src/tewi/TewiObjectFactory.cpp
         src/tewi/TewiObjectFactory.hpp
 	src/Common/RotatingBlockingObject.cpp
 	src/Common/RotatingBlockingObject.hpp
 	src/Common/BlockingObject.cpp
 	src/Common/BlockingObject.hpp
-        src/Common/DefaultFactory.cpp
-        src/Common/DefaultFactory.hpp
+	src/Common/DefaultFactory.hpp
         src/tewi/Hammer.cpp
         src/tewi/Hammer.hpp
         src/Common/BasicObject.cpp
@@ -51,7 +48,7 @@ add_library(
 	src/Common/AnglableObject.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
-target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG> -DBLOCK_OBJECT=RotatingBlockingObject -DOBJECT_MEMORY_SIZE=4)
+target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG> OBJECT_MEMORY_SIZE=4 _USE_MATH_DEFINES)
 target_include_directories("${PROJECT_NAME}" PRIVATE include SokuLib/directx "src/Common/")
 target_link_directories("${PROJECT_NAME}" PRIVATE lib)
 target_link_libraries(

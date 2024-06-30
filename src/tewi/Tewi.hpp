@@ -96,11 +96,16 @@ private:
 	bool _processCAirborne();
 	void _processInputsAirborne();
 
+	virtual bool _canUseCard(int id);
+	bool _useSkillCard(int id);
+	bool _useSpellCard(int id);
+
 	bool _tryPickUpHammer();
 	bool _canPickUpHammer();
 	bool _checkDashSlide();
 	void _jumpUpdate(float xSpeed);
 	void _highJumpUpdate(float xSpeed, float ySpeed, float gravity);
+	void _bSeriesUpdate(float angle, float speed, float slowDown, float yOffset, bool isAirborne);
 
 public:
 	Tewi(SokuLib::PlayerInfo &info);

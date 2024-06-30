@@ -6,7 +6,7 @@
 #include "Memory.hpp"
 #include "tewi/Tewi.hpp"
 #include "log.hpp"
-#include "tewi/TewiObject.hpp"
+#include "BasicObject.hpp"
 
 static int (SokuLib::Select::*og_SelectOnProcess)();
 static int (SokuLib::SelectClient::*og_SelectCLOnProcess)();
@@ -61,9 +61,30 @@ static SokuLib::Dequeue<unsigned short> *selectDeckSlot(SokuLib::Profile *profil
 {
 	if (chr < 20)
 		return &profile->cards[chr][subdeck];
-	if (!cards.data)
-		for (int i = 0; i < 20; i++)
-			cards.push_back(i);
+	if (!cards.data) {
+		//for (int i = 0; i < 20; i++)
+		//	cards.push_back(i);
+		cards.push_back(200);
+		cards.push_back(200);
+		cards.push_back(200);
+		cards.push_back(200);
+		cards.push_back(0);
+		cards.push_back(0);
+		cards.push_back(0);
+		cards.push_back(0);
+		cards.push_back(4);
+		cards.push_back(4);
+		cards.push_back(4);
+		cards.push_back(4);
+		cards.push_back(9);
+		cards.push_back(9);
+		cards.push_back(9);
+		cards.push_back(9);
+		cards.push_back(12);
+		cards.push_back(12);
+		cards.push_back(12);
+		cards.push_back(12);
+	}
 	return &cards;
 }
 
@@ -208,33 +229,23 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 
 	auto gr = LoadLibraryA("giuroll");
 
-	if (!gr) {
-		/*if (MessageBoxA(
-			nullptr,
-			"Netplay rollback not supported. This mod supports giuroll 0.6.12+, which wasn't found.\n"
-			"If you are using it, make sure the line for giuroll is above the line for CharacterEngine in SWRSToys.ini.\n"
-			"If you are using a rollback mod, playing online now will cause desyncs. Do you want to disable the mod now?",
-			"CustomWeathers",
-			MB_ICONWARNING | MB_YESNO
-		) == IDYES)
-			return false;*/
-	} else {
+	if (gr) {
 		auto fct1 = GetProcAddress(gr, "set_char_data_size");
 		auto fct2 = GetProcAddress(gr, "set_char_data_pos");
 
 		if (!fct1 || !fct2) {
-			if (MessageBoxA(
+			MessageBoxA(
 				nullptr,
 				"Netplay rollback not supported. This mod supports giuroll 0.6.12+, which wasn't found.\n"
 				"A different (and not supported) giuroll version is in use. Please use version 0.6.12 or greater, or otherwise one that is compatible.\n"
-				"Playing online now will cause desyncs. Do you want to disable the mod now?",
+				"Playing online now will cause desyncs",
 				"CustomWeathers",
-				MB_ICONWARNING | MB_YESNO
-			) == IDYES)
-				return false;
+				MB_ICONWARNING | MB_OK
+			);
+		} else {
+			reinterpret_cast<void (*)(size_t)>(fct1)(SokuLib::CHARACTER_TEWI + 1);
+			reinterpret_cast<void (*)(size_t, size_t, size_t)>(fct2)(SokuLib::CHARACTER_TEWI, sizeof(Tewi), sizeof(BasicObject));
 		}
-		reinterpret_cast<void (*)(size_t)>(fct1)(SokuLib::CHARACTER_TEWI + 1);
-		reinterpret_cast<void (*)(size_t, size_t, size_t)>(fct2)(SokuLib::CHARACTER_TEWI, sizeof(Tewi), sizeof(TewiObject));
 	}
 
 	puts("Hello, world!");
