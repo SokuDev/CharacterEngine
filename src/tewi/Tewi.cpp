@@ -880,7 +880,7 @@ void Tewi::update()
 		}
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_FALLING);
-		if (this->frameState.currentFrame == 0 && this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0)
+		if (this->frameState.currentFrame == 0 && this->frameState.sequenceId != 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0)
 			this->setAction(SokuLib::ACTION_FALLING);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 2 && this->chargedAttack) {
 			this->nextSequence();
@@ -914,7 +914,7 @@ void Tewi::update()
 		}
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_FALLING);
-		if (this->frameState.currentFrame == 0 && this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0)
+		if (this->frameState.currentFrame == 0 && this->frameState.sequenceId != 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0)
 			this->setAction(SokuLib::ACTION_FALLING);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseId < 3) {
 			if (this->frameState.poseId == 2 && this->chargedAttack) {
@@ -952,6 +952,8 @@ void Tewi::update()
 			break;
 		}
 		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.currentFrame == 0 && this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0)
 			this->setAction(SokuLib::ACTION_FALLING);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseId < 3)
 			this->speed = {0, 0};
@@ -1069,7 +1071,7 @@ void Tewi::update()
 			this->advanceFrame();
 		else if (this->_checkDashSlide())
 			this->setAction(SokuLib::ACTION_IDLE);
-		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 4)
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 		break;
 	case ACTION_5AA_HAMMER:
@@ -1111,8 +1113,18 @@ void Tewi::update()
 		break;
 	case ACTION_3A_HAMMER:
 		this->applyGroundMechanics();
-		if (this->advanceFrame())
+		if (this->frameState.sequenceId < 1 && this->inputData.keyInput.a == 0)
+			this->chargedAttack = false;
+		if (this->_checkDashSlide())
 			this->setAction(SokuLib::ACTION_CROUCHED);
+		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0)
+			this->setAction(SokuLib::ACTION_CROUCHED);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 2 && this->chargedAttack) {
+			this->nextSequence();
+			this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 122.0, this->direction, 1);
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 2)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
 		break;
@@ -1176,15 +1188,35 @@ void Tewi::update()
 	case ACTION_f5A_HAMMER:
 	case ACTION_5AAA_HAMMER:
 		this->applyGroundMechanics();
-		if (this->advanceFrame())
+		if (this->frameState.sequenceId < 1 && this->inputData.keyInput.a == 0)
+			this->chargedAttack = false;
+		if (this->_checkDashSlide())
 			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0)
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 2 && this->chargedAttack) {
+			this->nextSequence();
+			this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 122.0, this->direction, 1);
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 4)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
 		break;
 	case ACTION_6A_HAMMER:
 		this->applyGroundMechanics();
+		if (this->frameState.sequenceId < 1 && this->inputData.keyInput.a == 0)
+			this->chargedAttack = false;
 		if (this->_checkDashSlide())
 			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0)
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 2 && this->chargedAttack) {
+			this->nextSequence();
+			this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 122.0, this->direction, 1);
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 5)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
 		break;
@@ -1678,6 +1710,7 @@ bool Tewi::initializeAction()
 	case ACTION_f5A_HAMMER:
 	case ACTION_2A_HAMMER:
 	case ACTION_6A_HAMMER:
+	case ACTION_5AAA_HAMMER:
 		this->chargedAttack = true;
 	case ACTION_4A_HAMMER:
 	case ACTION_5A_HAMMER:
@@ -1687,7 +1720,6 @@ bool Tewi::initializeAction()
 	case SokuLib::ACTION_5A:
 	case SokuLib::ACTION_f2A:
 	case SokuLib::ACTION_5AA:
-	case ACTION_5AAA_HAMMER:
 		this->collisionType = 0;
 		this->collisionLimit = 1;
 		if (this->groundDashCount == 0)
