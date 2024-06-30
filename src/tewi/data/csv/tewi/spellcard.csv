@@ -10,9 +10,9 @@ Appears from the stage with the number onwards
 11-16 NORMAL
 21-26 HARD
 31-36 LUNA","Rarity
-0Å@Common
-1Å@Uncommon
-2Å@Rare
+0¸¸@Common
+1¸¸@Uncommon
+2¸¸@Rare
 Acquisition by lottery
 Common 60%
 Uncommon 30%
@@ -21,5 +21,4 @@ Rare 10%",,,,,,,,sort
 101,"Volatile Doll",1,2,"Throws enchanted dolls then backs   away. The dolls explode upon being  attacked. At higher levels\, the     dolls can also be detonated after a time delay.",0,1,105,1,109,1,0,0,3,110
 102,"Doll Arrangement",1,1,"Places several dolls above in       waiting\, then makes them attack     successively.",0,1,106,1,110,1,0,0,3,120
 103,"Doll Activation",1,4,"Leaves C dolls idle for later       activation. If you place a          lot\, you can set up a high-powered  wide range attack.",0,1,107,1,111,1,0,0,3,140
-
 200,"Earth Sign \"Hare Run\"",2,5,"Grabs the opponent and throw her    into the air. Press an attack to    catch the opponent on the way down. The better the timing\, the better   the reward",0,2,203,4,0,0,0,0,3,200

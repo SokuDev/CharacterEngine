@@ -41,17 +41,17 @@ private:
 	static constexpr float HIGH_JUMP_SPEED_NEUTRAL_Y = 22;
 	static constexpr float HIGH_JUMP_GRAVITY = 0.9;
 	static constexpr float HAMMER_JUMP_SPEED_X = 6;
-	static constexpr float HAMMER_JUMP_SPEED_Y = 16;
-	static constexpr float HAMMER_JUMP_GRAVITY = 0.8;
+	static constexpr float HAMMER_JUMP_SPEED_Y = 15;
+	static constexpr float HAMMER_JUMP_GRAVITY = 0.6;
 	static constexpr float HAMMER_HIGH_JUMP_SPEED_X = 8;
 	static constexpr float HAMMER_N_HIGH_JUMP_FD_SPEED_X = 2;
 	static constexpr float HAMMER_F_HIGH_JUMP_FD_SPEED_X = 10;
-	static constexpr float HAMMER_HIGH_JUMP_SPEED_Y = 16;
-	static constexpr float HAMMER_HIGH_JUMP_SPEED_NEUTRAL_Y = 20;
-	static constexpr float HAMMER_HIGH_JUMP_GRAVITY = 0.7;
+	static constexpr float HAMMER_HIGH_JUMP_SPEED_Y = 14;
+	static constexpr float HAMMER_HIGH_JUMP_SPEED_NEUTRAL_Y = 16;
+	static constexpr float HAMMER_HIGH_JUMP_GRAVITY = 0.5;
 
 	static constexpr float FALLING_GRAVITY = 1;
-	static constexpr float HAMMER_FALLING_GRAVITY = 0.8;
+	static constexpr float HAMMER_FALLING_GRAVITY = 0.6;
 
 	static constexpr float HAMMER_INITIAL_DASH_SPEED = 10;
 	static constexpr float HAMMER_TOP_DASH_SPEED = 7.5;
