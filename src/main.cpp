@@ -204,6 +204,22 @@ static int __fastcall SelectSVOnProcess(SokuLib::SelectServer *This)
 	return ret;
 }
 
+void __declspec(naked) gameEndGrantCards()
+{
+	__asm {
+		POP ECX
+		MOV EAX, [ESP + 8]
+		CMP EAX, 20
+		JL cont
+
+		MOV AL, 1
+		RET 0x8
+
+	cont:
+		PUSH 0x84E0B8
+		JMP ECX
+	}
+}
 
 
 // We check if the game version is what we target (in our case, Soku 1.10a).
@@ -265,6 +281,20 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 	SokuLib::TamperNearCall(0x4356B5, selectDeckSlot_hook);
 	SokuLib::TamperNearCall(0x4356CB, selectDeckSlot_hook);
 	//*(char *)0x46DA6F = 0x12;
+
+	// FIXME: Result screen hack
+	*(char *)0x4497CB = 0xC6;
+	*(char *)0x4497CC = 0x46;
+	*(char *)0x4497CD = 0x04;
+	*(char *)0x4497CE = 0x00;
+	*(char *)0x4497CF = 0xEB;
+	*(char *)0x4497D0 = 0x05;
+	*(char *)0x482039 = 0xE9;
+	*(char *)0x48203A = 0xA7;
+	*(char *)0x48203B = 0x00;
+	*(char *)0x48203C = 0x00;
+	*(char *)0x48203D = 0x00;
+	*(char *)0x48203E = 0x90;
 
 	// Filesystem first patch
 	*(char *)0x40D1FB = 0xEB;

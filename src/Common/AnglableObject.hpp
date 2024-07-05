@@ -10,8 +10,9 @@
 
 class AnglableObject : public BasicObject {
 public:
-	void update() override;
+	AnglableObject(std::pair<char, char> crystalsSpawn);
 
+	void update() override;
 	bool initializeAction() override;
 };
 

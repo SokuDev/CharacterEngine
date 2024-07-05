@@ -10,7 +10,9 @@
 #include "Memory.hpp"
 
 class BasicObject : public SokuLib::v2::GameObject {
-private:
+protected:
+	std::pair<char, char> crystalsSpawn;
+	std::tuple<unsigned char, unsigned char, unsigned char> offsetY;
 #if defined(OBJECT_MEMORY_SIZE) && OBJECT_MEMORY_SIZE > 0
 	char data[OBJECT_MEMORY_SIZE];
 #endif

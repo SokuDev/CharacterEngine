@@ -4,6 +4,11 @@
 
 #include "BlockingObject.hpp"
 
+BlockingObject::BlockingObject(unsigned char offsetYAir, unsigned char offsetYHigh, unsigned char offsetYLow)
+{
+	this->offsetY = { offsetYHigh, offsetYAir, offsetYLow };
+}
+
 void BlockingObject::update()
 {
 	this->renderInfos.color.a -= 15;
@@ -12,11 +17,11 @@ void BlockingObject::update()
 		float yOffset;
 
 		if (this->parentPlayer->frameState.actionId <= SokuLib::ACTION_RIGHTBLOCK_HIGH_HUGE_BLOCKSTUN)
-			yOffset = 94;
-		else if (this->frameState.actionId == SokuLib::ACTION_AIR_GUARD)
-			yOffset = 100;
-		else //if (SokuLib::ACTION_RIGHTBLOCK_LOW_SMALL_BLOCKSTUN <= this->parentPlayer->frameState.actionId && this->parentPlayer->frameState.actionId <= SokuLib::ACTION_RIGHTBLOCK_LOW_HUGE_BLOCKSTUN)
-			yOffset = 60;
+			yOffset = std::get<0>(this->offsetY);
+		else if (this->parentPlayer->frameState.actionId == SokuLib::ACTION_AIR_GUARD)
+			yOffset = std::get<1>(this->offsetY);
+		else //if (SokuLib::ACTION_RIGHTBLOCK_LOW_SMALL_BLOCKSTUN <= this->frameState.actionId && this->frameState.actionId <= SokuLib::ACTION_RIGHTBLOCK_LOW_HUGE_BLOCKSTUN)
+			yOffset = std::get<2>(this->offsetY);
 		this->direction = this->parentPlayer->direction;
 		this->position.x = this->parentPlayer->position.x + (float)(this->direction * 57);
 		this->position.y = this->parentPlayer->position.y + yOffset;

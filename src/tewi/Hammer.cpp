@@ -7,7 +7,17 @@
 
 void Hammer::update()
 {
-	if (this->frameState.sequenceId == 0) {
+	if (this->frameState.sequenceId == 6) {
+		this->renderInfos.zRotation = fmod(this->renderInfos.zRotation + 30, 360);
+		this->position += this->speed;
+		this->speed.x += (this->parentPlayer->position.x - this->position.x) / 1000;
+		this->speed.y += (this->parentPlayer->position.y + 75 - this->position.y) / 1000;
+	} else if (this->frameState.sequenceId == 0) {
+		if (this->collisionLimit && this->checkTurnIntoCrystals(false, 1, 5)) {
+			this->collisionLimit = 0;
+			this->customData[2] = 0;
+			return;
+		}
 		this->renderInfos.zRotation = fmod(this->renderInfos.zRotation + 30, 360);
 		this->position += this->speed;
 		this->speed.y -= 1;

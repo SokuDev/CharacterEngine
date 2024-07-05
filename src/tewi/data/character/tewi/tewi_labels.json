@@ -101,6 +101,11 @@
 	"422": "Air Pickup from Air",
 	"423": "Air Pickup from Ground",
 
+	"600": "Earth Sign \"Hare Run\"",
+
 	"800": "Hammer object",
-	"801": "B series object"
+	"801": "B series object",
+
+	"848": "Hare Run Grab object",
+	"849": "Hare Run Smoke object"
 }

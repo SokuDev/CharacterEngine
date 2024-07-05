@@ -17,7 +17,10 @@ SokuLib::v2::GameObject* BasicObject::createChild(short action, float x, float y
 void BasicObject::update()
 {
 	// Update common objects
-	((void (__thiscall *)(SokuLib::v2::GameObject *))0x48DB20)(this);
+	if (this->frameState.actionId >= 1000)
+		return ((void (__thiscall *)(SokuLib::v2::GameObject *))0x48DB20)(this);
+	if (this->advanceFrame())
+		this->lifetime = 0;
 }
 
 bool BasicObject::initializeAction()

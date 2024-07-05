@@ -214,7 +214,6 @@ void Tewi::_bSeriesUpdate(float angle, float speed, float slowDown, float yOffse
 	if (this->frameState.sequenceId < 1 && this->inputData.keyInput.b == 0)
 		this->chargedAttack = false;
 	if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0) {
-		printf("%i %i\n", this->frameState.poseId, this->chargedAttack);
 		if (this->frameState.poseId == 4 && this->chargedAttack) {
 			this->nextSequence();
 			this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 122.0, this->direction, 1);
@@ -227,7 +226,7 @@ void Tewi::_bSeriesUpdate(float angle, float speed, float slowDown, float yOffse
 				this->consumeSpirit(200, 45);
 				this->addCardMeter(20);
 			}
-			this->collisionType = 1;
+			this->collisionType = COLLISION_TYPE_HIT;
 			this->playSFX(1);
 			obj->collisionLimit = 1;
 		}
@@ -246,7 +245,7 @@ void Tewi::_bSeriesUpdate(float angle, float speed, float slowDown, float yOffse
 				this->consumeSpirit(200, 45);
 				this->addCardMeter(40);
 			}
-			this->collisionType = 1;
+			this->collisionType = COLLISION_TYPE_HIT;
 			this->playSFX(1);
 			obj1->collisionLimit = 1;
 			obj2->collisionLimit = 1;
@@ -266,11 +265,11 @@ void Tewi::update()
 
 		this->blockObjectSpawned = true;
 		if (this->frameState.actionId <= SokuLib::ACTION_RIGHTBLOCK_HIGH_HUGE_BLOCKSTUN)
-			yOffset = 94;
+			yOffset = 74;
 		else if (this->frameState.actionId == SokuLib::ACTION_AIR_GUARD)
-			yOffset = 100;
+			yOffset = 120;
 		else //if (SokuLib::ACTION_RIGHTBLOCK_LOW_SMALL_BLOCKSTUN <= this->frameState.actionId && this->frameState.actionId <= SokuLib::ACTION_RIGHTBLOCK_LOW_HUGE_BLOCKSTUN)
-			yOffset = 60;
+			yOffset = 40;
 		this->createObject(998, (float)(this->direction * 57) + this->position.x, this->position.y + yOffset, this->direction, 1, nullptr, 0);
 	}
 	if (this->hitStop)
@@ -410,7 +409,7 @@ void Tewi::update()
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
 			this->speed.y = 15;
-			this->speed.x = 10;
+			this->speed.x = this->_hammer ? 10 : 15;
 			this->gravity.y = 1;
 			return;
 		}
@@ -447,7 +446,7 @@ void Tewi::update()
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
 			this->speed.y = 15;
-			this->speed.x = -10.0;
+			this->speed.x = this->_hammer ? -10 : -15;
 			this->gravity.y = 1;
 		}
 		break;
@@ -932,7 +931,10 @@ void Tewi::update()
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 		break;
 	case SokuLib::ACTION_j8A:
-		if (this->frameState.sequenceId != 1 || this->frameState.poseId > 2)
+		if (
+			(this->frameState.sequenceId == 1 && this->frameState.poseId > 2) ||
+			(this->frameState.sequenceId == 0 && (this->frameState.poseId >= 2 || this->frameState.poseId < 1))
+		)
 			this->speed -= this->gravity;
 		if (this->frameState.sequenceId < 1 && this->inputData.keyInput.a == 0)
 			this->chargedAttack = false;
@@ -992,11 +994,11 @@ void Tewi::update()
 				this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 122.0, this->direction, 1);
 			}
 			if (this->speed.y > 2)
-				this->speed.y -= 0.5;
+				this->speed.y -= 1;
 			else if (this->speed.y < 2)
-				this->speed.y += 0.5;
+				this->speed.y += 1;
 			if (this->speed.x > 4)
-				this->speed.x -= 0.5;
+				this->speed.x -= 1;
 		}
 		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 2) {
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
@@ -1150,12 +1152,12 @@ void Tewi::update()
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
 		switch (this->frameState.poseId) {
-		case 11:
+		case 12:
 			if (this->frameState.poseFrame == 0) {
 				this->speed.x = 0;
 				this->speed.y = 0;
 				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
-				this->collisionType = 0;
+				this->collisionType = COLLISION_TYPE_NONE;
 			}
 			break;
 		case 7:
@@ -1167,16 +1169,17 @@ void Tewi::update()
 			}
 			this->speed.y -= this->gravity.y;
 			break;
-		case 14:
+		case 15:
 			if (this->frameState.poseFrame == 0)
 				this->speed.y = this->gravity.y * (8 + 8 + 8 + 4 + 4) / 2.f - this->gravity.y * (8 + 8 + 8 + 4);
 		case 8:
 		case 9:
 		case 10:
-		case 15:
+		case 11:
+		case 16:
 			this->speed.y -= this->gravity.y;
 			break;
-		case 16:
+		case 17:
 			if (this->frameState.poseFrame == 0)
 				SokuLib::playSEWaveBuffer(SokuLib::SFX_LAND);
 		}
@@ -1207,7 +1210,7 @@ void Tewi::update()
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0) {
 			if (3 <= this->frameState.poseId && this->frameState.poseId <= 9) {
 				SokuLib::playSEWaveBuffer(SokuLib::SFX_LIGHT_ATTACK);
-				this->collisionType = 0;
+				this->collisionType = COLLISION_TYPE_NONE;
 			}
 		}
 		break;
@@ -1228,7 +1231,7 @@ void Tewi::update()
 			if (this->frameState.poseFrame == 0) {
 				this->speed.y = 0;
 				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
-				this->collisionType = 0;
+				this->collisionType = COLLISION_TYPE_NONE;
 			}
 			break;
 		case 7:
@@ -1241,7 +1244,7 @@ void Tewi::update()
 				this->addCardMeter(50);
 				this->_hammerPickTimer = 20;
 				this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams);
-				this->_hammer->collisionType = 1;
+				this->_hammer->collisionType = COLLISION_TYPE_HIT;
 				this->speed.y = this->gravity.y * -2;
 			}
 		case 5:
@@ -1281,7 +1284,7 @@ void Tewi::update()
 			this->setAction(SokuLib::ACTION_IDLE);
 		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0)
 			this->setAction(SokuLib::ACTION_IDLE);
-		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 2 && this->chargedAttack) {
+		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 4 && this->chargedAttack) {
 			this->nextSequence();
 			this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 122.0, this->direction, 1);
 		}
@@ -1331,7 +1334,7 @@ void Tewi::update()
 				float hammerParams[3] = {90.f - 45 * this->direction, 20, 0};
 
 				this->consumeSpirit(200, 60);
-				this->collisionType = 1;
+				this->collisionType = COLLISION_TYPE_HIT;
 				this->addCardMeter(50);
 				this->playSFX(0);
 				this->_hammerPickTimer = 20;
@@ -1352,7 +1355,7 @@ void Tewi::update()
 				float hammerParams[3] = {90.f - 80 * this->direction, 25};
 
 				this->consumeSpirit(200, 60);
-				this->collisionType = 1;
+				this->collisionType = COLLISION_TYPE_HIT;
 				this->addCardMeter(50);
 				this->playSFX(0);
 				this->_hammerPickTimer = 20;
@@ -1373,7 +1376,7 @@ void Tewi::update()
 				float hammerParams[3] = {90.f - 10 * this->direction, 30};
 
 				this->consumeSpirit(200, 60);
-				this->collisionType = 1;
+				this->collisionType = COLLISION_TYPE_HIT;
 				this->addCardMeter(50);
 				this->playSFX(0);
 				this->_hammerPickTimer = 20;
@@ -1411,7 +1414,7 @@ void Tewi::update()
 				hammerParams[0] = -90.f;
 
 			this->consumeSpirit(200, 60);
-			this->collisionType = 1;
+			this->collisionType = COLLISION_TYPE_HIT;
 			this->addCardMeter(50);
 			this->playSFX(0);
 			this->_hammerPickTimer = 20;
@@ -1443,6 +1446,8 @@ void Tewi::update()
 
 	case SokuLib::ACTION_USING_SC_ID_200:
 		this->applyGroundMechanics();
+		if (this->frameState.sequenceId != 0)
+			this->_hammerPickTimer = 1;
 		if (this->frameState.sequenceId == 0) {
 			this->advanceFrame();
 			if (this->frameState.sequenceId == 1)
@@ -1456,17 +1461,27 @@ void Tewi::update()
 				this->eventSpellUse();
 				this->eventWeatherCycle();
 			}
-			if (this->collisionType == 1) {
+			if (this->frameState.poseFrame == 0 && this->frameState.poseId == 4)
+				this->createObject(848, this->position.x, this->position.y, this->direction, 1, nullptr, 0);
+			if (this->collisionType == COLLISION_TYPE_HIT || this->collisionType == COLLISION_TYPE_ARMORED) {
 				this->gameData.opponent->setAction(SokuLib::ACTION_GRABBED);
+				this->gameData.opponent->untech = 300;
 				this->gameData.opponent->speed.x = 0;
 				this->gameData.opponent->speed.y = 0;
-				this->collisionType = 0;
+				this->gameData.opponent->position.x = this->position.x + 30 * this->direction;
+				this->gameData.opponent->position.y = this->position.y;
+				this->collisionType = COLLISION_TYPE_NONE;
 				this->collisionLimit = 1;
-				this->nextSequence();
+				if (this->_hammer)
+					this->setSequence(3);
+				else
+					this->setSequence(1);
 			}
-		} else if (this->frameState.sequenceId == 1) {
+		} else if (this->frameState.sequenceId == 1 || this->frameState.sequenceId == 3) {
 			this->advanceFrame();
-			this->playSpellBackground(0, 30);
+			if (this->frameState.sequenceId == 4)
+				this->_hammer->setSequence(6);
+			this->spellBgTimer = 30;
 			if (this->frameState.poseFrame == 0 && this->frameState.poseId == 4) {
 				this->gameData.opponent->setAction(SokuLib::ACTION_AIR_HIT_BIG_HITSTUN);
 				this->gameData.opponent->untech = 300;
@@ -1475,7 +1490,7 @@ void Tewi::update()
 				this->gameData.opponent->gravity.y = 0.5;
 				SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 			}
-			if (this->frameState.poseId != 10)
+			if (this->frameState.poseId != 11)
 				break;
 			if (
 				this->inputData.keyInput.a == 1 ||
@@ -1486,10 +1501,43 @@ void Tewi::update()
 			)
 				this->nextSequence();
 		} else if (this->frameState.sequenceId == 2) {
-			if (this->advanceFrame())
+			this->advanceFrame();
+			if (this->frameState.sequenceId == 3)
 				this->setAction(SokuLib::ACTION_IDLE);
 			if (this->frameState.poseFrame == 0 && this->frameState.poseId == 2)
 				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+		} else if (this->frameState.sequenceId == 4) {
+			this->advanceFrame();
+			if (this->frameState.currentFrame % 10 == 0) {
+				float params[2] = {
+					static_cast<float>(SokuLib::rand(360)),
+					static_cast<float>(SokuLib::rand(150) + 250)
+				};
+
+				this->createObject(849, this->position.x, this->position.y, this->direction, 1, params);
+			}
+			if (std::abs(this->_hammer->position.x - this->position.x) > 100)
+				break;
+			if (this->_hammer->position.y + 50 < this->position.y)
+				break;
+			if (this->_hammer->position.y - 200 > this->position.y)
+				break;
+			this->_hammer->lifetime = 0;
+			this->_hammer = nullptr;
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_SLAP_HIT);
+			this->nextSequence();
+		} else if (this->frameState.sequenceId == 5) {
+			this->advanceFrame();
+			if (this->frameState.sequenceId != 5)
+				this->setSequence(2);
+			if (this->frameState.poseId == 2 && (
+				this->inputData.keyInput.a == 1 ||
+				this->inputData.keyInput.b == 1 ||
+				this->inputData.keyInput.c == 1 ||
+				this->inputData.keyInput.d == 1 ||
+				this->inputData.keyInput.spellcard == 1
+			))
+				this->setSequence(2);
 		}
 		break;
 
@@ -1510,7 +1558,7 @@ void Tewi::update()
 		int old = this->frameState.poseFrame;
 
 		this->updateDefaultBehavior();
-		// Fail safe to prevent softlocks
+		// Fail-safe to prevent softlocks
 		if (old == this->frameState.poseFrame && this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
 	}}
@@ -1519,20 +1567,6 @@ void Tewi::update()
 bool Tewi::setAction(short action)
 {
 	printf("Tewi::setAction(%i)\n", action);
-
-	// You can cancel h.5AA(1) right after the hitstop, where you are still considered on the ground
-	// into a grounded bullet (h.xB or h.xC). However, you keep the vertical momentum which causes you to go in the air
-	// and the cancel the grounded bullet immediately. It allows for some funky stuff which isn't a problem by itself
-	// but the spirit cost is applied when the bullets spawn, not when the move is started. Here we just make sure
-	// that doing this still costs one orb.
-	if (
-		this->frameState.actionId == ACTION_5AA_HAMMER &&
-		this->frameState.sequenceId == 0 &&
-		this->frameState.poseId == 7 &&
-		this->frameState.poseFrame == 1 &&
-		action >= SokuLib::ACTION_5A
-	)
-		this->consumeSpirit(200, 60);
 
 	short realAction = action;
 
@@ -1584,18 +1618,18 @@ bool Tewi::initializeAction()
 		this->renderInfos.xRotation = 0;
 		break;
 	case ACTION_5AA_HAMMER:
-		this->collisionType = 0;
+		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 2;
 		this->speed.x = 0.0;
 		break;
 	case SokuLib::ACTION_f5A:
 		this->speed.x = 6;
-		this->collisionType = 0;
+		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		break;
 	case SokuLib::ACTION_5AAA:
 		this->speed.x = 10;
-		this->collisionType = 0;
+		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		break;
 	case SokuLib::ACTION_66A:
@@ -1605,22 +1639,22 @@ bool Tewi::initializeAction()
 	case SokuLib::ACTION_5AAA6A:
 	case SokuLib::ACTION_5AAA3A:
 		this->speed.x = 14;
-		this->collisionType = 0;
+		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		break;
 	case ACTION_66A_HAMMER:
 		this->speed.x = 10;
-		this->collisionType = 0;
+		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		break;
 	case ACTION_66B_HAMMER:
 		this->speed.x = 10;
-		this->collisionType = 0;
+		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 7;
 		break;
 	case ACTION_66C_HAMMER:
 		this->speed.x = 10;
-		this->collisionType = 0;
+		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		break;
 	case SokuLib::ACTION_j2A:
@@ -1629,7 +1663,7 @@ bool Tewi::initializeAction()
 	case SokuLib::ACTION_j6A:
 	case SokuLib::ACTION_j5A:
 		this->gravity.y = FALLING_GRAVITY;
-		this->collisionType = 0;
+		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		break;
 	case ACTION_j5A_HAMMER:
@@ -1637,8 +1671,12 @@ bool Tewi::initializeAction()
 	case ACTION_j2A_HAMMER:
 	case ACTION_j6A_HAMMER:
 		this->gravity.y = HAMMER_FALLING_GRAVITY;
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->collisionLimit = 1;
+		break;
 	case SokuLib::ACTION_USING_SC_ID_200:
-		this->collisionType = 0;
+		this->speed.x = 0;
+		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		break;
 	case SokuLib::ACTION_6A:
@@ -1657,7 +1695,7 @@ bool Tewi::initializeAction()
 	case SokuLib::ACTION_5A:
 	case SokuLib::ACTION_f2A:
 	case SokuLib::ACTION_5AA:
-		this->collisionType = 0;
+		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		if (this->groundDashCount == 0)
 			this->speed.x = 0.0;
@@ -1670,7 +1708,7 @@ bool Tewi::initializeAction()
 	case SokuLib::ACTION_5C:
 	case SokuLib::ACTION_2C:
 	case SokuLib::ACTION_6C:
-		this->collisionType = 0;
+		this->collisionType = COLLISION_TYPE_NONE;
 		break;
 	case ACTION_j2B_HAMMER:
 	case SokuLib::ACTION_j2B:
@@ -1681,7 +1719,7 @@ bool Tewi::initializeAction()
 			this->speed.x = std::copysign(2, this->speed.x);
 		if (std::abs(this->speed.y) > 2)
 			this->speed.y = std::copysign(2, this->speed.y);
-		this->collisionType = 0;
+		this->collisionType = COLLISION_TYPE_NONE;
 		break;
 	default:
 		Player::initializeAction();
@@ -1742,7 +1780,7 @@ bool Tewi::_processAAirborne()
 	auto hBuffKeys = this->inputData.bufferedKeyInput.horizontalAxis * this->direction;
 
 
-	if (this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == 0 || this->collisionType == 3))
+	if (this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_3))
 		return false;
 
 	if (this->_hammer) {
@@ -1830,7 +1868,7 @@ bool Tewi::_processBAirborne()
 	auto hKeys = this->inputData.keyInput.horizontalAxis * this->direction;
 	auto hBuffKeys = this->inputData.bufferedKeyInput.horizontalAxis * this->direction;
 
-	if ((this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == 0 || this->collisionType == 3)) || this->currentSpirit < 200)
+	if ((this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_3)) || this->currentSpirit < 200)
 		return false;
 
 	if (this->_hammer) {
@@ -1896,7 +1934,7 @@ bool Tewi::_processCAirborne()
 	if (
 		(
 			this->frameState.actionId >= SokuLib::ACTION_5A &&
-			(this->collisionType == 0 || this->collisionType == 3)
+			(this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_3)
 		) ||
 		this->currentSpirit < 200
 	)
@@ -1966,7 +2004,7 @@ bool Tewi::_processAGrounded()
 		return true;
 	}
 
-	if (this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == 0 || this->collisionType == 3))
+	if (this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_3))
 		return false;
 
 	if (this->_hammer) {
@@ -2128,7 +2166,7 @@ bool Tewi::_processBGrounded()
 		return true;
 	}
 
-	if ((this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == 0 || this->collisionType == 3)) || this->currentSpirit < 200)
+	if ((this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_3)) || this->currentSpirit < 200)
 		return false;
 
 	if (this->_hammer) {
@@ -2206,7 +2244,7 @@ bool Tewi::_processCGrounded()
 	if (
 		(
 			this->frameState.actionId >= SokuLib::ACTION_5A &&
-			(this->collisionType == 0 || this->collisionType == 3)
+			(this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_3)
 		) ||
 		this->currentSpirit < 200
 	)
@@ -2240,7 +2278,9 @@ bool Tewi::_processCGrounded()
 
 bool Tewi::_canUseCard(int id)
 {
-	if (id == 200 && this->isGrounded() && !this->_hammer)
+	if (id < 100)
+		return true;
+	if (id == 200 && this->isGrounded())
 		return true;
 	return false;
 }
@@ -2386,7 +2426,7 @@ bool Tewi::_useSpellCard(int id)
 
 	if (
 		this->frameState.actionId >= SokuLib::ACTION_5A &&
-		(this->collisionType == 0 || this->collisionType == 3)
+		(this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_3)
 	)
 		return false;
 
@@ -2397,18 +2437,17 @@ bool Tewi::_useSpellCard(int id)
 void Tewi::_processInputsGrounded()
 {
 	if (
-		(this->inputData.keyInput.spellcard != 0 && this->inputData.keyInput.spellcard < 3) ||
-		this->inputData.bufferedKeyInput.spellcard != 0 &&
+		!this->handInfo.hand.empty() &&
+		((this->inputData.keyInput.spellcard != 0 && this->inputData.keyInput.spellcard < 3) || this->inputData.bufferedKeyInput.spellcard != 0) &&
 		this->unknown524 == 0 &&
 		this->canActivateCard(0) &&
 		this->unknown836 == 0 &&
 		this->_canUseCard(this->handInfo.hand[0].id)
 	) {
-		if (this->useSystemCard(this->gameData.sequenceData->actionLock))
-			return;
-
 		auto &card = this->handInfo.hand[0];
 
+		if (0   <= card.id && card.id < 100 && this->useSystemCard(this->gameData.sequenceData->actionLock))
+			return;
 		if (100 <= card.id && card.id < 200 && this->_useSkillCard(card.id))
 			return;
 		if (200 <= card.id && card.id < 300 && this->_useSpellCard(card.id))

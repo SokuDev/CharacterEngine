@@ -3,8 +3,7 @@ cmake_policy(SET CMP0091 NEW)
 set(PROJECT_NAME CharacterEngine)
 project("${PROJECT_NAME}" C CXX)
 
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/install")
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
@@ -37,8 +36,7 @@ add_library(
 	src/Common/RotatingBlockingObject.hpp
 	src/Common/BlockingObject.cpp
 	src/Common/BlockingObject.hpp
-	src/Common/DefaultFactory.hpp
-        src/tewi/Hammer.cpp
+	src/tewi/Hammer.cpp
         src/tewi/Hammer.hpp
         src/Common/BasicObject.cpp
         src/Common/BasicObject.hpp
@@ -46,6 +44,8 @@ add_library(
         src/Common/Memory.hpp
 	src/Common/AnglableObject.cpp
 	src/Common/AnglableObject.hpp
+	src/tewi/SpinningSmoke.cpp
+	src/tewi/SpinningSmoke.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG> OBJECT_MEMORY_SIZE=4 _USE_MATH_DEFINES)

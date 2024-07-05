@@ -11,7 +11,7 @@
 
 class BlockingObject : public BasicObject {
 public:
-	BlockingObject() = default;
+	BlockingObject(unsigned char offsetYAir, unsigned char offsetYHigh, unsigned char offsetYLow);
 	~BlockingObject() override = default;
 
 	void update() override;

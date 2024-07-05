@@ -11,7 +11,7 @@
 
 class RotatingBlockingObject : public BlockingObject {
 public:
-	RotatingBlockingObject() = default;
+	RotatingBlockingObject(unsigned char offsetYAir, unsigned char offsetYHigh, unsigned char offsetYLow);
 	~RotatingBlockingObject() override = default;
 
 	void update() override;

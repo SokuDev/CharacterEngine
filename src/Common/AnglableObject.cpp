@@ -5,11 +5,20 @@
 #include <cmath>
 #include "AnglableObject.hpp"
 
+AnglableObject::AnglableObject(std::pair<char, char> crystalsSpawn)
+{
+	this->crystalsSpawn = crystalsSpawn;
+}
+
 void AnglableObject::update()
 {
 	this->position += this->speed;
 	this->advanceFrame();
 	if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 0) {
+		this->lifetime = 0;
+		return;
+	}
+	if (this->frameState.sequenceId == 0 && this->checkTurnIntoCrystals(false, this->crystalsSpawn.first, this->crystalsSpawn.second)) {
 		this->lifetime = 0;
 		return;
 	}
