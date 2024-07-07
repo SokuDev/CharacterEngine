@@ -101,7 +101,17 @@
 	"422": "Air Pickup from Air",
 	"423": "Air Pickup from Ground",
 
+	"500": "d.623B ()",
+	"501": "d.623C ()",
+	"502": "j.d.623B ()",
+	"503": "j.d.623C ()",
+	"504": "$CC6644h.d.623B ()",
+	"505": "$CC6644h.d.623C ()",
+	"506": "$CC6644h.j.d.623B ()",
+	"507": "$CC6644h.j.d.623C ()",
+
 	"600": "Earth Sign \"Hare Run\"",
+	"620": "$CC6644Earth Sign \"Hare Run\"",
 
 	"800": "Hammer object",
 	"801": "B series object",
