@@ -80,10 +80,10 @@ static SokuLib::Dequeue<unsigned short> *selectDeckSlot(SokuLib::Profile *profil
 		cards.push_back(9);
 		cards.push_back(9);
 		cards.push_back(9);
-		cards.push_back(12);
-		cards.push_back(12);
-		cards.push_back(12);
-		cards.push_back(12);
+		cards.push_back(100);
+		cards.push_back(100);
+		cards.push_back(100);
+		cards.push_back(100);
 	}
 	return &cards;
 }

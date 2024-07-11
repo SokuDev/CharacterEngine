@@ -7,7 +7,6 @@
 
 
 #include "BasicObject.hpp"
-#include "Memory.hpp"
 
 class Hammer : public BasicObject {
 public:

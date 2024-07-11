@@ -109,12 +109,22 @@
 	"505": "$CC6644h.d.623C ()",
 	"506": "$CC6644h.j.d.623B ()",
 	"507": "$CC6644h.j.d.623C ()",
+	"508": "d.236B ()",
+	"509": "d.236C ()",
+	"512": "$CC6644h.d.236B ()",
+	"513": "$CC6644h.d.236C ()",
+	"516": "d.214B ()",
+	"517": "d.214C ()",
+	"520": "$CC6644h.d.214B ()",
+	"521": "$CC6644h.d.214C ()",
 
 	"600": "Earth Sign \"Hare Run\"",
 	"620": "$CC6644Earth Sign \"Hare Run\"",
 
 	"800": "Hammer object",
 	"801": "B series object",
+	"802": "Rabbit object",
+	"803": "Trap Hole object",
 
 	"848": "Hare Run Grab object",
 	"849": "Hare Run Smoke object"

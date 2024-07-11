@@ -46,6 +46,8 @@ add_library(
 	src/Common/AnglableObject.hpp
 	src/tewi/SpinningSmoke.cpp
 	src/tewi/SpinningSmoke.hpp
+	src/tewi/Rabbit.cpp
+	src/tewi/Rabbit.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG> OBJECT_MEMORY_SIZE=4 _USE_MATH_DEFINES)

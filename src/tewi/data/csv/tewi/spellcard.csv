@@ -10,15 +10,24 @@ Appears from the stage with the number onwards
 11-16 NORMAL
 21-26 HARD
 31-36 LUNA","Rarity
-0üü@Common
-1üü@Uncommon
-2üü@Rare
+0@Common
+1@Uncommon
+2@Rare
 Acquisition by lottery
 Common 60%
 Uncommon 30%
 Rare 10%",,,,,,,,sort
-100,"Doll Placement",1,0,"Places a doll into position and     makes it attack. The position       depends on the button used\, so it's a basic skill that ties the opponentdown with mines.",0,1,104,1,108,1,0,0,3,100
-101,"Volatile Doll",1,2,"Throws enchanted dolls then backs   away. The dolls explode upon being  attacked. At higher levels\, the     dolls can also be detonated after a time delay.",0,1,105,1,109,1,0,0,3,110
-102,"Doll Arrangement",1,1,"Places several dolls above in       waiting\, then makes them attack     successively.",0,1,106,1,110,1,0,0,3,120
-103,"Doll Activation",1,4,"Leaves C dolls idle for later       activation. If you place a          lot\, you can set up a high-powered  wide range attack.",0,1,107,1,111,1,0,0,3,140
+100,"Rabbit Orb",1,2,"",0,1,104,1,108,1,0,0,3,100
+101,"Hare Hunt",1,0,"",0,1,105,1,109,1,0,0,3,110
+102,"Rabbit Hole",1,1,"",0,1,106,1,110,1,0,0,3,120
+103,"Earthly Exit",1,4,"",0,1,107,1,111,1,0,0,3,140
+104,"           ",1,2,"",0,1,108,1,0,1,0,0,3,101
+105,"           ",1,4,"",0,1,109,1,0,1,0,0,3,111
+106,"Bambo-hole",1,0,"",0,1,110,1,0,1,0,0,3,121
+107,"           ",1,1,"",0,1,111,1,0,1,0,0,3,141
+108,"           ",1,2,"",0,1,112,1,0,1,0,0,3,102
+109,"           ",1,4,"",0,1,113,1,0,1,0,0,3,112
+110,"           ",1,0,"",0,1,114,1,0,1,0,0,3,122
+111,"           ",1,1,"",0,1,115,1,0,1,0,0,3,142
 200,"Earth Sign \"Hare Run\"",2,5,"Grabs the opponent and throw her    into the air. Press an attack to    catch the opponent on the way down. The better the timing\, the better   the reward",0,2,203,4,0,0,0,0,3,200
+Runaway Rabbit "Fluster Escape"

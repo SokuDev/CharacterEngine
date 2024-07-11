@@ -12,19 +12,27 @@ void Hammer::update()
 		this->position += this->speed;
 		this->speed.x += (this->parentPlayer->position.x - this->position.x) / 1000;
 		this->speed.y += (this->parentPlayer->position.y + 75 - this->position.y) / 1000;
-	} else if (this->frameState.sequenceId == 0) {
-		if (this->collisionLimit && this->checkTurnIntoCrystals(false, 1, 5)) {
-			this->collisionLimit = 0;
-			this->customData[2] = 0;
-			return;
+	} else if (this->frameState.sequenceId == 0 || this->frameState.sequenceId == 7) {
+		if (this->collisionLimit) {
+			if (this->HP <= 0) {
+				this->collisionLimit = 0;
+				this->customData[2] = 0;
+				this->speed.y = 7;
+				this->speed.x = std::copysign(2, -this->speed.x);
+				this->gravity.y = 0.25;
+				this->setSequence(7);
+			} else if (this->checkTurnIntoCrystals(false, 1, 5)) {
+				this->collisionLimit = 0;
+				this->customData[2] = 0;
+			}
 		}
 		this->renderInfos.zRotation = fmod(this->renderInfos.zRotation + 30, 360);
 		this->position += this->speed;
-		this->speed.y -= 1;
+		this->speed.y -= this->gravity.y;
 	} else
 		this->renderInfos.zRotation = 0;
 	this->advanceFrame();
-	if (this->frameState.sequenceId != 0)
+	if (this->frameState.sequenceId != 0 && this->frameState.sequenceId != 7)
 		return;
 	if (this->position.x <= 40 && this->speed.x < 0) {
 		this->position.x = 40;
@@ -52,6 +60,8 @@ void Hammer::update()
 
 bool Hammer::initializeAction()
 {
+	this->HP = 500;
+	this->gravity.y = 1;
 	this->collisionLimit = 1;
 	this->speed.x = cos(this->customData[0] * M_PI / 180) * this->customData[1];
 	this->speed.y = sin(this->customData[0] * M_PI / 180) * this->customData[1];

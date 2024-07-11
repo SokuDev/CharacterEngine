@@ -89,11 +89,13 @@ private:
 	bool _processAGrounded();
 	bool _processBGrounded();
 	bool _processCGrounded();
+	bool _processSkillsGrounded();
 	void _processInputsGrounded();
 
 	bool _processAAirborne();
 	bool _processBAirborne();
 	bool _processCAirborne();
+	bool _processSkillsAirborne();
 	void _processInputsAirborne();
 
 	virtual bool _canUseCard(int id);

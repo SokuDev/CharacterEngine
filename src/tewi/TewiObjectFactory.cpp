@@ -8,6 +8,7 @@
 #include "AnglableObject.hpp"
 #include "RotatingBlockingObject.hpp"
 #include "SpinningSmoke.hpp"
+#include "Rabbit.hpp"
 
 SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner, short action)
 {
@@ -18,6 +19,8 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 		return new Hammer();
 	case 801:
 		return new AnglableObject({0, 5});
+	case 802:
+		return new Rabbit();
 	case 849:
 		return new SpinningSmoke();
 	case 998:
