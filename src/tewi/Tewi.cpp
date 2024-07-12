@@ -63,6 +63,10 @@
 #define ACTION_d236C                           509
 #define ACTION_d236B_HAMMER                    512
 #define ACTION_d236C_HAMMER                    513
+#define ACTION_d214B                           516
+#define ACTION_d214C                           517
+#define ACTION_d214B_HAMMER                    520
+#define ACTION_d214C_HAMMER                    521
 
 #define ACTION_USING_SC_ID_200_HAMMER          620
 
@@ -1579,6 +1583,24 @@ void Tewi::update()
 		break;
 	}
 
+	case ACTION_d214B:
+	case ACTION_d214C:
+	case ACTION_d214B_HAMMER:
+	case ACTION_d214C_HAMMER: {
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.currentFrame == 25) {
+			this->collisionType = COLLISION_TYPE_HIT;
+			if (this->createObject(803, this->position.x + 85 * this->direction, this->position.y, this->direction, -1, nullptr, 0)->lifetime) {
+				this->playSFX(0);
+				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+			}
+		}
+		if (this->frameState.currentFrame == 60)
+			this->nextSequence();
+		break;
+	}
+
 	case ACTION_USING_SC_ID_200_HAMMER:
 	case SokuLib::ACTION_USING_SC_ID_200:
 		this->applyGroundMechanics();
@@ -1742,9 +1764,7 @@ bool Tewi::initializeAction()
 		this->speed.x = 0.0;
 	case ACTION_AIR_PICKUP_HAMMER_FROM_AIR:
 	case ACTION_AIR_PICKUP_HAMMER_FROM_GROUND:
-		this->renderInfos.zRotation = 0;
-		this->renderInfos.yRotation = 0;
-		this->renderInfos.xRotation = 0;
+		this->resetRenderInfo();
 		break;
 	case ACTION_5AA_HAMMER:
 		this->collisionType = COLLISION_TYPE_NONE;
@@ -1835,8 +1855,8 @@ bool Tewi::initializeAction()
 		this->collisionLimit = 2 + this->effectiveSkillLevel[0];
 		break;
 	case ACTION_d623C_HAMMER:
-		this->speed.x = 5;
-		this->speed.y = 15;
+		this->speed.x = 0;
+		this->speed.y = 10;
 		this->gravity.y = 0.3;
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 2 + this->effectiveSkillLevel[0];
@@ -1863,6 +1883,10 @@ bool Tewi::initializeAction()
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		break;
+	case ACTION_d214B:
+	case ACTION_d214C:
+	case ACTION_d214B_HAMMER:
+	case ACTION_d214C_HAMMER:
 	case SokuLib::ACTION_USING_SC_ID_200:
 	case ACTION_USING_SC_ID_200_HAMMER:
 		this->speed.x = 0;
@@ -2605,6 +2629,28 @@ bool Tewi::_processSkillsGrounded()
 			this->useSkill(ACTION_d236C, this->boxData.sequenceData->moveLock);
 			return true;
 		}
+		if (this->inputData.commandCombination._214b && (
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d214B) ||
+			!this->skillCancelsUsed[1]
+		)) {
+			this->skillCancelCount++;
+			this->skillCancelsUsed[1] = true;
+			this->renderInfos.zRotation = 0.0;
+			this->eventSkillUse();
+			this->useSkill(ACTION_d214B, this->boxData.sequenceData->moveLock);
+			return true;
+		}
+		if (this->inputData.commandCombination._214c && (
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d214C) ||
+			!this->skillCancelsUsed[1]
+		)) {
+			this->skillCancelCount++;
+			this->skillCancelsUsed[1] = true;
+			this->renderInfos.zRotation = 0.0;
+			this->eventSkillUse();
+			this->useSkill(ACTION_d214C, this->boxData.sequenceData->moveLock);
+			return true;
+		}
 	} else {
 		if (this->inputData.commandCombination._623b && (
 			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d623B_HAMMER) ||
@@ -2650,6 +2696,28 @@ bool Tewi::_processSkillsGrounded()
 			this->useSkill(ACTION_d236C_HAMMER, this->boxData.sequenceData->moveLock);
 			return true;
 		}
+		if (this->inputData.commandCombination._214b && (
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d214B_HAMMER) ||
+			!this->skillCancelsUsed[1]
+		)) {
+			this->skillCancelCount++;
+			this->skillCancelsUsed[1] = true;
+			this->renderInfos.zRotation = 0.0;
+			this->eventSkillUse();
+			this->useSkill(ACTION_d214B_HAMMER, this->boxData.sequenceData->moveLock);
+			return true;
+		}
+		if (this->inputData.commandCombination._214c && (
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d214C_HAMMER) ||
+			!this->skillCancelsUsed[1]
+		)) {
+			this->skillCancelCount++;
+			this->skillCancelsUsed[1] = true;
+			this->renderInfos.zRotation = 0.0;
+			this->eventSkillUse();
+			this->useSkill(ACTION_d214C_HAMMER, this->boxData.sequenceData->moveLock);
+			return true;
+		}
 	}
 	return false;
 }
@@ -2661,6 +2729,8 @@ bool Tewi::_canUseCard(int id)
 	if (id == 100)
 		return true;
 	if (id == 101 && this->isGrounded())
+		return true;
+	if (id == 102 && this->isGrounded())
 		return true;
 	if (id == 200 && this->isGrounded())
 		return true;
@@ -2829,4 +2899,22 @@ void Tewi::VUnknown5C()
 bool Tewi::VUnknown60(int a)
 {
 	return false;
+}
+
+void Tewi::hook()
+{
+	DWORD old;
+
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+	*(char *)0x48894C = 0xEB;
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
+}
+
+void Tewi::unhook()
+{
+	DWORD old;
+
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+	*(char *)0x48894C = 0x74;
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
 }

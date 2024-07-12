@@ -30,15 +30,19 @@ static const char *names[] = {
 	"tewi"
 };
 static SokuLib::Sprite extraSprites[sizeof(names) / sizeof(*names)];
-
+bool hooked = false;
 FILE *file;
 
 static const unsigned createCustomCharacter_hook_ret = 0x46DE25;
 
 static SokuLib::v2::Player *createCustomCharacter(int id, SokuLib::PlayerInfo &info)
 {
-	if (id == SokuLib::CHARACTER_TEWI)
+	if (id == SokuLib::CHARACTER_TEWI) {
+		if (!hooked)
+			Tewi::hook();
+		hooked = true;
 		return new Tewi(info);
+	}
 	return nullptr;
 }
 
@@ -171,14 +175,23 @@ static void __declspec(naked) chrSelectPortrait_hook()
 	}
 }
 
-static int __fastcall SelectOnProcess(SokuLib::Select *This)
+void selectCommon(SokuLib::Select *This)
 {
-	int ret = (This->*og_SelectOnProcess)();
-
+	if (hooked) {
+		hooked = false;
+		Tewi::unhook();
+	}
 	if (This->leftKeys && This->leftKeys->input.spellcard == 1)
 		SokuLib::leftChar = SokuLib::CHARACTER_TEWI;
 	if (This->rightKeys && This->rightKeys->input.spellcard == 1)
 		SokuLib::rightChar = SokuLib::CHARACTER_TEWI;
+}
+
+static int __fastcall SelectOnProcess(SokuLib::Select *This)
+{
+	int ret = (This->*og_SelectOnProcess)();
+
+	selectCommon(This);
 	return ret;
 }
 
@@ -186,10 +199,7 @@ static int __fastcall SelectCLOnProcess(SokuLib::SelectClient *This)
 {
 	int ret = (This->*og_SelectCLOnProcess)();
 
-	if (This->base.leftKeys && This->base.leftKeys->input.spellcard == 1)
-		SokuLib::leftChar = SokuLib::CHARACTER_TEWI;
-	if (This->base.rightKeys && This->base.rightKeys->input.spellcard == 1)
-		SokuLib::rightChar = SokuLib::CHARACTER_TEWI;
+	selectCommon(&This->base);
 	return ret;
 }
 
@@ -197,10 +207,7 @@ static int __fastcall SelectSVOnProcess(SokuLib::SelectServer *This)
 {
 	int ret = (This->*og_SelectSVOnProcess)();
 
-	if (This->base.leftKeys && This->base.leftKeys->input.spellcard == 1)
-		SokuLib::leftChar = SokuLib::CHARACTER_TEWI;
-	if (This->base.rightKeys && This->base.rightKeys->input.spellcard == 1)
-		SokuLib::rightChar = SokuLib::CHARACTER_TEWI;
+	selectCommon(&This->base);
 	return ret;
 }
 

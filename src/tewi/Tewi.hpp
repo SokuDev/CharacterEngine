@@ -121,6 +121,10 @@ public:
 	bool VUnknown60(int a) override;
 
 	bool setAction(short action) override;
+
+	static char hookBuffer;
+	static void hook();
+	static void unhook();
 };
 
 

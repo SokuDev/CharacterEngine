@@ -32,8 +32,10 @@ void Hammer::update()
 	} else
 		this->renderInfos.zRotation = 0;
 	this->advanceFrame();
-	if (this->frameState.sequenceId != 0 && this->frameState.sequenceId != 7)
+	if (this->frameState.sequenceId != 0 && this->frameState.sequenceId != 7) {
+		this->position.y = this->getGroundHeight();
 		return;
+	}
 	if (this->position.x <= 40 && this->speed.x < 0) {
 		this->position.x = 40;
 		this->speed.x = -this->speed.x * 0.8f;
@@ -43,7 +45,7 @@ void Hammer::update()
 		this->speed.x = -this->speed.x * 0.8f;
 		this->speed.y = this->speed.y * 0.8f;
 	}
-	if (this->position.y <= 0 && this->speed.y < 0) {
+	if (this->position.y <= this->getGroundHeight() && this->speed.y < 0) {
 		if (this->customData[2] == 0) {
 			this->nextSequence();
 			this->speed.x = 0;
@@ -51,7 +53,7 @@ void Hammer::update()
 			this->position.y = 0;
 		} else {
 			this->customData[2]--;
-			this->position.y = 0;
+			this->position.y = this->getGroundHeight();
 			this->speed.x = this->speed.x * 0.8f;
 			this->speed.y = -this->speed.y * 0.8f;
 		}
