@@ -48,6 +48,8 @@ add_library(
 	src/tewi/SpinningSmoke.hpp
 	src/tewi/Rabbit.cpp
 	src/tewi/Rabbit.hpp
+	src/tewi/TaCRabbit.cpp
+	src/tewi/TaCRabbit.hpp
 	src/tewi/TrapHole.cpp
 	src/tewi/TrapHole.hpp
 )

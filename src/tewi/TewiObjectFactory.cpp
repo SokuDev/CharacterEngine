@@ -10,6 +10,7 @@
 #include "SpinningSmoke.hpp"
 #include "Rabbit.hpp"
 #include "TrapHole.hpp"
+#include "TaCRabbit.hpp"
 
 SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner, short action)
 {
@@ -24,6 +25,8 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 		return new Rabbit();
 	case 803:
 		return new TrapHole();
+	case 804:
+		return new TaCRabbit();
 	case 849:
 		return new SpinningSmoke();
 	case 998:

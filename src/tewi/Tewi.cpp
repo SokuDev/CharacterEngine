@@ -8,116 +8,49 @@
 #include "TewiObjectFactory.hpp"
 #include "GameObjectList.hpp"
 
-#define ACTION_IDLE_NO_HAMMER                               11
-#define ACTION_CROUCHING_NO_HAMMER                          12
-#define ACTION_CROUCHED_NO_HAMMER                           13
-#define ACTION_STANDING_UP_NO_HAMMER                        14
-#define ACTION_WALK_FORWARD_NO_HAMMER                       15
-#define ACTION_WALK_BACKWARD_NO_HAMMER                      16
-#define ACTION_NEUTRAL_JUMP_NO_HAMMER                       17
-#define ACTION_FORWARD_JUMP_NO_HAMMER                       18
-#define ACTION_BACKWARD_JUMP_NO_HAMMER                      19
-#define ACTION_FALLING_NO_HAMMER                            20
-#define ACTION_LANDING_NO_HAMMER                            21
-#define ACTION_NEUTRAL_HIGH_JUMP_NO_HAMMER                  216
-#define ACTION_FORWARD_HIGH_JUMP_NO_HAMMER                  217
-#define ACTION_BACKWARD_HIGH_JUMP_NO_HAMMER                 218
-#define ACTION_NEUTRAL_HIGH_JUMP_FROM_GROUND_DASH_NO_HAMMER 227
-#define ACTION_FORWARD_HIGH_JUMP_FROM_GROUND_DASH_NO_HAMMER 228
-#define ACTION_BE2_NO_HAMMER                                229
-#define ACTION_BE1_NO_HAMMER                                230
-#define ACTION_BE6_NO_HAMMER                                231
-#define ACTION_BE4_NO_HAMMER                                232
-
-#define ACTION_5AAA6A                          ACTION_5AAAAA
-#define ACTION_5A_HAMMER                       310
-#define ACTION_5AA_HAMMER                      319
-#define ACTION_5AAA_HAMMER                     312
-#define ACTION_4A_HAMMER                       313
-#define ACTION_66A_HAMMER                      314
-#define ACTION_2A_HAMMER                       315
-#define ACTION_3A_HAMMER                       316
-#define ACTION_6A_HAMMER                       317
-#define ACTION_f5A_HAMMER                      318
-#define ACTION_j5A_HAMMER                      331
-#define ACTION_j6A_HAMMER                      332
-#define ACTION_j2A_HAMMER                      333
-#define ACTION_j8A_HAMMER                      334
-#define ACTION_66B_HAMMER                      327
-#define ACTION_66C_HAMMER                      328
-
-#define ACTION_5B_HAMMER                       401
-#define ACTION_2B_HAMMER                       403
-#define ACTION_j5B_HAMMER                      405
-#define ACTION_j2B_HAMMER                      407
-
-#define ACTION_d623B                           500
-#define ACTION_d623C                           501
-#define ACTION_jd623B                          502
-#define ACTION_jd623C                          503
-#define ACTION_d623B_HAMMER                    504
-#define ACTION_d623C_HAMMER                    505
-#define ACTION_jd623B_HAMMER                   506
-#define ACTION_jd623C_HAMMER                   507
-#define ACTION_d236B                           508
-#define ACTION_d236C                           509
-#define ACTION_d236B_HAMMER                    512
-#define ACTION_d236C_HAMMER                    513
-#define ACTION_d214B                           516
-#define ACTION_d214C                           517
-#define ACTION_d214B_HAMMER                    520
-#define ACTION_d214C_HAMMER                    521
-
-#define ACTION_USING_SC_ID_200_HAMMER          620
-
-#define ACTION_STAND_PICKUP_HAMMER_FROM_AIR    420
-#define ACTION_STAND_PICKUP_HAMMER_FROM_GROUND 421
-#define ACTION_AIR_PICKUP_HAMMER_FROM_AIR      422
-#define ACTION_AIR_PICKUP_HAMMER_FROM_GROUND   423
-
 const std::map<unsigned short, unsigned short> systemToHammer{
-	{ SokuLib::ACTION_IDLE,                                  ACTION_IDLE_NO_HAMMER },
-	{ SokuLib::ACTION_CROUCHING,                             ACTION_CROUCHING_NO_HAMMER },
-	{ SokuLib::ACTION_CROUCHED,                              ACTION_CROUCHED_NO_HAMMER },
-	{ SokuLib::ACTION_STANDING_UP,                           ACTION_STANDING_UP_NO_HAMMER },
-	{ SokuLib::ACTION_WALK_FORWARD,                          ACTION_WALK_FORWARD_NO_HAMMER },
-	{ SokuLib::ACTION_WALK_BACKWARD,                         ACTION_WALK_BACKWARD_NO_HAMMER },
-	{ SokuLib::ACTION_NEUTRAL_JUMP,                          ACTION_NEUTRAL_JUMP_NO_HAMMER },
-	{ SokuLib::ACTION_FORWARD_JUMP,                          ACTION_FORWARD_JUMP_NO_HAMMER },
-	{ SokuLib::ACTION_BACKWARD_JUMP,                         ACTION_BACKWARD_JUMP_NO_HAMMER },
-	{ SokuLib::ACTION_FALLING,                               ACTION_FALLING_NO_HAMMER },
-	{ SokuLib::ACTION_LANDING,                               ACTION_LANDING_NO_HAMMER },
-	{ SokuLib::ACTION_NEUTRAL_HIGH_JUMP,                     ACTION_NEUTRAL_HIGH_JUMP_NO_HAMMER },
-	{ SokuLib::ACTION_FORWARD_HIGH_JUMP,                     ACTION_FORWARD_HIGH_JUMP_NO_HAMMER },
-	{ SokuLib::ACTION_BACKWARD_HIGH_JUMP,                    ACTION_BACKWARD_HIGH_JUMP_NO_HAMMER },
-	{ SokuLib::ACTION_NEUTRAL_HIGH_JUMP_FROM_GROUND_DASH,    ACTION_NEUTRAL_HIGH_JUMP_FROM_GROUND_DASH_NO_HAMMER },
-	{ SokuLib::ACTION_FORWARD_HIGH_JUMP_FROM_GROUND_DASH,    ACTION_FORWARD_HIGH_JUMP_FROM_GROUND_DASH_NO_HAMMER },
-	{ SokuLib::ACTION_BE2,                                   ACTION_BE2_NO_HAMMER },
-	{ SokuLib::ACTION_BE1,                                   ACTION_BE1_NO_HAMMER },
-	{ SokuLib::ACTION_BE6,                                   ACTION_BE6_NO_HAMMER },
-	{ SokuLib::ACTION_BE4,                                   ACTION_BE4_NO_HAMMER },
+	{ SokuLib::ACTION_IDLE,                                  Tewi::ACTION_IDLE_NO_HAMMER },
+	{ SokuLib::ACTION_CROUCHING,                             Tewi::ACTION_CROUCHING_NO_HAMMER },
+	{ SokuLib::ACTION_CROUCHED,                              Tewi::ACTION_CROUCHED_NO_HAMMER },
+	{ SokuLib::ACTION_STANDING_UP,                           Tewi::ACTION_STANDING_UP_NO_HAMMER },
+	{ SokuLib::ACTION_WALK_FORWARD,                          Tewi::ACTION_WALK_FORWARD_NO_HAMMER },
+	{ SokuLib::ACTION_WALK_BACKWARD,                         Tewi::ACTION_WALK_BACKWARD_NO_HAMMER },
+	{ SokuLib::ACTION_NEUTRAL_JUMP,                          Tewi::ACTION_NEUTRAL_JUMP_NO_HAMMER },
+	{ SokuLib::ACTION_FORWARD_JUMP,                          Tewi::ACTION_FORWARD_JUMP_NO_HAMMER },
+	{ SokuLib::ACTION_BACKWARD_JUMP,                         Tewi::ACTION_BACKWARD_JUMP_NO_HAMMER },
+	{ SokuLib::ACTION_FALLING,                               Tewi::ACTION_FALLING_NO_HAMMER },
+	{ SokuLib::ACTION_LANDING,                               Tewi::ACTION_LANDING_NO_HAMMER },
+	{ SokuLib::ACTION_NEUTRAL_HIGH_JUMP,                     Tewi::ACTION_NEUTRAL_HIGH_JUMP_NO_HAMMER },
+	{ SokuLib::ACTION_FORWARD_HIGH_JUMP,                     Tewi::ACTION_FORWARD_HIGH_JUMP_NO_HAMMER },
+	{ SokuLib::ACTION_BACKWARD_HIGH_JUMP,                    Tewi::ACTION_BACKWARD_HIGH_JUMP_NO_HAMMER },
+	{ SokuLib::ACTION_NEUTRAL_HIGH_JUMP_FROM_GROUND_DASH,    Tewi::ACTION_NEUTRAL_HIGH_JUMP_FROM_GROUND_DASH_NO_HAMMER },
+	{ SokuLib::ACTION_FORWARD_HIGH_JUMP_FROM_GROUND_DASH,    Tewi::ACTION_FORWARD_HIGH_JUMP_FROM_GROUND_DASH_NO_HAMMER },
+	{ SokuLib::ACTION_BE2,                                   Tewi::ACTION_BE2_NO_HAMMER },
+	{ SokuLib::ACTION_BE1,                                   Tewi::ACTION_BE1_NO_HAMMER },
+	{ SokuLib::ACTION_BE6,                                   Tewi::ACTION_BE6_NO_HAMMER },
+	{ SokuLib::ACTION_BE4,                                   Tewi::ACTION_BE4_NO_HAMMER },
 };
 const std::map<unsigned short, unsigned short> hammerToSystem{
-	{ ACTION_IDLE_NO_HAMMER,                                  SokuLib::ACTION_IDLE },
-	{ ACTION_CROUCHING_NO_HAMMER,                             SokuLib::ACTION_CROUCHING },
-	{ ACTION_CROUCHED_NO_HAMMER,                              SokuLib::ACTION_CROUCHED },
-	{ ACTION_STANDING_UP_NO_HAMMER,                           SokuLib::ACTION_STANDING_UP },
-	{ ACTION_WALK_FORWARD_NO_HAMMER,                          SokuLib::ACTION_WALK_FORWARD },
-	{ ACTION_WALK_BACKWARD_NO_HAMMER,                         SokuLib::ACTION_WALK_BACKWARD },
-	{ ACTION_NEUTRAL_JUMP_NO_HAMMER,                          SokuLib::ACTION_NEUTRAL_JUMP },
-	{ ACTION_FORWARD_JUMP_NO_HAMMER,                          SokuLib::ACTION_FORWARD_JUMP },
-	{ ACTION_BACKWARD_JUMP_NO_HAMMER,                         SokuLib::ACTION_BACKWARD_JUMP },
-	{ ACTION_FALLING_NO_HAMMER,                               SokuLib::ACTION_FALLING },
-	{ ACTION_LANDING_NO_HAMMER,                               SokuLib::ACTION_LANDING },
-	{ ACTION_NEUTRAL_HIGH_JUMP_NO_HAMMER,                     SokuLib::ACTION_NEUTRAL_HIGH_JUMP },
-	{ ACTION_FORWARD_HIGH_JUMP_NO_HAMMER,                     SokuLib::ACTION_FORWARD_HIGH_JUMP },
-	{ ACTION_BACKWARD_HIGH_JUMP_NO_HAMMER,                    SokuLib::ACTION_BACKWARD_HIGH_JUMP },
-	{ ACTION_NEUTRAL_HIGH_JUMP_FROM_GROUND_DASH_NO_HAMMER,    SokuLib::ACTION_NEUTRAL_HIGH_JUMP_FROM_GROUND_DASH },
-	{ ACTION_FORWARD_HIGH_JUMP_FROM_GROUND_DASH_NO_HAMMER,    SokuLib::ACTION_FORWARD_HIGH_JUMP_FROM_GROUND_DASH },
-	{ ACTION_BE2_NO_HAMMER,                                   SokuLib::ACTION_BE2 },
-	{ ACTION_BE1_NO_HAMMER,                                   SokuLib::ACTION_BE1 },
-	{ ACTION_BE6_NO_HAMMER,                                   SokuLib::ACTION_BE6 },
-	{ ACTION_BE4_NO_HAMMER,                                   SokuLib::ACTION_BE4 },
+	{ Tewi::ACTION_IDLE_NO_HAMMER,                                  SokuLib::ACTION_IDLE },
+	{ Tewi::ACTION_CROUCHING_NO_HAMMER,                             SokuLib::ACTION_CROUCHING },
+	{ Tewi::ACTION_CROUCHED_NO_HAMMER,                              SokuLib::ACTION_CROUCHED },
+	{ Tewi::ACTION_STANDING_UP_NO_HAMMER,                           SokuLib::ACTION_STANDING_UP },
+	{ Tewi::ACTION_WALK_FORWARD_NO_HAMMER,                          SokuLib::ACTION_WALK_FORWARD },
+	{ Tewi::ACTION_WALK_BACKWARD_NO_HAMMER,                         SokuLib::ACTION_WALK_BACKWARD },
+	{ Tewi::ACTION_NEUTRAL_JUMP_NO_HAMMER,                          SokuLib::ACTION_NEUTRAL_JUMP },
+	{ Tewi::ACTION_FORWARD_JUMP_NO_HAMMER,                          SokuLib::ACTION_FORWARD_JUMP },
+	{ Tewi::ACTION_BACKWARD_JUMP_NO_HAMMER,                         SokuLib::ACTION_BACKWARD_JUMP },
+	{ Tewi::ACTION_FALLING_NO_HAMMER,                               SokuLib::ACTION_FALLING },
+	{ Tewi::ACTION_LANDING_NO_HAMMER,                               SokuLib::ACTION_LANDING },
+	{ Tewi::ACTION_NEUTRAL_HIGH_JUMP_NO_HAMMER,                     SokuLib::ACTION_NEUTRAL_HIGH_JUMP },
+	{ Tewi::ACTION_FORWARD_HIGH_JUMP_NO_HAMMER,                     SokuLib::ACTION_FORWARD_HIGH_JUMP },
+	{ Tewi::ACTION_BACKWARD_HIGH_JUMP_NO_HAMMER,                    SokuLib::ACTION_BACKWARD_HIGH_JUMP },
+	{ Tewi::ACTION_NEUTRAL_HIGH_JUMP_FROM_GROUND_DASH_NO_HAMMER,    SokuLib::ACTION_NEUTRAL_HIGH_JUMP_FROM_GROUND_DASH },
+	{ Tewi::ACTION_FORWARD_HIGH_JUMP_FROM_GROUND_DASH_NO_HAMMER,    SokuLib::ACTION_FORWARD_HIGH_JUMP_FROM_GROUND_DASH },
+	{ Tewi::ACTION_BE2_NO_HAMMER,                                   SokuLib::ACTION_BE2 },
+	{ Tewi::ACTION_BE1_NO_HAMMER,                                   SokuLib::ACTION_BE1 },
+	{ Tewi::ACTION_BE6_NO_HAMMER,                                   SokuLib::ACTION_BE6 },
+	{ Tewi::ACTION_BE4_NO_HAMMER,                                   SokuLib::ACTION_BE4 },
 };
 
 Tewi::Tewi(SokuLib::PlayerInfo &info) :
@@ -1014,11 +947,11 @@ void Tewi::update()
 			}
 			if (this->speed.y > 2)
 				this->speed.y -= 1;
-			else if (this->speed.y < 2)
+			else if (this->speed.y < -2)
 				this->speed.y += 1;
 			if (this->speed.x > 4)
 				this->speed.x -= 1;
-			else if (this->speed.x < 4)
+			else if (this->speed.x < -4)
 				this->speed.x += 1;
 		}
 		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 2) {
@@ -1125,7 +1058,7 @@ void Tewi::update()
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
 		break;
 	case SokuLib::ACTION_66C:
-	case SokuLib::ACTION_5AAA6A:
+	case ACTION_5AAA6A:
 		if (this->frameState.sequenceId == 1) {
 			this->speed.y -= this->gravity.y;
 			if (this->applyAirMechanics()) {
@@ -1259,7 +1192,7 @@ void Tewi::update()
 			if (this->speed.x > 0)
 				this->speed.x -= 0.5;
 			if (this->frameState.poseFrame == 0) {
-				float hammerParams[3] = {90.f, 30, 0};
+				float hammerParams[5] = {90.f, 30, 0, 0, 0};
 
 				this->_hammerPickTimer = 20;
 				this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams);
@@ -1350,7 +1283,7 @@ void Tewi::update()
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0) {
 			if (this->frameState.poseId == 4) {
-				float hammerParams[3] = {90.f - 45 * this->direction, 20, 0};
+				float hammerParams[5] = {90.f - 45 * this->direction, 20, 0, 0, 0};
 
 				this->consumeSpirit(200, 60);
 				this->collisionType = COLLISION_TYPE_HIT;
@@ -1371,7 +1304,7 @@ void Tewi::update()
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0) {
 			if (this->frameState.poseId == 5) {
-				float hammerParams[3] = {90.f - 80 * this->direction, 25};
+				float hammerParams[5] = {90.f - 80 * this->direction, 25, 0, 0};
 
 				this->consumeSpirit(200, 60);
 				this->collisionType = COLLISION_TYPE_HIT;
@@ -1392,7 +1325,7 @@ void Tewi::update()
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0) {
 			if (this->frameState.poseId == 4) {
-				float hammerParams[3] = {90.f - 10 * this->direction, 30};
+				float hammerParams[5] = {90.f - 10 * this->direction, 30, 0, 0};
 
 				this->consumeSpirit(200, 60);
 				this->collisionType = COLLISION_TYPE_HIT;
@@ -1424,7 +1357,7 @@ void Tewi::update()
 			break;
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
-			float hammerParams[3] = {-90.f + 45.f * this->direction, 30, 1};
+			float hammerParams[5] = {-90.f + 45.f * this->direction, 30, 1, 0, 0};
 
 			if (this->frameState.actionId == SokuLib::ACTION_j6C) {
 				hammerParams[0] = 90.f - 75.f * this->direction;
@@ -1471,8 +1404,33 @@ void Tewi::update()
 
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
-		if (b && this->frameState.sequenceId == 1)
+		if (this->frameState.sequenceId != 0)
+			this->speed.y -= this->gravity.y;
+		if (b && this->frameState.sequenceId == 1) {
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+			switch (this->frameState.actionId) {
+			case ACTION_d623B:
+				this->speed.x = 12;
+				this->speed.y = 15;
+				this->gravity.y = FALLING_GRAVITY / 2;
+				break;
+			case ACTION_d623C:
+				this->speed.x = 15;
+				this->speed.y = 1;
+				this->gravity.y = 0.05;
+				break;
+			case ACTION_jd623B:
+				this->speed.x = 15;
+				this->speed.y = 10;
+				this->gravity.y = FALLING_GRAVITY;
+				break;
+			case ACTION_jd623C:
+				this->speed.x = 10;
+				this->speed.y = 15;
+				this->gravity.y = FALLING_GRAVITY;
+				break;
+			}
+		}
 		if (this->frameState.sequenceId == 4) {
 			this->applyGroundMechanics();
 			this->resetForces();
@@ -1498,7 +1456,6 @@ void Tewi::update()
 				this->renderInfos.zRotation = 360 * (this->frameState.poseFrame / 2) / this->frameState.poseDuration;
 			}
 		}
-		this->speed.y -= this->gravity.y;
 		break;
 	}
 
@@ -1550,9 +1507,9 @@ void Tewi::update()
 	case ACTION_d236C:
 	case ACTION_d236B_HAMMER:
 	case ACTION_d236C_HAMMER: {
-		float rabbitData[4] = {
-			10, 7.5,
-			6, 12.5
+		float rabbitData[6] = {
+			10, 7.5, 0,
+			6, 12.5, 0
 		};
 
 		if (this->_checkDashSlide() || (this->frameState.sequenceId == 1 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0))
@@ -1566,8 +1523,8 @@ void Tewi::update()
 				this->collisionType = COLLISION_TYPE_HIT;
 				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 				this->playSFX(0);
-				this->createObject(802, this->position.x, this->position.y, this->direction, 1, &rabbitData[0], 2);
-				this->createObject(802, this->position.x, this->position.y, this->direction, 1, &rabbitData[2], 2);
+				this->createObject(802, this->position.x, this->position.y, this->direction, 1, &rabbitData[0], 3);
+				this->createObject(802, this->position.x, this->position.y, this->direction, 1, &rabbitData[3], 3);
 			}
 		} else if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
 			if (this->chargedAttack) {
@@ -1578,7 +1535,12 @@ void Tewi::update()
 			this->collisionType = COLLISION_TYPE_HIT;
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 			this->playSFX(0);
-			this->createObject(802, this->position.x, this->position.y, this->direction, 1, &rabbitData[this->frameState.actionId % 2 * 2], 2);
+			this->createObject(
+				802,
+				this->position.x, this->position.y,
+				this->direction, 1,
+				&rabbitData[this->frameState.actionId % 2 * 3], 3
+			);
 		}
 		break;
 	}
@@ -1591,7 +1553,7 @@ void Tewi::update()
 			this->setAction(SokuLib::ACTION_IDLE);
 		if (this->frameState.currentFrame == 25) {
 			this->collisionType = COLLISION_TYPE_HIT;
-			if (this->createObject(803, this->position.x + 85 * this->direction, this->position.y, this->direction, -1, nullptr, 0)->lifetime) {
+			if (this->createObject(803, this->position.x + (1 - this->frameState.actionId % 2 * 2) * 100 * this->direction, this->position.y, this->direction, -1, nullptr, 0)->lifetime) {
 				this->playSFX(0);
 				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 			}
@@ -1600,6 +1562,121 @@ void Tewi::update()
 			this->nextSequence();
 		break;
 	}
+
+	case ACTION_d22B:
+	case ACTION_d22C:
+		if (this->_checkDashSlide())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
+			this->collisionType = COLLISION_TYPE_HIT;
+			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+			this->playSFX(0);
+			this->createObject(
+				804,
+				this->position.x, this->position.y,
+				this->direction, 1,
+				nullptr, 0
+			);
+		}
+		break;
+
+	case ACTION_jd22B:
+	case ACTION_jd22C:
+		this->speed.x = 0;
+		this->speed.y = 0;
+		if (this->_checkDashSlide())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.poseId <= 3 && this->frameState.poseFrame == 0) {
+			this->speed.x = 0;
+			this->speed.y = 0;
+		} else
+			this->speed.y -= 1;
+		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
+			this->collisionType = COLLISION_TYPE_HIT;
+			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+			this->playSFX(0);
+
+			auto rabbit = this->createObject(
+				804,
+				this->position.x, this->position.y,
+				this->direction, 1,
+				nullptr, 0
+			);
+
+			rabbit->setPose(4);
+			if (this->frameState.actionId == ACTION_jd22B)
+				rabbit->speed.x = 2;
+			else
+				rabbit->speed.x = 5;
+		}
+		break;
+
+	case ACTION_d22B_HAMMER:
+	case ACTION_d22C_HAMMER:
+		this->applyGroundMechanics();
+		if (this->_checkDashSlide())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 1) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			return;
+		}
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0) {
+			if (this->frameState.poseId == 5) {
+				float hammerParams[5] = {90.f - 45.f * this->direction, 35, 0, 1, 0};
+
+				if (this->frameState.actionId == ACTION_d22B_HAMMER)
+					hammerParams[0] = 90.f - 90.f * this->direction;
+				this->consumeSpirit(200, 120);
+				this->collisionType = COLLISION_TYPE_HIT;
+				this->addCardMeter(70);
+				this->playSFX(0);
+				this->_hammerPickTimer = 20;
+				this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams);
+				if (this->frameState.actionId == ACTION_d22B_HAMMER)
+					this->_hammer->gravity.y = 0;
+			}
+		}
+		break;
+	case ACTION_jd22B_HAMMER:
+	case ACTION_jd22C_HAMMER:
+		if (this->frameState.sequenceId == 2) {
+			this->applyGroundMechanics();
+			if (this->advanceFrame())
+				this->setAction(SokuLib::ACTION_FALLING);
+			break;
+		}
+		this->advanceFrame();
+		if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId != 0) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			return;
+		}
+		if (this->applyAirMechanics()) {
+			this->setSequence(2);
+			this->position.y = this->getGroundHeight();
+			this->resetForces();
+			break;
+		}
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
+			float hammerParams[5] = {90.f - 110.f * this->direction, 35, 0, 1, 0};
+
+			if (this->frameState.actionId == ACTION_jd22B_HAMMER)
+				hammerParams[0] = 90.f - 90.f * this->direction;
+			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+			this->collisionType = COLLISION_TYPE_HIT;
+			this->addCardMeter(70);
+			this->playSFX(0);
+			this->_hammerPickTimer = 20;
+			this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams);
+			if (this->frameState.actionId == ACTION_jd22B_HAMMER)
+				this->_hammer->gravity.y = 0;
+			else
+				this->_hammer->gravity.y = 0.1;
+		}
+		if (this->frameState.poseId >= 3)
+			this->speed -= this->gravity;
+		else if (std::abs(this->speed.y) > 3)
+			this->speed.y = std::copysign(3, this->speed.y);
+		break;
 
 	case ACTION_USING_SC_ID_200_HAMMER:
 	case SokuLib::ACTION_USING_SC_ID_200:
@@ -1765,6 +1842,8 @@ bool Tewi::initializeAction()
 	case ACTION_AIR_PICKUP_HAMMER_FROM_AIR:
 	case ACTION_AIR_PICKUP_HAMMER_FROM_GROUND:
 		this->resetRenderInfo();
+		this->_hammer->lifetime = 0;
+		this->_hammer = nullptr;
 		break;
 	case ACTION_5AA_HAMMER:
 		this->collisionType = COLLISION_TYPE_NONE;
@@ -1785,7 +1864,7 @@ bool Tewi::initializeAction()
 	case SokuLib::ACTION_66B:
 	case SokuLib::ACTION_66C:
 	case SokuLib::ACTION_5AAAA:
-	case SokuLib::ACTION_5AAA6A:
+	case ACTION_5AAA6A:
 	case SokuLib::ACTION_5AAA3A:
 		this->speed.x = 14;
 		this->collisionType = COLLISION_TYPE_NONE;
@@ -1820,30 +1899,12 @@ bool Tewi::initializeAction()
 			this->meleeInvulTimer = 12;
 		else if (this->effectiveSkillLevel[0] >= 1)
 			this->meleeInvulTimer = 4;
-		this->speed.x = 10;
-		this->speed.y = 15;
-		this->gravity.y = FALLING_GRAVITY;
-		this->collisionType = COLLISION_TYPE_NONE;
-		this->collisionLimit = 1;
-		break;
 	case ACTION_d623C:
-		this->speed.x = 0;
-		this->speed.y = 25;
-		this->gravity.y = FALLING_GRAVITY;
-		this->collisionType = COLLISION_TYPE_NONE;
-		this->collisionLimit = 1;
-		break;
 	case ACTION_jd623B:
-		this->speed.x = 10;
-		this->speed.y = 10;
-		this->gravity.y = FALLING_GRAVITY;
-		this->collisionType = COLLISION_TYPE_NONE;
-		this->collisionLimit = 1;
-		break;
 	case ACTION_jd623C:
 		this->speed.x = 0;
-		this->speed.y = 15;
-		this->gravity.y = FALLING_GRAVITY;
+		this->speed.y = 0;
+		this->gravity.y = 0;
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		break;
@@ -1873,7 +1934,7 @@ bool Tewi::initializeAction()
 		this->speed.y = 12.5;
 		this->gravity.y = 0.3;
 		this->collisionType = COLLISION_TYPE_NONE;
-			this->collisionLimit = 2 + this->effectiveSkillLevel[0];
+		this->collisionLimit = 2 + this->effectiveSkillLevel[0];
 		break;
 	case ACTION_j5A_HAMMER:
 	case ACTION_j8A_HAMMER:
@@ -1948,7 +2009,8 @@ bool Tewi::initializeAction()
 
 bool Tewi::_canPickUpHammer()
 {
-	if (SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN <= this->frameState.actionId && this->frameState.actionId <= SokuLib::ACTION_NEUTRAL_TECH)
+	if (SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN <= this->frameState.actionId && this->frameState.actionId < SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN)
+	//if (SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN <= this->frameState.actionId && this->frameState.actionId <= SokuLib::ACTION_NEUTRAL_TECH)
 		return false;
 	if (this->_hammer->frameState.sequenceId == 0) {
 		if (std::abs(this->_hammer->position.x - this->position.x) > 100)
@@ -1957,10 +2019,17 @@ bool Tewi::_canPickUpHammer()
 			return false;
 		if (this->_hammer->position.y - 200 > this->position.y)
 			return false;
-	} else {
+	} else if (this->_hammer->renderInfos.zRotation == 0) {
 		if (std::abs(this->_hammer->position.x - this->position.x) > 75)
 			return false;
 		if (std::abs(this->_hammer->position.y - this->position.y) > 150)
+			return false;
+	} else {
+		if (this->_hammer->position.y - this->position.y > 150)
+			return false;
+		if (this->_hammer->position.y - this->position.y < -35)
+			return false;
+		if (std::abs(this->_hammer->position.x - this->position.x) > 150)
 			return false;
 	}
 	return true;
@@ -1986,8 +2055,6 @@ bool Tewi::_tryPickUpHammer()
 	if (this->_hammer->frameState.sequenceId != 0)
 		action++;
 	this->setAction(action);
-	this->_hammer->lifetime = 0;
-	this->_hammer = nullptr;
 	SokuLib::playSEWaveBuffer(SokuLib::SFX_SLAP_HIT);
 	return true;
 }
@@ -2218,6 +2285,28 @@ bool Tewi::_processSkillsAirborne()
 			this->useSkill(ACTION_jd623C, this->boxData.sequenceData->moveLock);
 			return true;
 		}
+		if (this->inputData.commandCombination._22b && (
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_jd22B) ||
+			!this->skillCancelsUsed[0]
+		)) {
+			this->skillCancelCount++;
+			this->skillCancelsUsed[0] = true;
+			this->renderInfos.zRotation = 0.0;
+			this->eventSkillUse();
+			this->useSkill(ACTION_jd22B, this->boxData.sequenceData->moveLock);
+			return true;
+		}
+		if (this->inputData.commandCombination._22c && (
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_jd22C) ||
+			!this->skillCancelsUsed[0]
+		)) {
+			this->skillCancelCount++;
+			this->skillCancelsUsed[0] = true;
+			this->renderInfos.zRotation = 0.0;
+			this->eventSkillUse();
+			this->useSkill(ACTION_jd22C, this->boxData.sequenceData->moveLock);
+			return true;
+		}
 	} else {
 		if (this->inputData.commandCombination._623b && (
 			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_jd623B_HAMMER) ||
@@ -2239,6 +2328,28 @@ bool Tewi::_processSkillsAirborne()
 			this->renderInfos.zRotation = 0.0;
 			this->eventSkillUse();
 			this->useSkill(ACTION_jd623C_HAMMER, this->boxData.sequenceData->moveLock);
+			return true;
+		}
+		if (this->inputData.commandCombination._22b && (
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_jd22B_HAMMER) ||
+			!this->skillCancelsUsed[0]
+		)) {
+			this->skillCancelCount++;
+			this->skillCancelsUsed[0] = true;
+			this->renderInfos.zRotation = 0.0;
+			this->eventSkillUse();
+			this->useSkill(ACTION_jd22B_HAMMER, this->boxData.sequenceData->moveLock);
+			return true;
+		}
+		if (this->inputData.commandCombination._22c && (
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_jd22C_HAMMER) ||
+			!this->skillCancelsUsed[0]
+		)) {
+			this->skillCancelCount++;
+			this->skillCancelsUsed[0] = true;
+			this->renderInfos.zRotation = 0.0;
+			this->eventSkillUse();
+			this->useSkill(ACTION_jd22C_HAMMER, this->boxData.sequenceData->moveLock);
 			return true;
 		}
 	}
@@ -2369,11 +2480,11 @@ bool Tewi::_processAGrounded()
 			else if (this->inputData.keyInput.verticalAxis > 0 || this->inputData.bufferedKeyInput.verticalAxis > 0)
 				action = SokuLib::ACTION_5AAA3A;
 			else
-				action = SokuLib::ACTION_5AAA6A;
+				action = ACTION_5AAA6A;
 			ok = true;
 			break;
 		case SokuLib::ACTION_5AAAA:
-		case SokuLib::ACTION_5AAA6A:
+		case ACTION_5AAA6A:
 		case SokuLib::ACTION_5AAA3A:
 			return false;
 		}
@@ -2651,6 +2762,28 @@ bool Tewi::_processSkillsGrounded()
 			this->useSkill(ACTION_d214C, this->boxData.sequenceData->moveLock);
 			return true;
 		}
+		if (this->inputData.commandCombination._22b && (
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d22B) ||
+			!this->skillCancelsUsed[0]
+		)) {
+			this->skillCancelCount++;
+			this->skillCancelsUsed[0] = true;
+			this->renderInfos.zRotation = 0.0;
+			this->eventSkillUse();
+			this->useSkill(ACTION_d22B, this->boxData.sequenceData->moveLock);
+			return true;
+		}
+		if (this->inputData.commandCombination._22c && (
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d22C) ||
+			!this->skillCancelsUsed[0]
+		)) {
+			this->skillCancelCount++;
+			this->skillCancelsUsed[0] = true;
+			this->renderInfos.zRotation = 0.0;
+			this->eventSkillUse();
+			this->useSkill(ACTION_d22C, this->boxData.sequenceData->moveLock);
+			return true;
+		}
 	} else {
 		if (this->inputData.commandCombination._623b && (
 			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d623B_HAMMER) ||
@@ -2718,6 +2851,28 @@ bool Tewi::_processSkillsGrounded()
 			this->useSkill(ACTION_d214C_HAMMER, this->boxData.sequenceData->moveLock);
 			return true;
 		}
+		if (this->inputData.commandCombination._22b && (
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d22B_HAMMER) ||
+			!this->skillCancelsUsed[0]
+		)) {
+			this->skillCancelCount++;
+			this->skillCancelsUsed[0] = true;
+			this->renderInfos.zRotation = 0.0;
+			this->eventSkillUse();
+			this->useSkill(ACTION_d22B_HAMMER, this->boxData.sequenceData->moveLock);
+			return true;
+		}
+		if (this->inputData.commandCombination._22c && (
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d22C_HAMMER) ||
+			!this->skillCancelsUsed[0]
+		)) {
+			this->skillCancelCount++;
+			this->skillCancelsUsed[0] = true;
+			this->renderInfos.zRotation = 0.0;
+			this->eventSkillUse();
+			this->useSkill(ACTION_d22C_HAMMER, this->boxData.sequenceData->moveLock);
+			return true;
+		}
 	}
 	return false;
 }
@@ -2731,6 +2886,8 @@ bool Tewi::_canUseCard(int id)
 	if (id == 101 && this->isGrounded())
 		return true;
 	if (id == 102 && this->isGrounded())
+		return true;
+	if (id == 103)
 		return true;
 	if (id == 200 && this->isGrounded())
 		return true;
@@ -2917,4 +3074,9 @@ void Tewi::unhook()
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
 	*(char *)0x48894C = 0x74;
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
+}
+
+SokuLib::v2::GameObject *Tewi::getHammer() const
+{
+	return this->_hammer;
 }
