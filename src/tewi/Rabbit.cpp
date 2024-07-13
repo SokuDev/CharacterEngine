@@ -7,13 +7,18 @@
 
 void Rabbit::update()
 {
-	if (this->checkTurnIntoCrystals(false, 2, 2)) {
+	if (this->parentPlayerB->timeStop)
+		return;
+	if (this->customData[2] == 0 && this->checkTurnIntoCrystals(false, 2, 2)) {
 		this->lifetime = 0;
 		return;
 	}
 	this->advanceFrame();
-	if (this->collisionType == COLLISION_TYPE_GRAZED)
+	if (this->collisionType == COLLISION_TYPE_GRAZED) {
 		this->collisionType = COLLISION_TYPE_NONE;
+		if (this->customData[2] != 0)
+			this->collisionLimit++;
+	}
 	if (this->collisionType == COLLISION_TYPE_BULLET_COLLIDE_SAME_DENSITY)
 		this->collisionType = COLLISION_TYPE_NONE;
 	if (this->collisionType == COLLISION_TYPE_BULLET_COLLIDE_HIGH_DENSITY)
@@ -39,7 +44,7 @@ void Rabbit::update()
 	if (this->position.x < 0 || this->position.x > 1300)
 		this->lifetime = 0;
 	// TODO: Find a better way to do this
-	if (this->parentPlayerB->frameState.poseId == 0 && this->customData[2] != 0)
+	if (this->parentPlayerB->frameState.poseId == 0 && this->customData[2] == 0)
 		switch (this->parentPlayerB->frameState.actionId) {
 		case Tewi::ACTION_d236B:
 		case Tewi::ACTION_d236B_HAMMER:

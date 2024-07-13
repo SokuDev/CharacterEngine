@@ -54,7 +54,7 @@ add_library(
 	src/tewi/TrapHole.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
-target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG> OBJECT_MEMORY_SIZE=4 _USE_MATH_DEFINES)
+target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG> OBJECT_MEMORY_SIZE=8 _USE_MATH_DEFINES)
 target_include_directories("${PROJECT_NAME}" PRIVATE include SokuLib/directx "src/Common/")
 target_link_directories("${PROJECT_NAME}" PRIVATE lib)
 target_link_libraries(

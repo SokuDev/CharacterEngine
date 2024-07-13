@@ -8,6 +8,8 @@
 
 void Hammer::update()
 {
+	if (this->parentPlayerB->timeStop)
+		return;
 	if (this->frameState.sequenceId == 8) {
 		if (this->checkTurnIntoCrystals(false, 1, 5)) {
 			this->setSequence(0);
@@ -39,14 +41,14 @@ void Hammer::update()
 		this->position += this->speed;
 		this->speed.x += (this->parentPlayer->position.x - this->position.x) / 1000;
 		this->speed.y += (this->parentPlayer->position.y + 75 - this->position.y) / 1000;
-		if (this->customData[4] == 0) {
+		if (this->customData[4] == 0 && std::pow(this->parentPlayerB->position.x - this->position.x, 2) + std::pow(this->parentPlayerB->position.y + 75 - this->position.y, 2) < 10000) {
 			short action;
 
 			if (!this->parentPlayerB->isGrounded())
 				action = Tewi::ACTION_AIR_PICKUP_HAMMER_FROM_AIR;
 			else
 				action = Tewi::ACTION_STAND_PICKUP_HAMMER_FROM_AIR;
-			this->setAction(action);
+			this->parentPlayerB->setAction(action);
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_SLAP_HIT);
 		}
 	} else if (this->frameState.sequenceId == 0 || this->frameState.sequenceId == 7) {
@@ -114,6 +116,11 @@ void Hammer::update()
 			this->speed.x = this->speed.x * 0.8f;
 			this->speed.y = -this->speed.y * 0.8f;
 		}
+	}
+	if (this->position.y >= 800 && this->speed.y > 0) {
+		this->position.y = 800;
+		this->speed.x = this->speed.x * 0.8f;
+		this->speed.y = -this->speed.y * 0.8f;
 	}
 }
 

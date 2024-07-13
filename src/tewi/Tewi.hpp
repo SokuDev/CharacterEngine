@@ -26,6 +26,7 @@ private:
 
 	static constexpr float FRONT_WALK_SPEED = 4;
 	static constexpr float BACK_WALK_SPEED = -3.5;
+	static constexpr float HAMMER_FRONT_WALK_SPEED = 7;
 	static constexpr float HAMMER_BACK_WALK_SPEED = -6;
 	static constexpr float FORWARD_WALK_SPEED_X = 12;
 	static constexpr float FORWARD_WALK_SPEED_Y = 10;
@@ -180,6 +181,8 @@ public:
 		ACTION_jd22C_HAMMER =                    531,
 
 		ACTION_USING_SC_ID_200_HAMMER =          620,
+		ACTION_USING_SC_ID_201_HAMMER =          621,
+		ACTION_USING_SC_ID_201_HAMMER_AIR =      671,
 
 		ACTION_STAND_PICKUP_HAMMER_FROM_AIR =    420,
 		ACTION_STAND_PICKUP_HAMMER_FROM_GROUND = 421,

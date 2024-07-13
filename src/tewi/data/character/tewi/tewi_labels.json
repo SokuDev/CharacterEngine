@@ -127,13 +127,18 @@
 	"531": "$CC6644h.j.d.22C ()",
 
 	"600": "Earth Sign \"Hare Run\"",
+	"601": "Runaway Rabbit \"Fluster Escape\"",
 	"620": "$CC6644Earth Sign \"Hare Run\"",
+	"621": "$CC6644Runaway Rabbit \"Fluster Escape\"",
+	"651": "Runaway Rabbit \"Fluster Escape\" (Air)",
+	"671": "$CC6644Runaway Rabbit \"Fluster Escape\" (Air)",
 
 	"800": "Hammer object",
 	"801": "B series object",
 	"802": "Hare Hunt object",
 	"803": "Trap Hole object",
 	"804": "Throw & Catch object",
+	"805": "Fluster Escape object",
 
 	"848": "Hare Run Grab object",
 	"849": "Hare Run Smoke object"
