@@ -52,6 +52,8 @@ void TrapHole::update()
 		return;
 	if (this->parentPlayerB->timeStop)
 		return;
+	if (this->lifetime == 0)
+		return;
 	if (this->collisionLimit && this->renderInfos.scale.x != 1) {
 		this->renderInfos.scale.x = this->frameState.currentFrame / (float)HOLE_FADE_IN;
 		this->renderInfos.scale.y = this->frameState.currentFrame / (float)HOLE_FADE_IN;
@@ -103,16 +105,6 @@ void TrapHole::update()
 
 bool TrapHole::initializeAction()
 {
-	for (int x = this->position.x - HOLE_RADIUS; x < this->position.x + HOLE_RADIUS; x++) {
-		if (x < 0 || x >= 1280)
-			continue;
-		if (SokuLib::v2::groundHeight[x] == 0)
-			continue;
-		this->lifetime = 0;
-		*stageSprite(this) = nullptr;
-		*frontHole(this) = nullptr;
-		return true;
-	}
 	if (
 		this->gameData.opponent->damageLimited &&
 		this->gameData.opponent->position.x > this->position.x - HOLE_RADIUS &&
@@ -126,6 +118,17 @@ bool TrapHole::initializeAction()
 	if (this->customData) {
 		this->setSequence(1);
 		//this->prepareTexture();
+		return true;
+	}
+
+	for (int x = this->position.x - HOLE_RADIUS; x < this->position.x + HOLE_RADIUS; x++) {
+		if (x < 0 || x >= 1280)
+			continue;
+		if (SokuLib::v2::groundHeight[x] == 0)
+			continue;
+		this->lifetime = 0;
+		*stageSprite(this) = nullptr;
+		*frontHole(this) = nullptr;
 		return true;
 	}
 

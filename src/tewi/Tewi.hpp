@@ -19,7 +19,7 @@ private:
 	static constexpr float BACKDASH_DECEL = 2;
 	static constexpr float BACKDASH_IMPULSE = -17.0;
 
-	static constexpr float HAMMER_FAR_RANGE = 125;
+	static constexpr float HAMMER_FAR_RANGE = 105;
 	static constexpr float NO_HAMMER_FAR_RANGE = 80;
 
 	static constexpr float MAX_DASH_HOLD = 45;
@@ -56,8 +56,10 @@ private:
 
 	static constexpr float HAMMER_INITIAL_DASH_SPEED = 10;
 	static constexpr float HAMMER_TOP_DASH_SPEED = 7.5;
+	static constexpr float HAMMER_TOP_BE6_SPEED = 5.5;
 	static constexpr float INITIAL_DASH_SPEED = 15;
 	static constexpr float TOP_DASH_SPEED = 10;
+	static constexpr float TOP_BE6_SPEED = 7.5;
 	static constexpr float DASH_RECOVERY_DECEL = 1;
 
 	static constexpr float HAMMER_FLIGHT_TURN = 0.75;
@@ -154,6 +156,7 @@ public:
 		ACTION_2B_HAMMER =                       403,
 		ACTION_j5B_HAMMER =                      405,
 		ACTION_j2B_HAMMER =                      407,
+		ACTION_4C =                              413,
 
 		ACTION_d623B =                           500,
 		ACTION_d623C =                           501,

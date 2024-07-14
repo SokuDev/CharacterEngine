@@ -428,17 +428,33 @@ void Tewi::update()
 	case SokuLib::ACTION_FORWARD_DASH:
 		this->applyGroundMechanics();
 		this->groundDashCount = 1;
-		if (this->_hammer) {
-			if (TOP_DASH_SPEED < this->speed.x) {
-				this->speed.x -= 0.5;
-				if (this->speed.x < TOP_DASH_SPEED)
-					this->speed.x = TOP_DASH_SPEED;
+		if (this->frameState.actionId == SokuLib::ACTION_BE6) {
+			if (this->_hammer) {
+				if (TOP_BE6_SPEED < this->speed.x) {
+					this->speed.x -= 0.5;
+					if (this->speed.x < TOP_BE6_SPEED)
+						this->speed.x = TOP_BE6_SPEED;
+				}
+			} else {
+				if (HAMMER_TOP_BE6_SPEED < this->speed.x) {
+					this->speed.x -= 0.25;
+					if (this->speed.x < HAMMER_TOP_BE6_SPEED)
+						this->speed.x = HAMMER_TOP_BE6_SPEED;
+				}
 			}
 		} else {
-			if (HAMMER_TOP_DASH_SPEED < this->speed.x) {
-				this->speed.x -= 0.25;
-				if (this->speed.x < HAMMER_TOP_DASH_SPEED)
-					this->speed.x = HAMMER_TOP_DASH_SPEED;
+			if (this->_hammer) {
+				if (TOP_DASH_SPEED < this->speed.x) {
+					this->speed.x -= 0.5;
+					if (this->speed.x < TOP_DASH_SPEED)
+						this->speed.x = TOP_DASH_SPEED;
+				}
+			} else {
+				if (HAMMER_TOP_DASH_SPEED < this->speed.x) {
+					this->speed.x -= 0.25;
+					if (this->speed.x < HAMMER_TOP_DASH_SPEED)
+						this->speed.x = HAMMER_TOP_DASH_SPEED;
+				}
 			}
 		}
 		this->advanceFrame();
@@ -1272,7 +1288,27 @@ void Tewi::update()
 		this->_bSeriesUpdate(0, B_BULLET_SPEED, B_BULLET_SLOW_DOWN, 100, false);
 		break;
 
+	case ACTION_4C:
+		this->applyGroundMechanics();
+		if (this->_checkDashSlide())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 1) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			return;
+		}
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0) {
+			if (this->frameState.poseId == 6) {
+				float hammerParams[5] = {90.f + 45 * this->direction, 20, 0, 0, 0};
 
+				this->consumeSpirit(200, 60);
+				this->collisionType = COLLISION_TYPE_HIT;
+				this->addCardMeter(50);
+				this->playSFX(0);
+				this->_hammerPickTimer = 20;
+				this->_hammer = this->createObject(800, (this->direction * -40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams);
+			}
+		}
+		break;
 	case SokuLib::ACTION_5C:
 		this->applyGroundMechanics();
 		if (this->_checkDashSlide())
@@ -1414,11 +1450,6 @@ void Tewi::update()
 				this->speed.y = 15;
 				this->gravity.y = FALLING_GRAVITY / 2;
 				break;
-			case ACTION_d623C:
-				this->speed.x = 15;
-				this->speed.y = 1;
-				this->gravity.y = 0.05;
-				break;
 			case ACTION_jd623B:
 				this->speed.x = 15;
 				this->speed.y = 10;
@@ -1426,7 +1457,7 @@ void Tewi::update()
 				break;
 			case ACTION_jd623C:
 				this->speed.x = 10;
-				this->speed.y = 15;
+				this->speed.y = 5;
 				this->gravity.y = FALLING_GRAVITY;
 				break;
 			}
@@ -1820,7 +1851,7 @@ void Tewi::update()
 				} else
 					this->createObject(805, x, 0, this->direction, 1, rabbitData);
 			}
-			if (this->frameState.currentFrame >= 180)
+			if (this->frameState.currentFrame >= 120)
 				this->nextSequence();
 		}
 		break;
@@ -1852,7 +1883,7 @@ void Tewi::update()
 				} else
 					this->createObject(805, x, 0, this->direction, 1, rabbitData);
 			}
-			if (this->frameState.currentFrame >= 180)
+			if (this->frameState.currentFrame >= 120)
 				this->nextSequence();
 		}
 		break;
@@ -1929,6 +1960,8 @@ bool Tewi::initializeAction()
 		this->speed.x = 0.0;
 	case ACTION_AIR_PICKUP_HAMMER_FROM_AIR:
 	case ACTION_AIR_PICKUP_HAMMER_FROM_GROUND:
+		if (this->gravity.y < 0.1)
+			this->gravity.y = FALLING_GRAVITY;
 		this->resetRenderInfo();
 		this->_hammer->lifetime = 0;
 		this->_hammer = nullptr;
@@ -1982,12 +2015,18 @@ bool Tewi::initializeAction()
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		break;
+	case ACTION_d623C:
+		this->speed.x = 15;
+		this->speed.y = 1;
+		this->gravity.y = 0.05;
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->collisionLimit = 1;
+		break;
 	case ACTION_d623B:
 		if (this->effectiveSkillLevel[0] >= 3)
 			this->meleeInvulTimer = 12;
 		else if (this->effectiveSkillLevel[0] >= 1)
 			this->meleeInvulTimer = 4;
-	case ACTION_d623C:
 	case ACTION_jd623B:
 	case ACTION_jd623C:
 		this->speed.x = 0;
@@ -2077,6 +2116,7 @@ bool Tewi::initializeAction()
 	case ACTION_5B_HAMMER:
 	case SokuLib::ACTION_5B:
 		this->chargedAttack = true;
+	case ACTION_4C:
 	case SokuLib::ACTION_5C:
 	case SokuLib::ACTION_2C:
 	case SokuLib::ACTION_6C:
@@ -2766,6 +2806,15 @@ bool Tewi::_processCGrounded()
 	) {
 		this->renderInfos.zRotation = 0.0;
 		this->setAction(SokuLib::ACTION_6C);
+		return true;
+	}
+
+	if (
+		(hKeys < 0 || hBuffKeys < 0) &&
+		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_4C)
+	) {
+		this->renderInfos.zRotation = 0.0;
+		this->setAction(SokuLib::ACTION_4C);
 		return true;
 	}
 

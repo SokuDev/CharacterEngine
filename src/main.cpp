@@ -68,26 +68,10 @@ static SokuLib::Dequeue<unsigned short> *selectDeckSlot(SokuLib::Profile *profil
 	if (!cards.data) {
 		//for (int i = 0; i < 20; i++)
 		//	cards.push_back(i);
-		cards.push_back(200);
-		cards.push_back(200);
-		cards.push_back(200);
-		cards.push_back(200);
-		cards.push_back(0);
-		cards.push_back(0);
-		cards.push_back(0);
-		cards.push_back(0);
-		cards.push_back(102);
-		cards.push_back(102);
-		cards.push_back(102);
-		cards.push_back(102);
-		cards.push_back(103);
-		cards.push_back(103);
-		cards.push_back(103);
-		cards.push_back(103);
-		cards.push_back(100);
-		cards.push_back(100);
-		cards.push_back(100);
-		cards.push_back(100);
+		short card[] = {200,200,200,201,201,201,0,0,0,0,9,9,100,100,100,100,102,102,101,103};
+
+		for (short c : card)
+			cards.push_back(c);
 	}
 	return &cards;
 }
