@@ -8,6 +8,8 @@
 #include "log.hpp"
 #include "BasicObject.hpp"
 
+char *(*getCharName)(unsigned) = (char *(*)(unsigned))0x43F3F0;
+static int (__fastcall *og_ProfileChrSelect)(void *This);
 static int (SokuLib::Select::*og_SelectOnProcess)();
 static int (SokuLib::SelectClient::*og_SelectCLOnProcess)();
 static int (SokuLib::SelectServer::*og_SelectSVOnProcess)();
@@ -31,9 +33,83 @@ static const char *names[] = {
 };
 static SokuLib::Sprite extraSprites[sizeof(names) / sizeof(*names)];
 bool hooked = false;
+bool init = false;
 FILE *file;
+std::vector<SokuLib::Map<int, int>> characterCards;
 
 static const unsigned createCustomCharacter_hook_ret = 0x46DE25;
+
+static void initCardArray()
+{
+	unsigned list[] = {
+		SokuLib::CHARACTER_REIMU,
+		SokuLib::CHARACTER_MARISA,
+		SokuLib::CHARACTER_SAKUYA,
+		SokuLib::CHARACTER_ALICE,
+		SokuLib::CHARACTER_PATCHOULI,
+		SokuLib::CHARACTER_YOUMU,
+		SokuLib::CHARACTER_REMILIA,
+		SokuLib::CHARACTER_YUYUKO,
+		SokuLib::CHARACTER_YUKARI,
+		SokuLib::CHARACTER_SUIKA,
+		SokuLib::CHARACTER_REISEN,
+		SokuLib::CHARACTER_AYA,
+		SokuLib::CHARACTER_KOMACHI,
+		SokuLib::CHARACTER_IKU,
+		SokuLib::CHARACTER_TENSHI,
+		SokuLib::CHARACTER_SANAE,
+		SokuLib::CHARACTER_CIRNO,
+		SokuLib::CHARACTER_MEILING,
+		SokuLib::CHARACTER_UTSUHO,
+		SokuLib::CHARACTER_SUWAKO,
+		SokuLib::CHARACTER_TEWI
+	};
+	char buffer[] = "data/csv/000000000000000000/spellcard.csv";
+
+	characterCards.clear();
+	characterCards.resize(SokuLib::CHARACTER_TEWI + 1);
+	for (auto c : list) {
+		if (c <= SokuLib::CHARACTER_SUWAKO && !SokuLib::v2::SaveDataManager::instance.enabledCharacters[c])
+			continue;
+
+		sprintf(buffer, "data/csv/%s/spellcard.csv", getCharName(c));
+		printf("Loading cards from %s\n", buffer);
+
+		SokuLib::CSVParser parser{buffer};
+		std::vector<unsigned short> valid;
+		int i = 0;
+
+		do {
+			auto str = parser.getNextCell();
+
+			i++;
+			try {
+				characterCards[c][std::stoul(str)] = 100;
+			} catch (std::exception &e) {
+				MessageBoxA(
+					SokuLib::window,
+					(
+						"Fatal error: Cannot load cards list for " + std::string(getCharName(c)) + ":\n" +
+						"In file " + buffer + ": Cannot parse cell #1 at line #" + std::to_string(i) +
+						" \"" + str + "\": " + e.what()
+					).c_str(),
+					"Loading default deck failed",
+					MB_ICONERROR
+				);
+				abort();
+			}
+		} while (parser.goToNextLine());
+	}
+}
+
+static void *getCharacterCardObject()
+{
+	if (!init) {
+		initCardArray();
+		init = true;
+	}
+	return (void *)((unsigned)characterCards.data() - offsetof(SokuLib::v2::SaveDataManager, characterCards));
+}
 
 static SokuLib::v2::Player *createCustomCharacter(int id, SokuLib::PlayerInfo &info)
 {
@@ -68,7 +144,7 @@ static SokuLib::Dequeue<unsigned short> *selectDeckSlot(SokuLib::Profile *profil
 	if (!cards.data) {
 		//for (int i = 0; i < 20; i++)
 		//	cards.push_back(i);
-		short card[] = {200,200,200,201,201,201,0,0,0,0,9,9,100,100,100,100,102,102,101,103};
+		short card[] = {0,0,1,100,100,101,101,102,102,103,103,200,200,201,201,208,208,210,210,210};
 
 		for (short c : card)
 			cards.push_back(c);
@@ -195,6 +271,33 @@ static int __fastcall SelectSVOnProcess(SokuLib::SelectServer *This)
 	return ret;
 }
 
+static int __fastcall ProfileCharacterSelect_Update(void *This)
+{
+	if (og_ProfileChrSelect(This) == 0)
+		return 0;
+	if (SokuLib::inputMgrs.input.spellcard != 1)
+		return 1;
+
+	int ret, w, h;
+	auto sprite = (SokuLib::Sprite *)((unsigned)This + 8);
+	auto profile = *(SokuLib::Profile **)((unsigned)This + 0x9C);
+
+	if (SokuLib::textureMgr.loadTexture(&ret, "data/stand/tewi.bmp", &w, &h)) {
+		sprite->init(ret, 0, 0, w, h);
+		for (auto &vertice: sprite->vertices)
+			vertice.color = SokuLib::Color{0x80, 0x80, 0x80, 0xFF};
+	}
+
+	SokuLib::playSEWaveBuffer(0x28);
+	SokuLib::activateMenu(((SokuLib::ProfileDeckEdit *(__thiscall *)(void *, SokuLib::Profile *, SokuLib::Character, SokuLib::Sprite *))(*(unsigned *)0x44D52A + 0x44D52E))(
+		SokuLib::NewFct(0x840),
+		profile,
+		SokuLib::CHARACTER_TEWI,
+		sprite
+	));
+	return 1;
+}
+
 void __declspec(naked) gameEndGrantCards()
 {
 	__asm {
@@ -260,6 +363,7 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 	og_SelectOnProcess = SokuLib::TamperDword(&SokuLib::VTable_Select.onProcess, SelectOnProcess);
 	og_SelectCLOnProcess = SokuLib::TamperDword(&SokuLib::VTable_SelectClient.onProcess, SelectCLOnProcess);
 	og_SelectSVOnProcess = SokuLib::TamperDword(&SokuLib::VTable_SelectServer.onProcess, SelectSVOnProcess);
+	og_ProfileChrSelect = SokuLib::TamperDword(0x859878, ProfileCharacterSelect_Update);
 	VirtualProtect((PVOID)RDATA_SECTION_OFFSET, RDATA_SECTION_SIZE, old, &old);
 
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
@@ -286,6 +390,10 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 	*(char *)0x48203C = 0x00;
 	*(char *)0x48203D = 0x00;
 	*(char *)0x48203E = 0x90;
+
+	// Add extra characters to save data manager
+	SokuLib::TamperNearJmpOpr(0x44E102, getCharacterCardObject);
+	SokuLib::TamperNearJmpOpr(0x44E11D, getCharacterCardObject);
 
 	// Filesystem first patch
 	*(char *)0x40D1FB = 0xEB;

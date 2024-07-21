@@ -14,16 +14,9 @@ void Rabbit::update()
 		return;
 	}
 	this->advanceFrame();
-	if (this->collisionType == COLLISION_TYPE_GRAZED) {
-		this->collisionType = COLLISION_TYPE_NONE;
-		if (this->customData[2] != 0)
-			this->collisionLimit++;
-	}
-	if (this->collisionType == COLLISION_TYPE_BULLET_COLLIDE_SAME_DENSITY)
-		this->collisionType = COLLISION_TYPE_NONE;
-	if (this->collisionType == COLLISION_TYPE_BULLET_COLLIDE_HIGH_DENSITY)
-		this->collisionLimit = 0;
-	if (this->collisionLimit == 0) {
+	this->checkGrazed(this->customData[2]);
+	this->checkProjectileHit(this->customData[2]);
+	if (0 < this->customData[2] && (this->customData[2] <= this->otherProjectileHit || this->customData[2] <= this->grazeCounter)) {
 		this->renderInfos.color.a -= 15;
 		if (!this->renderInfos.color.a)
 			this->lifetime = 0;
@@ -44,7 +37,7 @@ void Rabbit::update()
 	if (this->position.x < 0 || this->position.x > 1300)
 		this->lifetime = 0;
 	// TODO: Find a better way to do this
-	if (this->parentPlayerB->frameState.poseId == 0 && this->customData[2] == 0)
+	if (this->parentPlayerB->frameState.poseId == 0 && this->customData[2] != 0)
 		switch (this->parentPlayerB->frameState.actionId) {
 		case Tewi::ACTION_d236B:
 		case Tewi::ACTION_d236B_HAMMER:
@@ -57,8 +50,6 @@ void Rabbit::update()
 
 bool Rabbit::initializeAction()
 {
-	if (this->frameState.actionId == 802)
-		this->skillIndex = 1;
-	this->collisionLimit = 4;
+	this->collisionLimit = 1;
 	return true;
 }

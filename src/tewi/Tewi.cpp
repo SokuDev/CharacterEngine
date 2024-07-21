@@ -961,10 +961,12 @@ void Tewi::update()
 				this->nextSequence();
 				this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 122.0, this->direction, 1);
 			}
-			if (this->speed.y > 2)
-				this->speed.y -= 1;
-			else if (this->speed.y < -2)
-				this->speed.y += 1;
+			if (this->speed.y > 1)
+				this->speed.y -= 2;
+			else if (this->speed.y < -1)
+				this->speed.y += 2;
+			else
+				this->speed.y = 0;
 			if (this->speed.x > 4)
 				this->speed.x -= 1;
 			else if (this->speed.x < -4)
@@ -1189,6 +1191,7 @@ void Tewi::update()
 			this->applyGroundMechanics();
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_CROUCHED);
+		this->groundDashCount = 0;
 		switch (this->frameState.poseId) {
 		case 4:
 			if (this->frameState.poseFrame == 0) {
@@ -1256,7 +1259,7 @@ void Tewi::update()
 			this->nextSequence();
 			this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 122.0, this->direction, 1);
 		}
-		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
+		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 1)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 5)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
@@ -1539,8 +1542,8 @@ void Tewi::update()
 	case ACTION_d236B_HAMMER:
 	case ACTION_d236C_HAMMER: {
 		float rabbitData[6] = {
-			10, 7.5, 0,
-			6, 12.5, 0
+			10, 7.5, 4,
+			6, 12.5, 4
 		};
 
 		if (this->_checkDashSlide() || (this->frameState.sequenceId == 1 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0))
@@ -1554,8 +1557,8 @@ void Tewi::update()
 				this->collisionType = COLLISION_TYPE_HIT;
 				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 				this->playSFX(0);
-				this->createObject(802, this->position.x, this->position.y, this->direction, 1, &rabbitData[0], 3);
-				this->createObject(802, this->position.x, this->position.y, this->direction, 1, &rabbitData[3], 3);
+				this->createObject(802, this->position.x, this->position.y, this->direction, 1, &rabbitData[0], 3)->skillIndex = 1;
+				this->createObject(802, this->position.x, this->position.y, this->direction, 1, &rabbitData[3], 3)->skillIndex = 1;
 			}
 		} else if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
 			if (this->chargedAttack) {
@@ -1571,7 +1574,7 @@ void Tewi::update()
 				this->position.x, this->position.y,
 				this->direction, 1,
 				&rabbitData[this->frameState.actionId % 2 * 3], 3
-			);
+			)->skillIndex = 1;
 		}
 		break;
 	}
@@ -1839,7 +1842,7 @@ void Tewi::update()
 		}
 		if (this->frameState.sequenceId == 1) {
 			if (this->frameState.currentFrame < 120 && this->frameState.currentFrame % 2 == 0) {
-				float rabbitData[3] = {5.f + SokuLib::rand(15), 5.f + SokuLib::rand(15), 1};
+				float rabbitData[3] = {5.f + SokuLib::rand(15), 5.f + SokuLib::rand(15), 0};
 				float x = 640 - this->direction * 640;
 
 				if (SokuLib::rand(2) != 0) {
@@ -1887,6 +1890,66 @@ void Tewi::update()
 				this->nextSequence();
 		}
 		break;
+
+	case ACTION_USING_SC_ID_210_HAMMER:
+	case SokuLib::ACTION_USING_SC_ID_210: {
+		const unsigned probs[20] = {
+			1, // Reimu - Gohei comes flying straight into the center of the screen or sides of the wall, creates a vertical or sideways wave of energy (think her 4card vertical amulet thingie)
+			1, // Marisa - Her bomb falls onto the screen from the sides and jumps around, eventually doing a big explosion
+			1, // Sakuya - Sakuya Richochet Spellcard (the 4card one, the "bad one") suddenly appears out of nowhere. The attack proceeds as you would expect the actual spellcard
+			1, // Alice - Alice's dolls comeout of one of the sides. Fundamentally a weaker version of the lemmings spellcard or Tewi rabbits attack
+			1, // Patchouli - A book (do we even have the graphic) falls from the center sky of the screen. Once it touches the ground it generates a weaker Royal Flare or another spell you prefer to use
+			0, // Youmu - Her sword (shouldn't be hard to get a sprite) comes from somewhere offscreen, aiming towards the opponent, lodging itself somewhere, once it touches a wall or the ground it will emit a wisp effect and then explode in a similar vein to Youmu's 22 Wicked Soul (quite strong for pressure)
+			0, // Remilia - Her lance comes from the ceiling or the sides at really high velocity. Does 2orbs blocked minimum and solid damage
+			0, // Yuyuko - Butterflies or wisps come from sides of the screen / alternatively, sphere bloom from fucking nowhere just kind of happens
+			0, // Yukari - Yukari comes out of a Border spinning. Its literally just her actual move, hitbox and AUB and whatnot
+			0, // Suika - Either a rock falls from the sky or it comes diagonally from upperleft/right of the screen. It's a Type 3 Projectile, can't be grazed
+			0, // Reisen - Fullscreen Laser, reusing that idea. That or she appears out of nowhere to assist Tewi
+			0, // Aya - CROWS ALL OVER THE ALL OVER THE STAGE, CALL ME THE CROWS MAN
+			0, // Komachi - Scythes comes flying from somewhere, lodges itself, calls out wisps or the slow walking effect that Komachi can do
+			0, // Iku - I really want tewi to get a shorter version of her 4card spell, for funnies
+			0, // Tenshi - The meteor thing
+			0, // Sanae - Good/Bad luck amulets randomized fall from the sky. This should hit tewi too
+			0, // Cirno - A huge block of ice falls from the sky, for a while the entire arena has the "ice frog" effect. Gotta have funnies too
+			0, // Meiling - Catfish effect, but it appears and uses one of the Story mode attacks (actually Alice, Utsuho, Suwako could take ideas from Story mode?)
+			0, // Utsuho - The arena becomes orangey/yellowish and then fire geysers come out from underground
+			0, // Suwako - Rings out of nowhere bouncing all over. Reusing spells once again
+		};
+
+		if (this->_checkDashSlide())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 5 && this->frameState.poseFrame == 0) {
+			this->unknown4A6 = 40;
+			this->playSpellBackground(4, 30);
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_SPELL_ACTIVATE);
+			this->createEffect(115, this->position.x - this->direction * 34.f, this->position.y + 114.f, this->direction, 1);
+			this->consumeCard(0, 0, 0x3c);
+			this->eventSpellUse();
+			this->eventWeatherCycle();
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 0) {
+			unsigned total = 0;
+			int character = 0;
+
+			this->collisionType = COLLISION_TYPE_HIT;
+			for (unsigned int prob : probs)
+				total += prob;
+			total = SokuLib::rand(total);
+
+			while (character < 20) {
+				unsigned prob = probs[character];
+
+				if (total < prob && prob)
+					break;
+				character++;
+				total -= prob;
+			}
+			if (character == 20)
+				character--;
+			this->createObject(810 + character, 0, 0, SokuLib::RIGHT, 1, nullptr, 0);
+		}
+		break;
+	}
 
 	case SokuLib::ACTION_TALISMAN:
 		this->applyGroundMechanics();
@@ -1972,7 +2035,7 @@ bool Tewi::initializeAction()
 		this->speed.x = 0.0;
 		break;
 	case SokuLib::ACTION_f5A:
-		this->speed.x = 6;
+		this->speed.x = 8;
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		break;
@@ -2384,6 +2447,24 @@ bool Tewi::_processCAirborne()
 	return false;
 }
 
+bool Tewi::_useSkill(bool input, unsigned char id, unsigned short action)
+{
+	if (!input)
+		return false;
+	if (this->skilledSkillLevel[id] < 0)
+		return false;
+	if (this->gameData.sequenceData->actionLock >= 150)
+		return false;
+	if (this->gameData.sequenceData->actionLock > this->getMoveLock(action) && this->skillCancelsUsed[id % 4])
+		return false;
+	this->skillCancelCount++;
+	this->skillCancelsUsed[id % 4] = true;
+	this->renderInfos.zRotation = 0.0;
+	this->eventSkillUse();
+	this->useSkill(action, this->boxData.sequenceData->moveLock);
+	return true;
+}
+
 bool Tewi::_processSkillsAirborne()
 {
 	if (
@@ -2396,95 +2477,23 @@ bool Tewi::_processSkillsAirborne()
 		return false;
 
 	if (this->_hammer) {
-		if (this->inputData.commandCombination._623b && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_jd623B) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_jd623B, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._623b, 0, ACTION_jd623B))
 			return true;
-		}
-		if (this->inputData.commandCombination._623c && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_jd623C) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_jd623C, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._623c, 0, ACTION_jd623C))
 			return true;
-		}
-		if (this->inputData.commandCombination._22b && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_jd22B) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_jd22B, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._22b, 3, ACTION_jd22B))
 			return true;
-		}
-		if (this->inputData.commandCombination._22c && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_jd22C) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_jd22C, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._22c, 3, ACTION_jd22C))
 			return true;
-		}
 	} else {
-		if (this->inputData.commandCombination._623b && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_jd623B_HAMMER) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_jd623B_HAMMER, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._623b, 0, ACTION_jd623B_HAMMER))
 			return true;
-		}
-		if (this->inputData.commandCombination._623c && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_jd623C_HAMMER) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_jd623C_HAMMER, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._623c, 0, ACTION_jd623C_HAMMER))
 			return true;
-		}
-		if (this->inputData.commandCombination._22b && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_jd22B_HAMMER) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_jd22B_HAMMER, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._22b, 3, ACTION_jd22B_HAMMER))
 			return true;
-		}
-		if (this->inputData.commandCombination._22c && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_jd22C_HAMMER) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_jd22C_HAMMER, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._22c, 3, ACTION_jd22C_HAMMER))
 			return true;
-		}
 	}
 	return false;
 }
@@ -2838,183 +2847,39 @@ bool Tewi::_processSkillsGrounded()
 		return false;
 
 	if (this->_hammer) {
-		if (this->inputData.commandCombination._623b && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d623B) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d623B, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._623b, 0, ACTION_d623B))
 			return true;
-		}
-		if (this->inputData.commandCombination._623c && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d623C) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d623C, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._623c, 0, ACTION_d623C))
 			return true;
-		}
-		if (this->inputData.commandCombination._236b && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d236B) ||
-			!this->skillCancelsUsed[1]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[1] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d236B, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._236b, 1, ACTION_d236B))
 			return true;
-		}
-		if (this->inputData.commandCombination._236c && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d236C) ||
-			!this->skillCancelsUsed[1]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[1] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d236C, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._236c, 1, ACTION_d236C))
 			return true;
-		}
-		if (this->inputData.commandCombination._214b && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d214B) ||
-			!this->skillCancelsUsed[1]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[1] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d214B, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._214b, 2, ACTION_d214B))
 			return true;
-		}
-		if (this->inputData.commandCombination._214c && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d214C) ||
-			!this->skillCancelsUsed[1]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[1] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d214C, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._214c, 2, ACTION_d214C))
 			return true;
-		}
-		if (this->inputData.commandCombination._22b && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d22B) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d22B, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._22b,  3, ACTION_d22B))
 			return true;
-		}
-		if (this->inputData.commandCombination._22c && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d22C) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d22C, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._22c,  3, ACTION_d22C))
 			return true;
-		}
 	} else {
-		if (this->inputData.commandCombination._623b && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d623B_HAMMER) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d623B_HAMMER, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._623b, 0, ACTION_d623B_HAMMER))
 			return true;
-		}
-		if (this->inputData.commandCombination._623c && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d623C_HAMMER) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d623C_HAMMER, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._623c, 0, ACTION_d623C_HAMMER))
 			return true;
-		}
-		if (this->inputData.commandCombination._236b && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d236B_HAMMER) ||
-			!this->skillCancelsUsed[1]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[1] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d236B_HAMMER, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._236b, 1, ACTION_d236B_HAMMER))
 			return true;
-		}
-		if (this->inputData.commandCombination._236c && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d236C_HAMMER) ||
-			!this->skillCancelsUsed[1]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[1] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d236C_HAMMER, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._236c, 1, ACTION_d236C_HAMMER))
 			return true;
-		}
-		if (this->inputData.commandCombination._214b && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d214B_HAMMER) ||
-			!this->skillCancelsUsed[1]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[1] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d214B_HAMMER, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._214b, 2, ACTION_d214B_HAMMER))
 			return true;
-		}
-		if (this->inputData.commandCombination._214c && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d214C_HAMMER) ||
-			!this->skillCancelsUsed[1]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[1] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d214C_HAMMER, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._214c, 2, ACTION_d214C_HAMMER))
 			return true;
-		}
-		if (this->inputData.commandCombination._22b && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d22B_HAMMER) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d22B_HAMMER, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._22b,  3, ACTION_d22B_HAMMER))
 			return true;
-		}
-		if (this->inputData.commandCombination._22c && (
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_d22C_HAMMER) ||
-			!this->skillCancelsUsed[0]
-		)) {
-			this->skillCancelCount++;
-			this->skillCancelsUsed[0] = true;
-			this->renderInfos.zRotation = 0.0;
-			this->eventSkillUse();
-			this->useSkill(ACTION_d22C_HAMMER, this->boxData.sequenceData->moveLock);
+		if (this->_useSkill(this->inputData.commandCombination._22c,  3, ACTION_d22C_HAMMER))
 			return true;
-		}
 	}
 	return false;
 }
@@ -3023,17 +2888,21 @@ bool Tewi::_canUseCard(int id)
 {
 	if (id < 100)
 		return true;
+
 	if (id == 100)
 		return true;
-	if (id == 101 && this->isGrounded())
+	if (id == 101)
 		return true;
 	if (id == 102 && this->isGrounded())
 		return true;
 	if (id == 103)
 		return true;
+
 	if (id == 200 && this->isGrounded())
 		return true;
 	if (id == 201)
+		return true;
+	if (id == 210 && this->isGrounded())
 		return true;
 	return false;
 }

@@ -21,10 +21,10 @@ void SpinningSmoke::update()
 	this->unknown37C += 0.1;
 	this->position.x = this->direction * (this->customData[1] + 50.0) * cos(this->customData[0] * M_PI / 180) + this->parentPlayerB->position.x;
 	this->position.y = (this->customData[1] + 50.0) * sin(this->customData[0] * M_PI / 180) * 0.25 + this->parentPlayerB->position.y + this->unknown37C;
-	if (*this->unknown36C == 0) {
+	if (this->unknown36C == 0) {
 		if (this->renderInfos.color.a >= 0xF6){
 			this->renderInfos.color.a = 0xFF;
-			*this->unknown36C = 1;
+			this->unknown36C = 1;
 		} else
 			this->renderInfos.color.a += 10;
 	} else {
@@ -37,7 +37,7 @@ void SpinningSmoke::update()
 
 bool SpinningSmoke::initializeAction()
 {
-	*this->unknown36C = 0;
+	this->unknown36C = 0;
 	this->renderInfos.color.a = 0;
 	return true;
 }

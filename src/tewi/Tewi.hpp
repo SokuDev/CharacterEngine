@@ -105,6 +105,7 @@ private:
 	bool _useSkillCard(int id);
 	bool _useSpellCard(int id);
 
+	bool _useSkill(bool input, unsigned char id, unsigned short action);
 	bool _tryPickUpHammer();
 	bool _canPickUpHammer();
 	bool _checkDashSlide();
@@ -183,8 +184,34 @@ public:
 		ACTION_jd22B_HAMMER =                    530,
 		ACTION_jd22C_HAMMER =                    531,
 
+		// ACTION_a1_623B =                         500,
+		// ACTION_a1_623C =                         501,
+		// ACTION_ja1_623B =                        502,
+		// ACTION_ja1_623C =                        503,
+		// ACTION_a1_623B_HAMMER =                  504,
+		// ACTION_a1_623C_HAMMER =                  505,
+		// ACTION_ja1_623B_HAMMER =                 506,
+		// ACTION_ja1_623C_HAMMER =                 507,
+		// ACTION_a1_236B =                         508,
+		// ACTION_a1_236C =                         509,
+		// ACTION_a1_236B_HAMMER =                  512,
+		// ACTION_a1_236C_HAMMER =                  513,
+		ACTION_a1_214B =                         548,
+		ACTION_a1_214C =                         549,
+		ACTION_a1_214B_HAMMER =                  552,
+		ACTION_a1_214C_HAMMER =                  553,
+		// ACTION_a1_22B =                          524,
+		// ACTION_a1_22C =                          525,
+		// ACTION_ja1_22B =                         526,
+		// ACTION_ja1_22C =                         527,
+		// ACTION_a1_22B_HAMMER =                   528,
+		// ACTION_a1_22C_HAMMER =                   529,
+		// ACTION_ja1_22B_HAMMER =                  530,
+		// ACTION_ja1_22C_HAMMER =                  531,
+
 		ACTION_USING_SC_ID_200_HAMMER =          620,
 		ACTION_USING_SC_ID_201_HAMMER =          621,
+		ACTION_USING_SC_ID_210_HAMMER =          630,
 		ACTION_USING_SC_ID_201_HAMMER_AIR =      671,
 
 		ACTION_STAND_PICKUP_HAMMER_FROM_AIR =    420,
@@ -206,7 +233,6 @@ public:
 
 	SokuLib::v2::GameObject *getHammer() const;
 
-	static char hookBuffer;
 	static void hook();
 	static void unhook();
 };

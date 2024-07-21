@@ -85,43 +85,50 @@ void Hammer::update()
 			this->position.x = 40;
 			this->speed.x = -this->speed.x * 0.8f;
 			this->speed.y = this->speed.y * 0.8f;
-		} else {
+		} else if (!this->unknown360) {
 			this->position.x = 0;
 			this->speed.x = 0;
 			this->speed.y = 0;
 			this->nextSequence();
-		}
+			this->renderInfos.zRotation = this->direction * 90;
+		} else
+			this->position.x = 40;
 	}
 	if (this->position.x >= 1240 && this->speed.x >= 0) {
 		if (this->customData[3] == 0 && this->speed.x != 0) {
 			this->position.x = 1240;
 			this->speed.x = -this->speed.x * 0.8f;
 			this->speed.y = this->speed.y * 0.8f;
-		} else {
+		} else if (!this->unknown360) {
 			this->position.x = 1280;
 			this->speed.x = 0;
 			this->speed.y = 0;
 			this->nextSequence();
-		}
+			this->renderInfos.zRotation = this->direction * -90;
+		} else
+			this->position.x = 1240;
 	}
 	if (this->position.y <= this->getGroundHeight() && this->speed.y < 0) {
-		if (this->customData[2] == 0) {
-			this->nextSequence();
-			this->speed.x = 0;
-			this->speed.y = 0;
-			this->position.y = 0;
-		} else {
+		if (this->customData[2] != 0) {
 			this->customData[2]--;
 			this->position.y = this->getGroundHeight();
 			this->speed.x = this->speed.x * 0.8f;
 			this->speed.y = -this->speed.y * 0.8f;
-		}
+		} else if (!this->unknown360) {
+			this->nextSequence();
+			this->position.y = this->getGroundHeight();
+			this->speed.x = 0;
+			this->speed.y = 0;
+		} else
+			this->position.y = this->getGroundHeight();
 	}
 	if (this->position.y >= 800 && this->speed.y > 0) {
 		this->position.y = 800;
 		this->speed.x = this->speed.x * 0.8f;
 		this->speed.y = -this->speed.y * 0.8f;
 	}
+	if (this->unknown360)
+		this->unknown360--;
 }
 
 bool Hammer::initializeAction()
@@ -129,6 +136,7 @@ bool Hammer::initializeAction()
 	this->HP = 500;
 	this->gravity.y = 1;
 	this->collisionLimit = 1;
+	this->unknown360 = 4;
 	this->speed.x = cos(this->customData[0] * M_PI / 180) * this->customData[1];
 	this->speed.y = sin(this->customData[0] * M_PI / 180) * this->customData[1];
 	return true;

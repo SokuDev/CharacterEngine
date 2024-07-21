@@ -52,6 +52,16 @@ add_library(
 	src/tewi/TaCRabbit.hpp
 	src/tewi/TrapHole.cpp
 	src/tewi/TrapHole.hpp
+	src/tewi/UnexpectedAssistanceObject/Reimu.cpp
+	src/tewi/UnexpectedAssistanceObject/Reimu.hpp
+	src/tewi/UnexpectedAssistanceObject/Marisa.cpp
+	src/tewi/UnexpectedAssistanceObject/Marisa.hpp
+	src/tewi/UnexpectedAssistanceObject/Sakuya.cpp
+	src/tewi/UnexpectedAssistanceObject/Sakuya.hpp
+	src/tewi/UnexpectedAssistanceObject/Alice.cpp
+	src/tewi/UnexpectedAssistanceObject/Alice.hpp
+	src/tewi/UnexpectedAssistanceObject/Patchouli.cpp
+	src/tewi/UnexpectedAssistanceObject/Patchouli.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG> OBJECT_MEMORY_SIZE=8 _USE_MATH_DEFINES)

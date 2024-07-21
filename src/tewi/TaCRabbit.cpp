@@ -2,7 +2,7 @@
 // Created by PinkySmile on 09/07/24.
 //
 
-#include <valarray>
+#include <cmath>
 #include "TaCRabbit.hpp"
 #include "Tewi.hpp"
 
