@@ -62,6 +62,8 @@ add_library(
 	src/tewi/UnexpectedAssistanceObject/Alice.hpp
 	src/tewi/UnexpectedAssistanceObject/Patchouli.cpp
 	src/tewi/UnexpectedAssistanceObject/Patchouli.hpp
+	src/tewi/Bottle.cpp
+	src/tewi/Bottle.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG> OBJECT_MEMORY_SIZE=8 _USE_MATH_DEFINES)

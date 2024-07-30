@@ -12,6 +12,8 @@ namespace UnexpectedAssistance
 		float params[3];
 		auto FUN_004b0e40 = (void (__thiscall *)(SokuLib::v2::GameObject *, int, int, int, int, short, short, short))0x4B0E40;
 
+		if (this->parentPlayerB->timeStop)
+			return;
 		switch(this->frameState.sequenceId) {
 		case 0:
 			if (this->frameState.currentFrame % 5 == 0) {

@@ -47,7 +47,6 @@ namespace UnexpectedAssistance
 			}
 			if (
 				(std::pow(this->position.x - this->gameData.opponent->position.x, 2) < 2500 && std::pow(this->position.y - this->gameData.opponent->position.y, 2) < 10000) ||
-				(std::pow(this->position.x - this->parentPlayerB->position.x, 2) < 2500 && std::pow(this->position.y - this->parentPlayerB->position.y, 2) < 10000) ||
 				this->position.y < this->getGroundHeight() ||
 				this->HP < 0
 		    	) {
@@ -144,7 +143,6 @@ namespace UnexpectedAssistance
 			}
 			if (
 				(std::pow(this->position.x - this->gameData.opponent->position.x, 2) <= 10000 &&std::pow(this->position.y - this->gameData.opponent->position.y, 2) <= 10000) ||
-				(std::pow(this->position.x - this->parentPlayerB->position.x, 2) <= 10000 &&std::pow(this->position.y - this->parentPlayerB->position.y, 2) <= 10000) ||
 				this->HP < 0
 			) {
 				SokuLib::camera.shake = 10;
@@ -169,7 +167,6 @@ namespace UnexpectedAssistance
 			if (
 				this->speed.y + this->position.y <= this->getGroundHeight() + this->unknown380 ||
 				(std::pow(this->position.x - this->gameData.opponent->position.x, 2) < 2500 && std::pow(this->position.y - this->gameData.opponent->position.y, 2) < 10000) ||
-				(std::pow(this->position.x - this->parentPlayerB->position.x, 2) < 2500 && std::pow(this->position.y - this->parentPlayerB->position.y, 2) < 10000) ||
 				this->position.y < this->getGroundHeight() + this->unknown380 ||
 				this->HP < 0
 			) {
@@ -225,17 +222,8 @@ namespace UnexpectedAssistance
 			}
 			if (this->unknown36E == 1) {
 				float diff = this->direction * this->gameData.opponent->position.x - this->position.x;
-				float diff2 = this->direction * this->parentPlayerB->position.x - this->position.x;
 
 				if (diff <= 200 && diff >= 0 && this->gameData.opponent->position.y <= this->position.y) {
-					this->setSequence(8);
-					this->createEffect(1, this->position.x, this->position.y, this->direction, 1);
-					SokuLib::playSEWaveBuffer(SokuLib::SFX_SLAP_HIT);
-					this->speed.x += 3.0;
-					this->speed.y = 8.0;
-					return;
-				}
-				if (diff2 <= 200 && diff2 >= 0 && this->parentPlayerB->position.y <= this->position.y) {
 					this->setSequence(8);
 					this->createEffect(1, this->position.x, this->position.y, this->direction, 1);
 					SokuLib::playSEWaveBuffer(SokuLib::SFX_SLAP_HIT);
@@ -246,16 +234,8 @@ namespace UnexpectedAssistance
 			}
 			if (this->unknown36E == 2) {
 				float diff = this->direction * this->gameData.opponent->position.x - this->position.x;
-				float diff2 = this->direction * this->parentPlayerB->position.x - this->position.x;
 
 				if (diff <= 200 && diff > 0 && this->position.y > this->gameData.opponent->position.y) {
-					this->unknown36C = 1;
-					this->setSequence(7);
-					this->speed.x = 4.0;
-					this->speed.y = 15.0;
-					return;
-				}
-				if (diff2 <= 200 && diff2 > 0 && this->position.y > this->parentPlayerB->position.y) {
 					this->unknown36C = 1;
 					this->setSequence(7);
 					this->speed.x = 4.0;
@@ -265,7 +245,6 @@ namespace UnexpectedAssistance
 			}
 			if (
 				(std::pow(this->position.x - this->gameData.opponent->position.x, 2) <= 2500 && std::pow(this->position.y - this->gameData.opponent->position.y, 2) <= 10000) ||
-				(std::pow(this->position.x - this->parentPlayerB->position.x, 2) <= 2500 && std::pow(this->position.y - this->parentPlayerB->position.y, 2) <= 10000) ||
 				this->position.y < this->getGroundHeight() + this->unknown380 ||
 				this->HP < 0
 			) {

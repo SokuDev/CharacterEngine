@@ -13,17 +13,19 @@ void Hammer::update()
 	if (this->frameState.sequenceId == 8) {
 		if (this->checkTurnIntoCrystals(false, 1, 5)) {
 			this->setSequence(0);
+			this->gravity.y = 1;
 			this->customData[3] = 0;
 			this->customData[2] = 1;
 			this->skillIndex = -1;
+			this->collisionLimit = 0;
 			return;
 		}
 		if (this->customData[3] == 0) {
 			this->renderInfos.zRotation = fmod(this->renderInfos.zRotation + 30, 360);
 			this->position += this->speed;
 		}
-		this->speed.x = cos(this->customData[0] * M_PI / 180) * this->customData[1];
-		this->speed.y = sin(this->customData[0] * M_PI / 180) * this->customData[1];
+		this->speed.x = std::cos(this->customData[0] * M_PI / 180) * this->customData[1];
+		this->speed.y = std::sin(this->customData[0] * M_PI / 180) * this->customData[1];
 		if (this->customData[4] == 0 && std::pow(this->parentPlayerB->position.x - this->position.x, 2) + std::pow(this->parentPlayerB->position.y + 75 - this->position.y, 2) < 10000) {
 			short action;
 
@@ -89,7 +91,7 @@ void Hammer::update()
 			this->position.x = 0;
 			this->speed.x = 0;
 			this->speed.y = 0;
-			this->nextSequence();
+			this->setSequence(1);
 			this->renderInfos.zRotation = this->direction * 90;
 		} else
 			this->position.x = 40;
@@ -103,7 +105,7 @@ void Hammer::update()
 			this->position.x = 1280;
 			this->speed.x = 0;
 			this->speed.y = 0;
-			this->nextSequence();
+			this->setSequence(1);
 			this->renderInfos.zRotation = this->direction * -90;
 		} else
 			this->position.x = 1240;
@@ -115,7 +117,7 @@ void Hammer::update()
 			this->speed.x = this->speed.x * 0.8f;
 			this->speed.y = -this->speed.y * 0.8f;
 		} else if (!this->unknown360) {
-			this->nextSequence();
+			this->setSequence(1);
 			this->position.y = this->getGroundHeight();
 			this->speed.x = 0;
 			this->speed.y = 0;
@@ -137,7 +139,7 @@ bool Hammer::initializeAction()
 	this->gravity.y = 1;
 	this->collisionLimit = 1;
 	this->unknown360 = 4;
-	this->speed.x = cos(this->customData[0] * M_PI / 180) * this->customData[1];
-	this->speed.y = sin(this->customData[0] * M_PI / 180) * this->customData[1];
+	this->speed.x = std::cos(this->customData[0] * M_PI / 180) * this->customData[1];
+	this->speed.y = std::sin(this->customData[0] * M_PI / 180) * this->customData[1];
 	return true;
 }

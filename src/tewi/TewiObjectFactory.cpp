@@ -16,6 +16,7 @@
 #include "UnexpectedAssistanceObject/Sakuya.hpp"
 #include "UnexpectedAssistanceObject/Alice.hpp"
 #include "UnexpectedAssistanceObject/Patchouli.hpp"
+#include "Bottle.hpp"
 
 SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner, short action)
 {
@@ -25,6 +26,7 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 	case 800:
 		return new Hammer();
 	case 801:
+	case 806:
 		return new AnglableObject({0, 5});
 	case 802:
 	case 805:
@@ -33,6 +35,8 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 		return new TrapHole();
 	case 804:
 		return new TaCRabbit();
+	case 807:
+		return new Bottle();
 	case 810:
 		return new UnexpectedAssistance::Reimu();
 	case 811:

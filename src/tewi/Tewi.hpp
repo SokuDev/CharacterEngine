@@ -11,8 +11,13 @@
 
 class Tewi : public SokuLib::v2::Player {
 private:
+	// Stuff accessed from assembly
+	bool _revive = false;
+
 	SokuLib::v2::GameObject *_hammer = nullptr;
 	unsigned _hammerPickTimer = 0;
+	SokuLib::Vector2f _oldSpeed;
+	SokuLib::v2::GameObject *_tmpObject = nullptr;
 
 	static constexpr float HAMMER_BACKDASH_DECEL = 1.5;
 	static constexpr float HAMMER_BACKDASH_IMPULSE = -12.75;
@@ -211,8 +216,18 @@ public:
 
 		ACTION_USING_SC_ID_200_HAMMER =          620,
 		ACTION_USING_SC_ID_201_HAMMER =          621,
+		ACTION_USING_SC_ID_202_HAMMER =          622,
+		ACTION_USING_SC_ID_203_HAMMER =          623,
+		ACTION_USING_SC_ID_204_HAMMER =          624,
+		ACTION_USING_SC_ID_205_HAMMER =          625,
+		ACTION_USING_SC_ID_206_HAMMER =          626,
+		ACTION_USING_SC_ID_207_HAMMER =          627,
+		ACTION_USING_SC_ID_208_HAMMER =          628,
+		ACTION_USING_SC_ID_209_HAMMER =          629,
 		ACTION_USING_SC_ID_210_HAMMER =          630,
+		ACTION_USING_SC_ID_211_HAMMER =          631,
 		ACTION_USING_SC_ID_201_HAMMER_AIR =      671,
+		ACTION_USING_SC_ID_208_HAMMER_AIR =      678,
 
 		ACTION_STAND_PICKUP_HAMMER_FROM_AIR =    420,
 		ACTION_STAND_PICKUP_HAMMER_FROM_GROUND = 421,
