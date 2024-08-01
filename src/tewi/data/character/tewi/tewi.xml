@@ -3539,63 +3539,63 @@
 		</frame>
 	</move>
 	<move id="89" index="1" loop="0" movelock="0" actionlock="0">
-		<frame image="hitAir000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="60" texheight="60" xoffset="50" yoffset="120" duration="3" rendergroup="0">
+		<frame image="hitAir000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="60" texheight="60" xoffset="50" yoffset="140" duration="3" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<airborne/>
 				<fflag24LOOP_ANIMATION/>
 			</traits>
 			<collision>
-				<box left="-20" up="-108" right="20" down="-20"/>
+				<box left="-20" up="-128" right="20" down="-40"/>
 			</collision>
 			<hit>
-				<box left="-31" up="-106" right="32" down="-13"/>
+				<box left="-31" up="-126" right="32" down="-33"/>
 			</hit>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
-		<frame image="hitAir001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="74" texheight="67" xoffset="79" yoffset="141" duration="3" rendergroup="0">
+		<frame image="hitAir001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="74" texheight="67" xoffset="79" yoffset="181" duration="3" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<airborne/>
 				<fflag24LOOP_ANIMATION/>
 			</traits>
 			<collision>
-				<box left="-20" up="-108" right="20" down="-20"/>
+				<box left="-20" up="-148" right="20" down="-60"/>
 			</collision>
 			<hit>
-				<box left="-65" up="-126" right="-9" down="-63"/>
-				<box left="-45" up="-101" right="14" down="-43"/>
-				<box left="-18" up="-86" right="46" down="-19"/>
+				<box left="-65" up="-166" right="-9" down="-103"/>
+				<box left="-45" up="-141" right="14" down="-83"/>
+				<box left="-18" up="-126" right="46" down="-59"/>
 			</hit>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
-		<frame image="down002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="85" texheight="37" xoffset="100" yoffset="108" duration="3" rendergroup="0">
+		<frame image="down002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="85" texheight="37" xoffset="100" yoffset="148" duration="3" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<airborne/>
 				<fflag24LOOP_ANIMATION/>
 			</traits>
 			<collision>
-				<box left="-20" up="-108" right="20" down="-20"/>
+				<box left="-20" up="-148" right="20" down="-60"/>
 			</collision>
 			<hit>
-				<box left="-74" up="-94" right="-27" down="-34"/>
-				<box left="-33" up="-101" right="17" down="-45"/>
-				<box left="4" up="-92" right="57" down="-34"/>
+				<box left="-74" up="-134" right="-27" down="-74"/>
+				<box left="-33" up="-141" right="17" down="-85"/>
+				<box left="4" up="-132" right="57" down="-74"/>
 			</hit>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 	</move>
 	<move id="89" index="2" loop="1" movelock="0" actionlock="0">
-		<frame image="down002.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="85" texheight="37" xoffset="100" yoffset="108" duration="3" rendergroup="0">
+		<frame image="down002.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="85" texheight="37" xoffset="100" yoffset="148" duration="3" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<airborne/>
 				<fflag24LOOP_ANIMATION/>
 			</traits>
 			<collision>
-				<box left="-20" up="-108" right="20" down="-20"/>
+				<box left="-20" up="-148" right="20" down="-60"/>
 			</collision>
 			<hit>
-				<box left="-74" up="-94" right="-27" down="-34"/>
-				<box left="-33" up="-101" right="17" down="-45"/>
-				<box left="4" up="-92" right="57" down="-34"/>
+				<box left="-74" up="-134" right="-27" down="-74"/>
+				<box left="-33" up="-141" right="17" down="-85"/>
+				<box left="4" up="-132" right="57" down="-74"/>
 			</hit>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
