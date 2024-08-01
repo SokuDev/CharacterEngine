@@ -25,6 +25,16 @@ public:
 	bool initializeAction() override;
 	GameObject* createObject(short action, float x, float y, SokuLib::Direction direction, char layer, float *extraData, unsigned int extraDataSize) override;
 	GameObject* createChild(short action, float x, float y, SokuLib::Direction direction, char layer, float *extraData, unsigned int extraDataSize) override;
+
+	template<size_t size>
+	SokuLib::v2::GameObject *createObject(short action, float x, float y, SokuLib::Direction direction, char layer, float (&extraData)[size]) {
+		// Mimics 0x46EB30
+		return this->createObject(action, x, y, direction, layer, extraData, size);
+	}
+	SokuLib::v2::GameObject *createObject(short action, float x, float y, SokuLib::Direction direction, char layer) {
+		// Mimics 0x46EB30
+		return this->createObject(action, x, y, direction, layer, nullptr, 0);
+	}
 };
 
 
