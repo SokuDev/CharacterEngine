@@ -10,7 +10,44 @@ void Hammer::update()
 {
 	if (this->parentPlayerB->timeStop)
 		return;
-	if (this->frameState.sequenceId == 8) {
+	if (this->frameState.sequenceId == 10) {
+		this->renderInfos.zRotation = this->customData[1];
+		if (this->renderInfos.color.a < 25)
+			this->lifetime = 0;
+		else
+			this->renderInfos.color.a -= 25;
+	} else if (this->frameState.sequenceId == 9) {
+		if (
+			(this->position.x <= SokuLib::camera.leftEdge && this->speed.x <= 0) ||
+			(this->position.x >= SokuLib::camera.rightEdge && this->speed.x >= 0)
+		) {
+			this->speed.x = -this->speed.x;
+			this->collisionLimit = 1;
+			this->collisionType = COLLISION_TYPE_NONE;
+			this->parentPlayerB->playSFX(1);
+		}
+		if (this->position.y <= this->getGroundHeight() && this->speed.y < 0) {
+			this->speed.y = -this->speed.y;
+			this->parentPlayerB->playSFX(1);
+		}
+		if (this->position.y >= SokuLib::camera.topEdge + 150 && this->speed.y >= 0) {
+			this->collisionLimit = 0;
+			this->customData[3] = 0;
+			this->customData[2] = 0;
+			this->speed.x = 0;
+			this->speed.y = 0;
+			this->position.x = this->parentPlayerB->position.x;
+			this->gravity.y = 0.25;
+			this->setSequence(7);
+		}
+
+		float params[2] = {370, this->renderInfos.zRotation};
+
+		this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1, params);
+		this->position += this->speed;
+		this->renderInfos.zRotation = fmod(this->renderInfos.zRotation + 30, 360);
+		this->parentPlayerB->spellBgTimer = 10;
+	} else if (this->frameState.sequenceId == 8) {
 		if (this->checkTurnIntoCrystals(false, 1, 5)) {
 			this->setSequence(0);
 			this->gravity.y = 1;
@@ -57,6 +94,7 @@ void Hammer::update()
 		if (this->collisionLimit) {
 			if (this->HP <= 0) {
 				this->collisionLimit = 0;
+				this->customData[3] = 0;
 				this->customData[2] = 0;
 				this->speed.y = 7;
 				this->speed.x = std::copysign(2, -this->speed.x);
@@ -135,6 +173,10 @@ void Hammer::update()
 
 bool Hammer::initializeAction()
 {
+	if (this->customData[0] >= 360) {
+		this->setSequence(this->customData[0] - 360);
+		return true;
+	}
 	this->HP = 500;
 	this->gravity.y = 1;
 	this->collisionLimit = 1;

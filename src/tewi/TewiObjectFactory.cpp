@@ -17,6 +17,7 @@
 #include "UnexpectedAssistanceObject/Alice.hpp"
 #include "UnexpectedAssistanceObject/Patchouli.hpp"
 #include "Bottle.hpp"
+#include "SpellTrapHole.hpp"
 
 SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner, short action)
 {
@@ -37,6 +38,8 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 		return new TaCRabbit();
 	case 807:
 		return new Bottle();
+	case 808:
+		return new SpellTrapHole();
 	case 810:
 		return new UnexpectedAssistance::Reimu();
 	case 811:

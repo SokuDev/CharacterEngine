@@ -8,6 +8,7 @@
 #define HOLE_DEPTH 100
 #define HOLE_FADE_IN 15
 #define HOLE_FADE_OUT 30
+#define STAY_TIME(lvl) (lvl) * 2 + 10
 
 #define convColor(c) ((((c).a & 1) << 15) | (((c).r >> 3) << 10) | (((c).g >> 3) << 5) | (((c).b >> 3) << 0))
 #define frontHole(t) ((SokuLib::v2::GameObject **)&t->data[0])
@@ -58,7 +59,7 @@ void TrapHole::update()
 		this->renderInfos.scale.x = this->frameState.currentFrame / (float)HOLE_FADE_IN;
 		this->renderInfos.scale.y = this->frameState.currentFrame / (float)HOLE_FADE_IN;
 		if (this->frameState.currentFrame == HOLE_FADE_IN) {
-			this->collisionLimit = this->parentPlayerB->effectiveSkillLevel[2] * 2 + 10;
+			this->collisionLimit = STAY_TIME(this->parentPlayerB->effectiveSkillLevel[2]);
 			this->collisionType = COLLISION_TYPE_NONE;
 		}
 		for (int x = this->position.x - HOLE_RADIUS; x < this->position.x + HOLE_RADIUS; x++) {
@@ -91,10 +92,12 @@ void TrapHole::update()
 				continue;
 			SokuLib::v2::groundHeight[x] = -HOLE_DEPTH + HOLE_DEPTH * this->frameState.currentFrame / (float)HOLE_FADE_OUT;
 		}
-	} else for (int x = this->position.x - HOLE_RADIUS; x < this->position.x + HOLE_RADIUS; x++) {
-		if (x < 0 || x >= 1280)
-			continue;
-		SokuLib::v2::groundHeight[x] = -HOLE_DEPTH;
+	} else if (this->renderInfos.scale.x == 1) {
+		for (int x = this->position.x - HOLE_RADIUS; x < this->position.x + HOLE_RADIUS; x++) {
+			if (x < 0 || x >= 1280)
+				continue;
+			SokuLib::v2::groundHeight[x] = -HOLE_DEPTH;
+		}
 	}
 	if (*frontHole(this) != nullptr) {
 		(*frontHole(this))->renderInfos.scale.x = this->renderInfos.scale.x;
@@ -117,6 +120,7 @@ bool TrapHole::initializeAction()
 	}
 	if (this->customData) {
 		this->setSequence(1);
+		this->renderInfos.color.a = 0;
 		//this->prepareTexture();
 		return true;
 	}
@@ -134,7 +138,7 @@ bool TrapHole::initializeAction()
 
 	float arr[] = {1};
 
-	*frontHole(this) = this->createObject(803, this->position.x, this->position.y, this->direction, -1, arr, 1);
+	*frontHole(this) = this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1, arr);
 	this->prepareFade();
 	this->renderInfos.scale.x = 0;
 	this->renderInfos.scale.y = 0;

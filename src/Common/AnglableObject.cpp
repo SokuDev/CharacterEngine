@@ -12,6 +12,8 @@ AnglableObject::AnglableObject(std::pair<char, char> crystalsSpawn)
 
 void AnglableObject::update()
 {
+	if (this->parentPlayerB->timeStop)
+		return;
 	this->position += this->speed;
 	this->advanceFrame();
 	if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 0) {

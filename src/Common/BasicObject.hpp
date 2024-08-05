@@ -35,6 +35,16 @@ public:
 		// Mimics 0x46EB30
 		return this->createObject(action, x, y, direction, layer, nullptr, 0);
 	}
+
+	template<size_t size>
+	SokuLib::v2::GameObject *createChild(short action, float x, float y, SokuLib::Direction direction, char layer, float (&extraData)[size]) {
+		// Mimics 0x46EB30
+		return this->createChild(action, x, y, direction, layer, extraData, size);
+	}
+	SokuLib::v2::GameObject *createChild(short action, float x, float y, SokuLib::Direction direction, char layer) {
+		// Mimics 0x46EB30
+		return this->createChild(action, x, y, direction, layer, nullptr, 0);
+	}
 };
 
 
