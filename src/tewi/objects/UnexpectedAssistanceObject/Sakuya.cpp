@@ -167,7 +167,7 @@ namespace UnexpectedAssistance
 		this->lifetime = 0;
 	}
 
-	bool Sakuya::initializeAction()
+	void Sakuya::initializeAction()
 	{
 		float params[3];
 
@@ -227,6 +227,5 @@ namespace UnexpectedAssistance
 		}
 		if (this->frameState.sequenceId == 7)
 			this->unknown378 = 0.4;
-		return true;
 	}
 }

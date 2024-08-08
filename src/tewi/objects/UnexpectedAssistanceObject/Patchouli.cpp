@@ -232,13 +232,13 @@ namespace UnexpectedAssistance
 			this->lifetime = 0;
 	}
 
-	bool Patchouli::initializeAction()
+	void Patchouli::initializeAction()
 	{
 		if (!this->customData) {
 			this->setSequence(8);
 			this->position.x = 640;
 			this->position.y = 800;
-			return true;
+			return;
 		}
 		this->renderInfos.zRotation = this->customData[0];
 		this->unknown360 = 1;
@@ -264,6 +264,5 @@ namespace UnexpectedAssistance
 			this->renderInfos.scale.x = SokuLib::rand(125) * 0.01 + 0.75;
 			this->renderInfos.scale.y = this->renderInfos.scale.x;
 		}
-		return true;
 	}
 }

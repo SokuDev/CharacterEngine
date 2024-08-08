@@ -60,7 +60,7 @@ namespace UnexpectedAssistance
 		}
 	}
 
-	bool Reimu::initializeAction()
+	void Reimu::initializeAction()
 	{
 		unsigned total = 0;
 		float temp = 0;
@@ -81,6 +81,5 @@ namespace UnexpectedAssistance
 		this->speed.x = (this->gameData.opponent->position.x - this->position.x) / total;
 		this->gravity.y = 1;
 		this->collisionLimit = 3;
-		return true;
 	}
 }

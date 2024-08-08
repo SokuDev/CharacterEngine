@@ -174,8 +174,12 @@ public:
 		ACTION_jd623C_HAMMER =                   507,
 		ACTION_d236B =                           508,
 		ACTION_d236C =                           509,
+		ACTION_jd236B =                          510,
+		ACTION_jd236C =                          511,
 		ACTION_d236B_HAMMER =                    512,
 		ACTION_d236C_HAMMER =                    513,
+		ACTION_jd236B_HAMMER =                   514,
+		ACTION_jd236C_HAMMER =                   515,
 		ACTION_d214B =                           516,
 		ACTION_d214C =                           517,
 		ACTION_d214B_HAMMER =                    520,
@@ -197,10 +201,10 @@ public:
 		// ACTION_a1_623C_HAMMER =                  505,
 		// ACTION_ja1_623B_HAMMER =                 506,
 		// ACTION_ja1_623C_HAMMER =                 507,
-		// ACTION_a1_236B =                         508,
-		// ACTION_a1_236C =                         509,
-		// ACTION_a1_236B_HAMMER =                  512,
-		// ACTION_a1_236C_HAMMER =                  513,
+		ACTION_a1_236B =                         540,
+		ACTION_a1_236C =                         541,
+		ACTION_a1_236B_HAMMER =                  544,
+		ACTION_a1_236C_HAMMER =                  545,
 		ACTION_a1_214B =                         548,
 		ACTION_a1_214C =                         549,
 		ACTION_a1_214B_HAMMER =                  552,
@@ -240,7 +244,7 @@ public:
 	~Tewi() override = default;
 
 	void update() override;
-	bool initializeAction() override;
+	void initializeAction() override;
 	void handleInputs() override;
 	void VUnknown58() override;
 	void VUnknown5C() override;

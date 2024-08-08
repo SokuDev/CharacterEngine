@@ -32,8 +32,7 @@ void BlockingObject::update()
 	}
 }
 
-bool BlockingObject::initializeAction()
+void BlockingObject::initializeAction()
 {
 	this->renderInfos.yRotation = 60;
-	return false;
 }

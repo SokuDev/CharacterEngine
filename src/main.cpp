@@ -241,10 +241,14 @@ void selectCommon(SokuLib::Select *This)
 		hooked = false;
 		Tewi::unhook();
 	}
-	if (This->leftKeys && This->leftKeys->input.spellcard == 1)
-		SokuLib::leftChar = SokuLib::CHARACTER_TEWI;
-	if (This->rightKeys && This->rightKeys->input.spellcard == 1)
-		SokuLib::rightChar = SokuLib::CHARACTER_TEWI;
+	if (This->leftKeys) {
+		if (This->leftKeys->input.spellcard == 1 || (This->leftKeys->input.a == 1 && This->leftKeys->input.verticalAxis > 0))
+			SokuLib::leftChar = SokuLib::CHARACTER_TEWI;
+	}
+	if (This->rightKeys) {
+		if (This->rightKeys->input.spellcard == 1 || (This->rightKeys->input.a == 1 && This->rightKeys->input.verticalAxis > 0))
+			SokuLib::rightChar = SokuLib::CHARACTER_TEWI;
+	}
 }
 
 static int __fastcall SelectOnProcess(SokuLib::Select *This)
@@ -335,7 +339,6 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 	freopen_s(&_, "CONOUT$", "w", stdout);
 	freopen_s(&_, "CONOUT$", "w", stderr);
 #endif
-	file = fopen("character_log.log", "a+");
 
 	auto gr = LoadLibraryA("giuroll");
 

@@ -4,7 +4,7 @@
 
 #include <cmath>
 #include "Hammer.hpp"
-#include "Tewi.hpp"
+#include "../Tewi.hpp"
 
 void Hammer::update()
 {
@@ -123,8 +123,8 @@ void Hammer::update()
 	if (this->position.x <= 40 && this->speed.x <= 0) {
 		if (this->customData[3] == 0 && this->speed.x != 0) {
 			this->position.x = 40;
-			this->speed.x = -this->speed.x * 0.8f;
-			this->speed.y = this->speed.y * 0.8f;
+			this->speed.x *= -0.8f;
+			this->speed.y *= 0.8f;
 		} else if (!this->unknown360) {
 			this->position.x = 0;
 			this->speed.x = 0;
@@ -171,11 +171,11 @@ void Hammer::update()
 		this->unknown360--;
 }
 
-bool Hammer::initializeAction()
+void Hammer::initializeAction()
 {
 	if (this->customData[0] >= 360) {
 		this->setSequence(this->customData[0] - 360);
-		return true;
+		return;
 	}
 	this->HP = 500;
 	this->gravity.y = 1;
@@ -183,5 +183,4 @@ bool Hammer::initializeAction()
 	this->unknown360 = 4;
 	this->speed.x = std::cos(this->customData[0] * M_PI / 180) * this->customData[1];
 	this->speed.y = std::sin(this->customData[0] * M_PI / 180) * this->customData[1];
-	return true;
 }

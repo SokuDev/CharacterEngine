@@ -13,7 +13,7 @@ public:
 	~TrapHole();
 	void render() override;
 	void update() override;
-	bool initializeAction() override;
+	void initializeAction() override;
 
 	void prepareFade();
 	void prepareTexture();

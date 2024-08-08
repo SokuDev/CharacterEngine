@@ -13,7 +13,7 @@ namespace UnexpectedAssistance
 	class Alice : public BasicObject {
 	public:
 		void update() override;
-		bool initializeAction() override;
+		void initializeAction() override;
 	};
 }
 

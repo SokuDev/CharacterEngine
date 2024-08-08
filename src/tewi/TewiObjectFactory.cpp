@@ -4,20 +4,25 @@
 
 #include "TewiObjectFactory.hpp"
 #include "BasicObject.hpp"
-#include "Hammer.hpp"
 #include "AnglableObject.hpp"
 #include "RotatingBlockingObject.hpp"
-#include "SpinningSmoke.hpp"
-#include "Rabbit.hpp"
-#include "TrapHole.hpp"
-#include "TaCRabbit.hpp"
-#include "UnexpectedAssistanceObject/Reimu.hpp"
-#include "UnexpectedAssistanceObject/Marisa.hpp"
-#include "UnexpectedAssistanceObject/Sakuya.hpp"
-#include "UnexpectedAssistanceObject/Alice.hpp"
-#include "UnexpectedAssistanceObject/Patchouli.hpp"
-#include "Bottle.hpp"
-#include "SpellTrapHole.hpp"
+#include "objects/Hammer.hpp"
+#include "objects/SpinningSmoke.hpp"
+#include "objects/Rabbit.hpp"
+#include "objects/TrapHole.hpp"
+#include "objects/TaCRabbit.hpp"
+#include "objects/UnexpectedAssistanceObject/Reimu.hpp"
+#include "objects/UnexpectedAssistanceObject/Marisa.hpp"
+#include "objects/UnexpectedAssistanceObject/Sakuya.hpp"
+#include "objects/UnexpectedAssistanceObject/Alice.hpp"
+#include "objects/UnexpectedAssistanceObject/Patchouli.hpp"
+#include "objects/Bottle.hpp"
+#include "objects/SpellTrapHole.hpp"
+#include "objects/RabbitOrb.hpp"
+
+#ifndef _DEBUG
+#define printf(...)
+#endif
 
 SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner, short action)
 {
@@ -40,6 +45,8 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 		return new Bottle();
 	case 808:
 		return new SpellTrapHole();
+	case 809:
+		return new RabbitOrb();
 	case 810:
 		return new UnexpectedAssistance::Reimu();
 	case 811:

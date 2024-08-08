@@ -35,9 +35,8 @@ void SpinningSmoke::update()
 	}
 }
 
-bool SpinningSmoke::initializeAction()
+void SpinningSmoke::initializeAction()
 {
 	this->unknown36C = 0;
 	this->renderInfos.color.a = 0;
-	return true;
 }

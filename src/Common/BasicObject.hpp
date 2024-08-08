@@ -22,7 +22,7 @@ public:
 	~BasicObject() override = default;
 
 	void update() override;
-	bool initializeAction() override;
+	void initializeAction() override;
 	GameObject* createObject(short action, float x, float y, SokuLib::Direction direction, char layer, float *extraData, unsigned int extraDataSize) override;
 	GameObject* createChild(short action, float x, float y, SokuLib::Direction direction, char layer, float *extraData, unsigned int extraDataSize) override;
 

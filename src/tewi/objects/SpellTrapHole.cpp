@@ -68,6 +68,8 @@ void SpellTrapHole::update()
 		return;
 	}
 	if (this->frameState.sequenceId == 3) {
+		if (this->parentPlayerB->timeStop)
+			return;
 		this->advanceFrame();
 		this->position += this->speed;
 		if (this->position.x < -140 || this->position.x > 1420 || this->position.y > 1000)
@@ -105,6 +107,8 @@ void SpellTrapHole::update()
 				SokuLib::v2::groundHeight[x] = HOLE_DEPTH * (f - HOLE_FADE_IN_OFFSET) / -(float)(HOLE_FADE_IN - HOLE_FADE_IN_OFFSET);
 		}
 	} else if (this->collisionType == COLLISION_TYPE_HIT || this->collisionType == COLLISION_TYPE_BLOCKED) {
+		if (this->parentPlayerB->timeStop)
+			return;
 		this->rabbitShootTimer++;
 		if (this->rabbitShot < NB_RABBIT) {
 			this->collisionLimit = 2;
@@ -130,6 +134,8 @@ void SpellTrapHole::update()
 	if (this->frameState.poseFrame == 0 && this->collisionLimit)
 		this->collisionLimit--;
 	if (!this->collisionLimit) {
+		if (this->parentPlayerB->timeStop)
+			return;
 		if (this->frameState.currentFrame > HOLE_FADE_OUT)
 			this->frameState.currentFrame = 0;
 		if (this->frameState.currentFrame == HOLE_FADE_OUT) {
@@ -163,7 +169,7 @@ void SpellTrapHole::update()
 	}
 }
 
-bool SpellTrapHole::initializeAction()
+void SpellTrapHole::initializeAction()
 {
 	if (this->customData) {
 		this->setSequence(this->customData[2]);
@@ -183,7 +189,7 @@ bool SpellTrapHole::initializeAction()
 			this->gravity.y = 0.5;
 		}
 		//this->prepareTexture();
-		return true;
+		return;
 	}
 
 	float params[] = {0, 0, 1};
@@ -202,7 +208,6 @@ bool SpellTrapHole::initializeAction()
 			continue;
 		SokuLib::v2::groundHeight[x] = -1;
 	}
-	return true;
 }
 
 

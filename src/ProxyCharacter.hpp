@@ -83,7 +83,7 @@ public:
 		T::update();
 	}
 
-	bool initializeAction() override
+	void initializeAction() override
 	{
 		log("initializeAction()\n");
 		return T::initializeAction();

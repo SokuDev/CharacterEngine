@@ -23,8 +23,8 @@ void BasicObject::update()
 		this->lifetime = 0;
 }
 
-bool BasicObject::initializeAction()
+void BasicObject::initializeAction()
 {
 	// Init common objects
-	return ((bool (__thiscall *)(SokuLib::v2::GameObject *))0x48D000)(this);
+	((void (__thiscall *)(SokuLib::v2::GameObject *))0x48D000)(this);
 }

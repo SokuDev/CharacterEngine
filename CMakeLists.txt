@@ -29,43 +29,45 @@ add_library(
         src/log.hpp
         src/tewi/Tewi.hpp
         src/tewi/Tewi.cpp
-        src/Common/GameObjectList.hpp
 	src/tewi/TewiObjectFactory.cpp
-        src/tewi/TewiObjectFactory.hpp
+	src/tewi/TewiObjectFactory.hpp
+        src/Common/GameObjectList.hpp
 	src/Common/RotatingBlockingObject.cpp
 	src/Common/RotatingBlockingObject.hpp
 	src/Common/BlockingObject.cpp
 	src/Common/BlockingObject.hpp
-	src/tewi/Hammer.cpp
-        src/tewi/Hammer.hpp
         src/Common/BasicObject.cpp
         src/Common/BasicObject.hpp
         src/Common/Memory.cpp
         src/Common/Memory.hpp
 	src/Common/AnglableObject.cpp
 	src/Common/AnglableObject.hpp
-	src/tewi/SpinningSmoke.cpp
-	src/tewi/SpinningSmoke.hpp
-	src/tewi/Rabbit.cpp
-	src/tewi/Rabbit.hpp
-	src/tewi/TaCRabbit.cpp
-	src/tewi/TaCRabbit.hpp
-	src/tewi/TrapHole.cpp
-	src/tewi/TrapHole.hpp
-	src/tewi/UnexpectedAssistanceObject/Reimu.cpp
-	src/tewi/UnexpectedAssistanceObject/Reimu.hpp
-	src/tewi/UnexpectedAssistanceObject/Marisa.cpp
-	src/tewi/UnexpectedAssistanceObject/Marisa.hpp
-	src/tewi/UnexpectedAssistanceObject/Sakuya.cpp
-	src/tewi/UnexpectedAssistanceObject/Sakuya.hpp
-	src/tewi/UnexpectedAssistanceObject/Alice.cpp
-	src/tewi/UnexpectedAssistanceObject/Alice.hpp
-	src/tewi/UnexpectedAssistanceObject/Patchouli.cpp
-	src/tewi/UnexpectedAssistanceObject/Patchouli.hpp
-	src/tewi/Bottle.cpp
-	src/tewi/Bottle.hpp
-	src/tewi/SpellTrapHole.cpp
-	src/tewi/SpellTrapHole.hpp
+	src/tewi/objects/Hammer.cpp
+	src/tewi/objects/Hammer.hpp
+	src/tewi/objects/SpinningSmoke.cpp
+	src/tewi/objects/SpinningSmoke.hpp
+	src/tewi/objects/Rabbit.cpp
+	src/tewi/objects/Rabbit.hpp
+	src/tewi/objects/TaCRabbit.cpp
+	src/tewi/objects/TaCRabbit.hpp
+	src/tewi/objects/TrapHole.cpp
+	src/tewi/objects/TrapHole.hpp
+	src/tewi/objects/UnexpectedAssistanceObject/Reimu.cpp
+	src/tewi/objects/UnexpectedAssistanceObject/Reimu.hpp
+	src/tewi/objects/UnexpectedAssistanceObject/Marisa.cpp
+	src/tewi/objects/UnexpectedAssistanceObject/Marisa.hpp
+	src/tewi/objects/UnexpectedAssistanceObject/Sakuya.cpp
+	src/tewi/objects/UnexpectedAssistanceObject/Sakuya.hpp
+	src/tewi/objects/UnexpectedAssistanceObject/Alice.cpp
+	src/tewi/objects/UnexpectedAssistanceObject/Alice.hpp
+	src/tewi/objects/UnexpectedAssistanceObject/Patchouli.cpp
+	src/tewi/objects/UnexpectedAssistanceObject/Patchouli.hpp
+	src/tewi/objects/Bottle.cpp
+	src/tewi/objects/Bottle.hpp
+	src/tewi/objects/SpellTrapHole.cpp
+	src/tewi/objects/SpellTrapHole.hpp
+	src/tewi/objects/RabbitOrb.cpp
+	src/tewi/objects/RabbitOrb.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG> OBJECT_MEMORY_SIZE=8 _USE_MATH_DEFINES)

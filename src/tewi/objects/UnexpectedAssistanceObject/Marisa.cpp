@@ -140,7 +140,7 @@ namespace UnexpectedAssistance
 		this->parentPlayerB->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1, params);
 	}
 
-	bool Marisa::initializeAction()
+	void Marisa::initializeAction()
 	{
 		if (!this->customData) {
 			this->parentPlayerB->playSFX(0);
@@ -155,11 +155,10 @@ namespace UnexpectedAssistance
 			if (this->customData[2] == 1)
 				this->collisionLimit = 1;
 			if (this->customData[2] != 2)
-				return true;
+				return;
 			this->renderInfos.scale.x = (SokuLib::rand() % 100) * 0.01 + 1.0;
 			this->renderInfos.scale.y = this->renderInfos.scale.x;
 			this->renderInfos.zRotation = (SokuLib::rand() % 360);
 		}
-		return true;
 	}
 }

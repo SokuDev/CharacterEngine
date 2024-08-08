@@ -3,7 +3,7 @@
 //
 
 #include "Rabbit.hpp"
-#include "Tewi.hpp"
+#include "../Tewi.hpp"
 
 void Rabbit::update()
 {
@@ -48,8 +48,7 @@ void Rabbit::update()
 		}
 }
 
-bool Rabbit::initializeAction()
+void Rabbit::initializeAction()
 {
 	this->collisionLimit = 1;
-	return true;
 }

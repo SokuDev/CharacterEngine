@@ -4,7 +4,7 @@
 
 #include <cmath>
 #include "TaCRabbit.hpp"
-#include "Tewi.hpp"
+#include "../Tewi.hpp"
 
 #define T 15
 
@@ -134,12 +134,11 @@ void TaCRabbit::update()
 		}
 }
 
-bool TaCRabbit::initializeAction()
+void TaCRabbit::initializeAction()
 {
 	this->skillIndex = 3;
 	this->HP = 1;
 	this->lifetime = 2;
-	return true;
 }
 
 bool TaCRabbit::_canGrabHammer(const SokuLib::v2::GameObject *hammer) const

@@ -152,10 +152,9 @@ void Bottle::update()
 	}
 }
 
-bool Bottle::initializeAction()
+void Bottle::initializeAction()
 {
 	this->setSequence(this->customData[2]);
 	if (this->frameState.sequenceId == 3)
 		this->renderInfos.color.a = 0;
-	return true;
 }

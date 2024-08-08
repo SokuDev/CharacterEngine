@@ -106,7 +106,7 @@ void TrapHole::update()
 	}
 }
 
-bool TrapHole::initializeAction()
+void TrapHole::initializeAction()
 {
 	if (
 		this->gameData.opponent->damageLimited &&
@@ -116,13 +116,13 @@ bool TrapHole::initializeAction()
 		this->lifetime = 0;
 		*stageSprite(this) = nullptr;
 		*frontHole(this) = nullptr;
-		return true;
+		return;
 	}
 	if (this->customData) {
 		this->setSequence(1);
 		this->renderInfos.color.a = 0;
 		//this->prepareTexture();
-		return true;
+		return;
 	}
 
 	for (int x = this->position.x - HOLE_RADIUS; x < this->position.x + HOLE_RADIUS; x++) {
@@ -133,7 +133,7 @@ bool TrapHole::initializeAction()
 		this->lifetime = 0;
 		*stageSprite(this) = nullptr;
 		*frontHole(this) = nullptr;
-		return true;
+		return;
 	}
 
 	float arr[] = {1};
@@ -149,7 +149,6 @@ bool TrapHole::initializeAction()
 			continue;
 		SokuLib::v2::groundHeight[x] = -1;
 	}
-	return true;
 }
 
 

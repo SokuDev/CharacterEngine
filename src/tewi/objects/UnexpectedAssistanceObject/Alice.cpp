@@ -296,13 +296,13 @@ namespace UnexpectedAssistance
 		this->position.y = this->speed.y + this->position.y;
 	}
 
-	bool Alice::initializeAction()
+	void Alice::initializeAction()
 	{
 		float params[3];
 
 		if (!this->customData) {
 			this->setSequence(11);
-			return true;
+			return;
 		}
 		this->collisionLimit = 1;
 		this->setSequence(this->customData[2]);
@@ -327,6 +327,5 @@ namespace UnexpectedAssistance
 		}
 		if (this->frameState.sequenceId == 4)
 			this->renderInfos.zRotation = SokuLib::rand(360);
-		return true;
 	}
 }

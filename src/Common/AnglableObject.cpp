@@ -44,12 +44,11 @@ void AnglableObject::update()
 	}
 }
 
-bool AnglableObject::initializeAction()
+void AnglableObject::initializeAction()
 {
 	this->renderInfos.zRotation = -this->customData[0];
 	this->speed = {
 		this->speed.x = cos(this->customData[0] * M_PI / 180) * this->customData[1] * this->direction,
 		this->speed.y = sin(this->customData[0] * M_PI / 180) * this->customData[1]
 	};
-	return true;
 }
