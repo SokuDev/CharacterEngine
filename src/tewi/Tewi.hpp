@@ -14,6 +14,7 @@ private:
 	// Stuff accessed from assembly
 	bool _revive = false;
 
+	bool _rabbitAnimation = false;
 	SokuLib::v2::GameObject *_hammer = nullptr;
 	unsigned _hammerPickTimer = 0;
 	SokuLib::Vector2f _oldSpeed;
@@ -23,16 +24,24 @@ private:
 	static constexpr float HAMMER_BACKDASH_IMPULSE = -12.75;
 	static constexpr float BACKDASH_DECEL = 2;
 	static constexpr float BACKDASH_IMPULSE = -17.0;
+	static constexpr float BACKDASH_IMPULSE_UP = 3.5;
+	static constexpr float BACKDASH_GRAVITY = 0.75;
+	static constexpr float HAMMER_BE4_DECEL = 2.25;
+	static constexpr float HAMMER_BE4_IMPULSE = -10;
+	static constexpr float BE4_DECEL = 3;
+	static constexpr float BE4_IMPULSE = -12.5;
+	static constexpr float BE4_IMPULSE_UP = 4;
+	static constexpr float BE4_GRAVITY = 0.5;
 
 	static constexpr float HAMMER_FAR_RANGE = 105;
 	static constexpr float NO_HAMMER_FAR_RANGE = 80;
 
 	static constexpr float MAX_DASH_HOLD = 45;
 
-	static constexpr float FRONT_WALK_SPEED = 4;
-	static constexpr float BACK_WALK_SPEED = -3.5;
-	static constexpr float HAMMER_FRONT_WALK_SPEED = 7;
-	static constexpr float HAMMER_BACK_WALK_SPEED = -6;
+	static constexpr float HAMMER_FRONT_WALK_SPEED = 4;
+	static constexpr float HAMMER_BACK_WALK_SPEED = -3.5;
+	static constexpr float FRONT_WALK_SPEED = 6;
+	static constexpr float BACK_WALK_SPEED = -5.5;
 	static constexpr float FORWARD_WALK_SPEED_X = 12;
 	static constexpr float FORWARD_WALK_SPEED_Y = 10;
 	static constexpr float FORWARD_WALK_GRAVITY = 1;
@@ -61,10 +70,12 @@ private:
 
 	static constexpr float HAMMER_INITIAL_DASH_SPEED = 10;
 	static constexpr float HAMMER_TOP_DASH_SPEED = 7.5;
-	static constexpr float HAMMER_TOP_BE6_SPEED = 5.5;
+	static constexpr float HAMMER_INITIAL_BE6_SPEED = 5.5;
+	static constexpr float HAMMER_TOP_BE6_SPEED = 4.5;
 	static constexpr float INITIAL_DASH_SPEED = 15;
 	static constexpr float TOP_DASH_SPEED = 10;
-	static constexpr float TOP_BE6_SPEED = 7.5;
+	static constexpr float INITIAL_BE6_SPEED = 7;
+	static constexpr float TOP_BE6_SPEED = 5;
 	static constexpr float DASH_RECOVERY_DECEL = 1;
 
 	static constexpr float HAMMER_FLIGHT_TURN = 0.75;
@@ -225,7 +236,6 @@ public:
 		ACTION_USING_SC_ID_204_HAMMER =          624,
 		ACTION_USING_SC_ID_205_HAMMER =          625,
 		ACTION_USING_SC_ID_206_HAMMER =          626,
-		ACTION_USING_SC_ID_207_HAMMER =          627,
 		ACTION_USING_SC_ID_208_HAMMER =          628,
 		ACTION_USING_SC_ID_209_HAMMER =          629,
 		ACTION_USING_SC_ID_210_HAMMER =          630,
@@ -252,6 +262,7 @@ public:
 	bool setAction(short action) override;
 
 	SokuLib::v2::GameObject *getHammer() const;
+	void setRabbitAnimation();
 
 	static void hook();
 	static void unhook();

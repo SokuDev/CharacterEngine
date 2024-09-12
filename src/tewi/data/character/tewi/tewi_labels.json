@@ -142,7 +142,7 @@
 	"602": "Earth Sign \"Gaia's Fumes\"",
 	"603": "Forbidden Poison \"Chimera's Fang\"",
 	"605": "Hunter Sign \"Preyful Flow\"",
-	"606": "Luck Sign \"Rabbit Solidarity\"",
+	"606": "Moon Sign \"Rabbit Solidarity\"",
 	"607": "Hare Sign \"Hunt Denial\"",
 	"608": "Tilt Out \"High Speed Chase\"",
 	"609": "Rabbit's Odyssey \"Space Cadet\"",
@@ -155,14 +155,14 @@
 	"623": "$CC6644Forbidden Poison \"Chimera's Fang\"",
 	"624": "$CC6644Mochi Sign \"HammerShake\"",
 	"625": "$CC6644Hunter Sign \"Preyful Flow\"",
-	"626": "$CC6644Luck Sign \"Rabbit Solidarity\"",
-	"627": "$CC6644Hare Sign \"Hunt Denial\"",
+	"626": "$CC6644Moon Sign \"Rabbit Solidarity\"",
 	"628": "$CC6644Tilt Out \"High Speed Chase\"",
 	"629": "$CC6644Rabbit's Odyssey \"Space Cadet\"",
 	"630": "$CC6644Luck Sign \"Unexpected Assistance\"",
 	"631": "$CC6644Hourai Sign \"Resurrection\"",
 
 	"651": "Runaway Rabbit \"Fluster Escape\" (Air)",
+	"657": "Hare Sign \"Hunt Denial\" (Air)",
 	"658": "Tilt Out \"High Speed Chase\" (Air)",
 	"659": "Rabbit's Odyssey \"Space Cadet\" (Air)",
 
@@ -205,6 +205,10 @@
 
 	"848": "Hare Run Grab object",
 	"849": "Hare Run Smoke object",
+	"850": "Hunt Denial object",
+	"851": "Rabbit Solidarity (hammer) objects",
+	"852": "Rabbit Solidarity (hammerless) objects",
 
-	"990": "Sakuya tail object"
+	"990": "Sakuya tail object",
+	"991": "Reisen tail object"
 }

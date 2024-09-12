@@ -241,6 +241,37 @@ void Tewi::update()
 		return;
 	if (this->gameData.opponent->timeStop)
 		return;
+	if ((
+		this->frameState.actionId == ACTION_USING_SC_ID_206_HAMMER ||
+		this->frameState.actionId == SokuLib::ACTION_USING_SC_ID_206
+	) && this->frameState.sequenceId == 1)
+		this->_rabbitAnimation = false;
+	if (this->_rabbitAnimation) {
+		this->projectileInvulTimer = 10;
+		this->meleeInvulTimer = 10;
+		this->grabInvulTimer = 10;
+		this->collisionLimit = 0;
+		this->advanceFrame();
+		if ((
+			this->frameState.actionId == ACTION_USING_SC_ID_206_HAMMER ||
+			this->frameState.actionId == SokuLib::ACTION_USING_SC_ID_206
+		) && this->frameState.sequenceId == 1)
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->renderInfos.color.a <= 15) {
+			this->setActionSequence(this->_hammer == nullptr ? ACTION_USING_SC_ID_206_HAMMER : SokuLib::ACTION_USING_SC_ID_206, 1);
+			this->_rabbitAnimation = false;
+			this->speed = {0, 0};
+			this->position.y = this->getGroundHeight();
+			SokuLib::camera.forceScale = true;
+			SokuLib::camera.forcedScale = 1;
+			SokuLib::camera.forceXCenter = true;
+			SokuLib::camera.forcedXCenter = this->gameData.opponent->position.x;
+			SokuLib::camera.forceYCenter = true;
+			SokuLib::camera.forcedYCenter = 50;
+		} else
+			this->renderInfos.color.a -= 15;
+		return;
+	}
 
 	const SokuLib::Vector2f bottleOffsets[10] = {
 		{50, 117},
@@ -355,7 +386,7 @@ void Tewi::update()
 		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
 			this->speed.y = 10;
 			if (this->_hammer) {
-				this->speed.x = 15;
+				this->speed.x = 11.5;
 				this->gravity.y = 1;
 			} else {
 				this->speed.x = 7.5;
@@ -434,13 +465,13 @@ void Tewi::update()
 		if (this->frameState.actionId == SokuLib::ACTION_BE6) {
 			if (this->_hammer) {
 				if (TOP_BE6_SPEED < this->speed.x) {
-					this->speed.x -= 0.5;
+					this->speed.x -= 0.25;
 					if (this->speed.x < TOP_BE6_SPEED)
 						this->speed.x = TOP_BE6_SPEED;
 				}
 			} else {
 				if (HAMMER_TOP_BE6_SPEED < this->speed.x) {
-					this->speed.x -= 0.25;
+					this->speed.x -= 0.15;
 					if (this->speed.x < HAMMER_TOP_BE6_SPEED)
 						this->speed.x = HAMMER_TOP_BE6_SPEED;
 				}
@@ -488,8 +519,11 @@ void Tewi::update()
 			}
 		}
 		if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 1) {
-			this->updateGroundMovement(this->_hammer ? INITIAL_DASH_SPEED : HAMMER_INITIAL_DASH_SPEED);
-			this->createEffect(0x7d, (float)(this->direction * 0x50) + this->position.x, this->position.y + 80, this->direction,1);
+			if (this->frameState.actionId == SokuLib::ACTION_BE6)
+				this->updateGroundMovement(this->_hammer ? INITIAL_BE6_SPEED : HAMMER_INITIAL_BE6_SPEED);
+			else
+				this->updateGroundMovement(this->_hammer ? INITIAL_DASH_SPEED : HAMMER_INITIAL_DASH_SPEED);
+			this->createEffect(0x7d, (float)(this->direction * 0x50) + this->position.x, this->position.y + 80, this->direction, 1);
 			this->createEffect(0x7e, this->position.x, this->position.y + 80, this->direction, 1);
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_DASH);
 		}
@@ -499,7 +533,10 @@ void Tewi::update()
 		if (this->frameState.sequenceId == 0 || frameState.sequenceId == 3)
 			this->applyGroundMechanics();
 		if (this->frameState.sequenceId == 3) {
-			this->speed.x += this->_hammer ? BACKDASH_DECEL : HAMMER_BACKDASH_DECEL;
+			if (this->frameState.actionId == SokuLib::ACTION_BE4)
+				this->speed.x += this->_hammer ? BE4_DECEL : HAMMER_BE4_DECEL;
+			else
+				this->speed.x += this->_hammer ? BACKDASH_DECEL : HAMMER_BACKDASH_DECEL;
 			if (this->speed.x > 0)
 				this->speed.x = 0;
 		}
@@ -526,9 +563,15 @@ void Tewi::update()
 		}
 		if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 1 && this->dashTimer == 0) {
 			this->dashTimer = 1;
-			this->updateGroundMovement(this->_hammer ? BACKDASH_IMPULSE : HAMMER_BACKDASH_IMPULSE);
-			this->speed.y = 3.5;
-			this->gravity.y = 0.75;
+			if (this->frameState.actionId == SokuLib::ACTION_BE4) {
+				this->updateGroundMovement(this->_hammer ? BE4_IMPULSE : HAMMER_BE4_IMPULSE);
+				this->speed.y = BE4_IMPULSE_UP;
+				this->gravity.y = BE4_GRAVITY;
+			} else {
+				this->updateGroundMovement(this->_hammer ? BACKDASH_IMPULSE : HAMMER_BACKDASH_IMPULSE);
+				this->speed.y = BACKDASH_IMPULSE_UP;
+				this->gravity.y = BACKDASH_GRAVITY;
+			}
 			this->createEffect(0x7d, this->position.x, this->position.y + 80.0, -this->direction, 1);
 			this->createEffect(0x7e, this->position.x, this->position.y + 80.0, -this->direction, 1);
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_DASH);
@@ -1914,7 +1957,7 @@ void Tewi::update()
 			this->setAction(SokuLib::ACTION_IDLE);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
 			this->spellStopCounter = 40;
-			this->playSpellBackground(6, 180);
+			this->playSpellBackground(5, 180);
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_SPELL_ACTIVATE);
 			this->createEffect(115, this->position.x - this->direction * 34.f, this->position.y + 114.f, this->direction, 1);
 			this->consumeCard();
@@ -1946,7 +1989,7 @@ void Tewi::update()
 			this->setAction(SokuLib::ACTION_FALLING);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
 			this->spellStopCounter = 40;
-			this->playSpellBackground(6, 180);
+			this->playSpellBackground(5, 180);
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_SPELL_ACTIVATE);
 			this->createEffect(115, this->position.x - this->direction * 34.f, this->position.y + 114.f, this->direction, 1);
 			this->consumeCard();
@@ -2066,6 +2109,7 @@ void Tewi::update()
 	case ACTION_USING_SC_ID_205_HAMMER:
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
+		this->applyGroundMechanics();
 		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
 			this->spellStopCounter = 60;
 			this->playSpellBackground(1, 180);
@@ -2081,6 +2125,173 @@ void Tewi::update()
 				this->playSFX(3);
 			}
 			if (this->frameState.currentFrame == 120)
+				this->nextSequence();
+		}
+		break;
+
+	case SokuLib::ACTION_USING_SC_ID_206:
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			return;
+		}
+		if (this->frameState.sequenceId == 0) {
+			this->applyGroundMechanics();
+			if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0) {
+				this->spellStopCounter = 40;
+				this->playSpellBackground(2, 60);
+				SokuLib::playSEWaveBuffer(SokuLib::SFX_SPELL_ACTIVATE);
+				this->createEffect(115, this->position.x - this->direction * 34.f, this->position.y + 114.f, this->direction, -1);
+				this->consumeCard();
+				this->eventSpellUse();
+				this->eventWeatherCycle();
+			}
+			if (this->timeStop)
+				this->position.x -= this->speed.x * this->direction;
+			else if (this->speed.x > 0)
+				this->speed.x -= 0.5;
+			if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0)
+				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+			if (this->frameState.poseId == 6 && this->frameState.poseFrame == 0)
+				this->createObject(852, 0, 0, this->direction, 1);
+		}
+		if (this->frameState.sequenceId == 1) {
+			if (this->frameState.currentFrame == 0) {
+				this->setAction(SokuLib::ACTION_IDLE);
+				return;
+			}
+			this->speed = {0, 0};
+			if (this->frameState.poseId <= 0) {
+				this->lockedInStageX = false;
+				this->position.x = this->gameData.opponent->position.x - 50 * this->direction;
+				SokuLib::camera.forcedXCenter = this->gameData.opponent->position.x;
+			} else {
+				if (this->frameState.poseFrame == 0 && this->frameState.poseId == 1)
+					this->position.y = 50;
+				if (this->frameState.poseId >= 4)
+					this->speed -= this->gravity;
+				if (this->applyAirMechanics()) {
+					this->setAction(SokuLib::ACTION_IDLE);
+					this->position.y = this->getGroundHeight();
+					this->resetForces();
+					break;
+				}
+				if (this->frameState.poseFrame == 0 && this->frameState.poseId == 2)
+					this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 122.0, this->direction, 1);
+				if (this->frameState.poseFrame == 0 && this->frameState.poseId == 4) {
+					SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+					this->speed.y = 9;
+				}
+				if (this->renderInfos.color.a > 225)
+					this->renderInfos.color.a = 255;
+				else
+					this->renderInfos.color.a += 30;
+			}
+			if (this->frameState.poseId == 1 && this->frameState.poseFrame == 0) {
+				SokuLib::camera.forceScale = false;
+				SokuLib::camera.forceXCenter = false;
+				SokuLib::camera.forceYCenter = false;
+				this->lockedInStageX = true;
+				this->direction = static_cast<SokuLib::Direction>(-this->direction);
+				this->position.x = this->gameData.opponent->position.x - 500 * this->direction;
+				this->position.y = this->getGroundHeight();
+			}
+			if (this->frameState.poseFrame == 0 && this->frameState.poseId == 5)
+				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+		}
+		break;
+
+	case ACTION_USING_SC_ID_206_HAMMER:
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			return;
+		}
+		if (this->frameState.sequenceId == 0) {
+			this->applyGroundMechanics();
+			if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
+				this->spellStopCounter = 40;
+				this->playSpellBackground(2, 60);
+				SokuLib::playSEWaveBuffer(SokuLib::SFX_SPELL_ACTIVATE);
+				this->createEffect(115, this->position.x - this->direction * 34.f, this->position.y + 114.f, this->direction, -1);
+				this->consumeCard();
+				this->eventSpellUse();
+				this->eventWeatherCycle();
+			}
+			if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0)
+				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+			if (this->frameState.poseId == 7 && this->frameState.poseFrame == 0)
+				this->createObject(851, 0, 0, this->direction, 1);
+		}
+		if (this->frameState.sequenceId == 1) {
+			if (this->frameState.currentFrame == 0) {
+				this->setAction(SokuLib::ACTION_IDLE);
+				return;
+			}
+			this->speed = {0, 0};
+			if (this->frameState.poseId <= 0) {
+				this->lockedInStageX = false;
+				this->position.x = this->gameData.opponent->position.x - 50 * this->direction;
+				SokuLib::camera.forcedXCenter = this->gameData.opponent->position.x;
+			} else {
+				this->applyGroundMechanics();
+				if (this->renderInfos.color.a > 225)
+					this->renderInfos.color.a = 255;
+				else
+					this->renderInfos.color.a += 30;
+			}
+			if (this->frameState.poseId == 1 && this->frameState.poseFrame == 0) {
+				SokuLib::camera.forceScale = false;
+				SokuLib::camera.forceXCenter = false;
+				SokuLib::camera.forceYCenter = false;
+				this->lockedInStageX = true;
+				this->direction = static_cast<SokuLib::Direction>(-this->direction);
+				this->position.x = this->gameData.opponent->position.x - 500 * this->direction;
+				this->position.y = this->getGroundHeight();
+			}
+			if (this->frameState.poseFrame == 0 && this->frameState.poseId == 5)
+				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+		}
+		break;
+
+
+	case SokuLib::ACTION_USING_SC_ID_207:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
+			this->spellStopCounter = 40;
+			this->_hammerPickTimer = 60;
+			this->playSpellBackground(6, 60);
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_SPELL_ACTIVATE);
+			this->createEffect(115, this->position.x - this->direction * 34.f, this->position.y + 114.f, this->direction, 1);
+			this->consumeCard();
+			this->eventSpellUse();
+			this->eventWeatherCycle();
+		}
+		if (this->frameState.sequenceId == 1) {
+			if (this->frameState.currentFrame == 0)
+				this->createObject(850, this->position.x, this->position.y, this->direction, 1);
+			if (this->frameState.currentFrame >= 10)
+				this->nextSequence();
+		}
+		break;
+
+	case SokuLib::ACTION_SC_ID_207_ALT_EFFECT:
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
+			this->spellStopCounter = 40;
+			this->_hammerPickTimer = 60;
+			this->playSpellBackground(6, 60);
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_SPELL_ACTIVATE);
+			this->createEffect(115, this->position.x - this->direction * 34.f, this->position.y + 114.f, this->direction, 1);
+			this->consumeCard();
+			this->eventSpellUse();
+			this->eventWeatherCycle();
+		}
+		if (this->frameState.sequenceId == 1) {
+			if (this->frameState.currentFrame == 0)
+				this->createObject(850, this->position.x, this->position.y, this->direction, 1);
+			if (this->frameState.currentFrame >= 10)
 				this->nextSequence();
 		}
 		break;
@@ -2460,6 +2671,7 @@ void Tewi::initializeAction()
 	case SokuLib::ACTION_5AAAA:
 	case ACTION_5AAA6A:
 	case SokuLib::ACTION_5AAA3A:
+	case SokuLib::ACTION_USING_SC_ID_206:
 		this->speed.x = 14;
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
@@ -2611,6 +2823,9 @@ void Tewi::initializeAction()
 	case ACTION_d214C_HAMMER:
 	case SokuLib::ACTION_USING_SC_ID_200:
 	case ACTION_USING_SC_ID_200_HAMMER:
+	case SokuLib::ACTION_USING_SC_ID_207:
+	case SokuLib::ACTION_SC_ID_207_ALT_EFFECT:
+	case ACTION_USING_SC_ID_206_HAMMER:
 	case SokuLib::ACTION_USING_SC_ID_201:
 	case ACTION_USING_SC_ID_201_HAMMER:
 	case SokuLib::ACTION_SC_ID_201_ALT_EFFECT:
@@ -2649,6 +2864,7 @@ void Tewi::initializeAction()
 	case SokuLib::ACTION_2B:
 	case ACTION_5B_HAMMER:
 	case SokuLib::ACTION_5B:
+		this->speed = {0, 0};
 		this->chargedAttack = true;
 	case ACTION_d236B:
 	case ACTION_d236C:
@@ -2683,8 +2899,8 @@ void Tewi::initializeAction()
 
 bool Tewi::_canPickUpHammer()
 {
-	if (SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN <= this->frameState.actionId && this->frameState.actionId < SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN)
-	//if (SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN <= this->frameState.actionId && this->frameState.actionId <= SokuLib::ACTION_NEUTRAL_TECH)
+	//if (SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN <= this->frameState.actionId && this->frameState.actionId < SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN)
+	if (SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN <= this->frameState.actionId && this->frameState.actionId <= SokuLib::ACTION_NEUTRAL_TECH)
 		return false;
 	if (this->_hammer->frameState.sequenceId == 0) {
 		if (std::abs(this->_hammer->position.x - this->position.x) > 100)
@@ -3398,6 +3614,7 @@ bool Tewi::_canUseCard(int id)
 	case 200:
 	case 202:
 	case 203:
+	case 206:
 	case 210:
 		return this->isGrounded();
 	case 205:
@@ -3412,8 +3629,8 @@ bool Tewi::_canUseCard(int id)
 		return true;
 	case 204:
 		return this->_hammer == nullptr;
-	//case 100:
-	//	return this->_hammer != nullptr;
+	case 207:
+		return this->_hammer != nullptr;
 	default:
 		return false;
 	}
@@ -3525,6 +3742,8 @@ void Tewi::handleInputs()
 	auto frameFlags = this->gameData.frameData->frameFlags;
 
 	if (!this->_revive && this->handleCardSwitch())
+		return;
+	if (this->_rabbitAnimation)
 		return;
 
 	if (frameFlags.cancellable || frameFlags.highJumpCancellable) {
@@ -3721,4 +3940,9 @@ void Tewi::unhook()
 SokuLib::v2::GameObject *Tewi::getHammer() const
 {
 	return this->_hammer;
+}
+
+void Tewi::setRabbitAnimation()
+{
+	this->_rabbitAnimation = true;
 }

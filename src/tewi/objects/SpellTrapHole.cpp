@@ -53,13 +53,16 @@ void SpellTrapHole::render()
 	}
 }
 
-void SpellTrapHole::update()
-{
+void SpellTrapHole::update() {
 	if (this->frameState.sequenceId == 1)
 		return;
 	if (this->lifetime == 0)
 		return;
 	if (this->frameState.sequenceId == 2) {
+		if (this->checkTurnIntoCrystals(false, 0, 0)) {
+			this->lifetime = 0;
+			return;
+		}
 		this->advanceFrame();
 		this->position.x = this->parentObject->position.x - (62 * 2 * this->parentObject->renderInfos.scale.x) * this->direction;
 		this->position.y = this->getGroundHeight();
@@ -84,6 +87,11 @@ void SpellTrapHole::update()
 		return;
 	}
 	if (this->collisionLimit && this->renderInfos.scale.x != 1) {
+		if (this->checkTurnIntoCrystals(false, 10, 50, 0, -50)) {
+			this->collisionLimit = 0;
+			this->collisionType = COLLISION_TYPE_NONE;
+			return;
+		}
 		if (this->frameState.currentFrame < RABBIT_GO_TIME) {
 			this->advanceFrame();
 			return;
@@ -94,8 +102,8 @@ void SpellTrapHole::update()
 
 		if (f % 20 == 0)
 			this->parentPlayerB->playSFX(14);
-		this->renderInfos.scale.x = f / ((float)HOLE_FADE_IN + 1);
-		this->renderInfos.scale.y = f / ((float)HOLE_FADE_IN + 1);
+		this->renderInfos.scale.x = f / ((float) HOLE_FADE_IN + 1);
+		this->renderInfos.scale.y = f / ((float) HOLE_FADE_IN + 1);
 		if (f > HOLE_FADE_IN) {
 			this->collisionLimit = STAY_TIME;
 			this->collisionType = COLLISION_TYPE_NONE;
@@ -104,7 +112,7 @@ void SpellTrapHole::update()
 			if (x < 0 || x >= 1280)
 				continue;
 			if (f > HOLE_FADE_IN_OFFSET)
-				SokuLib::v2::groundHeight[x] = HOLE_DEPTH * (f - HOLE_FADE_IN_OFFSET) / -(float)(HOLE_FADE_IN - HOLE_FADE_IN_OFFSET);
+				SokuLib::v2::groundHeight[x] = HOLE_DEPTH * (f - HOLE_FADE_IN_OFFSET) / -(float) (HOLE_FADE_IN - HOLE_FADE_IN_OFFSET);
 		}
 	} else if (this->collisionType == COLLISION_TYPE_HIT || this->collisionType == COLLISION_TYPE_BLOCKED) {
 		if (this->parentPlayerB->timeStop)
@@ -128,7 +136,7 @@ void SpellTrapHole::update()
 				SokuLib::camera.shake = min(this->rabbitShootTimer / 6, 5);
 		} else
 			this->collisionLimit = 0;
-	} else if (this->collisionType)
+	} else if (this->collisionType || (this->collisionLimit && this->checkTurnIntoCrystals(false, 10, 50, 0, -50)))
 		this->collisionLimit = 0;
 	this->advanceFrame();
 	if (this->frameState.poseFrame == 0 && this->collisionLimit)

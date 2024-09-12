@@ -68,6 +68,10 @@ add_library(
 	src/tewi/objects/SpellTrapHole.hpp
 	src/tewi/objects/RabbitOrb.cpp
 	src/tewi/objects/RabbitOrb.hpp
+	src/tewi/objects/KillingRabbit.cpp
+	src/tewi/objects/KillingRabbit.hpp
+	src/tewi/objects/RabbitSolidarity.cpp
+	src/tewi/objects/RabbitSolidarity.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG> OBJECT_MEMORY_SIZE=8 _USE_MATH_DEFINES)

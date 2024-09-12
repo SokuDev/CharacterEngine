@@ -19,7 +19,7 @@ void RabbitOrb::update()
 			this->nextSequence();
 			return;
 		}
-		if (this->checkProjectileHit(4)) {
+		if (this->checkProjectileHit(1)) {
 			this->nextSequence();
 			return;
 		}

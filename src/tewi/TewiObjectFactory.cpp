@@ -19,6 +19,8 @@
 #include "objects/Bottle.hpp"
 #include "objects/SpellTrapHole.hpp"
 #include "objects/RabbitOrb.hpp"
+#include "objects/KillingRabbit.hpp"
+#include "objects/RabbitSolidarity.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -59,6 +61,11 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 		return new UnexpectedAssistance::Patchouli();
 	case 849:
 		return new SpinningSmoke();
+	case 850:
+		return new KillingRabbit();
+	case 851:
+	case 852:
+		return new RabbitSolidarity();
 	case 998:
 		return new RotatingBlockingObject(120, 74, 40);
 	default:

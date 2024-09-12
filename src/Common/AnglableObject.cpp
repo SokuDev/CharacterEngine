@@ -28,10 +28,8 @@ void AnglableObject::update()
 		this->renderInfos.color.a -= 255 / this->frameState.poseDuration;
 	if (this->customData[1] > this->customData[2]) {
 		this->customData[1] = this->customData[1] - this->customData[2];
-		this->speed = {
-			this->speed.x = cos(this->customData[0] * M_PI / 180) * this->customData[1] * this->direction,
-			this->speed.y = sin(this->customData[0] * M_PI / 180) * this->customData[1]
-		};
+		this->speed.x = cos(this->customData[0] * M_PI / 180) * this->customData[1] * this->direction;
+		this->speed.y = sin(this->customData[0] * M_PI / 180) * this->customData[1];
 	} else {
 		this->customData[1] = 0;
 		this->speed = {0, 0};
