@@ -4,6 +4,10 @@
 
 #include "SpinningSmoke.hpp"
 
+#define spinAmount gpFloat[0]
+#define spinAccel gpFloat[1]
+#define fadeDir gpShort[0]
+
 void SpinningSmoke::update()
 {
 	if (this->frameState.sequenceId != 0)
@@ -15,16 +19,16 @@ void SpinningSmoke::update()
 		this->layer = 1;
 	else
 		this->layer = -1;
-	this->customData[0] += this->unknown378;
+	this->customData[0] += this->spinAmount;
 	this->customData[1] *= 0.95;
-	this->unknown378 += this->unknown37C;
-	this->unknown37C += 0.1;
+	this->spinAmount += this->spinAccel;
+	this->spinAccel += 0.1;
 	this->position.x = this->direction * (this->customData[1] + 50.0) * cos(this->customData[0] * M_PI / 180) + this->parentPlayerB->position.x;
-	this->position.y = (this->customData[1] + 50.0) * sin(this->customData[0] * M_PI / 180) * 0.25 + this->parentPlayerB->position.y + this->unknown37C;
-	if (this->unknown36C == 0) {
+	this->position.y = (this->customData[1] + 50.0) * sin(this->customData[0] * M_PI / 180) * 0.25 + this->parentPlayerB->position.y + this->spinAccel;
+	if (this->fadeDir == 0) {
 		if (this->renderInfos.color.a >= 0xF6){
 			this->renderInfos.color.a = 0xFF;
-			this->unknown36C = 1;
+			this->fadeDir = 1;
 		} else
 			this->renderInfos.color.a += 10;
 	} else {
@@ -37,6 +41,6 @@ void SpinningSmoke::update()
 
 void SpinningSmoke::initializeAction()
 {
-	this->unknown36C = 0;
+	this->fadeDir = 0;
 	this->renderInfos.color.a = 0;
 }

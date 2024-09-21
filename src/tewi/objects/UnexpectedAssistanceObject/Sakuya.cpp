@@ -5,6 +5,10 @@
 #include <cmath>
 #include "Sakuya.hpp"
 
+#define unknown36C gpShort[0]
+#define unknown36E gpShort[1]
+#define unknown378 gpFloat[0]
+
 namespace UnexpectedAssistance
 {
 	void Sakuya::_spawnActualBullet(unsigned id)

@@ -4,6 +4,9 @@
 
 #include <cmath>
 #include "RabbitOrb.hpp"
+#include "../Tewi.hpp"
+
+#define nbCollision gpShort[0]
 
 void RabbitOrb::update()
 {
@@ -11,7 +14,14 @@ void RabbitOrb::update()
 		return;
 	this->advanceFrame();
 	if (this->frameState.sequenceId == 0) {
-		if (this->checkTurnIntoCrystals(false, 1, 5)) {
+		if ((
+			this->parentPlayerB->frameState.actionId == SokuLib::ACTION_USING_SC_ID_206 ||
+			this->parentPlayerB->frameState.actionId == Tewi::ACTION_USING_SC_ID_206_HAMMER
+		) && this->parentPlayerB->frameState.sequenceId != 0) {
+			this->nextSequence();
+			return;
+		}
+		if (this->checkTurnIntoCrystals(false, 5, 5)) {
 			this->lifetime = 0;
 			return;
 		}
@@ -24,11 +34,11 @@ void RabbitOrb::update()
 			return;
 		}
 		if (this->collisionType) {
-			if (this->unknown380 == 0)
-				this->unknown380 = 4;
+			if (this->nbCollision == 0)
+				this->nbCollision = 4;
 			else
-				this->unknown380--;
-			if (this->unknown380 == 0)
+				this->nbCollision--;
+			if (this->nbCollision == 0)
 				this->collisionType = COLLISION_TYPE_NONE;
 		}
 		if (this->frameState.currentFrame % 2 == 0)

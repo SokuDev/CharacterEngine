@@ -17,8 +17,6 @@ namespace UnexpectedAssistance
 		}
 		switch (this->frameState.sequenceId) {
 		case 0:
-			if (this->parentPlayerB->HP < 1 || this->gameData.opponent->HP < 1)
-				this->unknown36C = 1;
 			this->renderInfos.zRotation += 8.0;
 			if (this->position.y < this->getGroundHeight()) {
 				if (this->speed.x > 0) {

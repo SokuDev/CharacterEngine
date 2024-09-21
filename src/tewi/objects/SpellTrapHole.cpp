@@ -12,8 +12,8 @@
 #define HOLE_FADE_OUT 30
 #define STAY_TIME 8
 #define NB_RABBIT 40
-#define rabbitShot unknown370
-#define rabbitShootTimer unknown36C
+#define rabbitShot gpShort[1]
+#define rabbitShootTimer gpShort[0]
 #define RABBIT_GO_TIME 20
 
 #define convColor(c) ((((c).a & 1) << 15) | (((c).r >> 3) << 10) | (((c).g >> 3) << 5) | (((c).b >> 3) << 0))

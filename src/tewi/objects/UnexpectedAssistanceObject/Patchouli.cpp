@@ -5,6 +5,12 @@
 #include <cmath>
 #include "Patchouli.hpp"
 
+#define unknown36C gpShort[0]
+#define unknown36E gpShort[1]
+#define unknown378 gpFloat[0]
+#define unknown37C gpFloat[1]
+#define unknown380 gpFloat[2]
+
 namespace UnexpectedAssistance
 {
 	void Patchouli::update()

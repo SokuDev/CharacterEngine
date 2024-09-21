@@ -5,6 +5,11 @@
 #include <cmath>
 #include "Alice.hpp"
 
+#define unknown36C gpShort[0]
+#define unknown36E gpShort[1]
+#define unknown378 gpFloat[0]
+#define unknown380 gpFloat[2]
+
 namespace UnexpectedAssistance
 {
 	void Alice::update()

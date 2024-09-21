@@ -9,6 +9,8 @@
 #include <SokuLib.hpp>
 #include "Memory.hpp"
 
+#define hasMoveBeenReset unknown881
+
 class Tewi : public SokuLib::v2::Player {
 private:
 	// Stuff accessed from assembly
@@ -204,22 +206,22 @@ public:
 		ACTION_jd22B_HAMMER =                    530,
 		ACTION_jd22C_HAMMER =                    531,
 
-		// ACTION_a1_623B =                         500,
-		// ACTION_a1_623C =                         501,
-		// ACTION_ja1_623B =                        502,
-		// ACTION_ja1_623C =                        503,
-		// ACTION_a1_623B_HAMMER =                  504,
-		// ACTION_a1_623C_HAMMER =                  505,
-		// ACTION_ja1_623B_HAMMER =                 506,
-		// ACTION_ja1_623C_HAMMER =                 507,
+		ACTION_a1_623B =                         532,
+		ACTION_a1_623C =                         533,
+		ACTION_a1_623B_HAMMER =                  536,
+		ACTION_a1_623C_HAMMER =                  537,
 		ACTION_a1_236B =                         540,
 		ACTION_a1_236C =                         541,
 		ACTION_a1_236B_HAMMER =                  544,
 		ACTION_a1_236C_HAMMER =                  545,
 		ACTION_a1_214B =                         548,
 		ACTION_a1_214C =                         549,
+		ACTION_ja1_214B =                        550,
+		ACTION_ja1_214C =                        551,
 		ACTION_a1_214B_HAMMER =                  552,
 		ACTION_a1_214C_HAMMER =                  553,
+		ACTION_ja1_214B_HAMMER =                 554,
+		ACTION_ja1_214C_HAMMER =                 555,
 		// ACTION_a1_22B =                          524,
 		// ACTION_a1_22C =                          525,
 		// ACTION_ja1_22B =                         526,
