@@ -22,6 +22,7 @@
 #include "objects/KillingRabbit.hpp"
 #include "objects/RabbitSolidarity.hpp"
 #include "objects/SetAndStrikeOrb.hpp"
+#include "objects/UBRabbit.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -69,6 +70,9 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 		return new RabbitSolidarity();
 	case 853:
 		return new SetAndStrikeOrb();
+	case 854:
+	case 855:
+		return new UBRabbit();
 	case 998:
 		return new RotatingBlockingObject(120, 74, 40);
 	default:

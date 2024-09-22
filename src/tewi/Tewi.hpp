@@ -10,6 +10,7 @@
 #include "Memory.hpp"
 
 #define hasMoveBeenReset unknown881
+#define maxRabbits(tewi) (1 + tewi->effectiveSkillLevel[6])
 
 class Tewi : public SokuLib::v2::Player {
 private:
@@ -17,6 +18,7 @@ private:
 	bool _revive = false;
 
 	bool _rabbitAnimation = false;
+	unsigned char _rabbitsStored = 0;
 	SokuLib::v2::GameObject *_hammer = nullptr;
 	unsigned _hammerPickTimer = 0;
 	SokuLib::Vector2f _oldSpeed;
@@ -216,12 +218,8 @@ public:
 		ACTION_a1_236C_HAMMER =                  545,
 		ACTION_a1_214B =                         548,
 		ACTION_a1_214C =                         549,
-		ACTION_ja1_214B =                        550,
-		ACTION_ja1_214C =                        551,
 		ACTION_a1_214B_HAMMER =                  552,
 		ACTION_a1_214C_HAMMER =                  553,
-		ACTION_ja1_214B_HAMMER =                 554,
-		ACTION_ja1_214C_HAMMER =                 555,
 		// ACTION_a1_22B =                          524,
 		// ACTION_a1_22C =                          525,
 		// ACTION_ja1_22B =                         526,

@@ -30951,6 +30951,814 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 	</move>
+	<move id="548" index="0" loop="1" movelock="50" actionlock="100">
+		<frame image="specialCa003.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="74" xoffset="54" yoffset="149" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa004.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="73" xoffset="50" yoffset="147" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa003.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="74" xoffset="54" yoffset="149" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa004.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="73" xoffset="50" yoffset="147" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa003.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="74" xoffset="54" yoffset="149" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa004.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="73" xoffset="50" yoffset="147" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa003.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="74" xoffset="54" yoffset="149" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa004.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="73" xoffset="50" yoffset="147" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="548" index="1" loop="0" movelock="50" actionlock="100">
+		<frame image="specialCa005.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="53" texheight="74" xoffset="50" yoffset="149" duration="6" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa006.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="57" texheight="68" xoffset="50" yoffset="137" duration="6" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-30" up="-120" right="40" down="-61"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa007.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="45" texheight="69" xoffset="50" yoffset="139" duration="6" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-119" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-134" right="26" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="549" index="0" loop="0" movelock="50" actionlock="100">
+		<frame image="attackBa000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="42" texheight="76" xoffset="56" yoffset="153" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-42" up="-148" right="15" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="42" texheight="75" xoffset="62" yoffset="151" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-42" up="-148" right="15" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="41" texheight="76" xoffset="62" yoffset="153" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-42" up="-148" right="15" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="43" texheight="77" xoffset="62" yoffset="155" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-42" up="-148" right="15" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="45" texheight="78" xoffset="58" yoffset="157" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="82" xoffset="58" yoffset="165" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa005.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="82" xoffset="58" yoffset="165" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa006.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="55" texheight="79" xoffset="58" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa007.bmp" index="8" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="79" xoffset="52" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa006.bmp" index="9" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="55" texheight="79" xoffset="58" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa007.bmp" index="10" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="79" xoffset="52" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa006.bmp" index="11" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="55" texheight="79" xoffset="58" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa007.bmp" index="12" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="79" xoffset="52" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa006.bmp" index="13" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="55" texheight="79" xoffset="58" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa007.bmp" index="14" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="79" xoffset="52" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa008.bmp" index="15" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="51" texheight="76" xoffset="52" yoffset="153" duration="6" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="13" up="-94" right="49" down="-63"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa009.bmp" index="16" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="45" texheight="77" xoffset="50" yoffset="155" duration="6" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="552" index="0" loop="1" movelock="50" actionlock="100">
+		<frame image="specialCa003.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="74" xoffset="54" yoffset="149" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa004.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="73" xoffset="50" yoffset="147" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa003.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="74" xoffset="54" yoffset="149" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa004.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="73" xoffset="50" yoffset="147" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa003.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="74" xoffset="54" yoffset="149" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa004.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="73" xoffset="50" yoffset="147" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa003.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="74" xoffset="54" yoffset="149" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa004.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="73" xoffset="50" yoffset="147" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="552" index="1" loop="0" movelock="50" actionlock="100">
+		<frame image="specialCa005.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="53" texheight="74" xoffset="50" yoffset="149" duration="6" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-40" up="-109" right="47" down="-49"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa006.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="57" texheight="68" xoffset="50" yoffset="137" duration="6" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-106" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-112" right="26" down="-1"/>
+				<box left="-30" up="-120" right="40" down="-61"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="specialCa007.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="45" texheight="69" xoffset="50" yoffset="139" duration="6" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-119" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-32" up="-134" right="26" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="553" index="0" loop="0" movelock="50" actionlock="100">
+		<frame image="attackBa000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="42" texheight="76" xoffset="56" yoffset="153" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-42" up="-148" right="15" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="42" texheight="75" xoffset="62" yoffset="151" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-42" up="-148" right="15" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="41" texheight="76" xoffset="62" yoffset="153" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-42" up="-148" right="15" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="43" texheight="77" xoffset="62" yoffset="155" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-42" up="-148" right="15" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="45" texheight="78" xoffset="58" yoffset="157" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<takecounterhit/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="82" xoffset="58" yoffset="165" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa005.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="82" xoffset="58" yoffset="165" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa006.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="55" texheight="79" xoffset="58" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa007.bmp" index="8" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="79" xoffset="52" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa006.bmp" index="9" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="55" texheight="79" xoffset="58" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa007.bmp" index="10" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="79" xoffset="52" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa006.bmp" index="11" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="55" texheight="79" xoffset="58" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa007.bmp" index="12" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="79" xoffset="52" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa006.bmp" index="13" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="55" texheight="79" xoffset="58" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa007.bmp" index="14" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="79" xoffset="52" yoffset="159" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="14" up="-118" right="50" down="-87"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa008.bmp" index="15" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="51" texheight="76" xoffset="52" yoffset="153" duration="6" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+				<box left="13" up="-94" right="49" down="-63"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="attackBa009.bmp" index="16" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="45" texheight="77" xoffset="50" yoffset="155" duration="6" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<cancellable/>
+				<movimentcancel/>
+			</traits>
+			<collision>
+				<box left="-20" up="-147" right="20" down="-1"/>
+			</collision>
+			<hit>
+				<box left="-26" up="-148" right="23" down="-1"/>
+			</hit>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
 	<move id="600" index="0" loop="0" movelock="100" actionlock="150">
 		<frame image="attackAm000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="40" texheight="66" xoffset="44" yoffset="133" duration="3" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
@@ -41654,6 +42462,147 @@
 		<frame image="guardObject.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="96" texheight="96" xoffset="48" yoffset="48" duration="999" rendergroup="2">
 			<blend mode="1" color="ffffffff" xscale="100" yscale="100" vertflip="0" horzflip="0" angle="0"/>
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="854" index="0" loop="0" movelock="0" actionlock="0">
+		<frame image="bulletAb000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="36" texheight="32" xoffset="36" yoffset="64" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="36" texheight="30" xoffset="18" yoffset="30" duration="2" rendergroup="2">
+			<blend mode="0" color="ffffffff" xscale="200" yscale="200" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb003b.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="80" texheight="40" xoffset="40" yoffset="40" duration="2" rendergroup="2">
+			<blend mode="0" color="ffffffff" xscale="200" yscale="200" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb004.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="56" texheight="21" xoffset="66" yoffset="42" duration="5" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb005.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="45" texheight="24" xoffset="46" yoffset="48" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb006.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="43" texheight="20" xoffset="46" yoffset="40" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb000.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="36" texheight="18" xoffset="36" yoffset="36" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb001.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="36" texheight="18" xoffset="18" yoffset="18" duration="2" rendergroup="2">
+			<blend mode="0" color="ffffffff" xscale="200" yscale="200" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb003b.bmp" index="8" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="80" texheight="28" xoffset="40" yoffset="28" duration="2" rendergroup="2">
+			<blend mode="0" color="ffffffff" xscale="200" yscale="200" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb004.bmp" index="9" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="56" texheight="9" xoffset="66" yoffset="18" duration="5" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb005.bmp" index="10" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="45" texheight="12" xoffset="46" yoffset="24" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb006.bmp" index="11" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="43" texheight="8" xoffset="46" yoffset="16" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb000.bmp" index="12" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="36" texheight="6" xoffset="36" yoffset="12" duration="2" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb001.bmp" index="13" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="36" texheight="4" xoffset="18" yoffset="4" duration="2" rendergroup="2">
+			<blend mode="0" color="ffffffff" xscale="200" yscale="200" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="855" index="0" loop="0" movelock="20" actionlock="0">
+		<frame image="bulletAb004.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="56" texheight="5" xoffset="66" yoffset="10" duration="1" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb004.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="56" texheight="9" xoffset="66" yoffset="18" duration="1" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb004.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="56" texheight="13" xoffset="66" yoffset="26" duration="1" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb004.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="56" texheight="17" xoffset="66" yoffset="34" duration="1" rendergroup="0">
+			<traits damage="300" proration="920" chipdamage="100" spiritdamage="50" untech="45" power="100" limit="4" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="40" onblockcardgain="30" onairhitsetsequence="71" ongroundhitsetsequence="0" xspeed="300" yspeed="600" onhitsfx="2" onhiteffect="2" attacklevel="1">
+				<lowrightblock/>
+				<airblockable/>
+				<inducecounterhit/>
+				<skillattacktype/>
+				<lowattacktype/>
+				<objectattacktype/>
+				<isbullet/>
+				<ungrazeble/>
+			</traits>
+			<attack>
+				<box left="-28" up="-19" right="28" down="19"/>
+			</attack>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="56" texheight="21" xoffset="66" yoffset="42" duration="1" rendergroup="0">
+			<traits damage="300" proration="920" chipdamage="100" spiritdamage="50" untech="45" power="100" limit="4" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="40" onblockcardgain="30" onairhitsetsequence="71" ongroundhitsetsequence="0" xspeed="300" yspeed="600" onhitsfx="2" onhiteffect="2" attacklevel="1">
+				<lowrightblock/>
+				<airblockable/>
+				<inducecounterhit/>
+				<skillattacktype/>
+				<lowattacktype/>
+				<objectattacktype/>
+				<isbullet/>
+				<ungrazeble/>
+			</traits>
+			<attack>
+				<box left="-28" up="-27" right="28" down="11"/>
+			</attack>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb004.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="56" texheight="25" xoffset="66" yoffset="50" duration="1" rendergroup="0">
+			<traits damage="300" proration="920" chipdamage="100" spiritdamage="50" untech="45" power="100" limit="4" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="40" onblockcardgain="30" onairhitsetsequence="71" ongroundhitsetsequence="0" xspeed="300" yspeed="600" onhitsfx="2" onhiteffect="2" attacklevel="1">
+				<lowrightblock/>
+				<airblockable/>
+				<inducecounterhit/>
+				<skillattacktype/>
+				<lowattacktype/>
+				<objectattacktype/>
+				<isbullet/>
+				<ungrazeble/>
+			</traits>
+			<attack>
+				<box left="-28" up="-35" right="28" down="3"/>
+			</attack>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="bulletAb004.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="56" texheight="29" xoffset="66" yoffset="58" duration="999" rendergroup="0">
+			<traits damage="300" proration="920" chipdamage="100" spiritdamage="50" untech="45" power="100" limit="4" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="40" onblockcardgain="30" onairhitsetsequence="71" ongroundhitsetsequence="0" xspeed="300" yspeed="600" onhitsfx="2" onhiteffect="2" attacklevel="1">
+				<lowrightblock/>
+				<airblockable/>
+				<inducecounterhit/>
+				<skillattacktype/>
+				<lowattacktype/>
+				<objectattacktype/>
+				<isbullet/>
+				<ungrazeble/>
+			</traits>
+			<attack>
+				<box left="-28" up="-43" right="28" down="-5"/>
+			</attack>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 	</move>

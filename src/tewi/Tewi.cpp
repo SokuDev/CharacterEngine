@@ -1925,6 +1925,47 @@ void Tewi::update()
 		break;
 	}
 
+	case ACTION_a1_214B:
+	case ACTION_a1_214B_HAMMER:
+		if (this->inputData.keyInput.b == 0)
+			this->chargedAttack = false;
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		else if (this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
+			if (this->chargedAttack && this->_rabbitsStored < maxRabbits(this)) {
+				this->collisionType = COLLISION_TYPE_NONE;
+				this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 100, this->direction, 1);
+			} else
+				this->nextSequence();
+		} else if (this->frameState.poseId == 0 && this->frameState.poseFrame == 3 && this->frameState.sequenceId == 0) {
+			this->playSFX(0);
+			this->createObject(854, this->position.x, this->position.y, this->direction, 1)->skillIndex = 6;
+			this->_rabbitsStored++;
+			this->collisionType = COLLISION_TYPE_HIT;
+		}
+		break;
+
+	case ACTION_a1_214C:
+	case ACTION_a1_214C_HAMMER:
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.poseId >= 7 && this->frameState.currentFrame % 3 == 0 && this->_rabbitsStored) {
+			auto dir = SokuLib::rand(2) ? SokuLib::LEFT : SokuLib::RIGHT;
+
+			this->_rabbitsStored--;
+			this->createObject(
+				855,
+				this->gameData.opponent->position.x - 100 * (float)dir,
+				this->gameData.opponent->position.y,
+				dir, 1
+			)->skillIndex = 6;
+			if (this->_rabbitsStored == 0) {
+				this->collisionType = COLLISION_TYPE_HIT;
+				this->collisionLimit = 0;
+			}
+			this->playSFX(1);
+		}
+		break;
 
 	case ACTION_USING_SC_ID_200_HAMMER:
 	case SokuLib::ACTION_USING_SC_ID_200:
@@ -2921,6 +2962,9 @@ void Tewi::initializeAction()
 		this->hasMoveBeenReset = true;
 		this->collisionLimit = 1;
 		break;
+	case ACTION_a1_214B:
+	case ACTION_a1_214B_HAMMER:
+		this->chargedAttack = true;
 	case ACTION_d214B:
 	case ACTION_d214C:
 	case ACTION_d214B_HAMMER:
@@ -2934,6 +2978,8 @@ void Tewi::initializeAction()
 	case ACTION_USING_SC_ID_201_HAMMER:
 	case SokuLib::ACTION_SC_ID_201_ALT_EFFECT:
 	case ACTION_USING_SC_ID_201_HAMMER_AIR:
+	case ACTION_a1_214C:
+	case ACTION_a1_214C_HAMMER:
 		this->speed.x = 0;
 		this->speed.y = 0;
 		this->collisionType = COLLISION_TYPE_NONE;
@@ -3683,6 +3729,13 @@ bool Tewi::_processSkillsGrounded()
 			return true;
 		if (this->_useSkill(this->inputData.commandCombination._236c, 5, ACTION_a1_236C))
 			return true;
+		if (
+			this->_rabbitsStored < maxRabbits(this) &&
+			this->_useSkill(this->inputData.commandCombination._214b, 6, ACTION_a1_214B)
+		)
+			return true;
+		if (this->_rabbitsStored && this->_useSkill(this->inputData.commandCombination._214c, 6, ACTION_a1_214C))
+			return true;
 	} else {
 		if (this->_useSkill(this->inputData.commandCombination._623b, 0, ACTION_d623B_HAMMER))
 			return true;
@@ -3709,6 +3762,13 @@ bool Tewi::_processSkillsGrounded()
 			return true;
 		if (this->_useSkill(this->inputData.commandCombination._236c, 5, ACTION_a1_236C_HAMMER))
 			return true;
+		if (
+			this->_rabbitsStored < 1 + this->effectiveSkillLevel[6] &&
+			this->_useSkill(this->inputData.commandCombination._214b, 6, ACTION_a1_214B_HAMMER)
+		)
+			return true;
+		if (this->_rabbitsStored && this->_useSkill(this->inputData.commandCombination._214c, 6, ACTION_a1_214C_HAMMER))
+			return true;
 	}
 	return false;
 }
@@ -3722,6 +3782,7 @@ bool Tewi::_canUseCard(int id)
 	case 100:
 	case 101:
 	case 103:
+	case 106:
 	case 201:
 	case 208:
 		return true;
