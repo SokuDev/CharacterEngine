@@ -1952,6 +1952,8 @@ void Tewi::update()
 		if (this->frameState.poseId >= 7 && this->frameState.currentFrame % 3 == 0 && this->_rabbitsStored) {
 			auto dir = SokuLib::rand(2) ? SokuLib::LEFT : SokuLib::RIGHT;
 
+			if (this->frameState.poseId == 7 && this->frameState.poseFrame < 3)
+				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 			this->_rabbitsStored--;
 			this->createObject(
 				855,
@@ -1966,6 +1968,91 @@ void Tewi::update()
 			this->playSFX(1);
 		}
 		break;
+
+	case ACTION_a1_22B:
+	case ACTION_a1_22C:
+		if (this->frameState.currentFrame == 0)
+			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+		this->advanceFrame();
+		if (this->frameState.currentFrame % 10 == 0) {
+			float params[2] = {
+				static_cast<float>(SokuLib::rand(360)),
+				static_cast<float>(SokuLib::rand(150) + 250)
+			};
+
+			this->createObject(849, this->position.x, this->position.y, this->direction, 1, params);
+		}
+		break;
+
+	case ACTION_a1_22B_HAMMER:
+	case ACTION_a1_22C_HAMMER:
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			return;
+		}
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 5) {
+			float hammerParams[5] = {90.f, 25, 0, 1, 0};
+
+			if (this->frameState.actionId % 2 == 0)
+				hammerParams[0] -= 90.f * this->direction;
+			else
+				hammerParams[0] -= 45.f * this->direction;
+			this->playSFX(0);
+			this->collisionType = COLLISION_TYPE_HIT;
+			this->_hammerPickTimer = 20;
+			this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams);
+			this->_hammer->gravity.y = 0;
+			this->_hammer->skillIndex = 7;
+			this->_hammer->collisionLimit = 1;
+			this->_hammer->collisionType = COLLISION_TYPE_NONE;
+			this->_hammer->setSequence(11);
+			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+		}
+		break;
+
+	case ACTION_ja1_22B_HAMMER:
+	case ACTION_ja1_22C_HAMMER:
+		if (this->frameState.sequenceId == 2) {
+			this->applyGroundMechanics();
+			if (this->advanceFrame())
+				this->setAction(SokuLib::ACTION_FALLING);
+			break;
+		}
+		this->advanceFrame();
+		if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId != 0) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			return;
+		}
+		if (this->applyAirMechanics()) {
+			this->setSequence(2);
+			this->position.y = this->getGroundHeight();
+			this->resetForces();
+			break;
+		}
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
+			float hammerParams[5] = {-90.f, 25, 0, 1, 0};
+
+			if (this->frameState.actionId % 2 == 0)
+				hammerParams[0] += 90.f * this->direction;
+			else
+				hammerParams[0] += 45.f * this->direction;
+			this->playSFX(0);
+			this->collisionType = COLLISION_TYPE_HIT;
+			this->_hammerPickTimer = 20;
+			this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams);
+			this->_hammer->gravity.y = 0;
+			this->_hammer->skillIndex = 7;
+			this->_hammer->collisionLimit = 1;
+			this->_hammer->collisionType = COLLISION_TYPE_NONE;
+			this->_hammer->setSequence(11);
+			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+		}
+		if (this->frameState.poseId >= 3)
+			this->speed -= this->gravity;
+		else if (std::abs(this->speed.y) > 3)
+			this->speed.y = std::copysign(3, this->speed.y);
+		break;
+
 
 	case ACTION_USING_SC_ID_200_HAMMER:
 	case SokuLib::ACTION_USING_SC_ID_200:
@@ -2962,9 +3049,25 @@ void Tewi::initializeAction()
 		this->hasMoveBeenReset = true;
 		this->collisionLimit = 1;
 		break;
+	case ACTION_a1_22B:
+	case ACTION_a1_22C:
+		this->_hammer->collisionType = COLLISION_TYPE_NONE;
+		this->_hammer->collisionLimit = 0;
+		this->_hammer->speed = {0, 0};
+		this->_hammer->setSequence(12);
+		this->speed.x = 0;
+		this->speed.y = 0;
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->hasMoveBeenReset = true;
+		this->collisionLimit = 1;
+		break;
 	case ACTION_a1_214B:
 	case ACTION_a1_214B_HAMMER:
 		this->chargedAttack = true;
+	case ACTION_d22B:
+	case ACTION_d22C:
+	case ACTION_a1_22B_HAMMER:
+	case ACTION_a1_22C_HAMMER:
 	case ACTION_d214B:
 	case ACTION_d214C:
 	case ACTION_d214B_HAMMER:
@@ -3334,9 +3437,9 @@ bool Tewi::_processSkillsAirborne()
 			return true;
 		if (this->_useSkill(this->inputData.commandCombination._236c, 1, ACTION_jd236C))
 			return true;
-		if (this->_useSkill(this->inputData.commandCombination._22b, 3, ACTION_jd22B))
+		if (this->_useSkill(this->inputData.commandCombination._22b,  3, ACTION_jd22B))
 			return true;
-		if (this->_useSkill(this->inputData.commandCombination._22c, 3, ACTION_jd22C))
+		if (this->_useSkill(this->inputData.commandCombination._22c,  3, ACTION_jd22C))
 			return true;
 	} else {
 		if (this->_useSkill(this->inputData.commandCombination._623b, 0, ACTION_jd623B_HAMMER))
@@ -3347,9 +3450,14 @@ bool Tewi::_processSkillsAirborne()
 			return true;
 		if (this->_useSkill(this->inputData.commandCombination._236c, 1, ACTION_jd236C_HAMMER))
 			return true;
-		if (this->_useSkill(this->inputData.commandCombination._22b, 3, ACTION_jd22B_HAMMER))
+		if (this->_useSkill(this->inputData.commandCombination._22b,  3, ACTION_jd22B_HAMMER))
 			return true;
-		if (this->_useSkill(this->inputData.commandCombination._22c, 3, ACTION_jd22C_HAMMER))
+		if (this->_useSkill(this->inputData.commandCombination._22c,  3, ACTION_jd22C_HAMMER))
+			return true;
+
+		if (this->_useSkill(this->inputData.commandCombination._22b,  7, ACTION_ja1_22B_HAMMER))
+			return true;
+		if (this->_useSkill(this->inputData.commandCombination._22c,  7, ACTION_ja1_22C_HAMMER))
 			return true;
 	}
 	return false;
@@ -3736,6 +3844,10 @@ bool Tewi::_processSkillsGrounded()
 			return true;
 		if (this->_rabbitsStored && this->_useSkill(this->inputData.commandCombination._214c, 6, ACTION_a1_214C))
 			return true;
+		if (/*!this->_hammerPickTimer && */this->_useSkill(this->inputData.commandCombination._22b,  7, ACTION_a1_22B))
+			return true;
+		if (/*!this->_hammerPickTimer && */this->_useSkill(this->inputData.commandCombination._22c,  7, ACTION_a1_22C))
+			return true;
 	} else {
 		if (this->_useSkill(this->inputData.commandCombination._623b, 0, ACTION_d623B_HAMMER))
 			return true;
@@ -3769,6 +3881,10 @@ bool Tewi::_processSkillsGrounded()
 			return true;
 		if (this->_rabbitsStored && this->_useSkill(this->inputData.commandCombination._214c, 6, ACTION_a1_214C_HAMMER))
 			return true;
+		if (this->_useSkill(this->inputData.commandCombination._22b,  7, ACTION_a1_22B_HAMMER))
+			return true;
+		if (this->_useSkill(this->inputData.commandCombination._22c,  7, ACTION_a1_22C_HAMMER))
+			return true;
 	}
 	return false;
 }
@@ -3782,13 +3898,14 @@ bool Tewi::_canUseCard(int id)
 	case 100:
 	case 101:
 	case 103:
-	case 106:
+	case 107:
 	case 201:
 	case 208:
 		return true;
+	case 102:
 	case 104:
 	case 105:
-	case 102:
+	case 106:
 	case 200:
 	case 202:
 	case 203:
