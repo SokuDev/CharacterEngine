@@ -170,8 +170,12 @@
 
 	"588": "a.22B (Earthly Exit)",
 	"589": "a.22C (Earthly Exit)",
+	"590": "j.a.22B (Earthly Exit)",
+	"591": "j.a.22C (Earthly Exit)",
 	"592": "$CC6644h.a.22B (Earthly Exit)",
 	"593": "$CC6644h.a.22C (Earthly Exit)",
+	"594": "$CC6644j.h.a.22B (Earthly Exit)",
+	"595": "$CC6644j.h.a.22C (Earthly Exit)",
 
 
 	"600": "Earth Sign \"Hare Run\"",
@@ -244,6 +248,7 @@
 	"853": "Set & Strike objects",
 	"854": "Underground Business (B) objects",
 	"855": "Underground Business (C) objects",
+	"856": "Illusory Rabbit objects",
 
 	"990": "Sakuya tail object",
 	"991": "Reisen tail object"

@@ -13,10 +13,10 @@ void UBRabbit::update()
 		return;
 	}
 	this->advanceFrame();
-	if (this->frameState.currentFrame > 30)
+	if (this->frameState.currentFrame > 35)
 		this->lifetime = 0;
-	else if (this->frameState.currentFrame > 15)
-		this->renderInfos.color.a = (30 - this->frameState.currentFrame) * 255 / 15;
+	else if (this->frameState.currentFrame > 20)
+		this->renderInfos.color.a = (35 - this->frameState.currentFrame) * 255 / 15;
 	this->position.x += this->speed.x;
 	if (this->frameState.poseId == this->frameState.sequenceSize - 1) {
 		this->position.y += this->speed.y;
@@ -29,7 +29,7 @@ void UBRabbit::initializeAction()
 	if (this->frameState.actionId == 854)
 		return;
 
-	this->speed.y = 7.5;
+	this->speed.y = min(22.5, 7.5 + (this->gameData.opponent->position.y - this->position.y) / 25);
 	this->speed.x = 6 * this->direction;
 	this->collisionLimit = 1;
 }

@@ -18,7 +18,15 @@ void Hammer::update()
 	if (this->parentPlayerB->timeStop)
 		return;
 	if (this->frameState.sequenceId == 12) {
-		if (this->checkTurnIntoCrystals(false, 5, 5)) {
+		if (this->HP <= 0) {
+			this->collisionLimit = 0;
+			this->canStickOnWalls = 0;
+			this->nbBounceOnGround = 0;
+			this->speed.y = 7;
+			this->speed.x = std::copysign(2, -this->speed.x);
+			this->gravity.y = 0.25;
+			this->setSequence(7);
+		} else if (this->checkTurnIntoCrystals(false, 5, 5)) {
 			this->setSequence(0);
 			this->gravity.y = 1;
 			this->canStickOnWalls = 0;
@@ -45,7 +53,15 @@ void Hammer::update()
 		this->angle = fmod(atan2(this->parentPlayerB->position.y + 75 - this->position.y, this->parentPlayerB->position.x - this->position.x) * 180 / M_PI + 360, 360);
 		this->velocity += 0.5;
 	} else if (this->frameState.sequenceId == 11) {
-		if (this->checkTurnIntoCrystals(false, 5, 5)) {
+		if (this->HP <= 0) {
+			this->collisionLimit = 0;
+			this->canStickOnWalls = 0;
+			this->nbBounceOnGround = 0;
+			this->speed.y = 7;
+			this->speed.x = std::copysign(2, -this->speed.x);
+			this->gravity.y = 0.25;
+			this->setSequence(7);
+		} else if (this->checkTurnIntoCrystals(false, 5, 5)) {
 			this->setSequence(0);
 			this->gravity.y = 1;
 			this->canStickOnWalls = 0;
@@ -64,6 +80,7 @@ void Hammer::update()
 			this->collisionLimit = 1;
 			this->collisionType = COLLISION_TYPE_NONE;
 			this->nextSequence();
+			this->HP = 500;
 		}
 	} else if (this->frameState.sequenceId == 10) {
 		this->renderInfos.zRotation = this->velocity;
@@ -92,6 +109,8 @@ void Hammer::update()
 			this->speed.x = 0;
 			this->speed.y = 0;
 			this->position.x = this->parentPlayerB->position.x;
+			this->position.x += this->position.x == 40;
+			this->position.x -= this->position.x == 1240;
 			this->gravity.y = 0.25;
 			this->setSequence(7);
 		}

@@ -23,6 +23,7 @@
 #include "objects/RabbitSolidarity.hpp"
 #include "objects/SetAndStrikeOrb.hpp"
 #include "objects/UBRabbit.hpp"
+#include "objects/IllusionRabbit.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -73,6 +74,8 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 	case 854:
 	case 855:
 		return new UBRabbit();
+	case 856:
+		return new IllusionRabbit();
 	case 998:
 		return new RotatingBlockingObject(120, 74, 40);
 	default:

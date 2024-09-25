@@ -23,6 +23,8 @@ private:
 	unsigned _hammerPickTimer = 0;
 	SokuLib::Vector2f _oldSpeed;
 	SokuLib::v2::GameObject *_tmpObject = nullptr;
+	unsigned _cropLimit = 400;
+	int _offset = 0;
 
 	static constexpr float HAMMER_BACKDASH_DECEL = 1.5;
 	static constexpr float HAMMER_BACKDASH_IMPULSE = -12.75;
@@ -227,6 +229,27 @@ public:
 		ACTION_ja1_22B_HAMMER =                  562,
 		ACTION_ja1_22C_HAMMER =                  563,
 
+		ACTION_a2_623B =                         564,
+		ACTION_a2_623C =                         565,
+		ACTION_a2_623B_HAMMER =                  568,
+		ACTION_a2_623C_HAMMER =                  569,
+		ACTION_a2_236B =                         572,
+		ACTION_a2_236C =                         573,
+		ACTION_a2_236B_HAMMER =                  576,
+		ACTION_a2_236C_HAMMER =                  577,
+		ACTION_a2_214B =                         580,
+		ACTION_a2_214C =                         581,
+		ACTION_a2_214B_HAMMER =                  584,
+		ACTION_a2_214C_HAMMER =                  585,
+		ACTION_a2_22B =                          588,
+		ACTION_a2_22C =                          589,
+		ACTION_ja2_22B =                         590,
+		ACTION_ja2_22C =                         591,
+		ACTION_a2_22B_HAMMER =                   592,
+		ACTION_a2_22C_HAMMER =                   593,
+		ACTION_ja2_22B_HAMMER =                  594,
+		ACTION_ja2_22C_HAMMER =                  595,
+
 		ACTION_USING_SC_ID_200_HAMMER =          620,
 		ACTION_USING_SC_ID_201_HAMMER =          621,
 		ACTION_USING_SC_ID_202_HAMMER =          622,
@@ -251,6 +274,7 @@ public:
 	Tewi(SokuLib::PlayerInfo &info);
 	~Tewi() override = default;
 
+	void render() override;
 	void update() override;
 	void initializeAction() override;
 	void handleInputs() override;
