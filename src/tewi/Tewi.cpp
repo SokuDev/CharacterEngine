@@ -2057,8 +2057,8 @@ void Tewi::update()
 	case ACTION_a2_623B_HAMMER:
 	case ACTION_a2_623C_HAMMER:
 		if (this->advanceFrame()) {
-			this->gravity.y = 0;
 			this->setAction(SokuLib::ACTION_FALLING);
+			break;
 		}
 		if (this->frameState.sequenceId == 1) {
 			this->applyGroundMechanics();
@@ -2095,14 +2095,22 @@ void Tewi::update()
 				}
 				if (this->frameState.poseId > 4)
 					this->speed.x -= 0.1;
-				if (this->isGrounded() && this->frameState.poseId > 5)
-					this->nextSequence();
+			} else {
+				if (this->frameState.poseFrame == 0 && this->frameState.poseId == 2) {
+					this->speed = {0, 20};
+					this->gravity.y = HAMMER_FALLING_GRAVITY;
+				}
+				if (this->frameState.poseFrame == 0 && this->frameState.poseId == 5) {
+					SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+					this->speed = {-4, 10};
+				}
+				this->speed.y -= this->gravity.y;
 			}
 			if (this->_cropLimit < 400 && this->frameState.poseId != 0) {
 				this->_offset = 20;
 				this->_cropLimit += 20;
-			} else
-				this->_offset = 0;
+			} else if (this->_offset)
+				this->_offset--;
 		} else
 			this->applyGroundMechanics();
 		break;
