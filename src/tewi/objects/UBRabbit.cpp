@@ -6,6 +6,8 @@
 
 void UBRabbit::update()
 {
+	if (this->parentPlayerB->timeStop)
+		return;
 	if (this->frameState.actionId == 854) {
 		this->position.x += this->direction;
 		if (this->advanceFrame())

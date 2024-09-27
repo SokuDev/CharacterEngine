@@ -78,6 +78,8 @@ add_library(
 	src/tewi/objects/UBRabbit.hpp
 	src/tewi/objects/IllusionRabbit.cpp
 	src/tewi/objects/IllusionRabbit.hpp
+	src/tewi/objects/SubterraneanAnimism.cpp
+	src/tewi/objects/SubterraneanAnimism.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG> OBJECT_MEMORY_SIZE=8 _USE_MATH_DEFINES)

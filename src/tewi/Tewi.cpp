@@ -2115,6 +2115,25 @@ void Tewi::update()
 			this->applyGroundMechanics();
 		break;
 
+	case ACTION_a2_236B:
+	case ACTION_a2_236C:
+	case ACTION_a2_236B_HAMMER:
+	case ACTION_a2_236C_HAMMER:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 0 && this->frameState.currentFrame == 20) {
+			if (this->_hammer)
+				this->createObject(857, this->gameData.opponent->position.x - (100 + 200 * (this->frameState.actionId % 2)) * this->direction, this->gameData.opponent->getGroundHeight(), this->direction, 1)->skillIndex = 9;
+			else
+				this->createObject(858, this->gameData.opponent->position.x - (100 * (this->frameState.actionId % 2)) * this->direction, this->gameData.opponent->getGroundHeight(), this->direction, 1)->skillIndex = 9;
+			this->collisionType = COLLISION_TYPE_HIT;
+		}
+		if (this->frameState.sequenceId == 0 && this->frameState.currentFrame == 40)
+			this->nextSequence();
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 30)
+			this->nextSequence();
+		break;
 
 	case ACTION_USING_SC_ID_200_HAMMER:
 	case SokuLib::ACTION_USING_SC_ID_200:
@@ -3149,6 +3168,10 @@ void Tewi::initializeAction()
 	case ACTION_a2_623C:
 	case ACTION_a2_623B_HAMMER:
 	case ACTION_a2_623C_HAMMER:
+	case ACTION_a2_236B:
+	case ACTION_a2_236C:
+	case ACTION_a2_236B_HAMMER:
+	case ACTION_a2_236C_HAMMER:
 		this->speed.x = 0;
 		this->speed.y = 0;
 		this->collisionType = COLLISION_TYPE_NONE;
@@ -3902,6 +3925,10 @@ bool Tewi::_processSkillsGrounded()
 			return true;
 		if (this->_useSkill(this->inputData.commandCombination._236c, 5, ACTION_a1_236C))
 			return true;
+		if (this->_useSkill(this->inputData.commandCombination._236b, 9, ACTION_a2_236B))
+			return true;
+		if (this->_useSkill(this->inputData.commandCombination._236c, 9, ACTION_a2_236C))
+			return true;
 
 		if (this->_useSkill(this->inputData.commandCombination._214b, 2, ACTION_d214B))
 			return true;
@@ -3944,6 +3971,10 @@ bool Tewi::_processSkillsGrounded()
 		if (this->_useSkill(this->inputData.commandCombination._236b, 5, ACTION_a1_236B_HAMMER))
 			return true;
 		if (this->_useSkill(this->inputData.commandCombination._236c, 5, ACTION_a1_236C_HAMMER))
+			return true;
+		if (this->_useSkill(this->inputData.commandCombination._236b, 9, ACTION_a2_236B_HAMMER))
+			return true;
+		if (this->_useSkill(this->inputData.commandCombination._236c, 9, ACTION_a2_236C_HAMMER))
 			return true;
 
 		if (this->_useSkill(this->inputData.commandCombination._214b, 2, ACTION_d214B_HAMMER))
@@ -3988,6 +4019,7 @@ bool Tewi::_canUseCard(int id)
 	case 105:
 	case 106:
 	case 108:
+	case 109:
 	case 200:
 	case 202:
 	case 203:
