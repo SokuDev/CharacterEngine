@@ -39,7 +39,10 @@ void Hammer::update()
 		this->position += this->speed;
 		this->speed.x = std::cos(this->angle * M_PI / 180) * this->velocity;
 		this->speed.y = std::sin(this->angle * M_PI / 180) * this->velocity;
-		if (std::pow(this->parentPlayerB->position.x - this->position.x, 2) + std::pow(this->parentPlayerB->position.y + 75 - this->position.y, 2) < 10000) {
+		if (
+			((Tewi *)this->parentPlayerB)->getHammerPickTimer() == 0 &&
+			std::pow(this->parentPlayerB->position.x - this->position.x, 2) + std::pow(this->parentPlayerB->position.y + 75 - this->position.y, 2) < 10000
+		) {
 			short action;
 
 			if (!this->parentPlayerB->isGrounded())
@@ -137,7 +140,11 @@ void Hammer::update()
 		}
 		this->speed.x = std::cos(this->angle * M_PI / 180) * this->velocity;
 		this->speed.y = std::sin(this->angle * M_PI / 180) * this->velocity;
-		if (this->noAutoPickUp == 0 && std::pow(this->parentPlayerB->position.x - this->position.x, 2) + std::pow(this->parentPlayerB->position.y + 75 - this->position.y, 2) < 10000) {
+		if (
+			((Tewi *)this->parentPlayerB)->getHammerPickTimer() == 0 &&
+			this->noAutoPickUp == 0 &&
+			std::pow(this->parentPlayerB->position.x - this->position.x, 2) + std::pow(this->parentPlayerB->position.y + 75 - this->position.y, 2) < 10000
+		) {
 			short action;
 
 			if (!this->parentPlayerB->isGrounded())
@@ -154,7 +161,11 @@ void Hammer::update()
 		this->position += this->speed;
 		this->speed.x += (this->parentPlayer->position.x - this->position.x) / 1000;
 		this->speed.y += (this->parentPlayer->position.y + 75 - this->position.y) / 1000;
-		if (this->noAutoPickUp == 0 && std::pow(this->parentPlayerB->position.x - this->position.x, 2) + std::pow(this->parentPlayerB->position.y + 75 - this->position.y, 2) < 10000) {
+		if (
+			((Tewi *)this->parentPlayerB)->getHammerPickTimer() == 0 &&
+			this->noAutoPickUp == 0 &&
+			std::pow(this->parentPlayerB->position.x - this->position.x, 2) + std::pow(this->parentPlayerB->position.y + 75 - this->position.y, 2) < 10000
+		) {
 			short action;
 
 			if (!this->parentPlayerB->isGrounded())

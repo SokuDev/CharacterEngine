@@ -23,12 +23,12 @@ Rare 10%",,,,,,,,sort
 103,"Throw & Catch                      ",1,4,"",0,1,107,1,111,1,0,0,3,140
 104,"Set & Strike                       ",1,2,"",0,1,108,1,0,1,0,0,3,101
 105,"Hare Hunt                          ",1,0,"",0,1,109,1,0,1,0,0,3,111
-106,"Underground Business               ",1,1,"",0,1,110,1,0,1,0,0,3,121, S:P doll, low melee rabbit
+106,"Underground Business               ",1,1,"",0,1,110,1,0,1,0,0,3,121
 107,"Hammerang                          ",1,4,"",0,1,111,1,0,1,0,0,3,141
 108,"Illusory Rabbit                    ",1,2,"",0,1,112,1,0,1,0,0,3,102
-109,"Subterranean Animism               ",1,0,"",0,1,113,1,0,1,0,0,3,112, Full screen check (pillar with H, rabbit in HL). Patchy d22
+109,"Subterranean Animism               ",1,0,"",0,1,113,1,0,1,0,0,3,112
 110,"Bamboo Farm                        ",1,1,"",0,1,114,1,0,1,0,0,3,122
-111,"Earthly Exit                       ",1,4,"",0,1,115,1,0,1,0,0,3,142
+111,"Hidden Burrow                      ",1,4,"",0,1,115,1,0,1,0,0,3,142
 200,"Earth Sign \"Hare Run\"            ",2,5,"Grabs the opponent and throw her    into the air. Press an attack to    catch the opponent on the way down. The better the timing\, the better   the reward",0,2,203,4,0,0,0,0,3,250
 201,"Runaway Rabbit \"Fluster Escape\"  ",2,3,"",0,2,204,4,0,0,0,0,3,230
 202,"Earth Sign \"Gaia's Fumes\"        ",2,2,"",0,2,205,4,0,0,0,0,3,220

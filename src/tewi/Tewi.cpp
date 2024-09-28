@@ -1888,8 +1888,8 @@ void Tewi::update()
 	case ACTION_a1_236B_HAMMER:
 	case ACTION_a1_236C_HAMMER: {
 		float rabbitData[6] = {
-			10, 7.5, 4,
-			6, 12.5, 4
+			10, 7.5, 1.f + this->effectiveSkillLevel[5],
+			6, 12.5, 1.f + this->effectiveSkillLevel[5]
 		};
 
 		if (this->_checkDashSlide() || (this->frameState.sequenceId == 1 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0))
@@ -2171,9 +2171,11 @@ void Tewi::update()
 		}
 		if (this->frameState.sequenceId == 1 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+			if (this->effectiveSkillLevel[11] == 4)
+				this->nextSequence();
+			this->_hammer->collisionLimit = 0;
 			this->_hammer->position.x = this->gameData.opponent->position.x;
 			this->_hammer->position.y = this->gameData.opponent->position.y + 250;
-			this->_hammer->collisionLimit = 0;
 			this->_hammer->setSequence(0);
 			this->_hammer->speed.x = 0;
 			this->_hammer->speed.y = 0;
@@ -2197,10 +2199,16 @@ void Tewi::update()
 		if (this->frameState.sequenceId == 1 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 			this->position = this->_hammer->position;
+			if (this->position.x < this->gameData.opponent->position.x)
+				this->direction = SokuLib::RIGHT;
+			if (this->position.x > this->gameData.opponent->position.x)
+				this->direction = SokuLib::LEFT;
 			if (this->position.y == this->getGroundHeight())
 				this->setActionSequence(ACTION_a2_22C, 1);
 			else
 				this->setActionSequence(ACTION_ja2_22C, 1);
+			if (this->effectiveSkillLevel[11] == 4)
+				this->nextSequence();
 		}
 		if (this->frameState.sequenceId == 2)
 			this->speed.y -= this->gravity.y;
@@ -2217,15 +2225,17 @@ void Tewi::update()
 		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 1 && this->frameState.poseFrame == 0) {
 			this->playSFX(20);
 			this->createObject(861, this->position.x, this->position.y, this->direction, 1);
-			this->createObject(861, this->position.x + 300 * this->direction * (this->frameState.actionId % 2 == 0 ? 1 : -1), this->position.y, this->direction, 1);
+			this->createObject(861, this->position.x + 200 * this->direction * (this->frameState.actionId % 2 == 0 ? 1 : -1), this->position.y, this->direction, 1);
 		}
 		if (this->frameState.sequenceId == 1 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
-			this->position.x += 300 * this->direction * (this->frameState.actionId % 2 == 0 ? 1 : -1);
+			this->position.x += 200 * this->direction * (this->frameState.actionId % 2 == 0 ? 1 : -1);
 			if (this->position.x < this->gameData.opponent->position.x)
 				this->direction = SokuLib::RIGHT;
 			if (this->position.x > this->gameData.opponent->position.x)
 				this->direction = SokuLib::LEFT;
+			if (this->effectiveSkillLevel[11] == 4)
+				this->nextSequence();
 		}
 		if (this->frameState.sequenceId == 2)
 			this->speed.y -= this->gravity.y;
@@ -2235,7 +2245,7 @@ void Tewi::update()
 	case SokuLib::ACTION_USING_SC_ID_200:
 		this->applyGroundMechanics();
 		if (this->frameState.sequenceId != 0)
-			this->_hammerPickTimer = 1;
+			this->_hammerPickTimer = 2;
 		if (this->frameState.sequenceId == 0) {
 			this->advanceFrame();
 			if (this->frameState.sequenceId == 1)
@@ -4161,6 +4171,7 @@ bool Tewi::_canUseCard(int id)
 	case 101:
 	case 103:
 	case 107:
+	case 111:
 	case 201:
 	case 208:
 		return true;
@@ -4525,4 +4536,9 @@ void Tewi::render()
 	AnimationObject::render();
 	memcpy(this->sprite.vertices, old2, sizeof(this->sprite.vertices));
 	memcpy(this->sprite.baseCoords, old, sizeof(this->sprite.baseCoords));
+}
+
+unsigned Tewi::getHammerPickTimer()
+{
+	return this->_hammerPickTimer;
 }

@@ -168,14 +168,14 @@
 	"584": "$CC6644h.a.214B (Bamboo Farm)",
 	"585": "$CC6644h.a.214C (Bamboo Farm)",
 
-	"588": "a.22B (Earthly Exit)",
-	"589": "a.22C (Earthly Exit)",
-	"590": "j.a.22B (Earthly Exit)",
-	"591": "j.a.22C (Earthly Exit)",
-	"592": "$CC6644h.a.22B (Earthly Exit)",
-	"593": "$CC6644h.a.22C (Earthly Exit)",
-	"594": "$CC6644j.h.a.22B (Earthly Exit)",
-	"595": "$CC6644j.h.a.22C (Earthly Exit)",
+	"588": "a.22B (Tactical Retreat)",
+	"589": "a.22C (Tactical Retreat)",
+	"590": "j.a.22B (Tactical Retreat)",
+	"591": "j.a.22C (Tactical Retreat)",
+	"592": "$CC6644h.a.22B (Tactical Retreat)",
+	"593": "$CC6644h.a.22C (Tactical Retreat)",
+	"594": "$CC6644j.h.a.22B (Tactical Retreat)",
+	"595": "$CC6644j.h.a.22C (Tactical Retreat)",
 
 
 	"600": "Earth Sign \"Hare Run\"",
@@ -239,6 +239,7 @@
 	"827": "Unexpected Assistance Meiling object",
 	"828": "Unexpected Assistance Utsuho object",
 	"829": "Unexpected Assistance Suwako object",
+	"830": "Unexpected Assistance Namazu object",
 
 	"848": "Hare Run Grab object",
 	"849": "Hare Run Smoke object",
@@ -253,7 +254,7 @@
 	"858": "Subterranean Animism (hammer) objects",
 	"859": "Bamboo Farm (B) objects",
 	"860": "Bamboo Farm (C) objects",
-	"861": "Earthly Exit objects",
+	"861": "Tactical Retreat objects",
 
 	"990": "Sakuya tail object",
 	"991": "Reisen tail object"

@@ -16,8 +16,7 @@ void IllusionRabbit::update()
 	this->advanceFrame();
 	this->position.x += this->speed.x * this->direction;
 	this->position.y += this->speed.y;
-	if (this->speed.y > 0)
-		this->speed.y -= 0.5;
+	this->speed.y -= this->gravity.y;
 	if (this->renderInfos.color.a != 255) {
 		if (this->renderInfos.color.a <= 11)
 			this->lifetime = 0;
@@ -33,9 +32,12 @@ void IllusionRabbit::update()
 		this->renderInfos.color.a -= 11;
 		this->parentPlayerB->nextPose();
 	}
+	if (this->gravity.y && this->isOnGround())
+		this->renderInfos.color.a -= 11;
 	if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
 		this->parentPlayerB->playSFX(3);
 		this->speed = {10, 12};
+		this->gravity.y = 0.5;
 	}
 	if (this->frameState.poseId == 4 && this->isOnGround())
 		this->lifetime = 0;

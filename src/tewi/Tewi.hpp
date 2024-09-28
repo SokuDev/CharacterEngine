@@ -286,6 +286,7 @@ public:
 
 	SokuLib::v2::GameObject *getHammer() const;
 	void setRabbitAnimation();
+	unsigned getHammerPickTimer();
 
 	static void hook();
 	static void unhook();
