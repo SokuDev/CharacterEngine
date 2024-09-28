@@ -39,9 +39,11 @@ void SubterraneanAnimism::initializeAction()
 	this->collisionLimit = 1;
 	if (this->frameState.actionId == 858) {
 		this->setSequence(min(4, this->parentPlayerB->effectiveSkillLevel[9] - 1));
+		this->parentPlayerB->playSFX(21);
 		return;
 	}
 
 	this->speed.y = min(22.5, 7.5 + (this->gameData.opponent->position.y - this->position.y) / 25);
 	this->speed.x = 6 * this->direction;
+	this->parentPlayerB->playSFX(3);
 }

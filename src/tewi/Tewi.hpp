@@ -19,6 +19,7 @@ private:
 
 	bool _rabbitAnimation = false;
 	unsigned char _rabbitsStored = 0;
+	unsigned char _nbBambooSpawned = 0;
 	SokuLib::v2::GameObject *_hammer = nullptr;
 	unsigned _hammerPickTimer = 0;
 	SokuLib::Vector2f _oldSpeed;

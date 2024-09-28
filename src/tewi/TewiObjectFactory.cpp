@@ -25,6 +25,7 @@
 #include "objects/UBRabbit.hpp"
 #include "objects/IllusionRabbit.hpp"
 #include "objects/SubterraneanAnimism.hpp"
+#include "objects/Bamboo.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -80,6 +81,9 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 	case 857:
 	case 858:
 		return new SubterraneanAnimism();
+	case 859:
+	case 860:
+		return new Bamboo();
 	case 998:
 		return new RotatingBlockingObject(120, 74, 40);
 	default:

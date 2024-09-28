@@ -1,0 +1,25 @@
+//
+// Created by PinkySmile on 28/09/24.
+//
+
+#include <cmath>
+#include "Bamboo.hpp"
+
+void Bamboo::update()
+{
+	this->advanceFrame();
+	if (this->frameState.sequenceId == 1) {
+		if (this->renderInfos.color.a < 11) {
+			this->lifetime = 0;
+			return;
+		}
+		this->renderInfos.color.a -= 11;
+		this->renderInfos.zRotation += 2;
+	}
+}
+
+void Bamboo::initializeAction()
+{
+	this->collisionLimit = 1;
+	this->renderInfos.zRotation = 22;
+}
