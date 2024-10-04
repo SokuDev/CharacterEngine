@@ -138,8 +138,12 @@
 
 	"540": "a.236B (Hare Hunt)",
 	"541": "a.236C (Hare Hunt)",
+	"542": "j.a.236B (Hare Hunt)",
+	"543": "j.a.236C (Hare Hunt)",
 	"544": "$CC6644h.a.236B (Hare Hunt)",
 	"545": "$CC6644h.a.236C (Hare Hunt)",
+	"546": "$CC6644j.h.a.236B (Hare Hunt)",
+	"547": "$CC6644j.h.a.236C (Hare Hunt)",
 
 	"548": "a.214B (Underground Business)",
 	"549": "a.214C (Underground Business)",
@@ -168,14 +172,14 @@
 	"584": "$CC6644h.a.214B (Bamboo Farm)",
 	"585": "$CC6644h.a.214C (Bamboo Farm)",
 
-	"588": "a.22B (Tactical Retreat)",
-	"589": "a.22C (Tactical Retreat)",
-	"590": "j.a.22B (Tactical Retreat)",
-	"591": "j.a.22C (Tactical Retreat)",
-	"592": "$CC6644h.a.22B (Tactical Retreat)",
-	"593": "$CC6644h.a.22C (Tactical Retreat)",
-	"594": "$CC6644j.h.a.22B (Tactical Retreat)",
-	"595": "$CC6644j.h.a.22C (Tactical Retreat)",
+	"588": "a.22B (Hidden Burrow)",
+	"589": "a.22C (Hidden Burrow)",
+	"590": "j.a.22B (Hidden Burrow)",
+	"591": "j.a.22C (Hidden Burrow)",
+	"592": "$CC6644h.a.22B (Hidden Burrow)",
+	"593": "$CC6644h.a.22C (Hidden Burrow)",
+	"594": "$CC6644j.h.a.22B (Hidden Burrow)",
+	"595": "$CC6644j.h.a.22C (Hidden Burrow)",
 
 
 	"600": "Earth Sign \"Hare Run\"",
@@ -254,7 +258,7 @@
 	"858": "Subterranean Animism (hammer) objects",
 	"859": "Bamboo Farm (B) objects",
 	"860": "Bamboo Farm (C) objects",
-	"861": "Tactical Retreat objects",
+	"861": "Hidden Burrow objects",
 
 	"990": "Sakuya tail object",
 	"991": "Reisen tail object"

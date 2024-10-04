@@ -18,7 +18,7 @@ void Hammer::update()
 	if (this->parentPlayerB->timeStop)
 		return;
 	if (this->frameState.sequenceId == 12) {
-		if (this->HP <= 0) {
+		if (this->HP <= 0 && this->collisionLimit) {
 			this->collisionLimit = 0;
 			this->canStickOnWalls = 0;
 			this->nbBounceOnGround = 0;

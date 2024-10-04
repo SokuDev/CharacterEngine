@@ -16,7 +16,6 @@ namespace UnexpectedAssistance
 	void Patchouli::update()
 	{
 		float params[3];
-		auto FUN_004b0e40 = (void (__thiscall *)(SokuLib::v2::GameObject *, int, int, int, int, short, short, short))0x4B0E40;
 
 		if (this->parentPlayerB->timeStop)
 			return;
@@ -64,7 +63,7 @@ namespace UnexpectedAssistance
 				this->renderInfos.scale.x = (1.0 - this->unknown378) * 25.0 + 1.0;
 				this->renderInfos.scale.y = (1.0 - this->unknown378) * 25.0 + 1.0;
 				this->unknown378 *= 0.95;
-				FUN_004b0e40(this, this->renderInfos.scale.x * -70, this->renderInfos.scale.x * 70, this->renderInfos.scale.x * 70, this->renderInfos.scale.x * -70, 0, 0, 0);
+				this->setHitBoxData(this->renderInfos.scale.x * -70, this->renderInfos.scale.x * 70, this->renderInfos.scale.x * 70, this->renderInfos.scale.x * -70, 0, 0, 0);
 				this->checkGrazed(0);
 				if (this->frameState.currentFrame % 2 == 0) {
 					params[0] = SokuLib::rand(360);

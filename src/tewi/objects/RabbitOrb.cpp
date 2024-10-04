@@ -21,6 +21,11 @@ void RabbitOrb::update()
 			this->nextSequence();
 			return;
 		}
+		this->setHitBoxData(
+			this->renderInfos.scale.x * -35, this->renderInfos.scale.x * 35,
+			this->renderInfos.scale.x * 35, this->renderInfos.scale.x * -35,
+			this->renderInfos.zRotation, 0, 0
+		);
 		if (this->checkTurnIntoCrystals(false, 5, 5)) {
 			this->lifetime = 0;
 			return;
@@ -42,7 +47,7 @@ void RabbitOrb::update()
 				this->collisionType = COLLISION_TYPE_NONE;
 		}
 		if (this->frameState.currentFrame % 2 == 0)
-			this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1)->renderInfos.zRotation = this->renderInfos.zRotation;
+			this->createChild(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1)->renderInfos.zRotation = this->renderInfos.zRotation;
 		this->renderInfos.zRotation = fmod(this->renderInfos.zRotation + 30, 360);
 		this->position += this->speed;
 		this->speed.y -= this->gravity.y;
@@ -74,10 +79,13 @@ void RabbitOrb::update()
 void RabbitOrb::initializeAction()
 {
 	if (!this->customData) {
+		this->renderInfos.scale = this->parentObject->renderInfos.scale;
 		this->renderInfos.color.a = 0xA0;
 		this->setSequence(1);
 		return;
 	}
+	this->renderInfos.scale.x = 1 + this->parentPlayerB->effectiveSkillLevel[1] / 8.f;
+	this->renderInfos.scale.y = this->renderInfos.scale.x;
 	this->gravity.y = 0.5;
 	this->collisionLimit = 5;
 	this->speed.x = std::cos(this->customData[0] * M_PI / 180) * this->customData[1];
