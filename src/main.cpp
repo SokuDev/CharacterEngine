@@ -113,7 +113,7 @@ static void *getCharacterCardObject()
 
 static SokuLib::v2::Player *createCustomCharacter(int id, SokuLib::PlayerInfo &info)
 {
-	if (id == SokuLib::CHARACTER_TEWI) {
+	if (id == SokuLib::CHARACTER_TEWI || id == -1) {
 		if (!hooked)
 			Tewi::hook();
 		hooked = true;
@@ -420,7 +420,7 @@ extern "C" int APIENTRY DllMain(HMODULE hModule, DWORD fdwReason, LPVOID lpReser
 // When 2 mods define the same loading priority the loading order is undefined.
 extern "C" __declspec(dllexport) int getPriority()
 {
-	return 0;
+	return -1;
 }
 
 // Not yet implemented in the mod loader, subject to change
