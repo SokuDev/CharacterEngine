@@ -27,10 +27,10 @@ add_library(
         src/version.rc
         src/ProxyCharacter.hpp
         src/log.hpp
-        src/tewi/Tewi.hpp
-        src/tewi/Tewi.cpp
-	src/tewi/TewiObjectFactory.cpp
-	src/tewi/TewiObjectFactory.hpp
+        src/Characters/tewi/Tewi.hpp
+        src/Characters/tewi/Tewi.cpp
+	src/Characters/tewi/TewiObjectFactory.cpp
+	src/Characters/tewi/TewiObjectFactory.hpp
         src/Common/GameObjectList.hpp
 	src/Common/RotatingBlockingObject.cpp
 	src/Common/RotatingBlockingObject.hpp
@@ -42,46 +42,46 @@ add_library(
         src/Common/Memory.hpp
 	src/Common/AnglableObject.cpp
 	src/Common/AnglableObject.hpp
-	src/tewi/objects/Hammer.cpp
-	src/tewi/objects/Hammer.hpp
-	src/tewi/objects/SpinningSmoke.cpp
-	src/tewi/objects/SpinningSmoke.hpp
-	src/tewi/objects/Rabbit.cpp
-	src/tewi/objects/Rabbit.hpp
-	src/tewi/objects/TaCRabbit.cpp
-	src/tewi/objects/TaCRabbit.hpp
-	src/tewi/objects/TrapHole.cpp
-	src/tewi/objects/TrapHole.hpp
-	src/tewi/objects/UnexpectedAssistanceObject/Reimu.cpp
-	src/tewi/objects/UnexpectedAssistanceObject/Reimu.hpp
-	src/tewi/objects/UnexpectedAssistanceObject/Marisa.cpp
-	src/tewi/objects/UnexpectedAssistanceObject/Marisa.hpp
-	src/tewi/objects/UnexpectedAssistanceObject/Sakuya.cpp
-	src/tewi/objects/UnexpectedAssistanceObject/Sakuya.hpp
-	src/tewi/objects/UnexpectedAssistanceObject/Alice.cpp
-	src/tewi/objects/UnexpectedAssistanceObject/Alice.hpp
-	src/tewi/objects/UnexpectedAssistanceObject/Patchouli.cpp
-	src/tewi/objects/UnexpectedAssistanceObject/Patchouli.hpp
-	src/tewi/objects/Bottle.cpp
-	src/tewi/objects/Bottle.hpp
-	src/tewi/objects/SpellTrapHole.cpp
-	src/tewi/objects/SpellTrapHole.hpp
-	src/tewi/objects/RabbitOrb.cpp
-	src/tewi/objects/RabbitOrb.hpp
-	src/tewi/objects/KillingRabbit.cpp
-	src/tewi/objects/KillingRabbit.hpp
-	src/tewi/objects/RabbitSolidarity.cpp
-	src/tewi/objects/RabbitSolidarity.hpp
-	src/tewi/objects/SetAndStrikeOrb.cpp
-	src/tewi/objects/SetAndStrikeOrb.hpp
-	src/tewi/objects/UBRabbit.cpp
-	src/tewi/objects/UBRabbit.hpp
-	src/tewi/objects/IllusionRabbit.cpp
-	src/tewi/objects/IllusionRabbit.hpp
-	src/tewi/objects/SubterraneanAnimism.cpp
-	src/tewi/objects/SubterraneanAnimism.hpp
-	src/tewi/objects/Bamboo.cpp
-	src/tewi/objects/Bamboo.hpp
+	src/Characters/tewi/objects/Hammer.cpp
+	src/Characters/tewi/objects/Hammer.hpp
+	src/Characters/tewi/objects/SpinningSmoke.cpp
+	src/Characters/tewi/objects/SpinningSmoke.hpp
+	src/Characters/tewi/objects/Rabbit.cpp
+	src/Characters/tewi/objects/Rabbit.hpp
+	src/Characters/tewi/objects/TaCRabbit.cpp
+	src/Characters/tewi/objects/TaCRabbit.hpp
+	src/Characters/tewi/objects/TrapHole.cpp
+	src/Characters/tewi/objects/TrapHole.hpp
+	src/Characters/tewi/objects/UnexpectedAssistanceObject/Reimu.cpp
+	src/Characters/tewi/objects/UnexpectedAssistanceObject/Reimu.hpp
+	src/Characters/tewi/objects/UnexpectedAssistanceObject/Marisa.cpp
+	src/Characters/tewi/objects/UnexpectedAssistanceObject/Marisa.hpp
+	src/Characters/tewi/objects/UnexpectedAssistanceObject/Sakuya.cpp
+	src/Characters/tewi/objects/UnexpectedAssistanceObject/Sakuya.hpp
+	src/Characters/tewi/objects/UnexpectedAssistanceObject/Alice.cpp
+	src/Characters/tewi/objects/UnexpectedAssistanceObject/Alice.hpp
+	src/Characters/tewi/objects/UnexpectedAssistanceObject/Patchouli.cpp
+	src/Characters/tewi/objects/UnexpectedAssistanceObject/Patchouli.hpp
+	src/Characters/tewi/objects/Bottle.cpp
+	src/Characters/tewi/objects/Bottle.hpp
+	src/Characters/tewi/objects/SpellTrapHole.cpp
+	src/Characters/tewi/objects/SpellTrapHole.hpp
+	src/Characters/tewi/objects/RabbitOrb.cpp
+	src/Characters/tewi/objects/RabbitOrb.hpp
+	src/Characters/tewi/objects/KillingRabbit.cpp
+	src/Characters/tewi/objects/KillingRabbit.hpp
+	src/Characters/tewi/objects/RabbitSolidarity.cpp
+	src/Characters/tewi/objects/RabbitSolidarity.hpp
+	src/Characters/tewi/objects/SetAndStrikeOrb.cpp
+	src/Characters/tewi/objects/SetAndStrikeOrb.hpp
+	src/Characters/tewi/objects/UBRabbit.cpp
+	src/Characters/tewi/objects/UBRabbit.hpp
+	src/Characters/tewi/objects/IllusionRabbit.cpp
+	src/Characters/tewi/objects/IllusionRabbit.hpp
+	src/Characters/tewi/objects/SubterraneanAnimism.cpp
+	src/Characters/tewi/objects/SubterraneanAnimism.hpp
+	src/Characters/tewi/objects/Bamboo.cpp
+	src/Characters/tewi/objects/Bamboo.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE DIRECTINPUT_VERSION=0x0800 CURL_STATICLIB _CRT_SECURE_NO_WARNINGS $<$<CONFIG:Debug>:_DEBUG> OBJECT_MEMORY_SIZE=8 _USE_MATH_DEFINES)

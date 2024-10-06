@@ -38,8 +38,8 @@
 # Build directories
 cmake-build-*
 build
-src/*/output
-src/*/pack
+src/Characters/*/output
+src/Characters/*/pack
 
 # Soku data files
 *.dat

@@ -1,0 +1,13 @@
+{
+    "internal_name": "tewi",
+    "prefered_index": 35,
+    "refuse_other_index": true,
+    "index_named_assets": false,
+    "character_dll": "Tewi.dll",
+    "character_internal_index": 0,
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "Tewi",
+    "full_name": "Tewi Inaba",
+    "skill_inputs": [623, 236, 214, 22],
+    "enabled": true
+}

@@ -4,7 +4,7 @@
 
 #include <SokuLib.hpp>
 #include "Memory.hpp"
-#include "tewi/Tewi.hpp"
+#include "Characters/tewi/Tewi.hpp"
 #include "log.hpp"
 #include "BasicObject.hpp"
 
