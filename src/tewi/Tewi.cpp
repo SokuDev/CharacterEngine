@@ -57,16 +57,19 @@ const std::map<unsigned short, unsigned short> hammerToSystem{
 	{ Tewi::ACTION_BE4_NO_HAMMER,                                   SokuLib::ACTION_BE4 },
 };
 const std::map<unsigned short, unsigned short> moveToHammer{
-	{ SokuLib::ACTION_5B,  Tewi::ACTION_5B_HAMMER  },
-	{ SokuLib::ACTION_j5B, Tewi::ACTION_j5B_HAMMER },
-	{ SokuLib::ACTION_6A,  Tewi::ACTION_6A_HAMMER  },
-	{ SokuLib::ACTION_j6A, Tewi::ACTION_j6A_HAMMER },
-	{ SokuLib::ACTION_2A,  Tewi::ACTION_2A_HAMMER  },
-	{ SokuLib::ACTION_j2A, Tewi::ACTION_j2A_HAMMER },
-	{ SokuLib::ACTION_3A,  Tewi::ACTION_3A_HAMMER  },
-	{ SokuLib::ACTION_j8A, Tewi::ACTION_j8A_HAMMER },
-	{ SokuLib::ACTION_f5A, Tewi::ACTION_f5A_HAMMER },
-	{ SokuLib::ACTION_j5A, Tewi::ACTION_j5A_HAMMER }
+	{ SokuLib::ACTION_5B,                      Tewi::ACTION_5B_HAMMER  },
+	{ SokuLib::ACTION_j5B,                     Tewi::ACTION_j5B_HAMMER },
+	{ SokuLib::ACTION_6A,                      Tewi::ACTION_6A_HAMMER  },
+	{ SokuLib::ACTION_j6A,                     Tewi::ACTION_j6A_HAMMER },
+	{ SokuLib::ACTION_2A,                      Tewi::ACTION_2A_HAMMER  },
+	{ SokuLib::ACTION_j2A,                     Tewi::ACTION_j2A_HAMMER },
+	{ SokuLib::ACTION_3A,                      Tewi::ACTION_3A_HAMMER  },
+	{ SokuLib::ACTION_j8A,                     Tewi::ACTION_j8A_HAMMER },
+	{ SokuLib::ACTION_f5A,                     Tewi::ACTION_f5A_HAMMER },
+	{ SokuLib::ACTION_j5A,                     Tewi::ACTION_j5A_HAMMER },
+	{ SokuLib::ACTION_HANGEKI,                 Tewi::ACTION_HANGEKI_HAMMER },
+	{ SokuLib::ACTION_LEFT_HANDED_FOLDING_FAN, Tewi::ACTION_LEFT_HANDED_FOLDING_FAN_HAMMER },
+	{ SokuLib::ACTION_SPELL_BREAKING_DRUG,     Tewi::ACTION_SPELL_BREAKING_DRUG_HAMMER },
 };
 
 Tewi::Tewi(SokuLib::PlayerInfo &info) :
@@ -957,15 +960,23 @@ void Tewi::update()
 		}
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_FALLING);
-		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 2)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 		break;
 	case SokuLib::ACTION_j8A:
 		if (
 			(this->frameState.sequenceId == 1 && this->frameState.poseId > 2) ||
-			(this->frameState.sequenceId == 0 && (this->frameState.poseId >= 2 || this->frameState.poseId < 1))
+			(this->frameState.sequenceId == 0 && (this->frameState.poseId >= 5 || this->frameState.poseId < 3))
 		)
 			this->speed -= this->gravity;
+		if (this->speed.y < 0 && (
+			(this->frameState.sequenceId == 1 && this->frameState.poseId <= 2) ||
+			(this->frameState.sequenceId == 0 && this->frameState.poseId < 5)
+		)) {
+			this->speed.y += 0.25;
+			if (this->speed.y > 0)
+				this->speed.y = 0;
+		}
 		if (this->frameState.sequenceId < 1 && this->inputData.keyInput.a == 0)
 			this->chargedAttack = false;
 		if (this->frameState.sequenceId == 2) {
@@ -984,17 +995,25 @@ void Tewi::update()
 			this->setAction(SokuLib::ACTION_FALLING);
 		if (this->frameState.currentFrame == 0 && this->frameState.sequenceId != 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0)
 			this->setAction(SokuLib::ACTION_FALLING);
-		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 2 && this->chargedAttack) {
-			this->nextSequence();
-			this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 122.0, this->direction, 1);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
+			this->speed.x = std::copysign(max(std::abs(this->speed.x), 2), this->speed.x);
+			this->speed.y = 0;
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
+		}
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 4) {
+			if (this->chargedAttack) {
+				this->nextSequence();
+				this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 122.0, this->direction, 1);
+			}
+			this->collisionType = COLLISION_TYPE_NONE;
+		}
+		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 5) {
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+			this->speed.y = 5;
 		}
 		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 2) {
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
 			this->speed.y = 9;
-		}
-		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3) {
-			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
-			this->speed.y = 5;
 		}
 		break;
 	case SokuLib::ACTION_j2A:
@@ -1608,8 +1627,8 @@ void Tewi::update()
 	case ACTION_d236B_HAMMER:
 	case ACTION_d236C_HAMMER: {
 		float orbData[6] = {
-			90.f - this->direction * 15.f, 12.5, 2,
-			90.f - this->direction * 45.f, 10, 2
+			90.f - 15.f, 12.5, 2,
+			90.f - 45.f, 10, 2
 		};
 
 		if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0)
@@ -2127,6 +2146,7 @@ void Tewi::update()
 			if (this->frameState.currentFrame >= 70 - (this->effectiveSkillLevel[8] * 10))
 				this->nextSequence();
 		} else if (this->frameState.sequenceId == 4) {
+			this->_hammerPickTimer = 2;
 			if (this->frameState.poseFrame == 0 && this->frameState.poseId == 0)
 				this->setAction(SokuLib::ACTION_IDLE);
 			if (this->frameState.poseFrame == 0 && this->frameState.poseId == 1) {
@@ -3025,6 +3045,32 @@ void Tewi::update()
 		this->createEffect(141, this->position.x, this->position.y + 100.f, this->direction, -1);
 		this->createEffect(142, this->position.x, this->position.y,         this->direction, -1);
 		return;
+
+	case ACTION_HANGEKI_HAMMER:
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+		break;
+
+	case SokuLib::ACTION_HANGEKI:
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->speed.x > 0)
+			this->speed.x -= 1;
+		if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0)
+			this->speed.x = 10;
+		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+		break;
+
+	case ACTION_LEFT_HANDED_FOLDING_FAN_HAMMER:
+	case ACTION_SPELL_BREAKING_DRUG_HAMMER:
+		this->frameState.actionId -= 3;
+		this->updateDefaultBehavior();
+		this->frameState.actionId += 3;
+		break;
+
 	default: {
 		int old = this->frameState.poseFrame;
 
@@ -3076,6 +3122,7 @@ void Tewi::initializeAction()
 	if (it != hammerToSystem.end())
 		this->frameState.actionId = it->second;
 	switch (this->frameState.actionId) {
+		break;
 	case SokuLib::ACTION_WALK_FORWARD:
 		this->speed.x = this->_hammer ? FRONT_WALK_SPEED : HAMMER_FRONT_WALK_SPEED;;
 		break;
@@ -3152,8 +3199,14 @@ void Tewi::initializeAction()
 		this->hasMoveBeenReset = true;
 		this->collisionLimit = 1;
 		break;
-	case SokuLib::ACTION_j2A:
 	case SokuLib::ACTION_j8A:
+		this->chargedAttack = true;
+		this->gravity.y = FALLING_GRAVITY / 2;
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->hasMoveBeenReset = true;
+		this->collisionLimit = 2;
+		break;
+	case SokuLib::ACTION_j2A:
 		this->chargedAttack = true;
 	case SokuLib::ACTION_j6A:
 	case SokuLib::ACTION_j5A:
@@ -3275,7 +3328,7 @@ void Tewi::initializeAction()
 		this->collisionLimit = 2 + this->effectiveSkillLevel[0];
 		break;
 	case ACTION_jd623B_HAMMER:
-		this->speed.x = 10;
+		this->speed.x = 7.5;
 		this->speed.y = 2.5;
 		this->gravity.y = 0.3;
 		this->collisionType = COLLISION_TYPE_NONE;
@@ -3447,6 +3500,14 @@ void Tewi::initializeAction()
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->hasMoveBeenReset = true;
 		break;
+	case ACTION_HANGEKI_HAMMER:
+	case ACTION_LEFT_HANDED_FOLDING_FAN_HAMMER:
+	case ACTION_SPELL_BREAKING_DRUG_HAMMER:
+		this->frameState.actionId -= 3;
+		Player::initializeAction();
+		this->frameState.actionId += 3;
+		break;
+
 	default:
 		Player::initializeAction();
 		break;
@@ -4257,9 +4318,12 @@ bool Tewi::_canUseCard(int id)
 	case 201:
 	case 208:
 		return true;
+	case 105:
+		if (this->effectiveSkillLevel[5] != 0 || SokuLib::activeWeather == SokuLib::WEATHER_SPRINKLE)
+			return true;
+		return this->isGrounded();
 	case 102:
 	case 104:
-	case 105:
 	case 106:
 	case 108:
 	case 109:

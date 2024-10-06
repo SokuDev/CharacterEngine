@@ -9,7 +9,8 @@ void Bamboo::update()
 {
 	this->advanceFrame();
 	this->checkGrazed(0);
-	this->checkProjectileHit(1);
+	if (this->checkProjectileHit(4))
+		this->nextSequence();
 	if (this->frameState.sequenceId == 1) {
 		if (this->renderInfos.color.a < 11) {
 			this->lifetime = 0;

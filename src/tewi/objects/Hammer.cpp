@@ -27,7 +27,7 @@ void Hammer::update()
 			this->gravity.y = 0.25;
 			this->setSequence(7);
 		} else if (this->checkTurnIntoCrystals(false, 5, 5)) {
-			this->setSequence(0);
+			this->setSequence(7);
 			this->gravity.y = 1;
 			this->canStickOnWalls = 0;
 			this->nbBounceOnGround = 1;
@@ -65,7 +65,7 @@ void Hammer::update()
 			this->gravity.y = 0.25;
 			this->setSequence(7);
 		} else if (this->checkTurnIntoCrystals(false, 5, 5)) {
-			this->setSequence(0);
+			this->setSequence(7);
 			this->gravity.y = 1;
 			this->canStickOnWalls = 0;
 			this->nbBounceOnGround = 1;
@@ -126,7 +126,7 @@ void Hammer::update()
 		this->parentPlayerB->spellBgTimer = 10;
 	} else if (this->frameState.sequenceId == 8) {
 		if (this->checkTurnIntoCrystals(false, 1, 5)) {
-			this->setSequence(0);
+			this->setSequence(7);
 			this->gravity.y = 1;
 			this->canStickOnWalls = 0;
 			this->nbBounceOnGround = 1;
@@ -176,6 +176,8 @@ void Hammer::update()
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_SLAP_HIT);
 		}
 	} else if (this->frameState.sequenceId == 0 || this->frameState.sequenceId == 7) {
+		if (this->frameState.sequenceId == 0 && this->checkTurnIntoCrystals(false, 0, 0))
+			this->setSequence(7);
 		if (this->collisionLimit) {
 			if (this->HP <= 0) {
 				this->collisionLimit = 0;
@@ -188,6 +190,7 @@ void Hammer::update()
 			} else if (this->checkTurnIntoCrystals(false, 1, 5)) {
 				this->collisionLimit = 0;
 				this->nbBounceOnGround = 0;
+				this->setSequence(7);
 			}
 		}
 		this->renderInfos.zRotation = fmod(this->renderInfos.zRotation + 30, 360);

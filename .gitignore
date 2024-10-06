@@ -39,3 +39,12 @@
 cmake-build-*
 build
 src/*/output
+src/*/pack
+
+# Soku data files
+*.dat
+*.cv0
+*.cv1
+*.cv2
+*.cv3
+*.cv4

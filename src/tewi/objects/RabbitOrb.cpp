@@ -49,7 +49,8 @@ void RabbitOrb::update()
 		if (this->frameState.currentFrame % 2 == 0)
 			this->createChild(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1)->renderInfos.zRotation = this->renderInfos.zRotation;
 		this->renderInfos.zRotation = fmod(this->renderInfos.zRotation + 30, 360);
-		this->position += this->speed;
+		this->position.x += this->speed.x * this->direction;
+		this->position.y += this->speed.y;
 		this->speed.y -= this->gravity.y;
 		if (this->isOnGround()) {
 			this->position.y = this->getGroundHeight();
