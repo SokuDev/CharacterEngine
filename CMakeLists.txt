@@ -88,4 +88,9 @@ target_include_directories(
 	src/Common
 )
 
-add_subdirectory(src/Characters/tewi)
+file(GLOB V_GLOB LIST_DIRECTORIES true "src/Characters/*")
+foreach(item ${V_GLOB})
+	if(IS_DIRECTORY ${item})
+		add_subdirectory(${item})
+	endif()
+endforeach()
