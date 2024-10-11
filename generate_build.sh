@@ -11,14 +11,21 @@ fi
 
 OUTPUT="$(realpath $1)"
 cd "$(dirname $0)"
+
 cmake --build $OUTPUT --target CharacterEngine || exit
 cmake --build $OUTPUT --target Soku2Loader || exit
+
 rm -f "$OUTPUT/Soku2Addon.zip"
 rm -f "$OUTPUT/CharacterEngine.zip"
 rm -rf "$OUTPUT/Soku2_package" "$OUTPUT/standalone"
 mkdir "$OUTPUT/Soku2_package" "$OUTPUT/standalone"
+
 cp "$OUTPUT/CharacterEngine.dll" "$OUTPUT/Soku2_package/$character"
+cp "$OUTPUT/Soku2Loader.dll" "$OUTPUT/Soku2_package/Soku2.dll"
+cp "src/Soku2Loader/Soku2Loader.ini" "$OUTPUT/Soku2_package/"
+cp "lib/Soku2Engine.dll" "$OUTPUT/Soku2_package/"
 cp "$OUTPUT/CharacterEngine.dll" "$OUTPUT/standalone/$character"
+
 for character in `ls src/Characters/`; do
 	echo "Checking $character"
 	OUT="$OUTPUT/$character"
@@ -27,10 +34,10 @@ for character in `ls src/Characters/`; do
 	mkdir -p "$OUT/data"
 	if [ -f "$OUT/$character.dat" ]; then
 		DATE1=$(stat -c '%Y' "$OUT/$character.dat")
-		for file in `find "$IN/data" -newer "$OUT/$character.dat" -name "*.png" -o -name "*.xml" -o -name "*wav" -o -name "*.csv" -o -name "*.pal" -o -name "${character}_labels.json"`; do
+		for file in `find "$IN/data" -name "*.png" -o -name "*.xml" -o -name "*wav" -o -name "*.csv" -o -name "*.pal" -o -name "${character}_labels.json"`; do
 			DATE2=$(stat -c '%Y' "$file")
 			RESULT="$OUT/data/$(echo $file | tail -c +$(echo "$IN/data/" | wc -c) | sed 's/.json$/.txt/g')"
-			if [ $DATE1 -lt $DATE2 ] || ! [ -f $RESULT ]; then
+			if [ $DATE1 -lt $DATE2 ] || ! [ -f $(echo $RESULT | sed 's/\.xml$/\.pat/g' | sed 's/\.csv$/\.cv1/g' | sed 's/\.png$/\.cv2/g' | sed 's/\.wav$/\.cv3/g') ]; then
 				mkdir -p $(dirname "$RESULT")
 				cp -f $file $RESULT
 				FILES="yes"
@@ -67,6 +74,8 @@ for character in `ls src/Characters/`; do
 	cat "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" > "$OUTPUT/Soku2_package/characters/$character/deck.cfg"
 done
 cd "$OUTPUT/Soku2_package"
+echo "Generating Soku2Addon.zip"
 zip ../Soku2Addon.zip -r .
 cd "$OUTPUT/standalone"
+echo "Generating CharacterEngine.zip"
 zip ../CharacterEngine.zip -r .
