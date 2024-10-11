@@ -4,34 +4,69 @@ if ! type shady-cli; then
 	export PATH="$(PWD)/shady/:$PATH"
 fi
 
-if [ $# -lt 1 ]; do
+if [ $# -lt 1 ]; then
 	echo "Usage: $0 <cmake_build_folder>"
 	exit 1
 fi
 
+OUTPUT="$(realpath $1)"
 cd "$(dirname $0)"
-make -C $1 CharacterEngine
+cmake --build $OUTPUT --target CharacterEngine || exit
+cmake --build $OUTPUT --target Soku2Loader || exit
+rm -f "$OUTPUT/Soku2Addon.zip"
+rm -f "$OUTPUT/CharacterEngine.zip"
+rm -rf "$OUTPUT/Soku2_package" "$OUTPUT/standalone"
+mkdir "$OUTPUT/Soku2_package" "$OUTPUT/standalone"
+cp "$OUTPUT/CharacterEngine.dll" "$OUTPUT/Soku2_package/$character"
+cp "$OUTPUT/CharacterEngine.dll" "$OUTPUT/standalone/$character"
 for character in `ls src/Characters/`; do
-	OUT="$1/$character"
+	echo "Checking $character"
+	OUT="$OUTPUT/$character"
 	IN="src/Characters/$character"
+	FILES=""
 	mkdir -p "$OUT/data"
 	if [ -f "$OUT/$character.dat" ]; then
-		for file in `find "$OUT/data" -newer "$OUT/$character.dat" -name "*.png" -o -name "*.xml" -o -name "*wav" -o -name "*.csv" -o -name "${character}_labels.json"`; do
-			mkdir -p $(dirname "$file")
-			cp -f $file "$OUT/data/$(echo $file | sed 's/.json$/.txt/g')"
+		DATE1=$(stat -c '%Y' "$OUT/$character.dat")
+		for file in `find "$IN/data" -newer "$OUT/$character.dat" -name "*.png" -o -name "*.xml" -o -name "*wav" -o -name "*.csv" -o -name "*.pal" -o -name "${character}_labels.json"`; do
+			DATE2=$(stat -c '%Y' "$file")
+			RESULT="$OUT/data/$(echo $file | tail -c +$(echo "$IN/data/" | wc -c) | sed 's/.json$/.txt/g')"
+			if [ $DATE1 -lt $DATE2 ] || ! [ -f $RESULT ]; then
+				mkdir -p $(dirname "$RESULT")
+				cp -f $file $RESULT
+				FILES="yes"
+			fi
 		done
 	else
-		for file in `find "$OUT/data" -name "*.png" -o -name "*.xml" -o -name "*wav" -o -name "*.csv" -o -name "${character}_labels.json"`; do
-			mkdir -p $(dirname "$file")
-			cp -f $file "$OUT/data/$(echo $file | sed 's/.json$/.txt/g')"
+		for file in `find "$IN/data" -name "*.png" -o -name "*.xml" -o -name "*wav" -o -name "*.csv" -o -name "*.pal" -o -name "${character}_labels.json"`; do
+			RESULT="$OUT/data/$(echo $file | tail -c +$(echo "$IN/data/" | wc -c) | sed 's/.json$/.txt/g')"
+			mkdir -p $(dirname "$RESULT")
+			cp -f $file $RESULT
+			FILES="yes"
 		done
 	fi
-	for file in `find "$OUT/data" -name "*.png" -o -name "*.xml" -o -name "*wav" -o -name "*.csv"`; do
-		cd "$(dirname $file)"
-		shady-cli convert $file
-		rm $file
-		cd - >/dev/null
-	done
-	rm -f "$1/$character/$character.dat"
-	shady-cli pack -o "$1/$character/$character.dat" -m data "$1/$character"
-fi
+	if [ -z $FILES ]; then
+		echo "Assets are clean"
+	else
+		for file in `find "$OUT/data" -name "*.png" -o -name "*.xml" -o -name "*wav" -o -name "*.csv"`; do
+			cd "$(dirname $file)"
+			shady-cli convert $file | grep --color=never Converting
+			rm $file
+			cd - >/dev/null
+		done
+		rm -f "$OUTPUT/$character/$character.dat"
+		shady-cli pack -o "$OUT/$character.dat" -m data "$OUT"
+	fi
+	DLL="$(cat "$IN/character.json" | jq .character_dll | sed -r 's/^"(.*)"$/\1/g')"
+	echo "Building $DLL"
+	cmake --build $OUTPUT --target $(echo $DLL | sed -r 's/^(.*)\..*$/\1/g')
+	mkdir -p "$OUTPUT/Soku2_package/characters/$character" "$OUTPUT/standalone/characters/$character"
+	cp "$OUTPUT/src/Characters/$character/$DLL" "$OUT/$character.dat" "$IN/character.json" "$OUTPUT/standalone/characters/$character"
+	cp "$OUTPUT/src/Characters/$character/$DLL" "$OUT/$character.dat" "$IN/character.json" "$OUTPUT/Soku2_package/characters/$character"
+	echo ";#" > "$OUTPUT/Soku2_package/characters/$character/dummy.asm"
+	echo "return function() end" > "$OUTPUT/Soku2_package/characters/$character/dummy.lua"
+	cat "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" > "$OUTPUT/Soku2_package/characters/$character/deck.cfg"
+done
+cd "$OUTPUT/Soku2_package"
+zip ../Soku2Addon.zip -r .
+cd "$OUTPUT/standalone"
+zip ../CharacterEngine.zip -r .

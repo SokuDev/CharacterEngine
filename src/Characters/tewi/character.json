@@ -1,10 +1,9 @@
 {
     "internal_name": "tewi",
-    "prefered_index": 35,
-    "refuse_other_index": true,
-    "index_named_assets": false,
+    "index": 35,
+    "index_named_assets": true,
     "character_dll": "Tewi.dll",
-    "character_internal_index": 0,
+    "data": "tewi.dat",
     "skill_sprite_sheet": "sheet_skill.png",
     "short_name": "Tewi",
     "full_name": "Tewi Inaba",
