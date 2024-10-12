@@ -25,10 +25,16 @@ cp "$OUTPUT/Soku2Loader.dll" "$OUTPUT/Soku2_package/Soku2.dll"
 cp "src/Soku2Loader/Soku2Loader.ini" "$OUTPUT/Soku2_package/"
 mkdir -p "$OUTPUT/Soku2_package/config/info"
 cp "lib/Soku2Engine.dll" "$OUTPUT/Soku2_package/"
+cp "lib/MemoryPatch.dll" "$OUTPUT/Soku2_package/"
+cp "lib/MemoryPatch.ini" "$OUTPUT/Soku2_package/"
 cp "lib/SOKU2_base.lua" "$OUTPUT/Soku2_package/config/"
 cp "lib/characters_base.csv" "$OUTPUT/Soku2_package/config/info/"
 
-cp "$OUTPUT/CharacterEngine.dll" "$OUTPUT/standalone/$character"
+cp "$OUTPUT/CharacterEngine.dll" "$OUTPUT/standalone/Soku2.dll"
+mkdir -p "$OUTPUT/standalone/config/info"
+echo 'set_version("3.0")' > "$OUTPUT/standalone/config/SOKU2_base.lua"
+echo > "$OUTPUT/standalone/config/info/characters_base.csv"
+
 
 for character in `ls src/Characters/`; do
 	echo "Checking $character"
