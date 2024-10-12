@@ -36809,7 +36809,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="attackHAc003.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="95" texheight="59" xoffset="74" yoffset="117" duration="3" rendergroup="0">
-			<traits damage="2500" proration="900" chipdamage="0" spiritdamage="0" untech="60" power="100" limit="10" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="1000" yspeed="500" onhitsfx="2" onhiteffect="2" attacklevel="1">
+			<traits damage="4000" proration="900" chipdamage="0" spiritdamage="0" untech="60" power="100" limit="40" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="1000" yspeed="500" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<standing/>
 				<unblockable/>
@@ -36833,7 +36833,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="attackHAc004.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="89" texheight="112" xoffset="-4" yoffset="225" duration="2" rendergroup="0">
-			<traits damage="4500" proration="900" chipdamage="0" spiritdamage="0" untech="120" power="100" limit="100" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="1000" yspeed="1500" onhitsfx="4" onhiteffect="4" attacklevel="3">
+			<traits damage="5000" proration="900" chipdamage="0" spiritdamage="0" untech="120" power="100" limit="100" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="1000" yspeed="1500" onhitsfx="4" onhiteffect="4" attacklevel="3">
 				<liftmodifier/>
 				<standing/>
 				<unblockable/>
@@ -36847,7 +36847,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="attackHAc005.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="88" texheight="120" xoffset="-4" yoffset="241" duration="4" rendergroup="0">
-			<traits damage="3000" proration="900" chipdamage="0" spiritdamage="0" untech="60" power="100" limit="100" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="500" yspeed="1500" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="4000" proration="900" chipdamage="0" spiritdamage="0" untech="60" power="100" limit="100" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="500" yspeed="1500" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<standing/>
 				<unblockable/>
@@ -38879,7 +38879,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="attackHAc003.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="95" texheight="59" xoffset="74" yoffset="117" duration="3" rendergroup="0">
-			<traits damage="2500" proration="900" chipdamage="0" spiritdamage="0" untech="60" power="100" limit="10" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="1000" yspeed="500" onhitsfx="2" onhiteffect="2" attacklevel="1">
+			<traits damage="4000" proration="900" chipdamage="0" spiritdamage="0" untech="60" power="100" limit="40" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="1000" yspeed="500" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<standing/>
 				<unblockable/>
 				<spellattacktype/>
@@ -38901,7 +38901,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="attackHAc004.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="89" texheight="112" xoffset="-4" yoffset="225" duration="2" rendergroup="0">
-			<traits damage="4500" proration="900" chipdamage="0" spiritdamage="0" untech="120" power="100" limit="100" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="1000" yspeed="1500" onhitsfx="4" onhiteffect="4" attacklevel="3">
+			<traits damage="5000" proration="900" chipdamage="0" spiritdamage="0" untech="120" power="100" limit="100" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="1000" yspeed="1500" onhitsfx="4" onhiteffect="4" attacklevel="3">
 				<standing/>
 				<unblockable/>
 				<spellattacktype/>
@@ -38914,7 +38914,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="attackHAc005.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="88" texheight="120" xoffset="-4" yoffset="241" duration="4" rendergroup="0">
-			<traits damage="3000" proration="900" chipdamage="0" spiritdamage="0" untech="60" power="100" limit="100" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="500" yspeed="1500" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="4000" proration="900" chipdamage="0" spiritdamage="0" untech="60" power="100" limit="100" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="500" yspeed="1500" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<standing/>
 				<unblockable/>
 				<spellattacktype/>
