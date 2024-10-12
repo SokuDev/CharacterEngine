@@ -3772,7 +3772,7 @@ bool Tewi::_useSkill(bool input, unsigned char id, unsigned short action)
 	this->skillCancelsUsed[id % 4] = true;
 	this->renderInfos.zRotation = 0.0;
 	this->eventSkillUse();
-	this->useSkill(action, this->boxData.sequenceData->moveLock);
+	this->useSkill(action, this->gameData.sequenceData->moveLock);
 	this->skillIndex = id;
 	return true;
 }
@@ -4387,7 +4387,7 @@ bool Tewi::_useSkillCard(int id)
 	}
 	this->eventSkillUse();
 	this->onSkillUpgrade();
-	this->useSkill(action, this->boxData.sequenceData->moveLock);
+	this->useSkill(action, this->gameData.sequenceData->moveLock);
 	return true;
 }
 
@@ -4411,7 +4411,7 @@ bool Tewi::_useSpellCard(int id)
 		id += 50;
 	this->_offset = 0;
 	this->_cropLimit = 400;
-	this->useSpellCard(id, this->boxData.sequenceData->moveLock);
+	this->useSpellCard(id, this->gameData.sequenceData->moveLock);
 	return true;
 }
 
