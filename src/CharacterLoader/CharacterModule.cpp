@@ -51,6 +51,7 @@ void CharacterModule::load()
 {
 	auto path = this->_folder / this->_dll;
 
+	printf("Load %S\n", path.wstring().c_str());
 	this->_module = LoadLibraryW(path.wstring().c_str());
 	if (!this->_module)
 		throw std::runtime_error("Cannot load " + path.string() + ": LoadLibraryW: " + GetLastErrorAsString());
@@ -76,6 +77,9 @@ void CharacterModule::load()
 
 void CharacterModule::unload()
 {
+	auto path = this->_folder / this->_dll;
+
+	printf("Unload %S\n", path.wstring().c_str());
 	FreeLibrary(this->_module);
 }
 

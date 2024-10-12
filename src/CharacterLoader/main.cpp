@@ -33,8 +33,7 @@ static const char *names[] = {
 static SokuLib::Sprite extraSprites[sizeof(names) / sizeof(*names)];
 static wchar_t profilePath[MAX_PATH];
 static std::vector<CharacterModule> modules;
-static std::vector<CharacterModule> loadedModules;
-static void (__fastcall *og_deleteGameManager)(void *This);
+static std::map<void *, std::unique_ptr<CharacterModule>> loadedModules;
 
 static const unsigned createCustomCharacter_hook_ret = 0x46DE25;
 
@@ -51,8 +50,8 @@ static SokuLib::v2::Player *createCustomCharacter(int id, SokuLib::PlayerInfo &i
 		}
 	if (!module)
 		return nullptr;
-	loadedModules.emplace_back(*module);
-	module = &loadedModules.back();
+
+	module = new CharacterModule(*module);
 	while (true) {
 		try {
 			module->load();
@@ -62,9 +61,12 @@ static SokuLib::v2::Player *createCustomCharacter(int id, SokuLib::PlayerInfo &i
 			continue;
 		}
 		try {
-			return module->build(info);
+			auto chr = module->build(info);
+
+			loadedModules[chr].reset(module);
+			return chr;
 		} catch (std::exception &e) {
-			module->unload();
+			delete module;
 			if (MessageBoxA(nullptr, ("Failed to create character: " + std::string(e.what())).c_str(), "CharacterEngine error", MB_RETRYCANCEL) == IDCANCEL)
 				return nullptr;
 		}
@@ -204,6 +206,17 @@ void loadCharacterModules()
 			throw std::runtime_error("Failed loading " + path.string() + ": " + e.what());
 		}
 	}
+	std::sort(modules.begin(), modules.end(), [](const CharacterModule &module1, const CharacterModule &module2) -> bool{
+		return module1.getIndex() < module2.getIndex();
+	});
+}
+
+void __fastcall onCharacterDeleted(void *This)
+{
+	auto it = loadedModules.find(This);
+
+	if (it != loadedModules.end())
+		loadedModules.erase(it);
 }
 
 void generateSoku2Files()
@@ -289,12 +302,6 @@ void generateSoku2Files()
 	}
 }
 
-void __fastcall onGameEnd(void *This)
-{
-	og_deleteGameManager(This);
-	loadedModules.clear();
-}
-
 // We check if the game version is what we target (in our case, Soku 1.10a).
 extern "C" __declspec(dllexport) bool CheckVersion(const BYTE hash[16])
 {
@@ -345,7 +352,25 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
 	SokuLib::TamperNearJmpOpr(0x46DA71, createCustomCharacter_hook);
-	og_deleteGameManager = SokuLib::TamperNearJmpOpr(0x438701, onGameEnd);
+	// FIXME: Result screen hack
+	*(char *)0x4497CB = 0xC6;
+	*(char *)0x4497CC = 0x46;
+	*(char *)0x4497CD = 0x04;
+	*(char *)0x4497CE = 0x00;
+	*(char *)0x4497CF = 0xEB;
+	*(char *)0x4497D0 = 0x05;
+	*(char *)0x482039 = 0xE9;
+	*(char *)0x48203A = 0xA7;
+	*(char *)0x48203B = 0x00;
+	*(char *)0x48203C = 0x00;
+	*(char *)0x48203D = 0x00;
+	*(char *)0x48203E = 0x90;
+
+	// Detect character deletion
+	std::vector<unsigned char> extra = { 0x59 };
+	new SokuLib::Trampoline(0x46E687, (void (*)())onCharacterDeleted, 8, &extra, true, true);
+	*(char *)0x46E687 = 0x51;
+
 	if (!hasSoku2) {
 		SokuLib::TamperNearJmp(0x43F3F0, getCreateCustomCharacterName_hook);
 		SokuLib::TamperNearJmp(0x42129E, chrSelectPortrait_hook);
@@ -356,20 +381,6 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 		SokuLib::TamperNearCall(0x4356B5, selectDeckSlot_hook);
 		SokuLib::TamperNearCall(0x4356CB, selectDeckSlot_hook);
 		//*(char *)0x46DA6F = 0x12;
-
-		// FIXME: Result screen hack
-		*(char *)0x4497CB = 0xC6;
-		*(char *)0x4497CC = 0x46;
-		*(char *)0x4497CD = 0x04;
-		*(char *)0x4497CE = 0x00;
-		*(char *)0x4497CF = 0xEB;
-		*(char *)0x4497D0 = 0x05;
-		*(char *)0x482039 = 0xE9;
-		*(char *)0x48203A = 0xA7;
-		*(char *)0x48203B = 0x00;
-		*(char *)0x48203C = 0x00;
-		*(char *)0x48203D = 0x00;
-		*(char *)0x48203E = 0x90;
 
 		// Add extra characters to save data manager
 		SokuLib::TamperNearJmpOpr(0x44E102, getCharacterCardObject);
