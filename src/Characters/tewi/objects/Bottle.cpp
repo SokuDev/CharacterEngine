@@ -95,6 +95,7 @@ void Bottle::update()
 			this->gameData.opponent->renderInfos.color.g = 255;
 			this->gameData.opponent->renderInfos.color.b = 255;
 			this->lifetime = 0;
+			return;
 		}
 
 		if (this->customData[4] == 0) {

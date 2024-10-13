@@ -46340,6 +46340,294 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 	</move>
+	<move id="815" index="0" loop="1" movelock="0" actionlock="0">
+		<frame image="youmu/objectAa000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="64" texheight="64" xoffset="32" yoffset="32" duration="3" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="300" yscale="300" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="youmu/objectAa000.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="64" texheight="64" xoffset="32" yoffset="32" duration="3" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="290" yscale="290" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="815" index="1" loop="1" movelock="0" actionlock="0">
+		<frame image="youmu/objectAa000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="64" texheight="64" xoffset="32" yoffset="32" duration="4" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="200" yscale="200" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="815" index="2" loop="1" movelock="20" actionlock="0">
+		<frame image="youmu/objectAa002.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="64" yoffset="64" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="200" yscale="200" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="300" proration="970" chipdamage="75" spiritdamage="60" untech="45" power="100" limit="10" onhitplayerstun="0" onhitenemystun="5" onblockplayerstun="0" onblockenemystun="5" onhitcardgain="20" onblockcardgain="20" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="300" yspeed="1250" onhitsfx="3" onhiteffect="3" attacklevel="2">
+				<liftmodifier/>
+				<highrightblock/>
+				<airborne/>
+				<lowrightblock/>
+				<airblockable/>
+				<spellattacktype/>
+				<objectattacktype/>
+				<aflag18UNREFLECTABLE/>
+				<isbullet/>
+				<fflag25ATTACK_OBJECT/>
+			</traits>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="youmu/objectAa002.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="64" yoffset="64" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffff80" xscale="200" yscale="200" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="300" proration="970" chipdamage="75" spiritdamage="60" untech="45" power="100" limit="10" onhitplayerstun="0" onhitenemystun="5" onblockplayerstun="0" onblockenemystun="5" onhitcardgain="20" onblockcardgain="20" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="300" yspeed="1250" onhitsfx="3" onhiteffect="3" attacklevel="2">
+				<liftmodifier/>
+				<highrightblock/>
+				<airborne/>
+				<lowrightblock/>
+				<airblockable/>
+				<spellattacktype/>
+				<objectattacktype/>
+				<aflag18UNREFLECTABLE/>
+				<isbullet/>
+				<fflag25ATTACK_OBJECT/>
+			</traits>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="815" index="3" loop="1" movelock="0" actionlock="0">
+		<frame image="youmu/objectAa003.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="0" yoffset="64" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffc0" xscale="100" yscale="100" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="youmu/objectAa003.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="0" yoffset="64" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="100" yscale="100" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="815" index="4" loop="1" movelock="0" actionlock="0">
+		<frame image="youmu/objectAa000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="64" texheight="64" xoffset="32" yoffset="32" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="100" yscale="100" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="youmu/objectAa000.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="64" texheight="64" xoffset="32" yoffset="32" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="95" yscale="95" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="815" index="5" loop="1" movelock="0" actionlock="0">
+		<frame image="youmu/sword.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="32" texheight="32" xoffset="16" yoffset="18" duration="999" rendergroup="2">
+			<blend mode="0" color="ffffffff" xscale="200" yscale="200" vertflip="0" horzflip="0" angle="20"/>
+			<traits damage="750" proration="900" chipdamage="100" spiritdamage="100" untech="60" power="100" limit="10" onhitplayerstun="0" onhitenemystun="10" onblockplayerstun="0" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="200" yspeed="1500" onhitsfx="5" onhiteffect="6" attacklevel="2">
+				<liftmodifier/>
+				<highrightblock/>
+				<lowrightblock/>
+				<airblockable/>
+				<inducecounterhit/>
+				<spellattacktype/>
+				<objectattacktype/>
+				<aflag18UNREFLECTABLE/>
+				<fflag23AFTER_IMAGE/>
+				<isbullet/>
+				<ungrazeble/>
+			</traits>
+			<attack>
+				<box left="-26" up="-10" right="33" down="11"/>
+			</attack>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="815" index="6" loop="1" movelock="0" actionlock="0">
+		<frame image="youmu/objectAa000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="64" texheight="64" xoffset="32" yoffset="32" duration="3" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="600" yscale="600" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="youmu/objectAa000.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="64" texheight="64" xoffset="32" yoffset="32" duration="3" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="690" yscale="690" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="816" index="0" loop="0" movelock="0" actionlock="0">
+		<frame image="standHammer000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="0" texheight="0" xoffset="110" yoffset="176" duration="39" rendergroup="2">
+			<blend mode="1" color="0" xscale="400" yscale="400" vertflip="0" horzflip="180" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="816" index="1" loop="0" movelock="0" actionlock="0">
+		<frame image="standHammer000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="0" texheight="0" xoffset="78" yoffset="134" duration="20" rendergroup="2">
+			<blend mode="1" color="0" xscale="400" yscale="400" vertflip="0" horzflip="0" angle="-121"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="standHammer000.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="0" texheight="0" xoffset="78" yoffset="134" duration="15" rendergroup="2">
+			<blend mode="1" color="0" xscale="400" yscale="400" vertflip="0" horzflip="0" angle="-121"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="816" index="2" loop="1" movelock="40" actionlock="0">
+		<frame image="remilia/spellBulletBa033.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="256" xoffset="115" yoffset="129" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="400" yscale="400" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="350" proration="920" chipdamage="50" spiritdamage="100" untech="60" power="100" limit="10" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="74" ongroundhitsetsequence="74" xspeed="2750" yspeed="1400" onhitsfx="8" onhiteffect="4" attacklevel="3">
+				<smashmodifier/>
+				<highrightblock/>
+				<lowrightblock/>
+				<airblockable/>
+				<inducecounterhit/>
+				<spellattacktype/>
+				<objectattacktype/>
+				<aflag18UNREFLECTABLE/>
+				<fflag23AFTER_IMAGE/>
+				<isbullet/>
+				<fflag25ATTACK_OBJECT/>
+				<aflag25DRAINS_ON_GRAZE/>
+			</traits>
+			<attack>
+				<box left="-360" up="-50" right="332" down="50"/>
+				<box left="-150" up="-65" right="290" down="65"/>
+				<box left="4" up="-80" right="245" down="80"/>
+			</attack>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBa033.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="256" xoffset="116" yoffset="129" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="410" yscale="410" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="350" proration="920" chipdamage="50" spiritdamage="100" untech="60" power="100" limit="10" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="74" ongroundhitsetsequence="74" xspeed="2750" yspeed="1400" onhitsfx="8" onhiteffect="4" attacklevel="3">
+				<smashmodifier/>
+				<highrightblock/>
+				<lowrightblock/>
+				<airblockable/>
+				<inducecounterhit/>
+				<spellattacktype/>
+				<objectattacktype/>
+				<aflag18UNREFLECTABLE/>
+				<fflag23AFTER_IMAGE/>
+				<isbullet/>
+				<fflag25ATTACK_OBJECT/>
+				<aflag25DRAINS_ON_GRAZE/>
+			</traits>
+			<attack>
+				<box left="-360" up="-50" right="332" down="50"/>
+				<box left="-150" up="-65" right="290" down="65"/>
+				<box left="4" up="-80" right="245" down="80"/>
+			</attack>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="816" index="3" loop="1" movelock="40" actionlock="0">
+		<frame image="remilia/spellBulletBa033.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="256" xoffset="115" yoffset="129" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="400" yscale="400" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="816" index="4" loop="1" movelock="40" actionlock="0">
+		<frame image="remilia/spellBulletBd000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="64" yoffset="64" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="200" yscale="200" vertflip="0" horzflip="70" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBd000.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="64" yoffset="64" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffd2" xscale="200" yscale="200" vertflip="0" horzflip="70" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="816" index="5" loop="1" movelock="40" actionlock="0">
+		<frame image="remilia/spellBulletBc000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="64" yoffset="64" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="100" yscale="100" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="816" index="6" loop="1" movelock="40" actionlock="0">
+		<frame image="remilia/spellBulletBb000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb006.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb007.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb008.bmp" index="8" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb009.bmp" index="9" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb010.bmp" index="10" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb011.bmp" index="11" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb012.bmp" index="12" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb013.bmp" index="13" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="remilia/spellBulletBb014.bmp" index="14" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="256" texheight="128" xoffset="89" yoffset="70" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="250" yscale="250" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="816" index="7" loop="1" movelock="40" actionlock="0">
+		<frame image="remilia/bulletEc000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="192" xoffset="64" yoffset="159" duration="2" rendergroup="2">
+			<blend mode="1" color="ffffffff" xscale="200" yscale="200" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
 	<move id="848" index="0" loop="0" movelock="0" actionlock="0">
 		<frame image="objectBb000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="64" texheight="128" xoffset="90" yoffset="110" duration="1" rendergroup="2">
 			<blend mode="1" color="ffffffff" xscale="150" yscale="100" vertflip="0" horzflip="0" angle="90"/>

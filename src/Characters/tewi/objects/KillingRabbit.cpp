@@ -49,7 +49,7 @@ void KillingRabbit::update()
 	} else if (this->frameState.sequenceId == 1) {
 		this->speed = {0, 0};
 		this->position = opponent->position;
-		this->direction = static_cast<SokuLib::Direction>(-opponent->direction);
+		this->direction = -opponent->direction;
 		if (
 			this->parentPlayerB->frameState.actionId >= Tewi::ACTION_STAND_PICKUP_HAMMER_FROM_AIR &&
 			this->parentPlayerB->frameState.actionId <= Tewi::ACTION_AIR_PICKUP_HAMMER_FROM_GROUND

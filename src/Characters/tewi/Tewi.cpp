@@ -2151,7 +2151,7 @@ void Tewi::update()
 				this->setAction(SokuLib::ACTION_IDLE);
 			if (this->frameState.poseFrame == 0 && this->frameState.poseId == 1) {
 				this->position.x = this->gameData.opponent->position.x + 150 * this->direction;
-				this->direction = static_cast<SokuLib::Direction>(-this->direction);
+				this->direction = -this->direction;
 			}
 			if (this->_hammer) {
 				if (this->frameState.poseId == 2 || this->frameState.poseId == 3) {
@@ -2647,7 +2647,7 @@ void Tewi::update()
 				SokuLib::camera.forceXCenter = false;
 				SokuLib::camera.forceYCenter = false;
 				this->lockedInStageX = true;
-				this->direction = static_cast<SokuLib::Direction>(-this->direction);
+				this->direction = -this->direction;
 				this->position.x = this->gameData.opponent->position.x - 500 * this->direction;
 				this->position.y = this->getGroundHeight();
 			}
@@ -2699,7 +2699,7 @@ void Tewi::update()
 				SokuLib::camera.forceXCenter = false;
 				SokuLib::camera.forceYCenter = false;
 				this->lockedInStageX = true;
-				this->direction = static_cast<SokuLib::Direction>(-this->direction);
+				this->direction = -this->direction;
 				this->position.x = this->gameData.opponent->position.x - 500 * this->direction;
 				this->position.y = this->getGroundHeight();
 			}
@@ -2957,8 +2957,8 @@ void Tewi::update()
 			1, // Sakuya - Sakuya Richochet Spellcard (the 4card one, the "bad one") suddenly appears out of nowhere. The attack proceeds as you would expect the actual spellcard
 			1, // Alice - Alice's dolls comeout of one of the sides. Fundamentally a weaker version of the lemmings spellcard or Tewi rabbits attack
 			1, // Patchouli - A book (do we even have the graphic) falls from the center sky of the screen. Once it touches the ground it generates a weaker Royal Flare or another spell you prefer to use
-			0, // Youmu - Her sword (shouldn't be hard to get a sprite) comes from somewhere offscreen, aiming towards the opponent, lodging itself somewhere, once it touches a wall or the ground it will emit a wisp effect and then explode in a similar vein to Youmu's 22 Wicked Soul (quite strong for pressure)
-			0, // Remilia - Her lance comes from the ceiling or the sides at really high velocity. Does 2orbs blocked minimum and solid damage
+			1, // Youmu - Her sword (shouldn't be hard to get a sprite) comes from somewhere offscreen, aiming towards the opponent, lodging itself somewhere, once it touches a wall or the ground it will emit a wisp effect and then explode in a similar vein to Youmu's 22 Wicked Soul (quite strong for pressure)
+			1, // Remilia - Her lance comes from the ceiling or the sides at really high velocity. Does 2orbs blocked minimum and solid damage
 			0, // Yuyuko - Butterflies or wisps come from sides of the screen / alternatively, sphere bloom from fucking nowhere just kind of happens
 			0, // Yukari - Yukari comes out of a Border spinning. Its literally just her actual move, hitbox and AUB and whatnot
 			0, // Suika - Either a rock falls from the sky or it comes diagonally from upperleft/right of the screen. It's a Type 3 Projectile, can't be grazed

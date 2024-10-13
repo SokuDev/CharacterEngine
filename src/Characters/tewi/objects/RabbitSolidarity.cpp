@@ -15,31 +15,31 @@ void RabbitSolidarity::_hammerUpdate()
 	}
 	if (this->frameState.currentFrame == 115) { // T j.5A
 		params[2] = 8;
-		this->parentPlayerB->direction = static_cast<SokuLib::Direction>(-this->parentPlayerB->direction);
+		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 250 * this->direction, this->gameData.opponent->position.y - 40, this->direction, 2, params);
 	}
 	if (this->frameState.currentFrame == 135) { // R j.2B
 		params[2] = 15;
-		this->parentPlayerB->direction = static_cast<SokuLib::Direction>(-this->parentPlayerB->direction);
+		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 150 * this->direction, this->gameData.opponent->position.y + 20, this->direction, 2, params);
 	}
 	if (this->frameState.currentFrame == 170) { // T j.8A
 		params[2] = 14;
-		this->parentPlayerB->direction = static_cast<SokuLib::Direction>(-this->parentPlayerB->direction);
+		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 100 * this->direction, this->gameData.opponent->position.y + 20, this->direction, 2, params);
 	}
 	if (this->frameState.currentFrame == 220) { // R j.5A
 		params[2] = 7;
-		this->parentPlayerB->direction = static_cast<SokuLib::Direction>(-this->parentPlayerB->direction);
+		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 100 * this->direction, this->gameData.opponent->position.y - 20, this->direction, 2, params);
 	}
 	if (this->frameState.currentFrame == 235) { // T j.2A
 		params[2] = 9;
-		this->parentPlayerB->direction = static_cast<SokuLib::Direction>(-this->parentPlayerB->direction);
+		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 200 * this->direction, this->gameData.opponent->position.y + 20, this->direction, 2, params);
 	}
@@ -68,43 +68,43 @@ void RabbitSolidarity::_hammerlessUpdate()
 	}
 	if (this->frameState.currentFrame == 115) { // T j.5A
 		params[2] = 8;
-		this->parentPlayerB->direction = static_cast<SokuLib::Direction>(-this->parentPlayerB->direction);
+		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 150 * this->direction, this->gameData.opponent->position.y, this->direction, 2, params);
 	}
 	if (this->frameState.currentFrame == 135) { // R j.2B
 		params[2] = 15;
-		this->parentPlayerB->direction = static_cast<SokuLib::Direction>(-this->parentPlayerB->direction);
+		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 150 * this->direction, this->gameData.opponent->position.y + 20, this->direction, 2, params);
 	}
 	if (this->frameState.currentFrame == 170) { // T j.6A
 		params[2] = 14;
-		this->parentPlayerB->direction = static_cast<SokuLib::Direction>(-this->parentPlayerB->direction);
+		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 300 * this->direction, this->gameData.opponent->position.y + 80, this->direction, 2, params);
 	}
 	if (this->frameState.currentFrame == 182) { // R j.5A
 		params[2] = 7;
-		this->parentPlayerB->direction = static_cast<SokuLib::Direction>(-this->parentPlayerB->direction);
+		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 100 * this->direction, this->gameData.opponent->position.y - 20, this->direction, 2, params);
 	}
 	if (this->frameState.currentFrame == 200) { // T j.5A
 		params[2] = 8;
-		this->parentPlayerB->direction = static_cast<SokuLib::Direction>(-this->parentPlayerB->direction);
+		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 150 * this->direction, this->gameData.opponent->position.y + 20, this->direction, 2, params);
 	}
 	if (this->frameState.currentFrame == 225) { // R j.5A
 		params[2] = 7;
-		this->parentPlayerB->direction = static_cast<SokuLib::Direction>(-this->parentPlayerB->direction);
+		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 100 * this->direction, this->gameData.opponent->position.y - 20, this->direction, 2, params);
 	}
 	if (this->frameState.currentFrame == 250) { // T j.2[A]
 		params[2] = 9;
-		this->parentPlayerB->direction = static_cast<SokuLib::Direction>(-this->parentPlayerB->direction);
+		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 200 * this->direction, this->gameData.opponent->position.y - 40, this->direction, 2, params);
 	}

@@ -26,6 +26,8 @@
 #include "objects/IllusionRabbit.hpp"
 #include "objects/SubterraneanAnimism.hpp"
 #include "objects/Bamboo.hpp"
+#include "objects/UnexpectedAssistanceObject/Youmu.hpp"
+#include "objects/UnexpectedAssistanceObject/Remilia.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -64,6 +66,10 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 		return new UnexpectedAssistance::Alice();
 	case 814:
 		return new UnexpectedAssistance::Patchouli();
+	case 815:
+		return new UnexpectedAssistance::Youmu();
+	case 816:
+		return new UnexpectedAssistance::Remilia();
 	case 849:
 		return new SpinningSmoke();
 	case 850:

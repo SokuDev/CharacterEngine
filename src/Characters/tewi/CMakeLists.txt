@@ -65,6 +65,10 @@ add_library(
 	objects/SubterraneanAnimism.hpp
 	objects/Bamboo.cpp
 	objects/Bamboo.hpp
+	objects/UnexpectedAssistanceObject/Youmu.cpp
+	objects/UnexpectedAssistanceObject/Youmu.hpp
+	objects/UnexpectedAssistanceObject/Remilia.cpp
+	objects/UnexpectedAssistanceObject/Remilia.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)

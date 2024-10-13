@@ -69,8 +69,8 @@ void RabbitOrb::update()
 			this->speed.y *= 0.8f;
 		}
 		if (this->collisionLimit == 0) {
-			this->renderInfos.color.g = 100;
-			this->renderInfos.color.b = 100;
+			this->renderInfos.color.g = this->collisionLimit * 155 / 5 + 100;
+			this->renderInfos.color.b = this->collisionLimit * 155 / 5 + 100;
 		}
 		return;
 	}

@@ -193,7 +193,7 @@ void SpellTrapHole::initializeAction()
 
 			this->speed.x = (this->parentObject->position.x - this->position.x) / (t * 1.f);
 			this->speed.y = (-this->position.y + 0.5f * t * t / 2) / (t * 1.f);
-			this->direction = (SokuLib::Direction)std::copysign(1, this->speed.x);
+			this->direction = std::copysign(1, this->speed.x);
 			this->gravity.y = 0.5;
 		}
 		//this->prepareTexture();
