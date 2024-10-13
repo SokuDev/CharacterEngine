@@ -49,6 +49,7 @@ public:
 	[[nodiscard]] const std::string &getShortName() const;
 	[[nodiscard]] const std::string &getFullName() const;
 	[[nodiscard]] const std::vector<unsigned int> &getSkillInputs() const;
+	[[nodiscard]] const std::filesystem::path &getFolder() const;
 };
 
 

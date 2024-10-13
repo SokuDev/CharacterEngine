@@ -3,21 +3,35 @@
 //
 
 #include "scenes.hpp"
+#include "CharacterModule.hpp"
 
 int (SokuLib::Select::*og_SelectOnProcess)();
 int (SokuLib::SelectClient::*og_SelectCLOnProcess)();
 int (SokuLib::SelectServer::*og_SelectSVOnProcess)();
 int (__fastcall *og_ProfileChrSelect)(void *This);
+static unsigned leftInternal = 0;
+static unsigned rightInternal = 0;
+extern std::vector<CharacterModule> modules;
 
 void selectCommon(SokuLib::Select *This)
 {
-	if (This->leftKeys) {
-		if (This->leftKeys->input.spellcard == 1 || (This->leftKeys->input.a == 1 && This->leftKeys->input.verticalAxis > 0))
-			SokuLib::leftChar = SokuLib::CHARACTER_TEWI;
+	if (This->rightKeys != This->leftKeys && This->leftKeys && (
+		This->leftKeys->input.spellcard == 1 || (
+			This->leftKeys->input.a == 1 && This->leftKeys->input.verticalAxis > 0
+		)
+	)) {
+		SokuLib::leftChar = static_cast<SokuLib::Character>(modules[leftInternal].getIndex());
+		leftInternal++;
+		leftInternal %= modules.size();
 	}
-	if (This->rightKeys) {
-		if (This->rightKeys->input.spellcard == 1 || (This->rightKeys->input.a == 1 && This->rightKeys->input.verticalAxis > 0))
-			SokuLib::rightChar = SokuLib::CHARACTER_TEWI;
+	if (This->rightKeys && (
+		This->rightKeys->input.spellcard == 1 || (
+			This->rightKeys->input.a == 1 && This->rightKeys->input.verticalAxis > 0
+		)
+	)) {
+		SokuLib::rightChar = static_cast<SokuLib::Character>(modules[rightInternal].getIndex());
+		rightInternal++;
+		rightInternal %= modules.size();
 	}
 }
 

@@ -14,28 +14,22 @@
 #include "scenes.hpp"
 
 static SokuLib::Dequeue<unsigned short> cards;
-static const char *names[] = {
-	"momiji",
-	"clownpiece",
-	"flandre",
-	"orin",
-	"yuuka",
-	"kaguya",
-	"mokou",
-	"mima",
-	"shou",
-	"murasa",
-	"sekibanki",
-	"satori",
-	"ran",
-	"tewi"
-};
-static SokuLib::Sprite extraSprites[sizeof(names) / sizeof(*names)];
+static std::vector<SokuLib::Sprite> extraSprites;
 static wchar_t profilePath[MAX_PATH];
-static std::vector<CharacterModule> modules;
 static std::map<void *, std::unique_ptr<CharacterModule>> loadedModules;
+static void (*og_loadDat)(const char *path);
+
+std::vector<CharacterModule> modules;
+
 
 static const unsigned createCustomCharacter_hook_ret = 0x46DE25;
+
+void loadExtraDatFiles(const char *path)
+{
+	og_loadDat(path);
+	for (auto &module : modules)
+		og_loadDat((module.getFolder() / module.getData()).string().c_str());
+}
 
 static SokuLib::v2::Player *createCustomCharacter(int id, SokuLib::PlayerInfo &info)
 {
@@ -117,46 +111,41 @@ static void __declspec(naked) selectDeckSlot_hook()
 	}
 }
 
-static const unsigned getCreateCustomCharacterName_hook_ret = 0x43F3F8;
-
-static void __declspec(naked) getCreateCustomCharacterName_hook()
-{
-	__asm {
-		MOV ECX, [ESP + 0x4]
-		CMP ECX, 22
-		JGE custom
-
-		SUB ESP, 8
-		PUSH ESI
-		LEA EAX, [ESP + 0x10]
-		JMP [getCreateCustomCharacterName_hook_ret]
-
-	custom:
-		SUB ECX, 22
-		MOV EAX, [names + ECX * 4]
-		RET
-	}
-}
-
 static const unsigned chrSelectPortrait_hook_ret1 = 0x4212B3;
 static const unsigned chrSelectPortrait_hook_ret2 = 0x4212A3;
 static const unsigned chrSelectPortrait_hook_ret3 = 0x4212CC;
 static bool initSpritesDone = false;
+
+static const char *__fastcall getCharacterName(int index)
+{
+	for (const auto &module : modules)
+		if (module.getIndex() == index)
+			return module.getInternalName().c_str();
+	MessageBoxA(SokuLib::window, ("Fatal error in getCharacterName: Cannot find character index " + std::to_string(index)).c_str(), "Fatal Error", MB_ICONERROR);
+	return nullptr;
+}
+
+static SokuLib::Sprite *__fastcall getCharacterSprite(int index)
+{
+	for (size_t i = 0; i < modules.size(); i++)
+		if (modules[i].getIndex() == index)
+			return &extraSprites[i];
+	MessageBoxA(SokuLib::window, ("Fatal error in getCharacterSprite: Cannot find character index " + std::to_string(index)).c_str(), "Fatal Error", MB_ICONERROR);
+	return nullptr;
+}
 
 static void initSprites()
 {
 	if (initSpritesDone)
 		return;
 
-	int i = 0;
-
 	initSpritesDone = true;
-	for (auto &sprite : extraSprites) {
+	extraSprites.resize(modules.size());
+	for (size_t i = 0; i < modules.size(); i++) {
 		SokuLib::DrawUtils::Texture t;
 
-		if (t.loadFromGame(("data/scene/select/character/01b_name/name_" + std::to_string(i + 22) + ".bmp").c_str()))
-			sprite.init(t.releaseHandle(), 0, 0, t.getSize().x, t.getSize().y);
-		i++;
+		if (t.loadFromGame(("data/scene/select/character/01b_name/name_" + std::to_string(modules[i].getIndex()) + ".bmp").c_str()))
+			extraSprites[i].init(t.releaseHandle(), 0, 0, t.getSize().x, t.getSize().y);
 	}
 }
 
@@ -179,10 +168,31 @@ static void __declspec(naked) chrSelectPortrait_hook()
 	ret2:
 		JMP [chrSelectPortrait_hook_ret2]
 	ret3:
-		SUB EDX, 22
-		IMUL EDX, EDX, 0x94
-		LEA ECX, [extraSprites + EDX]
+		MOV ECX, EDX
+		PUSH EAX
+		CALL getCharacterSprite
+		MOV ECX, EAX
+		POP EAX
 		JMP [chrSelectPortrait_hook_ret3]
+	}
+}
+
+static const unsigned getCreateCustomCharacterName_hook_ret = 0x43F3F8;
+
+static void __declspec(naked) getCreateCustomCharacterName_hook()
+{
+	__asm {
+		MOV ECX, [ESP + 0x4]
+		CMP ECX, 22
+		JGE custom
+
+		SUB ESP, 8
+		PUSH ESI
+		LEA EAX, [ESP + 0x10]
+		JMP [getCreateCustomCharacterName_hook_ret]
+
+	custom:
+		JMP getCharacterName
 	}
 }
 
@@ -313,6 +323,7 @@ extern "C" __declspec(dllexport) bool CheckVersion(const BYTE hash[16])
 extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hParentModule)
 {
 	DWORD old;
+	wchar_t check[1024];
 
 #ifdef _DEBUG
 	FILE *_;
@@ -323,9 +334,23 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 #endif
 
 	GetModuleFileNameW(hMyModule, profilePath, 1024);
+	wcscpy(check, profilePath);
 	PathRemoveFileSpecW(profilePath);
-
+	for (int i = 0; check[i]; i++)
+		check[i] = tolower(check[i]);
 	checkSoku2();
+
+	auto ptr = wcsrchr(check, '\\');
+
+	if (!ptr)
+		ptr = check;
+	else
+		ptr++;
+	// If we are called Soku2, then it means we don't actually have Soku2
+	if (wcscmp(ptr, L"soku2.dll") == 0) {
+		hasSoku2 = false;
+		puts("But we are Soku2...");
+	}
 	while (true)
 		try {
 			loadCharacterModules();
@@ -392,6 +417,8 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 		*(char *)0x40D27B = 0x91;
 		*(char *)0x40D245 = 0x1C;
 		memset((char *)0x40D27C, 0x90, 7);
+
+		og_loadDat = SokuLib::TamperNearJmpOpr(0x7fb85f, loadExtraDatFiles);
 	}
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
 

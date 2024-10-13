@@ -137,3 +137,8 @@ const std::vector<unsigned int> &CharacterModule::getSkillInputs() const
 {
 	return this->_skillInputs;
 }
+
+const std::filesystem::path &CharacterModule::getFolder() const
+{
+	return this->_folder;
+}
