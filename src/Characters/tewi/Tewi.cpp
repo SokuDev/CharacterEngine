@@ -1662,8 +1662,8 @@ void Tewi::update()
 	case ACTION_jd236B_HAMMER:
 	case ACTION_jd236C_HAMMER: {
 		float orbData[6] = {
-			-90.f + this->direction * 15.f, 12.5, 3,
-			90.f - this->direction * 45.f, 10, 2
+			-90.f + 15.f, 12.5, 3,
+			90.f - 45.f, 10, 2
 		};
 
 		if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0)
@@ -2951,7 +2951,7 @@ void Tewi::update()
 
 	case ACTION_USING_SC_ID_210_HAMMER:
 	case SokuLib::ACTION_USING_SC_ID_210: {
-		const unsigned probs[20] = {
+		const unsigned probs[21] = {
 			1, // Reimu - Gohei comes flying straight into the center of the screen or sides of the wall, creates a vertical or sideways wave of energy (think her 4card vertical amulet thingie)
 			1, // Marisa - Her bomb falls onto the screen from the sides and jumps around, eventually doing a big explosion
 			1, // Sakuya - Sakuya Richochet Spellcard (the 4card one, the "bad one") suddenly appears out of nowhere. The attack proceeds as you would expect the actual spellcard
@@ -2966,12 +2966,13 @@ void Tewi::update()
 			0, // Aya - CROWS ALL OVER THE ALL OVER THE STAGE, CALL ME THE CROWS MAN
 			0, // Komachi - Scythes comes flying from somewhere, lodges itself, calls out wisps or the slow walking effect that Komachi can do
 			0, // Iku - I really want tewi to get a shorter version of her 4card spell, for funnies
-			0, // Tenshi - The meteor thing
+			0, // Tenshi - Activates current weather (or force it back to 999) and give the weather debuff to opponent + spawn boomerang
 			0, // Sanae - Good/Bad luck amulets randomized fall from the sky. This should hit tewi too
 			0, // Cirno - A huge block of ice falls from the sky, for a while the entire arena has the "ice frog" effect. Gotta have funnies too
 			0, // Meiling - Catfish effect, but it appears and uses one of the Story mode attacks (actually Alice, Utsuho, Suwako could take ideas from Story mode?)
 			0, // Utsuho - The arena becomes orangey/yellowish and then fire geysers come out from underground
 			0, // Suwako - Rings out of nowhere bouncing all over. Reusing spells once again
+			0, // Namazu - The meteor thing
 		};
 
 		if (this->_checkDashSlide())
@@ -2994,7 +2995,7 @@ void Tewi::update()
 				total += prob;
 			total = SokuLib::rand(total);
 
-			while (character < 20) {
+			while (character < sizeof(probs)) {
 				unsigned prob = probs[character];
 
 				if (total < prob && prob)
@@ -3002,7 +3003,7 @@ void Tewi::update()
 				character++;
 				total -= prob;
 			}
-			if (character == 20)
+			if (character == sizeof(probs))
 				character--;
 			this->createObject(810 + character, 0, 0, SokuLib::RIGHT, 1);
 		}

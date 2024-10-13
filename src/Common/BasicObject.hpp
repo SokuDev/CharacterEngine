@@ -11,6 +11,8 @@
 
 class BasicObject : public SokuLib::v2::GameObject {
 protected:
+	unsigned char grazeResist;
+	unsigned char density;
 	std::pair<char, char> crystalsSpawn;
 	std::tuple<unsigned char, unsigned char, unsigned char> offsetY;
 #if defined(OBJECT_MEMORY_SIZE) && OBJECT_MEMORY_SIZE > 0

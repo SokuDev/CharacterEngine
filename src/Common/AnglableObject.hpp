@@ -10,7 +10,7 @@
 
 class AnglableObject : public BasicObject {
 public:
-	AnglableObject(std::pair<char, char> crystalsSpawn);
+	AnglableObject(std::pair<char, char> crystalsSpawn, unsigned char grazeResist, unsigned char density);
 
 	void update() override;
 	void initializeAction() override;

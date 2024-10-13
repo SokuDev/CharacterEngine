@@ -40,7 +40,7 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 		return new Hammer();
 	case 801:
 	case 806:
-		return new AnglableObject({0, 5});
+		return new AnglableObject({0, 5}, 1, 1);
 	case 802:
 	case 805:
 		return new Rabbit();

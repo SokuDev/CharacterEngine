@@ -36,7 +36,6 @@ void SetAndStrikeOrb::_checkCollisionWithOwner()
 				this->direction, 1
 			);
 			this->speed = this->parentPlayerB->boxData.frameData->onHitSpeed;
-			this->speed.x *= this->direction;
 
 			float target = (this->parentPlayerB->boxData.frameData->attackType * 5 + 15) * this->direction;
 
@@ -88,9 +87,10 @@ void SetAndStrikeOrb::update()
 			this->collisionType = COLLISION_TYPE_NONE;
 	}
 	if (this->frameState.currentFrame % 4 == 0)
-		this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1)->renderInfos.zRotation = this->renderInfos.zRotation;
+		this->createChild(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1)->renderInfos.zRotation = this->renderInfos.zRotation;
 	this->renderInfos.zRotation = fmod(this->renderInfos.zRotation + this->rotationSpeed, 360);
-	this->position += this->speed;
+	this->position.x += this->speed.x;
+	this->position.y += this->speed.y;
 	this->speed.y -= this->gravity.y;
 	if (this->isOnGround()) {
 		this->position.y = this->getGroundHeight();
@@ -111,11 +111,16 @@ void SetAndStrikeOrb::update()
 		this->speed.x *= -0.8f;
 		this->speed.y *= 0.8f;
 	}
+	if (this->collisionLimit == 0) {
+		this->renderInfos.color.g = 100;
+		this->renderInfos.color.b = 100;
+	}
 }
 
 void SetAndStrikeOrb::initializeAction()
 {
 	if (!this->customData) {
+		this->renderInfos.color = this->parentObject->renderInfos.color;
 		this->renderInfos.color.a = 0xA0;
 		this->setSequence(1);
 		return;

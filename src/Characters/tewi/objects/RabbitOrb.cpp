@@ -24,7 +24,7 @@ void RabbitOrb::update()
 		this->setHitBoxData(
 			this->renderInfos.scale.x * -35, this->renderInfos.scale.x * 35,
 			this->renderInfos.scale.x * 35, this->renderInfos.scale.x * -35,
-			this->renderInfos.zRotation, 0, 0
+			0, 0, 0
 		);
 		if (this->checkTurnIntoCrystals(false, 5, 5)) {
 			this->lifetime = 0;
@@ -68,6 +68,10 @@ void RabbitOrb::update()
 			this->speed.x *= -0.8f;
 			this->speed.y *= 0.8f;
 		}
+		if (this->collisionLimit == 0) {
+			this->renderInfos.color.g = 100;
+			this->renderInfos.color.b = 100;
+		}
 		return;
 	}
 	if (this->checkTurnIntoCrystals(false, 0, 0) || this->renderInfos.color.a <= 10) {
@@ -81,6 +85,7 @@ void RabbitOrb::initializeAction()
 {
 	if (!this->customData) {
 		this->renderInfos.scale = this->parentObject->renderInfos.scale;
+		this->renderInfos.color = this->parentObject->renderInfos.color;
 		this->renderInfos.color.a = 0xA0;
 		this->setSequence(1);
 		return;
