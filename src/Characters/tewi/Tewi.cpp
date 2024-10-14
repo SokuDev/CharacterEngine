@@ -228,8 +228,8 @@ void Tewi::_bSeriesUpdate(float angle, float speed, float slowDown, float yOffse
 
 void Tewi::update()
 {
-	this->unknown88C = 0;
-	this->unknown88E = 0x65;
+	this->spinRotationCenter.x = 0;
+	this->spinRotationCenter.y = 57;
 	if (this->_revive && this->frameState.actionId == SokuLib::ACTION_KNOCKED_DOWN_STATIC) {
 		if (this->_hammer)
 			this->setAction(SokuLib::ACTION_USING_SC_ID_211);
@@ -403,13 +403,14 @@ void Tewi::update()
 			}
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
-			this->speed.y = 10;
 			if (this->_hammer) {
-				this->speed.x = 11.5;
+				this->speed.x = 10;
 				this->gravity.y = 1;
+				this->speed.y = 10;
 			} else {
-				this->speed.x = 7.5;
+				this->speed.x = 12.5;
 				this->gravity.y = 0.5;
+				this->speed.y = 10;
 			}
 			return;
 		}
@@ -445,13 +446,14 @@ void Tewi::update()
 			}
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
-			this->speed.y = 10;
 			if (this->_hammer) {
-				this->speed.x = -15;
+				this->speed.x = -10;
 				this->gravity.y = 1;
+				this->speed.y = 10;
 			} else {
-				this->speed.x = -7.5;
+				this->speed.x = -12.5;
 				this->gravity.y = 0.5;
+				this->speed.y = 10;
 			}
 		}
 		break;

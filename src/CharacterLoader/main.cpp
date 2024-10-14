@@ -12,6 +12,7 @@
 #include "cardSave.hpp"
 #include "checkSoku2.hpp"
 #include "scenes.hpp"
+#include "giuroll.hpp"
 
 static SokuLib::Dequeue<unsigned short> cards;
 static std::vector<SokuLib::Sprite> extraSprites;
@@ -58,6 +59,7 @@ static SokuLib::v2::Player *createCustomCharacter(int id, SokuLib::PlayerInfo &i
 			auto chr = module->build(info);
 
 			loadedModules[chr].reset(module);
+			module->registerGR();
 			return chr;
 		} catch (std::exception &e) {
 			delete module;
@@ -199,6 +201,7 @@ static void __declspec(naked) getCreateCustomCharacterName_hook()
 void loadCharacterModules()
 {
 	std::filesystem::path folderPath = profilePath;
+	int maxIndex = 34;
 
 	folderPath /= L"characters";
 	for (auto &dir : std::filesystem::directory_iterator(folderPath)) {
@@ -219,6 +222,8 @@ void loadCharacterModules()
 	std::sort(modules.begin(), modules.end(), [](const CharacterModule &module1, const CharacterModule &module2) -> bool{
 		return module1.getIndex() < module2.getIndex();
 	});
+	if (!modules.empty())
+		GiuRoll::setCharDataSize(modules.back().getIndex() + 1);
 }
 
 void __fastcall onCharacterDeleted(void *This)
@@ -412,11 +417,13 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 		SokuLib::TamperNearJmpOpr(0x44E11D, getCharacterCardObject);
 
 		// Filesystem first patch
+		/*
 		*(char *)0x40D1FB = 0xEB;
 		*(char *)0x40D27A = 0x74;
 		*(char *)0x40D27B = 0x91;
 		*(char *)0x40D245 = 0x1C;
 		memset((char *)0x40D27C, 0x90, 7);
+		 */
 
 		og_loadDat = SokuLib::TamperNearJmpOpr(0x7fb85f, loadExtraDatFiles);
 	}
