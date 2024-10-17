@@ -17,26 +17,26 @@ Acquisition by lottery
 Common 60%
 Uncommon 30%
 Rare 10%",,,,,,,,sort
-100,"Hare Orb                           ",1,2,"",0,1,104,1,108,1,0,0,3,100
-101,"Rabbit Orb                         ",1,0,"",0,1,105,1,109,1,0,0,3,110
-102,"Race To The Bottom                 ",1,1,"",0,1,106,1,110,1,0,0,3,120
-103,"Throw & Catch                      ",1,4,"",0,1,107,1,111,1,0,0,3,140
-104,"Set & Strike                       ",1,2,"",0,1,108,1,0,1,0,0,3,101
-105,"Hare Hunt                          ",1,0,"",0,1,109,1,0,1,0,0,3,111
-106,"Underground Business               ",1,1,"",0,1,110,1,0,1,0,0,3,121
-107,"Hammerang                          ",1,4,"",0,1,111,1,0,1,0,0,3,141
-108,"Illusory Rabbit                    ",1,2,"",0,1,112,1,0,1,0,0,3,102
-109,"Subterranean Animism               ",1,0,"",0,1,113,1,0,1,0,0,3,112
-110,"Bamboo Farm                        ",1,1,"",0,1,114,1,0,1,0,0,3,122
-111,"Hidden Burrow                      ",1,4,"|                                   |                                   |                                   |                                   |                                   |",0,1,115,1,0,1,0,0,3,142
+100,"Hare Orb",1,2,"Strike with potent impact with the  mallet while moving forward at high velocity. Strike through the        opponent with your entire body      without the mallet.",0,1,104,1,108,1,0,0,3,100
+101,"Rabbit Orb",1,0,"Toss out a bouncing orb of energy   towards the opponent. It will       disappear after a few hits.",0,1,105,1,109,1,0,0,3,110
+102,"Race To The Bottom",1,1,"Reveal a pit in the ground.         A spring-like effect will push the  defenseless victim towards the      skies.",0,1,106,1,110,1,0,0,3,120
+103,"Throw & Catch",1,4,"Throw the mallet with all your mighttowards the enemy making it crash   into the wall. Order an underling toretrieve it after having it thrown.",0,1,107,1,111,1,0,0,3,140
+104,"Set & Strike",1,2,"Sets an orb in front of yourself    and enter a stance. Pressing any    key will strike the orb with an     attack making it bounce all over theplace.",0,1,108,1,0,1,0,0,3,101
+105,"Hare Hunt",1,0,"Rabbit underlings are sent forward  charging the enemy with great       strength. The rabbits are accustomedto breaking through projectiles.",0,1,109,1,0,1,0,0,3,111
+106,"Underground Business",1,1,"Send rabbits underground through a  burrow. Can be sent out anytime to  trip the opponent over. The more    rabbits are sent underground\, the   more will appear to attack.",0,1,110,1,0,1,0,0,3,121
+107,"Hammerang",1,4,"Throw your mallet with vigorous     force\, and it will return back like a boomerang. When mallet-less you   will recall the mallet to yourself.",0,1,111,1,0,1,0,0,3,141
+108,"Illusory Rabbit",1,2,"Have a rabbit underling act as a    decoy. If struck\, the rabbit will   surprise the opponent. The rabbits  love participating in Tewi's pranks.",0,1,112,1,0,1,0,0,3,102
+109,"Subterranean Animism",1,0,"Tewi uses her mallet to trigger a   spike trap under the opponent.      Without her mallet she calls an     underling to trip the opponent.",0,1,113,1,0,1,0,0,3,112
+110,"Bamboo Farm",1,1,"Trigger a hidden Bamboo Trap. The   bamboo is quite tall\, covering a lotof space. The evergreen bamboo neverfails.",0,1,114,1,0,1,0,0,3,122
+111,"Hidden Burrow",1,4,"Hide yourself while secretly moving around the screen. With the mallet  move back or forward\, while without it you can summon it on the opponentor move to its location.",0,1,115,1,0,1,0,0,3,142
 200,"Earth Sign \"Hare Run\"",2,5,"Grabs the opponent and throw her    into the air. Press a key to catch  the opponent on the way down. The   better the timing\, the better the   reward.",0,2,203,4,0,0,0,0,3,250
 201,"Runaway Rabbit \"Fluster Escape\"",2,3,"A massive wave of rabbits collides  with the opponent trampling all overthem\, stopping their advance.       Because of the high amount of       rabbits present causing chaos\, it isdifficult to move around.",0,2,204,4,0,0,0,0,3,230
-202,"Earth Sign \"Gaia's Fumes\"",2,2,"A concoction that contains an       harmful spring water that saps the  life out of the opponents. The toxicfumes stick to any surface causing  constant damage. Tewi is luckily    immune to them.",0,2,205,4,0,0,0,0,3,220
+202,"Earth Sign \"Gaia's Fumes\"",2,2,"A concoction that contains a        harmful spring water that saps the  life out of the opponents. The toxicfumes stick to any surface causing  constant damage. Tewi is luckily    immune to them.",0,2,205,4,0,0,0,0,3,220
 203,"Forbidden Poison \"Chimera's Fang\"",2,5,"A compound comprised of various     different lethal poisons that slowlymelts the target. The extreme       volatility of the content makes it  attach and expand anywhere. Tewi    herself is already immunized.",0,2,205,4,0,0,0,0,3,251
 204,"Mochi Sign \"HammerShake\"",2,3,"Throw the Mallet at high velocity\,  making it ricochet across the screenhitting the opponent at full power. Once it has exhausted all momentum  it will fall back on Tewi herself.",0,2,206,4,0,0,0,0,3,231
 205,"Hunter Sign \"Preyful Flow\"",2,4,"Rabbits appear from the sides       converging together to dig a massivetrap-hole that covers a large amountof ground. Enemies falling inside   will be attacked by an immense flow of rabbits.",0,2,209,4,0,0,0,0,3,241
 206,"Luck Sign \"Rabbit Solidarity\"",2,5,"Despite not always being on friendlyterms with each other\, Reisen will  still come to Tewi's help in a time of need. Reisen will never admit it but she does care about her.        This is most fortunate for Tewi.",0,2,208,4,0,0,0,0,3,252
-207,"Hare Sign \"Hunt Denial\"",2,4,"Mallet-less Only.                   Send a rabbit on a never ending     chase to attach themselves to the   opponent. Picking up the mallet willcause the rabbit to strike with     excessive strength.",0,2,207,4,0,0,0,0,3,240
+207,"Hare Sign \"Hunt Denial\"",2,4,"Mallet-less Only.                   Send a rabbit underling on a never  ending chase to attach themselves tothe opponent. Picking up the mallet will cause the rabbit to strike withexcessive strength.",0,2,207,4,0,0,0,0,3,240
 208,"Rabbit Sign \"F.I.W.B.\"",2,2,"Launch yourself towards the opponentwith massive force.                 Tewi herself swears that the        Spell-Card means \"Falling InfinitelyWith Brutality\" and nothing else.",0,2,210,4,0,0,0,0,3,221
 210,"Luck Sign \"Unexpected Assistance\"",1,2,"Everyone needs an \"ace up their     sleeve\" and for Tewi that comes downto her infinite amount of Luck. Someunintentional help may strike from  somewhere else\, as Gensokyo is ever so busy after all.",0,2,211,4,0,0,0,0,3,219
 211,"Hourai Sign \"Resurrection\"",2,2,"Activates on knock-out.             A weaker elixir of extended life    that allows the user to cheat death and continue fighting at the price  of not actually healing oneself.",0,2,211,4,0,0,0,0,3,222

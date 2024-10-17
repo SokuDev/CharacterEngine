@@ -2,13 +2,13 @@
 // Created by PinkySmile on 18/09/24.
 //
 
-#ifndef CHARACTERENGINE_SETANDSTRIKEORB_HPP
-#define CHARACTERENGINE_SETANDSTRIKEORB_HPP
+#ifndef CHARACTERENGINE_SASORB_HPP
+#define CHARACTERENGINE_SASORB_HPP
 
 
 #include "BasicObject.hpp"
 
-class SetAndStrikeOrb : public BasicObject {
+class SaSOrb : public BasicObject {
 private:
 	void _checkCollisionWithOwner();
 
@@ -18,4 +18,4 @@ public:
 };
 
 
-#endif //CHARACTERENGINE_SETANDSTRIKEORB_HPP
+#endif //CHARACTERENGINE_SASORB_HPP

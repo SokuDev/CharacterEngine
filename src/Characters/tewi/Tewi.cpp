@@ -2138,14 +2138,14 @@ void Tewi::update()
 			if (this->collisionType == COLLISION_TYPE_INVUL) {
 				this->_cropLimit = 0;
 				this->collisionType = COLLISION_TYPE_NONE;
-				this->gameData.opponent->hitStop = 20;
+				this->gameData.opponent->hitStop = 15 + (this->effectiveSkillLevel[8] * 5);
 				this->setSequence(4);
 				this->playSFX(20);
 				this->createObject(856, this->position.x, this->position.y, this->direction, 1)->skillIndex = 8;
 			}
 		} else if (this->frameState.sequenceId == 2) {
 			this->applyGroundMechanics();
-			if (this->frameState.currentFrame >= 70 - (this->effectiveSkillLevel[8] * 10))
+			if (this->frameState.currentFrame >= 30)
 				this->nextSequence();
 		} else if (this->frameState.sequenceId == 4) {
 			this->_hammerPickTimer = 2;
@@ -2961,17 +2961,17 @@ void Tewi::update()
 			1, // Patchouli - A book (do we even have the graphic) falls from the center sky of the screen. Once it touches the ground it generates a weaker Royal Flare or another spell you prefer to use
 			1, // Youmu - Her sword (shouldn't be hard to get a sprite) comes from somewhere offscreen, aiming towards the opponent, lodging itself somewhere, once it touches a wall or the ground it will emit a wisp effect and then explode in a similar vein to Youmu's 22 Wicked Soul (quite strong for pressure)
 			1, // Remilia - Her lance comes from the ceiling or the sides at really high velocity. Does 2orbs blocked minimum and solid damage
-			0, // Yuyuko - Butterflies or wisps come from sides of the screen / alternatively, sphere bloom from fucking nowhere just kind of happens
-			0, // Yukari - Yukari comes out of a Border spinning. Its literally just her actual move, hitbox and AUB and whatnot
+			1, // Yuyuko - Butterflies or wisps come from sides of the screen / alternatively, sphere bloom from fucking nowhere just kind of happens
+			1, // Yukari - Yukari comes out of a Border spinning. Its literally just her actual move, hitbox and AUB and whatnot
 			0, // Suika - Either a rock falls from the sky or it comes diagonally from upperleft/right of the screen. It's a Type 3 Projectile, can't be grazed
 			0, // Reisen - Fullscreen Laser, reusing that idea. That or she appears out of nowhere to assist Tewi
 			0, // Aya - CROWS ALL OVER THE ALL OVER THE STAGE, CALL ME THE CROWS MAN
 			0, // Komachi - Scythes comes flying from somewhere, lodges itself, calls out wisps or the slow walking effect that Komachi can do
-			0, // Iku - I really want tewi to get a shorter version of her 4card spell, for funnies
+			0, // Iku - 2 balls of electricity
 			0, // Tenshi - Activates current weather (or force it back to 999) and give the weather debuff to opponent + spawn boomerang
 			0, // Sanae - Good/Bad luck amulets randomized fall from the sky. This should hit tewi too
 			0, // Cirno - A huge block of ice falls from the sky, for a while the entire arena has the "ice frog" effect. Gotta have funnies too
-			0, // Meiling - Catfish effect, but it appears and uses one of the Story mode attacks (actually Alice, Utsuho, Suwako could take ideas from Story mode?)
+			0, // Meiling - Arena going through the entire stage
 			0, // Utsuho - The arena becomes orangey/yellowish and then fire geysers come out from underground
 			0, // Suwako - Rings out of nowhere bouncing all over. Reusing spells once again
 			0, // Namazu - The meteor thing

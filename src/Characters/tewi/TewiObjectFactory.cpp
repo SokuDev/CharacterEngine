@@ -11,23 +11,25 @@
 #include "objects/Rabbit.hpp"
 #include "objects/TrapHole.hpp"
 #include "objects/TaCRabbit.hpp"
-#include "objects/UnexpectedAssistanceObject/Reimu.hpp"
-#include "objects/UnexpectedAssistanceObject/Marisa.hpp"
-#include "objects/UnexpectedAssistanceObject/Sakuya.hpp"
-#include "objects/UnexpectedAssistanceObject/Alice.hpp"
-#include "objects/UnexpectedAssistanceObject/Patchouli.hpp"
 #include "objects/Bottle.hpp"
 #include "objects/SpellTrapHole.hpp"
 #include "objects/RabbitOrb.hpp"
 #include "objects/KillingRabbit.hpp"
 #include "objects/RabbitSolidarity.hpp"
-#include "objects/SetAndStrikeOrb.hpp"
+#include "objects/SaSOrb.hpp"
 #include "objects/UBRabbit.hpp"
 #include "objects/IllusionRabbit.hpp"
 #include "objects/SubterraneanAnimism.hpp"
 #include "objects/Bamboo.hpp"
+#include "objects/UnexpectedAssistanceObject/Reimu.hpp"
+#include "objects/UnexpectedAssistanceObject/Marisa.hpp"
+#include "objects/UnexpectedAssistanceObject/Sakuya.hpp"
+#include "objects/UnexpectedAssistanceObject/Alice.hpp"
+#include "objects/UnexpectedAssistanceObject/Patchouli.hpp"
 #include "objects/UnexpectedAssistanceObject/Youmu.hpp"
 #include "objects/UnexpectedAssistanceObject/Remilia.hpp"
+#include "objects/UnexpectedAssistanceObject/Yuyuko.hpp"
+#include "objects/UnexpectedAssistanceObject/Yukari.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -70,6 +72,10 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 		return new UnexpectedAssistance::Youmu();
 	case 816:
 		return new UnexpectedAssistance::Remilia();
+	case 817:
+		return new UnexpectedAssistance::Yuyuko();
+	case 818:
+		return new UnexpectedAssistance::Yukari();
 	case 849:
 		return new SpinningSmoke();
 	case 850:
@@ -78,7 +84,7 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 	case 852:
 		return new RabbitSolidarity();
 	case 853:
-		return new SetAndStrikeOrb();
+		return new SaSOrb();
 	case 854:
 	case 855:
 		return new UBRabbit();

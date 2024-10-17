@@ -35,16 +35,6 @@ add_library(
 	objects/TaCRabbit.hpp
 	objects/TrapHole.cpp
 	objects/TrapHole.hpp
-	objects/UnexpectedAssistanceObject/Reimu.cpp
-	objects/UnexpectedAssistanceObject/Reimu.hpp
-	objects/UnexpectedAssistanceObject/Marisa.cpp
-	objects/UnexpectedAssistanceObject/Marisa.hpp
-	objects/UnexpectedAssistanceObject/Sakuya.cpp
-	objects/UnexpectedAssistanceObject/Sakuya.hpp
-	objects/UnexpectedAssistanceObject/Alice.cpp
-	objects/UnexpectedAssistanceObject/Alice.hpp
-	objects/UnexpectedAssistanceObject/Patchouli.cpp
-	objects/UnexpectedAssistanceObject/Patchouli.hpp
 	objects/Bottle.cpp
 	objects/Bottle.hpp
 	objects/SpellTrapHole.cpp
@@ -55,8 +45,8 @@ add_library(
 	objects/KillingRabbit.hpp
 	objects/RabbitSolidarity.cpp
 	objects/RabbitSolidarity.hpp
-	objects/SetAndStrikeOrb.cpp
-	objects/SetAndStrikeOrb.hpp
+	objects/SaSOrb.cpp
+	objects/SaSOrb.hpp
 	objects/UBRabbit.cpp
 	objects/UBRabbit.hpp
 	objects/IllusionRabbit.cpp
@@ -65,10 +55,24 @@ add_library(
 	objects/SubterraneanAnimism.hpp
 	objects/Bamboo.cpp
 	objects/Bamboo.hpp
+	objects/UnexpectedAssistanceObject/Reimu.cpp
+	objects/UnexpectedAssistanceObject/Reimu.hpp
+	objects/UnexpectedAssistanceObject/Marisa.cpp
+	objects/UnexpectedAssistanceObject/Marisa.hpp
+	objects/UnexpectedAssistanceObject/Sakuya.cpp
+	objects/UnexpectedAssistanceObject/Sakuya.hpp
+	objects/UnexpectedAssistanceObject/Alice.cpp
+	objects/UnexpectedAssistanceObject/Alice.hpp
+	objects/UnexpectedAssistanceObject/Patchouli.cpp
+	objects/UnexpectedAssistanceObject/Patchouli.hpp
 	objects/UnexpectedAssistanceObject/Youmu.cpp
 	objects/UnexpectedAssistanceObject/Youmu.hpp
 	objects/UnexpectedAssistanceObject/Remilia.cpp
 	objects/UnexpectedAssistanceObject/Remilia.hpp
+	objects/UnexpectedAssistanceObject/Yuyuko.cpp
+	objects/UnexpectedAssistanceObject/Yuyuko.hpp
+	objects/UnexpectedAssistanceObject/Yukari.cpp
+	objects/UnexpectedAssistanceObject/Yukari.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)

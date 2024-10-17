@@ -20,19 +20,19 @@ void UnexpectedAssistance::Youmu::update()
 	case 0:
 		if (this->gpShort[1] == 0) {
 			if (this->direction == SokuLib::RIGHT)
-				this->speed.x = (this->parentObject->position.x - this->position.x) * 0.1;
+				this->speed.x = (this->parentB->position.x - this->position.x) * 0.1;
 			if (this->direction == SokuLib::LEFT)
-				this->speed.x = (this->parentObject->position.x - this->position.x) * -0.1;
-			this->speed.y = (this->parentObject->position.y - this->position.y) * 0.1;
+				this->speed.x = (this->parentB->position.x - this->position.x) * -0.1;
+			this->speed.y = (this->parentB->position.y - this->position.y) * 0.1;
 		} else {
 			this->speed.y += 0.02;
 			this->speed.x += 0.1;
 			if (this->position.x < 0 || this->position.x > 1280 || this->position.y > 1300) {
 				this->lifetime = 0;
-				this->parentObject->lifetime = 0;
+				this->parentB->lifetime = 0;
 				return;
 			}
-			this->parentObject->position = this->position;
+			this->parentB->position = this->position;
 		}
 		this->gpShort[0] = this->gpShort[0] + 2;
 		if (this->gpShort[0] >= 360)
@@ -56,8 +56,8 @@ void UnexpectedAssistance::Youmu::update()
 		// Use the move
 		if (
 			this->gpShort[1] == 0 &&
-			std::pow(this->position.x - this->parentObject->position.x, 2) + std::pow(this->position.y - this->parentObject->position.y, 2) < 2000 &&
-			this->parentObject->isOnGround()
+			std::pow(this->position.x - this->parentB->position.x, 2) + std::pow(this->position.y - this->parentB->position.y, 2) < 2000 &&
+			this->parentB->isOnGround()
 		) {
 			this->setSequence(6);
 			this->gpShort[0] = 0;

@@ -4,12 +4,12 @@
 
 #include <cmath>
 #include "../Tewi.hpp"
-#include "SetAndStrikeOrb.hpp"
+#include "SaSOrb.hpp"
 
 #define nbCollision gpShort[0]
 #define rotationSpeed gpFloat[0]
 
-void SetAndStrikeOrb::_checkCollisionWithOwner()
+void SaSOrb::_checkCollisionWithOwner()
 {
 	if (!this->parentPlayerB->hasMoveBeenReset)
 		return;
@@ -36,6 +36,7 @@ void SetAndStrikeOrb::_checkCollisionWithOwner()
 				this->direction, 1
 			);
 			this->speed = this->parentPlayerB->boxData.frameData->onHitSpeed;
+			this->speed.x *= this->direction;
 
 			float target = (this->parentPlayerB->boxData.frameData->attackType * 5 + 15) * this->direction;
 
@@ -45,7 +46,7 @@ void SetAndStrikeOrb::_checkCollisionWithOwner()
 	}
 }
 
-void SetAndStrikeOrb::update()
+void SaSOrb::update()
 {
 	if (this->parentPlayerB->timeStop)
 		return;
@@ -117,7 +118,7 @@ void SetAndStrikeOrb::update()
 	}
 }
 
-void SetAndStrikeOrb::initializeAction()
+void SaSOrb::initializeAction()
 {
 	if (!this->customData) {
 		this->renderInfos.color = this->parentObject->renderInfos.color;
