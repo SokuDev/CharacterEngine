@@ -2145,7 +2145,7 @@ void Tewi::update()
 			}
 		} else if (this->frameState.sequenceId == 2) {
 			this->applyGroundMechanics();
-			if (this->frameState.currentFrame >= 30)
+			if (this->frameState.currentFrame >= 20)
 				this->nextSequence();
 		} else if (this->frameState.sequenceId == 4) {
 			this->_hammerPickTimer = 2;
