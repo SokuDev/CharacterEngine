@@ -30,6 +30,13 @@
 #include "objects/UnexpectedAssistanceObject/Remilia.hpp"
 #include "objects/UnexpectedAssistanceObject/Yuyuko.hpp"
 #include "objects/UnexpectedAssistanceObject/Yukari.hpp"
+#include "objects/UnexpectedAssistanceObject/Suika.hpp"
+#include "objects/UnexpectedAssistanceObject/Reisen.hpp"
+#include "objects/UnexpectedAssistanceObject/Aya.hpp"
+#include "objects/UnexpectedAssistanceObject/Komachi.hpp"
+#include "objects/UnexpectedAssistanceObject/Iku.hpp"
+#include "objects/UnexpectedAssistanceObject/Tenshi.hpp"
+#include "objects/UnexpectedAssistanceObject/Sanae.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -76,6 +83,20 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 		return new UnexpectedAssistance::Yuyuko();
 	case 818:
 		return new UnexpectedAssistance::Yukari();
+	case 819:
+		return new UnexpectedAssistance::Suika();
+	case 820:
+		return new UnexpectedAssistance::Reisen();
+	case 821:
+		return new UnexpectedAssistance::Aya();
+	case 822:
+		return new UnexpectedAssistance::Komachi();
+	case 823:
+		return new UnexpectedAssistance::Iku();
+	case 824:
+		return new UnexpectedAssistance::Tenshi();
+	case 825:
+		return new UnexpectedAssistance::Sanae();
 	case 849:
 		return new SpinningSmoke();
 	case 850:

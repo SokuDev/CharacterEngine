@@ -4,7 +4,7 @@
 
 #include "TrapHole.hpp"
 
-#define HOLE_RADIUS 50
+#define HOLE_RADIUS 65
 #define HOLE_DEPTH 100
 #define HOLE_FADE_IN 15
 #define HOLE_FADE_OUT 30

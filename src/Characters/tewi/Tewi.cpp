@@ -4,6 +4,7 @@
 
 #include <complex>
 #include <map>
+#include <dinput.h>
 #include "Tewi.hpp"
 #include "TewiObjectFactory.hpp"
 #include "GameObjectList.hpp"
@@ -11,6 +12,8 @@
 #ifndef _DEBUG
 #define printf(...)
 #endif
+
+#define EFFECT_COUNT 16
 
 const std::map<unsigned short, unsigned short> systemToHammer{
 	{ SokuLib::ACTION_IDLE,                                  Tewi::ACTION_IDLE_NO_HAMMER },
@@ -71,11 +74,44 @@ const std::map<unsigned short, unsigned short> moveToHammer{
 	{ SokuLib::ACTION_LEFT_HANDED_FOLDING_FAN, Tewi::ACTION_LEFT_HANDED_FOLDING_FAN_HAMMER },
 	{ SokuLib::ACTION_SPELL_BREAKING_DRUG,     Tewi::ACTION_SPELL_BREAKING_DRUG_HAMMER },
 };
+int __practiceEffect = -1;
+SokuLib::DrawUtils::Sprite leaf;
+SokuLib::DrawUtils::Sprite hammer;
+SokuLib::DrawUtils::Sprite faces[21];
+bool loaded = false;
 
 Tewi::Tewi(SokuLib::PlayerInfo &info) :
 	SokuLib::v2::Player(info)
 {
+	if (!loaded) {
+		SokuLib::loadPalette("data/character/tewi/palette000.pal");
+		hammer.texture.loadFromGame("data/character/tewi/hammerBullet000.png");
+		hammer.rect.width = hammer.texture.getSize().x;
+		hammer.rect.height = hammer.texture.getSize().y;
+		hammer.setSize(hammer.texture.getSize());
+		hammer.setRotation(-M_PI_4);
+		hammer.setCamera(&SokuLib::camera);
+
+		leaf.texture.loadFromGame("data/character/tewi/faces/leaf.png");
+		leaf.rect.width = leaf.texture.getSize().x;
+		leaf.rect.height = leaf.texture.getSize().y;
+		leaf.setSize({15, 15});
+		leaf.setPosition({25, 105});
+
+		for (int i = 0; i < std::size(faces); i++) {
+			auto &face = faces[i];
+
+			face.texture.loadFromGame(("data/character/tewi/faces/" + std::string(i == SokuLib::CHARACTER_RANDOM ? "namazu" : SokuLib::getCharName(i)) + ".png").c_str());
+			face.rect.width = face.texture.getSize().x;
+			face.rect.height = face.texture.getSize().y;
+			face.setSize(face.texture.getSize());
+			face.setPosition({5, 80});
+		}
+		loaded = true;
+	}
 	this->objectList = new GameObjectList<TewiObjectFactory>(this);
+	if (info.isRight == 0)
+		__practiceEffect = -1;
 }
 
 bool Tewi::_checkDashSlide()
@@ -214,7 +250,7 @@ void Tewi::_bSeriesUpdate(float angle, float speed, float slowDown, float yOffse
 			auto obj1 = this->createObject(id, (this->direction * 40) + this->position.x, this->position.y + yOffset, this->direction, 1, &carrotParams[0], 3);
 			auto obj2 = this->createObject(id, (this->direction * 40) + this->position.x, this->position.y + yOffset, this->direction, 1, &carrotParams[3], 3);
 
-			if (this->frameState.poseId == 6) {
+			if (this->frameState.poseId == 2) {
 				this->consumeSpirit(200, 45);
 				this->addCardMeter(40);
 			}
@@ -275,7 +311,12 @@ void Tewi::update()
 			this->frameState.actionId == SokuLib::ACTION_USING_SC_ID_206
 		) && this->frameState.sequenceId == 1)
 			this->setAction(SokuLib::ACTION_IDLE);
-		if (this->renderInfos.color.a <= 15) {
+		this->unknown7D8 += 15;
+		this->renderInfos.color.a = 255 - this->unknown7D8;
+		if (this->unknown7D8 >= 255) {
+			this->renderInfos.xRotation = 0;
+			this->renderInfos.yRotation = 0;
+			this->renderInfos.zRotation = 0;
 			this->setActionSequence(this->_hammer == nullptr ? ACTION_USING_SC_ID_206_HAMMER : SokuLib::ACTION_USING_SC_ID_206, 1);
 			this->_rabbitAnimation = false;
 			this->speed = {0, 0};
@@ -287,8 +328,8 @@ void Tewi::update()
 			SokuLib::camera.forcedXCenter = this->gameData.opponent->position.x;
 			SokuLib::camera.forceYCenter = true;
 			SokuLib::camera.forcedYCenter = 50;
-		} else
-			this->renderInfos.color.a -= 15;
+			this->unknown7D8 = 0;
+		}
 		return;
 	}
 
@@ -305,6 +346,10 @@ void Tewi::update()
 		{60, 120}
 	};
 
+	if (SokuLib::checkKeyOneshot(DIK_F5, false, false, false) && SokuLib::mainMode == SokuLib::BATTLE_MODE_PRACTICE && SokuLib::subMode == SokuLib::BATTLE_SUBMODE_PLAYING1) {
+		SokuLib::playSEWaveBuffer(SokuLib::SFX_MENU_CONFIRM);
+		__practiceEffect = (__practiceEffect + 2) % (EFFECT_COUNT + 1) - 1;
+	}
 	if (this->_hammerPickTimer)
 		this->_hammerPickTimer--;
 	switch (this->frameState.actionId) {
@@ -384,7 +429,7 @@ void Tewi::update()
 			return;
 		}
 		if (this->advanceFrame()) {
-			if (this->inputData.unknown7CC == 2) {
+			if (this->inputData.inputType == 2) {
 				this->setAction(700);
 				this->meleeInvulTimer = 3;
 				this->projectileInvulTimer = 3;
@@ -404,11 +449,11 @@ void Tewi::update()
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
 			if (this->_hammer) {
-				this->speed.x = 10;
+				this->speed.x = 12;
 				this->gravity.y = 1;
 				this->speed.y = 10;
 			} else {
-				this->speed.x = 12.5;
+				this->speed.x = 10;
 				this->gravity.y = 0.5;
 				this->speed.y = 10;
 			}
@@ -427,7 +472,7 @@ void Tewi::update()
 			return;
 		}
 		if (this->advanceFrame()) {
-			if (this->inputData.unknown7CC == 2) {
+			if (this->inputData.inputType == 2) {
 				this->setAction(700);
 				this->meleeInvulTimer = 3;
 				this->projectileInvulTimer = 3;
@@ -447,11 +492,11 @@ void Tewi::update()
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
 			if (this->_hammer) {
-				this->speed.x = -10;
+				this->speed.x = -12;
 				this->gravity.y = 1;
 				this->speed.y = 10;
 			} else {
-				this->speed.x = -12.5;
+				this->speed.x = -10;
 				this->gravity.y = 0.5;
 				this->speed.y = 10;
 			}
@@ -460,7 +505,7 @@ void Tewi::update()
 	case SokuLib::ACTION_NEUTRAL_TECH:
 		this->applyGroundMechanics();
 		if (this->advanceFrame()) {
-			if (this->inputData.unknown7CC == 2) {
+			if (this->inputData.inputType == 2) {
 				this->setAction(700);
 				this->meleeInvulTimer = 3;
 				this->projectileInvulTimer = 3;
@@ -1011,11 +1056,13 @@ void Tewi::update()
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 5) {
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
-			this->speed.y = 5;
+			this->speed.y = 10;
+			this->gravity.y = FALLING_GRAVITY * 3 / 4;
 		}
 		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 2) {
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
-			this->speed.y = 9;
+			this->speed.y = 15;
+			this->gravity.y = FALLING_GRAVITY;
 		}
 		break;
 	case SokuLib::ACTION_j2A:
@@ -1179,7 +1226,7 @@ void Tewi::update()
 		break;
 	case ACTION_2A_HAMMER:
 		this->applyGroundMechanics();
-		if (this->advanceFrame())
+		if (this->_checkDashSlide())
 			this->setAction(SokuLib::ACTION_CROUCHED);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 3)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
@@ -1375,6 +1422,12 @@ void Tewi::update()
 		break;
 	case SokuLib::ACTION_5B:
 		this->_bSeriesUpdate(0, B_BULLET_SPEED, B_BULLET_SLOW_DOWN, 100, false);
+		break;
+	case ACTION_6B_HAMMER:
+		this->_bSeriesUpdate(35, HAMMER_B_BULLET_SPEED, HAMMER_B_BULLET_SLOW_DOWN, 100, false);
+		break;
+	case ACTION_6B:
+		this->_bSeriesUpdate(35, B_BULLET_SPEED, B_BULLET_SLOW_DOWN, 100, false);
 		break;
 
 	case ACTION_4C:
@@ -2963,13 +3016,13 @@ void Tewi::update()
 			1, // Remilia - Her lance comes from the ceiling or the sides at really high velocity. Does 2orbs blocked minimum and solid damage
 			1, // Yuyuko - Butterflies or wisps come from sides of the screen / alternatively, sphere bloom from fucking nowhere just kind of happens
 			1, // Yukari - Yukari comes out of a Border spinning. Its literally just her actual move, hitbox and AUB and whatnot
-			0, // Suika - Either a rock falls from the sky or it comes diagonally from upperleft/right of the screen. It's a Type 3 Projectile, can't be grazed
-			0, // Reisen - Fullscreen Laser, reusing that idea. That or she appears out of nowhere to assist Tewi
-			0, // Aya - CROWS ALL OVER THE ALL OVER THE STAGE, CALL ME THE CROWS MAN
-			0, // Komachi - Scythes comes flying from somewhere, lodges itself, calls out wisps or the slow walking effect that Komachi can do
-			0, // Iku - 2 balls of electricity
-			0, // Tenshi - Activates current weather (or force it back to 999) and give the weather debuff to opponent + spawn boomerang
-			0, // Sanae - Good/Bad luck amulets randomized fall from the sky. This should hit tewi too
+			1, // Suika - Either a rock falls from the sky or it comes diagonally from upperleft/right of the screen. It's a Type 3 Projectile, can't be grazed
+			1, // Reisen - Fullscreen Laser, reusing that idea. That or she appears out of nowhere to assist Tewi
+			1, // Aya - CROWS ALL OVER THE ALL OVER THE STAGE, CALL ME THE CROWS MAN
+			1, // Komachi - Scythes comes flying from somewhere, lodges itself, calls out wisps or the slow walking effect that Komachi can do
+			1, // Iku - 2 balls of electricity
+			1, // Tenshi - Activates current weather (or force it back to 999) and give the weather debuff to opponent + spawn boomerang
+			1, // Sanae - Good/Bad luck amulets randomized fall from the sky. This should hit tewi too
 			0, // Cirno - A huge block of ice falls from the sky, for a while the entire arena has the "ice frog" effect. Gotta have funnies too
 			0, // Meiling - Arena going through the entire stage
 			0, // Utsuho - The arena becomes orangey/yellowish and then fire geysers come out from underground
@@ -2992,21 +3045,24 @@ void Tewi::update()
 			unsigned total = 0;
 			int character = 0;
 
-			this->collisionType = COLLISION_TYPE_HIT;
-			for (unsigned int prob : probs)
-				total += prob;
-			total = SokuLib::rand(total);
+			if (__practiceEffect == -1) {
+				this->collisionType = COLLISION_TYPE_HIT;
+				for (unsigned int prob: probs)
+					total += prob;
+				total = SokuLib::rand(total);
 
-			while (character < sizeof(probs)) {
-				unsigned prob = probs[character];
+				while (character < sizeof(probs)) {
+					unsigned prob = probs[character];
 
-				if (total < prob && prob)
-					break;
-				character++;
-				total -= prob;
-			}
-			if (character == sizeof(probs))
-				character--;
+					if (total < prob && prob)
+						break;
+					character++;
+					total -= prob;
+				}
+				if (character == sizeof(probs))
+					character--;
+			} else
+				character = __practiceEffect;
 			this->createObject(810 + character, 0, 0, SokuLib::RIGHT, 1);
 		}
 		break;
@@ -3204,6 +3260,7 @@ void Tewi::initializeAction()
 		break;
 	case SokuLib::ACTION_j8A:
 		this->chargedAttack = true;
+		this->speed.x = 0;
 		this->gravity.y = FALLING_GRAVITY / 2;
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->hasMoveBeenReset = true;
@@ -3355,6 +3412,13 @@ void Tewi::initializeAction()
 		this->hasMoveBeenReset = true;
 		this->collisionLimit = 1;
 		break;
+	case ACTION_jd22B:
+	case ACTION_jd22C:
+	case ACTION_jd22B_HAMMER:
+	case ACTION_jd22C_HAMMER:
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->collisionLimit = 0;
+		break;
 	case ACTION_ja2_22B:
 	case ACTION_ja2_22C:
 		this->speed.x = 0;
@@ -3388,6 +3452,8 @@ void Tewi::initializeAction()
 		this->chargedAttack = true;
 	case ACTION_d22B:
 	case ACTION_d22C:
+	case ACTION_d22B_HAMMER:
+	case ACTION_d22C_HAMMER:
 	case ACTION_a1_22B_HAMMER:
 	case ACTION_a1_22C_HAMMER:
 	case ACTION_d214B:
@@ -3437,13 +3503,13 @@ void Tewi::initializeAction()
 	case SokuLib::ACTION_3A:
 	case ACTION_3A_HAMMER:
 	case ACTION_f5A_HAMMER:
-	case ACTION_2A_HAMMER:
 	case ACTION_6A_HAMMER:
 	case ACTION_5AAA_HAMMER:
 		this->chargedAttack = true;
+		this->speed.x = 0.0;
+	case ACTION_2A_HAMMER:
 	case ACTION_4A_HAMMER:
 	case ACTION_5A_HAMMER:
-		this->speed.x = 0.0;
 	case SokuLib::ACTION_2A:
 	case SokuLib::ACTION_4A:
 	case SokuLib::ACTION_5A:
@@ -3474,6 +3540,8 @@ void Tewi::initializeAction()
 	case SokuLib::ACTION_2B:
 	case ACTION_5B_HAMMER:
 	case SokuLib::ACTION_5B:
+	case ACTION_6B_HAMMER:
+	case ACTION_6B:
 		this->speed = {0, 0};
 		this->chargedAttack = true;
 	case ACTION_d236B:
@@ -4076,14 +4144,14 @@ bool Tewi::_processBGrounded()
 			return true;
 		}
 
-		/*if (
+		if (
 			(hKeys > 0 || hBuffKeys > 0) &&
-			this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_6B)
+			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_6B)
 		) {
 			this->renderInfos.zRotation = 0.0;
-			this->setAction(SokuLib::ACTION_6B);
+			this->setAction(ACTION_6B);
 			return true;
-		}*/
+		}
 
 		if (this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_5B)) {
 			this->renderInfos.zRotation = 0.0;
@@ -4100,14 +4168,14 @@ bool Tewi::_processBGrounded()
 			return true;
 		}
 
-		/*if (
+		if (
 			(hKeys > 0 || hBuffKeys > 0) &&
 			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_6B_HAMMER)
 		) {
 			this->renderInfos.zRotation = 0.0;
 			this->setAction(ACTION_6B_HAMMER);
 			return true;
-		}*/
+		}
 
 		if (this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_5B_HAMMER)) {
 			this->renderInfos.zRotation = 0.0;
@@ -4558,9 +4626,6 @@ void __declspec(naked) tewiRevivePreventDeath()
 		CMP [ESI + 0x34C], 35
 		JNZ noChange
 
-		CMP byte ptr [ESI + 0x890], 0
-		JNZ doIt
-
 		// if (defender->HP <= 0)
 		CMP word ptr [ESI + 0x184], 0
 		JG noChange
@@ -4607,6 +4672,7 @@ void __declspec(naked) tewiRevivePreventDeath()
 
 	forceHitAnimation:
 		MOV dword ptr [ESP + 0x28], 71
+		JMP noChange
 
 	noChangeTewi:
 		// ((Tewi *)defender)->revive = false;
@@ -4685,6 +4751,14 @@ void Tewi::render()
 	AnimationObject::render();
 	memcpy(this->sprite.vertices, old2, sizeof(this->sprite.vertices));
 	memcpy(this->sprite.baseCoords, old, sizeof(this->sprite.baseCoords));
+	hammer.tint = this->_hammer == nullptr ? SokuLib::Color::White : SokuLib::Color{0x80, 0x00, 0x00};
+	hammer.tint.a = this->renderInfos.color.a;
+	hammer.setPosition(SokuLib::Vector2f{this->position.x - hammer.getSize().x / 2, -this->position.y - 200}.to<int>());
+	hammer.draw();
+	if (this->teamId == 0 && __practiceEffect != -1) {
+		faces[__practiceEffect].draw();
+		leaf.draw();
+	}
 }
 
 unsigned Tewi::getHammerPickTimer()

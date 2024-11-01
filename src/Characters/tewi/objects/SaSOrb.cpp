@@ -70,7 +70,7 @@ void SaSOrb::update()
 		this->nextSequence();
 		return;
 	}
-	if (this->checkGrazed(15)) {
+	if (this->checkGrazed(10)) {
 		this->nextSequence();
 		return;
 	}

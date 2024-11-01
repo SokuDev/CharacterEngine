@@ -30,7 +30,7 @@ void RabbitOrb::update()
 			this->lifetime = 0;
 			return;
 		}
-		if (this->checkGrazed(15)) {
+		if (this->checkGrazed(10)) {
 			this->nextSequence();
 			return;
 		}

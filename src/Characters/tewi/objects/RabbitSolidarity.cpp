@@ -373,7 +373,7 @@ void RabbitSolidarity::update()
 			if (this->frameState.poseId != 4 && this->frameState.poseId != 7 && this->frameState.poseId != 10)
 				break;
 
-			float angle = -atan2(this->gameData.opponent->position.y - this->position.y, this->direction * (this->gameData.opponent->position.x - this->position.x)) * 180 / M_PI;
+			float angle = atan2(this->gameData.opponent->position.y - this->position.y, this->direction * (this->gameData.opponent->position.x - this->position.x)) * 180 / M_PI;
 
 			params[0] = (SokuLib::rand(9) - 4.0) + angle;
 			params[1] = 25;
@@ -546,7 +546,7 @@ void RabbitSolidarity::initializeAction()
 	case 12:
 	case 13:
 		this->renderInfos.color.a = 255;
-		this->renderInfos.zRotation = this->customData[0];
+		this->renderInfos.zRotation = -this->customData[0];
 		if (this->frameState.sequenceId == 10) {
 			float params[3] = { this->renderInfos.zRotation, 0, 13 };
 

@@ -107,7 +107,7 @@ private:
 	static constexpr float BAD_GRAVITY = 0.45;
 
 	static constexpr float HAMMER_B_BULLET_SPEED = 15;
-	static constexpr float HAMMER_B_BULLET_SLOW_DOWN = 0.5;
+	static constexpr float HAMMER_B_BULLET_SLOW_DOWN = 0.45;
 	static constexpr float B_BULLET_SPEED = 20;
 	static constexpr float B_BULLET_SLOW_DOWN = 1;
 
@@ -176,6 +176,8 @@ public:
 		ACTION_66B_HAMMER =                      327,
 		ACTION_66C_HAMMER =                      328,
 
+		ACTION_6B =                              398,
+		ACTION_6B_HAMMER =                       399,
 		ACTION_5B_HAMMER =                       401,
 		ACTION_2B_HAMMER =                       403,
 		ACTION_j5B_HAMMER =                      405,

@@ -73,6 +73,20 @@ add_library(
 	objects/UnexpectedAssistanceObject/Yuyuko.hpp
 	objects/UnexpectedAssistanceObject/Yukari.cpp
 	objects/UnexpectedAssistanceObject/Yukari.hpp
+	objects/UnexpectedAssistanceObject/Suika.cpp
+	objects/UnexpectedAssistanceObject/Suika.hpp
+	objects/UnexpectedAssistanceObject/Reisen.cpp
+	objects/UnexpectedAssistanceObject/Reisen.hpp
+	objects/UnexpectedAssistanceObject/Aya.cpp
+	objects/UnexpectedAssistanceObject/Aya.hpp
+	objects/UnexpectedAssistanceObject/Komachi.cpp
+	objects/UnexpectedAssistanceObject/Komachi.hpp
+	objects/UnexpectedAssistanceObject/Iku.cpp
+	objects/UnexpectedAssistanceObject/Iku.hpp
+	objects/UnexpectedAssistanceObject/Tenshi.cpp
+	objects/UnexpectedAssistanceObject/Tenshi.hpp
+	objects/UnexpectedAssistanceObject/Sanae.cpp
+	objects/UnexpectedAssistanceObject/Sanae.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)

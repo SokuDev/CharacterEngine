@@ -111,8 +111,8 @@ void UnexpectedAssistance::Remilia::update()
 		this->renderInfos.color.a -= 5;
 		this->gpFloat[0] *= 0.9;
 	}
-	this->position.x = this->speed.x + this->position.x;
-	this->position.y = this->speed.y + this->position.y;
+	this->position.x += this->speed.x;
+	this->position.y += this->speed.y;
 	if (this->advanceFrame())
 		this->lifetime = 0;
 	if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 2) {
