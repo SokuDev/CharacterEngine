@@ -1853,6 +1853,8 @@ void Tewi::update()
 				this->_hammerPickTimer = 20;
 				this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams);
 				this->_hammer->HP = 10000;
+				this->_hammer->setSequence(13);
+				this->_hammer->skillIndex = 3;
 				this->_hammer->gravity.y = 0;
 			}
 		}
@@ -1899,6 +1901,8 @@ void Tewi::update()
 			this->playSFX(0);
 			this->_hammerPickTimer = 20;
 			this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams);
+			this->_hammer->setSequence(13);
+			this->_hammer->skillIndex = 3;
 			this->_hammer->gravity.y = 0;
 		}
 		if (this->frameState.poseId >= 3)

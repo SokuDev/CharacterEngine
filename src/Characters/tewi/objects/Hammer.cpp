@@ -175,7 +175,7 @@ void Hammer::update()
 			this->parentPlayerB->setAction(action);
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_SLAP_HIT);
 		}
-	} else if (this->frameState.sequenceId == 0 || this->frameState.sequenceId == 7) {
+	} else if (this->frameState.sequenceId == 0 || this->frameState.sequenceId == 7 || this->frameState.sequenceId == 13) {
 		if (this->frameState.sequenceId == 0 && this->checkTurnIntoCrystals(false, 0, 0))
 			this->setSequence(7);
 		if (this->collisionLimit) {
@@ -186,10 +186,12 @@ void Hammer::update()
 				this->speed.y = 7;
 				this->speed.x = std::copysign(2, -this->speed.x);
 				this->gravity.y = 0.25;
+				this->skillIndex = -1;
 				this->setSequence(7);
 			} else if (this->checkTurnIntoCrystals(false, 1, 5)) {
 				this->collisionLimit = 0;
 				this->nbBounceOnGround = 0;
+				this->skillIndex = -1;
 				this->setSequence(7);
 			}
 		}
@@ -208,7 +210,8 @@ void Hammer::update()
 	this->advanceFrame();
 	if (
 		this->frameState.sequenceId != 0 &&
-		this->frameState.sequenceId != 7
+		this->frameState.sequenceId != 7 &&
+		this->frameState.sequenceId != 13
 	)
 		return;
 	if (this->position.x <= 40 && this->speed.x <= 0) {

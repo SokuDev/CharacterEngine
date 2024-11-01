@@ -45011,7 +45011,40 @@
 	<move id="800" index="12" loop="1" movelock="0" actionlock="0">
 		<frame image="hammerBullet000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="57" texheight="50" xoffset="30" yoffset="25" duration="999" rendergroup="2">
 			<blend mode="0" color="ffffffff" xscale="200" yscale="200" vertflip="0" horzflip="0" angle="0"/>
-			<traits damage="1000" proration="900" chipdamage="100" spiritdamage="100" untech="45" power="100" limit="20" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="600" yspeed="1500" onhitsfx="3" onhiteffect="2" attacklevel="1">
+			<traits damage="1000" proration="900" chipdamage="150" spiritdamage="100" untech="45" power="100" limit="20" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="600" yspeed="1500" onhitsfx="3" onhiteffect="2" attacklevel="1">
+				<liftmodifier/>
+				<highrightblock/>
+				<lowrightblock/>
+				<airblockable/>
+				<takecounterhit/>
+				<inducecounterhit/>
+				<skillattacktype/>
+				<objectattacktype/>
+				<aflag18UNREFLECTABLE/>
+				<fflag23AFTER_IMAGE/>
+				<isbullet/>
+				<fflag24LOOP_ANIMATION/>
+				<fflag25ATTACK_OBJECT/>
+			</traits>
+			<hit>
+				<box left="-68" up="-57" right="27" down="-9"/>
+				<box left="-22" up="-20" right="15" down="17"/>
+				<box left="19" up="16" right="60" down="53"/>
+				<box left="0" up="-6" right="34" down="30"/>
+			</hit>
+			<attack>
+				<box left="-59" up="-50" right="22" down="-13"/>
+				<box left="-15" up="-15" right="12" down="12"/>
+				<box left="5" up="-1" right="29" down="25"/>
+				<box left="25" up="20" right="53" down="47"/>
+			</attack>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+	</move>
+	<move id="800" index="13" loop="1" movelock="0" actionlock="0">
+		<frame image="hammerBullet000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="57" texheight="50" xoffset="30" yoffset="25" duration="999" rendergroup="2">
+			<blend mode="0" color="ffffffff" xscale="200" yscale="200" vertflip="0" horzflip="0" angle="0"/>
+			<traits damage="850" proration="900" chipdamage="200" spiritdamage="100" untech="45" power="100" limit="10" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="600" yspeed="1500" onhitsfx="3" onhiteffect="2" attacklevel="1">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
