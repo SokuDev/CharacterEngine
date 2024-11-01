@@ -567,7 +567,7 @@ void Tewi::update()
 					this->direction, 1
 				);
 			}
-			if (this->inputData.keyInput.verticalAxis < 0) {
+			if (this->inputData.keyInput.verticalAxis < 0 && this->frameState.actionId == SokuLib::ACTION_FORWARD_DASH) {
 				if (this->direction * this->inputData.keyInput.horizontalAxis > 0) {
 					this->setAction(SokuLib::ACTION_FORWARD_HIGH_JUMP_FROM_GROUND_DASH);
 					return;
@@ -1582,6 +1582,10 @@ void Tewi::update()
 
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 5 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			break;
+		}
 		if (this->frameState.sequenceId != 0)
 			this->speed.y -= this->gravity.y;
 		if (b && this->frameState.sequenceId == 1) {
@@ -1604,6 +1608,16 @@ void Tewi::update()
 				break;
 			}
 		}
+		if (this->frameState.sequenceId == 5) {
+			this->applyGroundMechanics();
+			if (this->speed.x > 0) {
+				this->speed.x -= 0.5;
+				if (this->speed.x <= 0)
+					this->resetForces();
+			}
+			this->resetRenderInfo();
+			break;
+		}
 		if (this->frameState.sequenceId == 4) {
 			this->applyGroundMechanics();
 			this->resetForces();
@@ -1611,8 +1625,11 @@ void Tewi::update()
 			break;
 		}
 		if (this->applyAirMechanics()) {
-			this->setSequence(4);
-			return;
+			if ((this->frameState.actionId == ACTION_d623C || this->frameState.actionId == ACTION_jd623C) && this->frameState.sequenceId == 1)
+				this->setSequence(5);
+			else
+				this->setSequence(4);
+			break;
 		}
 		if (this->frameState.sequenceId == 1) {
 			if (this->frameState.poseId == 0 && this->frameState.poseFrame == 0)
@@ -1621,9 +1638,15 @@ void Tewi::update()
 				this->nextSequence();
 				this->resetRenderInfo();
 				this->center = {0, 0};
-				this->gravity.y = 0.5;
-				this->speed.x = -2;
-				this->speed.y = 10;
+				if (this->collisionType == COLLISION_TYPE_HIT || this->collisionType == COLLISION_TYPE_ARMORED) {
+					this->gravity.y = 1;
+					this->speed.x = -4;
+					this->speed.y = 15;
+				} else {
+					this->gravity.y = 0.5;
+					this->speed.x = -2;
+					this->speed.y = 10;
+				}
 			} else {
 				this->center = {0, 78};
 				this->renderInfos.zRotation = 360 * (this->frameState.poseFrame / 2) / this->frameState.poseDuration;
@@ -3281,7 +3304,7 @@ void Tewi::initializeAction()
 		break;
 	case ACTION_d623C:
 		this->speed.x = 15;
-		this->speed.y = 1;
+		this->speed.y = 0.5;
 		this->gravity.y = 0.05;
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->hasMoveBeenReset = true;
