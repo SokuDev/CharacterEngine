@@ -37,6 +37,11 @@
 #include "objects/UnexpectedAssistanceObject/Iku.hpp"
 #include "objects/UnexpectedAssistanceObject/Tenshi.hpp"
 #include "objects/UnexpectedAssistanceObject/Sanae.hpp"
+#include "objects/UnexpectedAssistanceObject/Cirno.hpp"
+#include "objects/UnexpectedAssistanceObject/Meiling.hpp"
+#include "objects/UnexpectedAssistanceObject/Utsuho.hpp"
+#include "objects/UnexpectedAssistanceObject/Suwako.hpp"
+#include "objects/UnexpectedAssistanceObject/Namazu.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -97,6 +102,16 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 		return new UnexpectedAssistance::Tenshi();
 	case 825:
 		return new UnexpectedAssistance::Sanae();
+	case 826:
+		return new UnexpectedAssistance::Cirno();
+	case 827:
+		return new UnexpectedAssistance::Meiling();
+	case 828:
+		return new UnexpectedAssistance::Utsuho();
+	case 829:
+		return new UnexpectedAssistance::Suwako();
+	case 830:
+		return new UnexpectedAssistance::Namazu();
 	case 849:
 		return new SpinningSmoke();
 	case 850:

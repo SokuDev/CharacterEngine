@@ -87,6 +87,16 @@ add_library(
 	objects/UnexpectedAssistanceObject/Tenshi.hpp
 	objects/UnexpectedAssistanceObject/Sanae.cpp
 	objects/UnexpectedAssistanceObject/Sanae.hpp
+	objects/UnexpectedAssistanceObject/Cirno.cpp
+	objects/UnexpectedAssistanceObject/Cirno.hpp
+	objects/UnexpectedAssistanceObject/Meiling.cpp
+	objects/UnexpectedAssistanceObject/Meiling.hpp
+	objects/UnexpectedAssistanceObject/Utsuho.cpp
+	objects/UnexpectedAssistanceObject/Utsuho.hpp
+	objects/UnexpectedAssistanceObject/Suwako.cpp
+	objects/UnexpectedAssistanceObject/Suwako.hpp
+	objects/UnexpectedAssistanceObject/Namazu.cpp
+	objects/UnexpectedAssistanceObject/Namazu.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)

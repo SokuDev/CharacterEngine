@@ -13,7 +13,7 @@
 #define printf(...)
 #endif
 
-#define EFFECT_COUNT 16
+#define EFFECT_COUNT 21
 
 const std::map<unsigned short, unsigned short> systemToHammer{
 	{ SokuLib::ACTION_IDLE,                                  Tewi::ACTION_IDLE_NO_HAMMER },
@@ -92,7 +92,7 @@ Tewi::Tewi(SokuLib::PlayerInfo &info) :
 		hammer.setRotation(-M_PI_4);
 		hammer.setCamera(&SokuLib::camera);
 
-		leaf.texture.loadFromGame("data/character/tewi/faces/leaf.png");
+		leaf.texture.loadFromGame("data/character/tewi/face/leaf.png");
 		leaf.rect.width = leaf.texture.getSize().x;
 		leaf.rect.height = leaf.texture.getSize().y;
 		leaf.setSize({15, 15});
@@ -101,7 +101,7 @@ Tewi::Tewi(SokuLib::PlayerInfo &info) :
 		for (int i = 0; i < std::size(faces); i++) {
 			auto &face = faces[i];
 
-			face.texture.loadFromGame(("data/character/tewi/faces/" + std::string(i == SokuLib::CHARACTER_RANDOM ? "namazu" : SokuLib::getCharName(i)) + ".png").c_str());
+			face.texture.loadFromGame(("data/character/tewi/face/" + std::string(i == SokuLib::CHARACTER_RANDOM ? "namazu" : SokuLib::getCharName(i)) + ".png").c_str());
 			face.rect.width = face.texture.getSize().x;
 			face.rect.height = face.texture.getSize().y;
 			face.setSize(face.texture.getSize());
@@ -355,8 +355,6 @@ void Tewi::update()
 	switch (this->frameState.actionId) {
 	case SokuLib::ACTION_IDLE:
 		this->applyGroundMechanics();
-		if (this->speed.x == 0)
-			this->groundDashCount = 0;
 		this->_checkDashSlide();
 		break;
 	case SokuLib::ACTION_CROUCHING:
@@ -2699,6 +2697,7 @@ void Tewi::update()
 			this->speed = {0, 0};
 			if (this->frameState.poseId <= 0) {
 				this->lockedInStageX = false;
+				this->_hammerPickTimer = 10;
 				this->position.x = this->gameData.opponent->position.x - 50 * this->direction;
 				SokuLib::camera.forcedXCenter = this->gameData.opponent->position.x;
 			} else {
@@ -3033,30 +3032,6 @@ void Tewi::update()
 
 	case ACTION_USING_SC_ID_210_HAMMER:
 	case SokuLib::ACTION_USING_SC_ID_210: {
-		const unsigned probs[21] = {
-			1, // Reimu - Gohei comes flying straight into the center of the screen or sides of the wall, creates a vertical or sideways wave of energy (think her 4card vertical amulet thingie)
-			1, // Marisa - Her bomb falls onto the screen from the sides and jumps around, eventually doing a big explosion
-			1, // Sakuya - Sakuya Richochet Spellcard (the 4card one, the "bad one") suddenly appears out of nowhere. The attack proceeds as you would expect the actual spellcard
-			1, // Alice - Alice's dolls comeout of one of the sides. Fundamentally a weaker version of the lemmings spellcard or Tewi rabbits attack
-			1, // Patchouli - A book (do we even have the graphic) falls from the center sky of the screen. Once it touches the ground it generates a weaker Royal Flare or another spell you prefer to use
-			1, // Youmu - Her sword (shouldn't be hard to get a sprite) comes from somewhere offscreen, aiming towards the opponent, lodging itself somewhere, once it touches a wall or the ground it will emit a wisp effect and then explode in a similar vein to Youmu's 22 Wicked Soul (quite strong for pressure)
-			1, // Remilia - Her lance comes from the ceiling or the sides at really high velocity. Does 2orbs blocked minimum and solid damage
-			1, // Yuyuko - Butterflies or wisps come from sides of the screen / alternatively, sphere bloom from fucking nowhere just kind of happens
-			1, // Yukari - Yukari comes out of a Border spinning. Its literally just her actual move, hitbox and AUB and whatnot
-			1, // Suika - Either a rock falls from the sky or it comes diagonally from upperleft/right of the screen. It's a Type 3 Projectile, can't be grazed
-			1, // Reisen - Fullscreen Laser, reusing that idea. That or she appears out of nowhere to assist Tewi
-			1, // Aya - CROWS ALL OVER THE ALL OVER THE STAGE, CALL ME THE CROWS MAN
-			1, // Komachi - Scythes comes flying from somewhere, lodges itself, calls out wisps or the slow walking effect that Komachi can do
-			1, // Iku - 2 balls of electricity
-			1, // Tenshi - Activates current weather (or force it back to 999) and give the weather debuff to opponent + spawn boomerang
-			1, // Sanae - Good/Bad luck amulets randomized fall from the sky. This should hit tewi too
-			0, // Cirno - A huge block of ice falls from the sky, for a while the entire arena has the "ice frog" effect. Gotta have funnies too
-			0, // Meiling - Arena going through the entire stage
-			0, // Utsuho - The arena becomes orangey/yellowish and then fire geysers come out from underground
-			0, // Suwako - Rings out of nowhere bouncing all over. Reusing spells once again
-			0, // Namazu - The meteor thing
-		};
-
 		if (this->_checkDashSlide())
 			this->setAction(SokuLib::ACTION_IDLE);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 5 && this->frameState.poseFrame == 0) {
@@ -3074,20 +3049,8 @@ void Tewi::update()
 
 			if (__practiceEffect == -1) {
 				this->collisionType = COLLISION_TYPE_HIT;
-				for (unsigned int prob: probs)
-					total += prob;
-				total = SokuLib::rand(total);
-
-				while (character < sizeof(probs)) {
-					unsigned prob = probs[character];
-
-					if (total < prob && prob)
-						break;
-					character++;
-					total -= prob;
-				}
-				if (character == sizeof(probs))
-					character--;
+				total = SokuLib::rand(525);
+				character = min(total / 25, 20);
 			} else
 				character = __practiceEffect;
 			this->createObject(810 + character, 0, 0, SokuLib::RIGHT, 1);
@@ -4620,6 +4583,60 @@ bool Tewi::VUnknown60(int a)
 	return false;
 }
 
+void Tewi::unhook()
+{
+	DWORD old;
+	unsigned char oldData[] = {0x0F, 0xB7, 0x86, 0x84, 0x01, 0x00, 0x00};
+	unsigned char oldData2[] = {0x0F, 0xB7, 0x87, 0x84, 0x01, 0x00, 0x00};
+
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+	*(char *)0x48894C = 0x74;
+	memcpy((void *)0x47B123, oldData, sizeof(oldData));
+	memcpy((void *)0x47B329, oldData2, sizeof(oldData2));
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
+}
+
+SokuLib::v2::GameObject *Tewi::getHammer() const
+{
+	return this->_hammer;
+}
+
+void Tewi::setRabbitAnimation()
+{
+	this->_rabbitAnimation = true;
+}
+
+void Tewi::render()
+{
+	SokuLib::SpriteEx::Coord old[4];
+	SokuLib::DxVertex old2[4];
+
+	memcpy(old, this->sprite.baseCoords, sizeof(this->sprite.baseCoords));
+	memcpy(old2, this->sprite.vertices, sizeof(this->sprite.vertices));
+	this->sprite.baseCoords[2].y = min(this->sprite.baseCoords[2].y, this->_cropLimit);
+	this->sprite.baseCoords[3].y = min(this->sprite.baseCoords[3].y, this->_cropLimit);
+	this->sprite.vertices[2].v *= this->sprite.baseCoords[2].y / old[2].y;
+	this->sprite.vertices[3].v *= this->sprite.baseCoords[3].y / old[3].y;
+	for (auto &coord : this->sprite.baseCoords)
+		coord.y += old[3].y - this->sprite.baseCoords[3].y + this->_offset;
+	AnimationObject::render();
+	memcpy(this->sprite.vertices, old2, sizeof(this->sprite.vertices));
+	memcpy(this->sprite.baseCoords, old, sizeof(this->sprite.baseCoords));
+	hammer.tint = this->_hammer == nullptr ? SokuLib::Color::White : SokuLib::Color{0x80, 0x00, 0x00};
+	hammer.tint.a = this->renderInfos.color.a;
+	hammer.setPosition(SokuLib::Vector2f{this->position.x - hammer.getSize().x / 2, -this->position.y - 200}.to<int>());
+	hammer.draw();
+	if (this->teamId == 0 && __practiceEffect != -1) {
+		faces[__practiceEffect].draw();
+		leaf.draw();
+	}
+}
+
+unsigned Tewi::getHammerPickTimer()
+{
+	return this->_hammerPickTimer;
+}
+
 constexpr auto operator_bracket = &SokuLib::Deque<SokuLib::Card>::operator[];
 
 void __declspec(naked) tewiRevivePreventDeath()
@@ -4634,7 +4651,10 @@ void __declspec(naked) tewiRevivePreventDeath()
 		//         defender->confusionDebuffTimer == 0 &&
 		//         !defender->handInfo.hand.empty() &&
 		//         defender->handInfo.hand[0]->id == 211 &&
-		//         defender->handInfo.hand[0]->cost <= defender->handInfo.hand.size()
+		//         (
+		//             defender->effectiveWeather == SokuLib::WEATHER_MOUNTAIN_VAPOR ||
+		//             defender->handInfo.hand[0]->cost - (defender->effectiveWeather == SokuLib::WEATHER_CLOUDY) <= defender->handInfo.hand.size()
+		//         )
 		//     ) {
 		//         ((Tewi *)defender)->revive = true;
 		//         defender->HP = 1;
@@ -4677,8 +4697,16 @@ void __declspec(naked) tewiRevivePreventDeath()
 		CMP word ptr [EAX], 211
 		JNZ noChangeTewi
 
-		// if (this->handInfo.hand[0]->cost <= this->handInfo.hand.size())
+		// if (defender->effectiveWeather == SokuLib::WEATHER_MOUNTAIN_VAPOR)
+		CMP dword ptr [ESI + 0x52C], 11
+		JZ doIt
+
+		// if (this->handInfo.hand[0]->cost - (defender->effectiveWeather == SokuLib::WEATHER_CLOUDY) <= this->handInfo.hand.size())
 		MOVZX EAX, word ptr [EAX + 2]
+		CMP dword ptr [ESI + 0x52C], 2
+		JNZ notCloudy
+		DEC EAX
+	notCloudy:
 		CMP EAX, [ESI + 0x5F8]
 		JG noChangeTewi
 
@@ -4737,58 +4765,4 @@ void Tewi::hook()
 
 	*(char *)0x48894C = 0xEB;
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
-}
-
-void Tewi::unhook()
-{
-	DWORD old;
-	unsigned char oldData[] = {0x0F, 0xB7, 0x86, 0x84, 0x01, 0x00, 0x00};
-	unsigned char oldData2[] = {0x0F, 0xB7, 0x87, 0x84, 0x01, 0x00, 0x00};
-
-	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
-	*(char *)0x48894C = 0x74;
-	memcpy((void *)0x47B123, oldData, sizeof(oldData));
-	memcpy((void *)0x47B329, oldData2, sizeof(oldData2));
-	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
-}
-
-SokuLib::v2::GameObject *Tewi::getHammer() const
-{
-	return this->_hammer;
-}
-
-void Tewi::setRabbitAnimation()
-{
-	this->_rabbitAnimation = true;
-}
-
-void Tewi::render()
-{
-	SokuLib::SpriteEx::Coord old[4];
-	SokuLib::DxVertex old2[4];
-
-	memcpy(old, this->sprite.baseCoords, sizeof(this->sprite.baseCoords));
-	memcpy(old2, this->sprite.vertices, sizeof(this->sprite.vertices));
-	this->sprite.baseCoords[2].y = min(this->sprite.baseCoords[2].y, this->_cropLimit);
-	this->sprite.baseCoords[3].y = min(this->sprite.baseCoords[3].y, this->_cropLimit);
-	this->sprite.vertices[2].v *= this->sprite.baseCoords[2].y / old[2].y;
-	this->sprite.vertices[3].v *= this->sprite.baseCoords[3].y / old[3].y;
-	for (auto &coord : this->sprite.baseCoords)
-		coord.y += old[3].y - this->sprite.baseCoords[3].y + this->_offset;
-	AnimationObject::render();
-	memcpy(this->sprite.vertices, old2, sizeof(this->sprite.vertices));
-	memcpy(this->sprite.baseCoords, old, sizeof(this->sprite.baseCoords));
-	hammer.tint = this->_hammer == nullptr ? SokuLib::Color::White : SokuLib::Color{0x80, 0x00, 0x00};
-	hammer.tint.a = this->renderInfos.color.a;
-	hammer.setPosition(SokuLib::Vector2f{this->position.x - hammer.getSize().x / 2, -this->position.y - 200}.to<int>());
-	hammer.draw();
-	if (this->teamId == 0 && __practiceEffect != -1) {
-		faces[__practiceEffect].draw();
-		leaf.draw();
-	}
-}
-
-unsigned Tewi::getHammerPickTimer()
-{
-	return this->_hammerPickTimer;
 }
