@@ -29,7 +29,7 @@ void loadExtraDatFiles(const char *path)
 {
 	og_loadDat(path);
 	for (auto &module : modules)
-		og_loadDat((module.getFolder() / module.getData()).string().c_str());
+		SokuLib::v2::loadDatFile((module.getFolder() / module.getData()).string().c_str());
 }
 
 static SokuLib::v2::Player *createCustomCharacter(int id, SokuLib::PlayerInfo &info)
