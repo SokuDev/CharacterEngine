@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if ! type shady-cli; then
-	export PATH="$(PWD)/shady/:$PATH"
+	export PATH="$(dirname $0)/shady/:$PATH"
 fi
 
 if [ $# -lt 1 ]; then
@@ -12,8 +12,8 @@ fi
 OUTPUT="$(realpath $1)"
 cd "$(dirname $0)"
 
-cmake --build $OUTPUT --target CharacterEngine || exit
-cmake --build $OUTPUT --target Soku2Loader || exit
+cmake --build $OUTPUT --target CharacterEngine -- -j || exit
+cmake --build $OUTPUT --target Soku2Loader -- -j || exit
 
 rm -f "$OUTPUT/Soku2Addon.zip"
 rm -f "$OUTPUT/CharacterEngine.zip"
@@ -78,7 +78,7 @@ for character in `ls src/Characters/`; do
 		fi
 		DLL="$(cat "$IN/character.json" | jq .character_dll | sed -r 's/^"(.*)"$/\1/g')"
 		echo "Building $DLL"
-		cmake --build $OUTPUT --target $(echo $DLL | sed -r 's/^(.*)\..*$/\1/g')
+		cmake --build $OUTPUT --target $(echo $DLL | sed -r 's/^(.*)\..*$/\1/g') -- -j
 		mkdir -p "$OUTPUT/Soku2_package/characters/$character" "$OUTPUT/standalone/characters/$character"
 		cp "$OUTPUT/src/Characters/$character/$DLL" "$OUT/$character.dat" "$IN/character.json" "$OUTPUT/standalone/characters/$character"
 		cp "$OUTPUT/src/Characters/$character/$DLL" "$OUT/$character.dat" "$IN/character.json" "$OUTPUT/Soku2_package/characters/$character"

@@ -53,7 +53,8 @@ void SpellTrapHole::render()
 	}
 }
 
-void SpellTrapHole::update() {
+void SpellTrapHole::update()
+{
 	if (this->frameState.sequenceId == 1)
 		return;
 	if (this->lifetime == 0)

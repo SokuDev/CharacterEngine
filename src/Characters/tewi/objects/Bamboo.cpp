@@ -7,6 +7,8 @@
 
 void Bamboo::update()
 {
+	if (this->parentPlayerB->timeStop)
+		return;
 	this->advanceFrame();
 	this->checkGrazed(0);
 	if (this->frameState.sequenceId == 0 && this->checkProjectileHit(4))

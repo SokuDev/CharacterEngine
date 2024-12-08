@@ -222,6 +222,7 @@ void loadCharacterModules()
 	std::sort(modules.begin(), modules.end(), [](const CharacterModule &module1, const CharacterModule &module2) -> bool{
 		return module1.getIndex() < module2.getIndex();
 	});
+	GiuRoll::load();
 	if (!modules.empty())
 		GiuRoll::setCharDataSize(modules.back().getIndex() + 1);
 }
@@ -443,7 +444,7 @@ extern "C" int APIENTRY DllMain(HMODULE hModule, DWORD fdwReason, LPVOID lpReser
 // When 2 mods define the same loading priority the loading order is undefined.
 extern "C" __declspec(dllexport) int getPriority()
 {
-	return 10000;
+	return 500;
 }
 
 // Not yet implemented in the mod loader, subject to change

@@ -12075,7 +12075,7 @@
 			</attack>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
-		<frame image="attackHAa006.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="76" texheight="71" xoffset="112" yoffset="143" duration="5" rendergroup="0">
+		<frame image="attackHAa006.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="76" texheight="71" xoffset="112" yoffset="143" duration="4" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<standing/>
 				<cancellable/>
@@ -12089,7 +12089,7 @@
 			</hit>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
-		<frame image="attackHAa007.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="76" texheight="71" xoffset="118" yoffset="143" duration="5" rendergroup="0">
+		<frame image="attackHAa007.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="76" texheight="71" xoffset="118" yoffset="143" duration="4" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<standing/>
 				<cancellable/>
@@ -12103,7 +12103,7 @@
 			</hit>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
-		<frame image="attackHAa008.bmp" index="8" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="62" texheight="70" xoffset="90" yoffset="141" duration="5" rendergroup="0">
+		<frame image="attackHAa008.bmp" index="8" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="62" texheight="70" xoffset="90" yoffset="141" duration="4" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<standing/>
 				<cancellable/>

@@ -4374,7 +4374,6 @@ bool Tewi::_canUseCard(int id)
 	case 100:
 	case 101:
 	case 103:
-	case 107:
 	case 111:
 	case 201:
 	case 208:
@@ -4394,6 +4393,10 @@ bool Tewi::_canUseCard(int id)
 	case 203:
 	case 206:
 	case 210:
+		return this->isGrounded();
+	case 107:
+		if (!this->_hammer)
+			return true;
 		return this->isGrounded();
 	case 205:
 		if (!this->isGrounded())
