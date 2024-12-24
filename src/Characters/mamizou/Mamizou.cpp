@@ -206,16 +206,12 @@ void Mamizou::update()
 		this->_init = true;
 		this->_transformPlayer->gameData.opponent = this->gameData.opponent;
 	}
-	//if (SokuLib::checkKeyOneshot(DIK_F1, false, false, false)) {
-	//	if (!this->_transformed) {
-	//		this->setAction(SokuLib::ACTION_IDLE);
-	//		this->_transform();
-	//	} else
-	//		this->_unTransform();
-	//}
-	if (this->_transformPlayer && !this->_transformed && (this->frameState.actionId < 50 || this->frameState.actionId >= 200)) {
-		this->setAction(SokuLib::ACTION_IDLE);
-		this->_transform();
+	if (SokuLib::checkKeyOneshot(DIK_F1, false, false, false)) {
+		if (!this->_transformed) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			this->_transform();
+		} else
+			this->_unTransform();
 	}
 	if (this->_transformed) {
 		this->_preTransformCall();
