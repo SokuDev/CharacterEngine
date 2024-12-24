@@ -1,0 +1,12 @@
+{
+    "internal_name": "mamizou",
+    "index": 36,
+    "index_named_assets": true,
+    "character_dll": "Mamizou.dll",
+    "data": "mamizou.dat",
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "Mamizou",
+    "full_name": "Mamizou Futatsuiwa",
+    "skill_inputs": [623, 236, 214, 421],
+    "enabled": false
+}
