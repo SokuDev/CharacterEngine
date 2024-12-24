@@ -3171,7 +3171,6 @@ void Tewi::initializeAction()
 	if (it != hammerToSystem.end())
 		this->frameState.actionId = it->second;
 	switch (this->frameState.actionId) {
-		break;
 	case SokuLib::ACTION_WALK_FORWARD:
 		this->speed.x = this->_hammer ? FRONT_WALK_SPEED : HAMMER_FRONT_WALK_SPEED;;
 		break;

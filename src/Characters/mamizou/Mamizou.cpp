@@ -13,75 +13,79 @@
 #define printf(...)
 #endif
 
-template<typename Factory>
-class TangledGameObjectList : public GameObjectList<Factory> {
+class MamizouGameObjectList : public GameObjectList<MamizouObjectFactory> {
 private:
 	SokuLib::List<SokuLib::v2::GameObject *> _mergedList;
-	SokuLib::v2::IGameObjectList &_other;
+	SokuLib::v2::Player &_other;
+	Mamizou &_me;
 
 public:
-	inline TangledGameObjectList(SokuLib::v2::Player* player, SokuLib::v2::IGameObjectList &other) :
-		GameObjectList<Factory>(player),
-		_other(other)
+	inline MamizouGameObjectList(Mamizou &player, SokuLib::v2::Player &other) :
+		GameObjectList<MamizouObjectFactory>(&player),
+		_other(other),
+		_me(player)
 	{
 	}
-	~TangledGameObjectList() override = default;
+	~MamizouGameObjectList() override = default;
 
-	void restoreAlly()
+	void restoreAlly(SokuLib::v2::Player *p)
 	{
-		for (auto obj : this->_other.getList())
-			obj->gameData.ally = this->_player;
+		for (auto obj : this->_other.objectList->getList())
+			obj->gameData.ally = p;
 	}
 
 	void clear() override
 	{
-		GameObjectList<Factory>::clear();
-		this->_other.clear();
+		GameObjectList<MamizouObjectFactory>::clear();
+		this->_other.objectList->clear();
 	}
 
 	void updatePhysics() override
 	{
-		GameObjectList<Factory>::updatePhysics();
-		this->restoreAlly();
-		this->_other.updatePhysics();
+		GameObjectList<MamizouObjectFactory>::updatePhysics();
+		this->_other.objectList->updatePhysics();
 	}
 
 	void update() override
 	{
-		GameObjectList<Factory>::update();
-		this->restoreAlly();
-		this->_other.update();
-		this->restoreAlly();
+		GameObjectList<MamizouObjectFactory>::update();
+		this->restoreAlly(&this->_other);
+		if (this->_me._transformed)
+			this->_me._preTransformCall();
+		this->_other.objectList->update();
+		if (this->_me._transformed)
+			this->_me._postTransformCall();
+		this->restoreAlly(this->_player);
 	}
 
 	void render1(char layer) override
 	{
-		GameObjectList<Factory>::render1(layer);
-		this->_other.render1(layer);
+		GameObjectList<MamizouObjectFactory>::render1(layer);
+		this->_other.objectList->render1(layer);
 	}
 
 	void render2() override
 	{
-		GameObjectList<Factory>::render2();
-		this->_other.render2();
+		GameObjectList<MamizouObjectFactory>::render2();
+		this->_other.objectList->render2();
 	}
 
 	void updateCamera() override
 	{
-		GameObjectList<Factory>::updateCamera();
-		this->_other.updateCamera();
+		GameObjectList<MamizouObjectFactory>::updateCamera();
+		this->_other.objectList->updateCamera();
 	}
 
 	void replaceOpponent(SokuLib::v2::Player *a0, SokuLib::v2::Player *a1) override
 	{
-		GameObjectList<Factory>::replaceOpponent(a0, a1);
-		this->_other.replaceOpponent(a0, a1);
+		GameObjectList<MamizouObjectFactory>::replaceOpponent(a0, a1);
+		this->_other.objectList->replaceOpponent(a0, a1);
 	}
 
 	SokuLib::List<SokuLib::v2::GameObject *> &getList() override
 	{
-		auto &myList = GameObjectList<Factory>::getList();
-		auto &otherList = this->_other.getList();
+		auto &myList = GameObjectList<MamizouObjectFactory>::getList();
+		auto &otherList = this->_other.objectList->getList();
 
 		for (size_t i = this->_mergedList.size(); i < myList.size() + otherList.size(); i++)
 			this->_mergedList.push_back(nullptr);
@@ -110,10 +114,11 @@ Mamizou::Mamizou(SokuLib::PlayerInfo &info) :
 
 		extra.isRight = info.isRight;
 		extra.palette = -info.palette - 1;
+		extra.effectiveDeck.clear();
 		this->_transformPlayer = SokuLib::v2::GameDataManager::createPlayer(extra);
 		this->_transformPlayer->initialize();
 		this->_transformPlayer->setAction(SokuLib::ACTION_IDLE);
-		this->objectList = new TangledGameObjectList<MamizouObjectFactory>(this, *this->_transformPlayer->objectList);
+		this->objectList = new MamizouGameObjectList(*this, *this->_transformPlayer);
 	} else {
 		this->objectList = new GameObjectList<MamizouObjectFactory>(this);
 		this->_init = true;
@@ -201,7 +206,14 @@ void Mamizou::update()
 		this->_init = true;
 		this->_transformPlayer->gameData.opponent = this->gameData.opponent;
 	}
-	if (!this->_transformed && (this->frameState.actionId < 50 || this->frameState.actionId >= 200)) {
+	//if (SokuLib::checkKeyOneshot(DIK_F1, false, false, false)) {
+	//	if (!this->_transformed) {
+	//		this->setAction(SokuLib::ACTION_IDLE);
+	//		this->_transform();
+	//	} else
+	//		this->_unTransform();
+	//}
+	if (this->_transformPlayer && !this->_transformed && (this->frameState.actionId < 50 || this->frameState.actionId >= 200)) {
 		this->setAction(SokuLib::ACTION_IDLE);
 		this->_transform();
 	}
@@ -760,11 +772,12 @@ void Mamizou::update()
 bool Mamizou::setAction(short action)
 {
 	printf("Mamizou::setAction(%i)\n", action);
+	if (this->_transformed && action >= 50 && action < 150)
+		this->_unTransform();
 	if (this->_transformed) {
 		if (this->_forward)
 			this->_transformPlayer->setAction(action);
-		if (action >= 50 && action < 150)
-			this->_unTransform();
+		return true;
 	}
 	return SokuLib::v2::Player::setAction(action);
 }
@@ -782,12 +795,22 @@ void Mamizou::initializeAction()
 		return;
 	}
 	switch (this->frameState.actionId) {
-		break;
 	case SokuLib::ACTION_WALK_FORWARD:
 		this->speed.x = FRONT_WALK_SPEED;;
 		break;
 	case SokuLib::ACTION_WALK_BACKWARD:
 		this->speed.x = BACK_WALK_SPEED;
+		break;
+	case SokuLib::ACTION_FLY:
+		this->resetRenderInfo();
+		this->speed.x = 0.0;
+		this->flightTimer = 0;
+		this->speed.y = 0.0;
+		this->gravity.y = 0.6;
+		this->center.x = 0.0;
+		this->center.y = 95.0;
+		this->flightSpeed = FLIGHT_SPEED;
+		this->unknown7EC = 0;
 		break;
 	default:
 		Player::initializeAction();
@@ -1419,8 +1442,8 @@ void Mamizou::updatePhysics()
 		this->_preTransformCall();
 		this->_transformPlayer->updatePhysics();
 		this->_postTransformCall();
-	} else
-		SokuLib::v2::Player::updatePhysics();
+	}
+	SokuLib::v2::Player::updatePhysics();
 }
 
 void Mamizou::render2()
@@ -1441,10 +1464,9 @@ void Mamizou::onRenderEnd()
 
 void Mamizou::setActionSequence(short action, short sequence)
 {
-	if (this->_transformed) {
-		this->setAction(action);
-		this->setSequence(sequence);
-	} else
+	if (this->_transformed)
+		this->_transformPlayer->setActionSequence(action, sequence);
+	else
 		GameObjectBase::setActionSequence(action, sequence);
 }
 
@@ -1562,6 +1584,7 @@ void Mamizou::_preTransformCall()
 	this->_transformPlayer->inputData.movementCombination = this->inputData.movementCombination;
 	this->_transformPlayer->inputData.commandCombination = this->inputData.commandCombination;
 	this->_transformPlayer->hitStop = this->hitStop;
+	this->_transformPlayer->weatherId = this->weatherId;
 
 	this->_transformPlayer->HP = this->HP;
 	this->_transformPlayer->redHP = this->redHP;
@@ -1586,6 +1609,7 @@ void Mamizou::_postTransformCall()
 	this->gameData.sequenceData = this->_transformPlayer->gameData.sequenceData;
 	this->gameData.frameData = this->_transformPlayer->gameData.frameData;
 	this->frameState.actionId = this->_transformPlayer->frameState.actionId;
+	this->skillIndex = this->_transformPlayer->skillIndex;
 
 	this->HP = this->_transformPlayer->HP;
 	this->redHP = this->_transformPlayer->redHP;
@@ -1610,13 +1634,15 @@ void Mamizou::_transform()
 	else
 		this->_transformPlayer->setAction(SokuLib::ACTION_FALLING);
 	for (int i = 0; i < 50; i++) {
-		float params[3];
+		float params[5];
 		float x = this->position.x + SokuLib::rand(150) - 75;
 		float y = this->position.y + SokuLib::rand(200);
 
 		params[0] = std::atan2(this->position.y + 100 - y, this->position.x - x) + M_PI;
 		params[1] = SokuLib::rand(200) / 100.f + 0.5;
-		params[2] = SokuLib::rand(20) + 3;
+		params[2] = SokuLib::rand(4);
+		params[3] = SokuLib::rand(10) + 10;
+		params[4] = SokuLib::rand(40) - 20;
 		this->createObject(802, x, y, SokuLib::rand(100) < 50 ? -1 : 1, 1, params);
 	}
 	this->playSFX(0);
@@ -1627,23 +1653,65 @@ void Mamizou::_unTransform()
 	this->_transformed = false;
 	this->gameData.frameData = this->_savedFrameData;
 	this->gameData.sequenceData = this->_savedSequenceData;
+	this->skillIndex = -1;
 	for (int i = 0; i < 50; i++) {
-		float params[3];
+		float params[5];
 		float x = this->position.x + SokuLib::rand(150) - 75;
 		float y = this->position.y + SokuLib::rand(200);
 
 		params[0] = std::atan2(this->position.y + 100 - y, this->position.x - x) + M_PI;
 		params[1] = SokuLib::rand(200) / 100.f + 0.5;
-		params[2] = SokuLib::rand(20) + 3;
+		params[2] = SokuLib::rand(4);
+		params[3] = SokuLib::rand(10) + 10;
+		params[4] = SokuLib::rand(40) - 20;
 		this->createObject(802, x, y, SokuLib::rand(100) < 50 ? -1 : 1, 1, params);
 	}
 	this->playSFX(0);
 }
 
-void Mamizou::unhook()
+bool Mamizou::isTransformed() const
 {
+	return this->_transformed;
+}
+
+SokuLib::v2::Player *Mamizou::getTransformPlayer() const
+{
+	return this->_transformPlayer;
+}
+
+static void (__fastcall *og_FUN_0046a240)(SokuLib::v2::Player *);
+
+void __fastcall FUN_0046a240(SokuLib::v2::Player *This)
+{
+	og_FUN_0046a240(This);
+	if (This->characterIndex != SokuLib::CHARACTER_MAMIZOU)
+		return;
+
+	auto mamizou = reinterpret_cast<Mamizou *>(This);
+
+	if (!mamizou->isTransformed())
+		return;
+
+	auto transformPlayer = mamizou->getTransformPlayer();
+
+	og_FUN_0046a240(transformPlayer);
+	memcpy(This->effectiveSkillLevel, transformPlayer->effectiveSkillLevel, sizeof(This->effectiveSkillLevel));
 }
 
 void Mamizou::hook()
 {
+	DWORD old;
+
+	VirtualProtect((void *)0x46E07E, 5, PAGE_EXECUTE_READWRITE, &old);
+	og_FUN_0046a240 = SokuLib::TamperNearJmpOpr(0x46E07E, FUN_0046a240);
+	VirtualProtect((void *)0x46E07E, 5, old, &old);
+}
+
+void Mamizou::unhook()
+{
+	DWORD old;
+
+	VirtualProtect((void *)0x46E07E, 5, PAGE_EXECUTE_READWRITE, &old);
+	SokuLib::TamperNearJmpOpr(0x46E07E, og_FUN_0046a240);
+	VirtualProtect((void *)0x46E07E, 5, old, &old);
 }
