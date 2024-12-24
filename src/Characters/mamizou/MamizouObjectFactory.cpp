@@ -6,6 +6,7 @@
 #include "BasicObject.hpp"
 #include "AnglableObject.hpp"
 #include "RotatingBlockingObject.hpp"
+#include "objects/Smoke.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -16,6 +17,8 @@ SokuLib::v2::GameObject *MamizouObjectFactory::construct(SokuLib::v2::Player *ow
 	printf("MamizouObjectFactory::construct(%i)\n", action);
 
 	switch (action) {
+	case 802:
+		return new Smoke();
 	case 998:
 		return new RotatingBlockingObject(120, 74, 40);
 	default:

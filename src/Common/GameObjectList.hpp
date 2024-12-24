@@ -11,7 +11,7 @@
 
 template<typename Factory>
 class GameObjectList : public SokuLib::v2::IGameObjectList {
-private:
+protected:
 	void *_;
 	SokuLib::Vector<std::unique_ptr<SokuLib::v2::GameObject>> _objects;
 	SokuLib::Vector<unsigned int> _usedIndexes;

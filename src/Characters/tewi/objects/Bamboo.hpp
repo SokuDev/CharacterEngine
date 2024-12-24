@@ -11,7 +11,6 @@
 class Bamboo : public BasicObject {
 public:
 	void update() override;
-
 	void initializeAction() override;
 };
 

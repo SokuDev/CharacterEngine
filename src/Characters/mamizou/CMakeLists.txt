@@ -25,6 +25,8 @@ add_library(
 	Mamizou.cpp
 	MamizouObjectFactory.cpp
 	MamizouObjectFactory.hpp
+	objects/Smoke.cpp
+	objects/Smoke.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)
