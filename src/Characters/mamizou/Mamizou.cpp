@@ -768,8 +768,16 @@ void Mamizou::update()
 bool Mamizou::setAction(short action)
 {
 	printf("Mamizou::setAction(%i)\n", action);
-	if (this->_transformed && action >= 50 && action < 150)
-		this->_unTransform();
+	if (this->_transformed && action >= 50 && action < 180) {
+		this->_transformPlayer->setAction(action);
+		if (action >= 150) {
+			bool b = SokuLib::v2::Player::setAction(action);
+
+			this->_transformPlayer->speed = this->speed;
+			return b;
+		} else
+			this->_unTransform();
+	}
 	if (this->_transformed) {
 		if (this->_forward)
 			this->_transformPlayer->setAction(action);
