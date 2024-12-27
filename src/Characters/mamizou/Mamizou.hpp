@@ -52,9 +52,9 @@ private:
 	static constexpr float TOP_BE6_SPEED = 5;
 	static constexpr float DASH_RECOVERY_DECEL = 1;
 
-	static constexpr float FLIGHT_TURN = 1.0;
-	static constexpr float FLIGHT_TURN_SUNNY = 2.0;
-	static constexpr float FLIGHT_SPEED = 12;
+	static constexpr float FLIGHT_TURN = 3.0;
+	static constexpr float FLIGHT_TURN_SUNNY = 6.0;
+	static constexpr float FLIGHT_SPEED = 8;
 
 	static constexpr float FAD_SPEED_X = 12;
 	static constexpr float FAD_SPEED_Y = 4;

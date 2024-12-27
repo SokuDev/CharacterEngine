@@ -9,6 +9,13 @@
 #include "TewiObjectFactory.hpp"
 #include "GameObjectList.hpp"
 
+#define dashTimer gpShort[0]
+#define flightTargetAngle gpShort[1]
+#define flightAngleDiff gpShort[2]
+#define flightTimer gpShort[3]
+#define flightSpeed gpFloat[0]
+#define flightAngle gpFloat[1]
+
 #ifndef _DEBUG
 #define printf(...)
 #endif

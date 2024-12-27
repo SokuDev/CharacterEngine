@@ -13,6 +13,13 @@
 #define printf(...)
 #endif
 
+#define dashTimer gpShort[0]
+#define flightTargetAngle gpShort[1]
+#define flightAngleDiff gpShort[2]
+#define flightTimer gpShort[3]
+#define flightSpeed gpFloat[0]
+#define flightAngle gpFloat[1]
+
 class MamizouGameObjectList : public GameObjectList<MamizouObjectFactory> {
 private:
 	SokuLib::List<SokuLib::v2::GameObject *> _mergedList;
@@ -564,14 +571,29 @@ void Mamizou::update()
 			this->setAction(SokuLib::ACTION_FALLING);
 			return;
 		}
-		if (this->frameState.currentFrame == 0) {
-			if (this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 6) {
-				this->setAction(SokuLib::ACTION_FALLING);
-				return;
-			}
-			if (this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 1)
+		if (
+			this->frameState.currentFrame == 0 &&
+			this->frameState.poseFrame == 0 &&
+			this->frameState.poseId == 0
+		) {
+			if (this->frameState.sequenceId == 1) {
 				SokuLib::playSEWaveBuffer(SokuLib::SFX_DASH);
+				if (this->flightAngle >= 135.0 || this->flightAngle <= -135.0) {
+					this->setSequence(6);
+					return;
+				}
+				if (this->flightAngle > 45.0 || this->flightAngle < -45.0) {
+					this->setSequence(4);
+					return;
+				}
+				puts("Nope");
+			}
+			if (this->frameState.sequenceId == 9)
+				this->setSequence(5);
+			if (this->frameState.sequenceId == 10 || this->frameState.sequenceId == 11)
+				this->setAction(SokuLib::ACTION_FALLING);
 		}
+
 		if (this->inputData.keyInput.verticalAxis > 0) {
 			if (this->inputData.keyInput.horizontalAxis * this->direction < 0)
 				this->flightTargetAngle = -135;
@@ -591,111 +613,175 @@ void Mamizou::update()
 		else if (this->inputData.keyInput.horizontalAxis * this->direction > 0)
 			this->flightTargetAngle = 0;
 
-		if (this->frameState.sequenceId == 5 || this->frameState.sequenceId == 6)
-			this->speed.y -= this->gravity.y;
-		if (0 < this->frameState.sequenceId && this->frameState.sequenceId < 5) {
-			this->flightTimer++;
-			this->flightAngleDiff = this->flightTargetAngle - this->flightAngle;
-			if (this->flightAngleDiff > 180)
-				this->flightAngleDiff -= 360;
-			if (this->flightAngleDiff < -180)
-				this->flightAngleDiff += 360;
-			if (this->flightAngleDiff > 0) {
-				if (this->weatherId == SokuLib::WEATHER_SUNNY)
-					this->flightAngle += FLIGHT_TURN_SUNNY;
-				else
-					this->flightAngle += FLIGHT_TURN;
+		if (this->frameState.sequenceId == 9 || this->frameState.sequenceId == 10 || this->frameState.sequenceId == 11)
+			this->speed.y = this->speed.y - this->gravity.y;
+		if (this->frameState.sequenceId < 1 || this->frameState.sequenceId > 8) {
+			if (!this->applyAirMechanics())
+				return;
+			this->position.y = this->getGroundHeight();
+			this->speed.y = 0.0;
+			this->gravity.y = 0.0;
+			if (8 < (short)this->frameState.sequenceId) {
+				this->setAction(SokuLib::ACTION_LANDING);
+				this->resetForces();
+				return;
 			}
-			if (this->flightAngleDiff < 0) {
-				if (this->weatherId == SokuLib::WEATHER_SUNNY)
-					this->flightAngle -= FLIGHT_TURN_SUNNY;
-				else
-					this->flightAngle -= FLIGHT_TURN ;
-			}
-			this->speed.x = cos(this->flightAngle * M_PI / 180) * this->flightSpeed;
-			this->speed.y = sin(this->flightAngle * M_PI / 180) * this->flightSpeed;
-			if (this->position.y > 680 && this->speed.y > 0)
-				this->speed.y = 0.0;
-			this->flightSpeed += 0.3;
-			if (this->flightSpeed > FLIGHT_SPEED)
-				this->flightSpeed = FLIGHT_SPEED;
+			this->resetRenderInfo();
+			this->setAction(SokuLib::ACTION_HARDLAND);
+			return;
+		}
+		this->flightTimer++;
+		this->flightAngleDiff = this->flightTargetAngle - this->flightAngle;
+		if (this->flightAngleDiff > 180)
+			this->flightAngleDiff -= 360;
+		if (this->flightAngleDiff < -180)
+			this->flightAngleDiff += 360;
+		if (this->flightAngle > 180)
+			this->flightAngle -= 360;
+		if (this->flightAngle < -180)
+			this->flightAngle += 360;
+		if (this->flightAngleDiff > 0) {
 			if (this->weatherId == SokuLib::WEATHER_SUNNY)
-				this->consumeSpirit(5, 1);
+				this->flightAngle += FLIGHT_TURN_SUNNY;
 			else
-				this->consumeSpirit(10, 1);
-			this->renderInfos.zRotation = -this->flightAngle;
-			if (this->speed.x < 0.0)
-				this->renderInfos.zRotation = 180.0 - this->flightAngle;
-			if (this->speed.x < 0.0 && this->frameState.sequenceId == 1)
-				this->setSequence(3);
-			if (this->speed.x >= 0 && this->frameState.sequenceId == 3)
+				this->flightAngle += FLIGHT_TURN;
+		}
+		if (this->flightAngleDiff < 0) {
+			if (this->weatherId == SokuLib::WEATHER_SUNNY)
+				this->flightAngle -= FLIGHT_TURN_SUNNY;
+			else
+				this->flightAngle -= FLIGHT_TURN;
+		}
+		this->speed.x = cos(this->flightAngle * M_PI / 180) * this->flightSpeed;
+		this->speed.y = sin(this->flightAngle * M_PI / 180) * this->flightSpeed;
+		if (this->position.y > 680 && this->speed.y > 0)
+			this->speed.y = 0.0;
+		//if (this->weatherId == SokuLib::WEATHER_SUNNY)
+		//	this->consumeSpirit(4, 1);
+		//else
+		//	this->consumeSpirit(8, 1);
+		if (
+			(this->frameState.sequenceId == 1 || this->frameState.sequenceId == 2) &&
+			(this->flightAngle > 60.0 || this->flightAngle < -60.0)
+		) {
+			this->setSequence(3);
+			return;
+		}
+		if (this->frameState.sequenceId == 4 || this->frameState.sequenceId == 5) {
+			if (this->flightAngle <= 45.0 && this->flightAngle >= -45.0) {
 				this->setSequence(1);
-			if (this->speed.x < 0.0 && this->frameState.sequenceId == 2)
-				this->setSequence(4);
-			if (this->speed.x >= 0 && this->frameState.sequenceId == 4)
-				this->setSequence(2);
-			if (this->frameState.currentFrame % 5 == 1)
-				this->createEffect(
-					0x7d,
-					this->position.x + cos(this->flightAngle * M_PI / 180) * this->direction * 100.0,
-					this->position.y + sin(this->flightAngle * M_PI / 180) * 100.0 + 100.0,
-					this->direction, 1
-				);
-			if ((this->inputData.keyInput.d == 0 && this->flightTimer > 10) || this->currentSpirit < 1) {
-				this->resetRenderInfo();
-				if (this->frameState.sequenceId == 1 || this->frameState.sequenceId == 2) {
-					if (this->direction == SokuLib::RIGHT) {
-						if (this->gameData.opponent->position.x >= this->position.x)
-							this->setSequence(5);
-						else {
-							this->direction = SokuLib::LEFT;
-							this->speed.x = -this->speed.x;
-							this->setSequence(6);
-						}
-					} else {
-						if (this->gameData.opponent->position.x <= this->position.x)
-							this->setSequence(5);
-						else {
-							this->direction = SokuLib::RIGHT;
-							this->setSequence(6);
-							this->speed.x = -this->speed.x;
-						}
-					}
-				}
-				if (this->frameState.sequenceId != 3 && this->frameState.sequenceId != 4)
-					return;
-				if (this->direction != SokuLib::RIGHT) {
-					if (this->position.x < this->gameData.opponent->position.x) {
-						this->direction = SokuLib::RIGHT;
-						this->speed.x = -this->speed.x;
-						this->setSequence(5);
-						return;
-					}
-					this->setSequence(6);
-					return;
-				}
-				if (this->position.x > this->gameData.opponent->position.x) {
-					this->direction = SokuLib::LEFT;
-					this->speed.x = -this->speed.x;
-					this->setSequence(5);
-					return;
-				}
+				return;
+			}
+			if (this->flightAngle >= 135.0 || this->flightAngle <= -135.0) {
 				this->setSequence(6);
 				return;
 			}
 		}
-		if (!this->applyAirMechanics())
-			return;
-		this->position.y = this->getGroundHeight();
-		this->speed.y = 0.0;
-		this->gravity.y = 0.0;
-		if (this->frameState.sequenceId > 4) {
-			this->setAction(SokuLib::ACTION_LANDING);
-			this->resetForces();
+		if (
+			(this->frameState.sequenceId == 6 || this->frameState.sequenceId == 7) &&
+			this->flightAngle < 120.0 &&
+			this->flightAngle > -120.0
+		) {
+			this->setSequence(8);
 			return;
 		}
-		this->resetRenderInfo();
-		this->setAction(SokuLib::ACTION_HARDLAND);
+		if (
+			(this->inputData.keyInput.d != 0 || this->flightTimer <= 10) &&
+			this->currentSpirit > 0
+		)  {
+			if (!this->applyAirMechanics())
+				return;
+			this->position.y = this->getGroundHeight();
+			this->speed.y = 0.0;
+			this->gravity.y = 0.0;
+			if (8 < (short)this->frameState.sequenceId) {
+				this->setAction(SokuLib::ACTION_LANDING);
+				this->resetForces();
+				return;
+			}
+			this->resetRenderInfo();
+			this->setAction(SokuLib::ACTION_HARDLAND);
+			return;
+		}
+		if (this->frameState.sequenceId == 1 || this->frameState.sequenceId == 2) {
+			if (this->direction == SokuLib::RIGHT) {
+				if (this->gameData.opponent->position.x < this->position.x) {
+					this->direction = SokuLib::LEFT;
+					this->speed.x = -this->speed.x;
+				}
+			} else {
+				if (this->gameData.opponent->position.x > this->position.x) {
+					this->direction = SokuLib::RIGHT;
+					this->speed.x = -this->speed.x;
+				}
+			}
+			this->setSequence(9);
+			return;
+		}
+		if (this->frameState.sequenceId == 3) {
+			this->gpShort[0] = this->frameState.poseId;
+			if (this->direction == SokuLib::RIGHT) {
+				if (this->gameData.opponent->position.x < this->position.x) {
+					this->direction = SokuLib::LEFT;
+					this->speed.x = -this->speed.x;
+				}
+			} else {
+				if (this->gameData.opponent->position.x > this->position.x) {
+					this->direction = SokuLib::RIGHT;
+					this->speed.x = -this->speed.x;
+				}
+			}
+			this->setSequence(9);
+			this->setPose(this->gpShort[0]);
+			return;
+		}
+		if (this->frameState.sequenceId == 4 || this->frameState.sequenceId == 5) {
+			if (this->direction == SokuLib::RIGHT) {
+				if (this->gameData.opponent->position.x < this->position.x) {
+					this->direction = SokuLib::LEFT;
+					this->speed.x = -this->speed.x;
+				}
+			} else {
+				if (this->gameData.opponent->position.x > this->position.x) {
+					this->direction = SokuLib::RIGHT;
+					this->speed.x = -this->speed.x;
+				}
+			}
+			this->setSequence(10);
+			return;
+		}
+		if (this->frameState.sequenceId == 6 || this->frameState.sequenceId == 7) {
+			if (this->direction == SokuLib::RIGHT) {
+				if (this->gameData.opponent->position.x < this->position.x) {
+					this->direction = SokuLib::LEFT;
+					this->speed.x = -this->speed.x;
+				}
+			} else {
+				if (this->gameData.opponent->position.x > this->position.x) {
+					this->direction = SokuLib::RIGHT;
+					this->speed.x = -this->speed.x;
+				}
+			}
+			this->setSequence(11);
+			return;
+		}
+		if (this->frameState.sequenceId == 8) {
+			this->gpShort[0] = this->frameState.poseId;
+			if (this->direction == SokuLib::RIGHT) {
+				if (this->gameData.opponent->position.x < this->position.x) {
+					this->direction = SokuLib::LEFT;
+					this->speed.x = -this->speed.x;
+				}
+			} else {
+				if (this->gameData.opponent->position.x > this->position.x) {
+					this->direction = SokuLib::RIGHT;
+					this->speed.x = -this->speed.x;
+				}
+			}
+			this->setSequence(11);
+			this->setPose(this->gpShort[0]);
+			return;
+		}
 		break;
 	case SokuLib::ACTION_HARDLAND:
 		this->applyGroundMechanics();
@@ -770,6 +856,11 @@ bool Mamizou::setAction(short action)
 	printf("Mamizou::setAction(%i)\n", action);
 	if (this->_transformed && action >= 50 && action < 180) {
 		this->_transformPlayer->setAction(action);
+		// TODO: For blocking, though something is still wrong here.
+		//       We get pushed normally on block, but for some reason,
+		//       the opponent doesn't when we are in the corner.
+		//       Normally, the opponent takes the push back we would have
+		//       took if we are in the corner, but that doesn't happen here.
 		if (action >= 150) {
 			bool b = SokuLib::v2::Player::setAction(action);
 
@@ -814,7 +905,7 @@ void Mamizou::initializeAction()
 		this->center.x = 0.0;
 		this->center.y = 95.0;
 		this->flightSpeed = FLIGHT_SPEED;
-		this->unknown7EC = 0;
+		this->gpFloat[4] = 0;
 		break;
 	default:
 		Player::initializeAction();
