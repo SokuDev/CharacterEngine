@@ -19,8 +19,8 @@ private:
 	SokuLib::v2::CharacterSequenceData *_savedSequenceData;
 
 	static constexpr float BACKDASH_DECEL = 2;
-	static constexpr float BACKDASH_IMPULSE = -17.0;
-	static constexpr float BACKDASH_IMPULSE_UP = 3.5;
+	static constexpr float BACKDASH_IMPULSE = -10.0;
+	static constexpr float BACKDASH_IMPULSE_UP = 4.5;
 	static constexpr float BACKDASH_GRAVITY = 0.75;
 	static constexpr float BE4_DECEL = 3;
 	static constexpr float BE4_IMPULSE = -12.5;
@@ -46,23 +46,23 @@ private:
 
 	static constexpr float FALLING_GRAVITY = 1;
 
-	static constexpr float INITIAL_DASH_SPEED = 15;
-	static constexpr float TOP_DASH_SPEED = 10;
-	static constexpr float INITIAL_BE6_SPEED = 7;
-	static constexpr float TOP_BE6_SPEED = 5;
-	static constexpr float DASH_RECOVERY_DECEL = 1;
+	static constexpr float INITIAL_DASH_SPEED = 10;
+	static constexpr float TOP_DASH_SPEED = 8;
+	static constexpr float INITIAL_BE6_SPEED = 5;
+	static constexpr float TOP_BE6_SPEED = 3;
+	static constexpr float DASH_RECOVERY_DECEL = 0.75;
 
-	static constexpr float FLIGHT_TURN = 3.0;
-	static constexpr float FLIGHT_TURN_SUNNY = 6.0;
-	static constexpr float FLIGHT_SPEED = 8;
+	static constexpr float FLIGHT_TURN = 3.5;
+	static constexpr float FLIGHT_TURN_SUNNY = 5;
+	static constexpr float FLIGHT_SPEED = 9;
 
-	static constexpr float FAD_SPEED_X = 12;
-	static constexpr float FAD_SPEED_Y = 4;
-	static constexpr float FAD_GRAVITY = 0.45;
+	static constexpr float FAD_SPEED_X = 8;
+	static constexpr float FAD_SPEED_Y = 3.5;
+	static constexpr float FAD_GRAVITY = 0.35;
 
-	static constexpr float BAD_SPEED_X = (-12);
-	static constexpr float BAD_SPEED_Y = 4;
-	static constexpr float BAD_GRAVITY = 0.45;
+	static constexpr float BAD_SPEED_X = (-8);
+	static constexpr float BAD_SPEED_Y = 3.5;
+	static constexpr float BAD_GRAVITY = 0.35;
 
 
 	bool _processAGrounded();

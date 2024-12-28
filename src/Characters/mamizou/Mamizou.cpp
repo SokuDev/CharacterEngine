@@ -227,7 +227,7 @@ void Mamizou::update()
 		return;
 	}
 	this->spinRotationCenter.x = 0;
-	this->spinRotationCenter.y = 57;
+	this->spinRotationCenter.y = 115;
 	if (this->hitStop)
 		return;
 	if (this->gameData.opponent->timeStop)
@@ -290,17 +290,11 @@ void Mamizou::update()
 			this->setAction(this->inputData.keyInput.verticalAxis == 0 ? SokuLib::ACTION_IDLE : SokuLib::ACTION_CROUCHED);
 		break;
 	case SokuLib::ACTION_FORWARD_TECH:
-		if (
-			(this->frameState.sequenceId == 0 && this->frameState.poseId < 4) ||
-			(this->frameState.sequenceId == 2 && this->frameState.poseId > 0)
-		)
+	case SokuLib::ACTION_BACKWARD_TECH:
+		if (this->frameState.sequenceId == 0 || this->frameState.sequenceId == 3)
 			this->applyGroundMechanics();
-		if (this->frameState.sequenceId < 3)
+		else
 			this->speed.y -= this->gravity.y;
-		if (this->speed.y < 0 && this->frameState.sequenceId < 2) {
-			this->setSequence(2);
-			return;
-		}
 		if (this->applyAirMechanics() && this->frameState.sequenceId < 3) {
 			this->position.y = this->getGroundHeight();
 			this->resetForces();
@@ -326,46 +320,12 @@ void Mamizou::update()
 				return;
 			}
 		}
-		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
-			this->speed.x = 12;
-			this->gravity.y = 1;
-			this->speed.y = 10;
-			return;
-		}
-		break;
-	case SokuLib::ACTION_BACKWARD_TECH:
-		if ((this->frameState.sequenceId == 0 && this->frameState.poseId < 4) || this->frameState.sequenceId == 2)
-			this->applyGroundMechanics();
-		if (this->frameState.sequenceId < 2)
-			this->speed.y -= this->gravity.y;
-		if (this->applyAirMechanics() && this->frameState.sequenceId < 2) {
-			this->position.y = this->getGroundHeight();
-			this->resetForces();
-			this->setSequence(2);
-			return;
-		}
-		if (this->advanceFrame()) {
-			if (this->inputData.inputType == 2) {
-				this->setAction(700);
-				this->meleeInvulTimer = 3;
-				this->projectileInvulTimer = 3;
-				return;
-			}
-			this->setAction(this->inputData.keyInput.verticalAxis > 0 ? SokuLib::ACTION_CROUCHED : SokuLib::ACTION_IDLE);
-		}
-		if (this->frameState.sequenceId == 2 && this->frameState.poseId == 1 && this->frameState.poseFrame == 0) {
-			if (this->position.x > this->gameData.opponent->position.x) {
-				this->direction = SokuLib::LEFT;
-				return;
-			}
-			if (this->position.x < this->gameData.opponent->position.x) {
-				this->direction = SokuLib::RIGHT;
-				return;
-			}
-		}
-		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
-			this->speed.x = -12;
-			this->gravity.y = 1;
+		if (this->frameState.sequenceId == 1 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
+			if (this->frameState.actionId == SokuLib::ACTION_FORWARD_TECH)
+				this->speed.x = 10;
+			else
+				this->speed.x = -10;
+			this->gravity.y = 0.5;
 			this->speed.y = 10;
 		}
 		break;
@@ -520,7 +480,7 @@ void Mamizou::update()
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_DASH);
 		}
 		if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 2) {
-			this->Unknown487C20();
+			this->checkTurnAround();
 			return;
 		}
 		break;
@@ -550,7 +510,7 @@ void Mamizou::update()
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_DASH);
 		}
 		if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 2) {
-			this->Unknown487C20();
+			this->checkTurnAround();
 			return;
 		}
 		break;
@@ -656,10 +616,10 @@ void Mamizou::update()
 		this->speed.y = sin(this->flightAngle * M_PI / 180) * this->flightSpeed;
 		if (this->position.y > 680 && this->speed.y > 0)
 			this->speed.y = 0.0;
-		//if (this->weatherId == SokuLib::WEATHER_SUNNY)
-		//	this->consumeSpirit(4, 1);
-		//else
-		//	this->consumeSpirit(8, 1);
+		if (this->weatherId == SokuLib::WEATHER_SUNNY)
+			this->consumeSpirit(4, 1);
+		else
+			this->consumeSpirit(8, 1);
 		if (
 			(this->frameState.sequenceId == 1 || this->frameState.sequenceId == 2) &&
 			(this->flightAngle > 60.0 || this->flightAngle < -60.0)
@@ -704,80 +664,30 @@ void Mamizou::update()
 			return;
 		}
 		if (this->frameState.sequenceId == 1 || this->frameState.sequenceId == 2) {
-			if (this->direction == SokuLib::RIGHT) {
-				if (this->gameData.opponent->position.x < this->position.x) {
-					this->direction = SokuLib::LEFT;
-					this->speed.x = -this->speed.x;
-				}
-			} else {
-				if (this->gameData.opponent->position.x > this->position.x) {
-					this->direction = SokuLib::RIGHT;
-					this->speed.x = -this->speed.x;
-				}
-			}
+			this->checkTurnAround();
 			this->setSequence(9);
 			return;
 		}
 		if (this->frameState.sequenceId == 3) {
 			this->gpShort[0] = this->frameState.poseId;
-			if (this->direction == SokuLib::RIGHT) {
-				if (this->gameData.opponent->position.x < this->position.x) {
-					this->direction = SokuLib::LEFT;
-					this->speed.x = -this->speed.x;
-				}
-			} else {
-				if (this->gameData.opponent->position.x > this->position.x) {
-					this->direction = SokuLib::RIGHT;
-					this->speed.x = -this->speed.x;
-				}
-			}
+			this->checkTurnAround();
 			this->setSequence(9);
 			this->setPose(this->gpShort[0]);
 			return;
 		}
 		if (this->frameState.sequenceId == 4 || this->frameState.sequenceId == 5) {
-			if (this->direction == SokuLib::RIGHT) {
-				if (this->gameData.opponent->position.x < this->position.x) {
-					this->direction = SokuLib::LEFT;
-					this->speed.x = -this->speed.x;
-				}
-			} else {
-				if (this->gameData.opponent->position.x > this->position.x) {
-					this->direction = SokuLib::RIGHT;
-					this->speed.x = -this->speed.x;
-				}
-			}
+			this->checkTurnAround();
 			this->setSequence(10);
 			return;
 		}
 		if (this->frameState.sequenceId == 6 || this->frameState.sequenceId == 7) {
-			if (this->direction == SokuLib::RIGHT) {
-				if (this->gameData.opponent->position.x < this->position.x) {
-					this->direction = SokuLib::LEFT;
-					this->speed.x = -this->speed.x;
-				}
-			} else {
-				if (this->gameData.opponent->position.x > this->position.x) {
-					this->direction = SokuLib::RIGHT;
-					this->speed.x = -this->speed.x;
-				}
-			}
+			this->checkTurnAround();
 			this->setSequence(11);
 			return;
 		}
 		if (this->frameState.sequenceId == 8) {
 			this->gpShort[0] = this->frameState.poseId;
-			if (this->direction == SokuLib::RIGHT) {
-				if (this->gameData.opponent->position.x < this->position.x) {
-					this->direction = SokuLib::LEFT;
-					this->speed.x = -this->speed.x;
-				}
-			} else {
-				if (this->gameData.opponent->position.x > this->position.x) {
-					this->direction = SokuLib::RIGHT;
-					this->speed.x = -this->speed.x;
-				}
-			}
+			this->checkTurnAround();
 			this->setSequence(11);
 			this->setPose(this->gpShort[0]);
 			return;

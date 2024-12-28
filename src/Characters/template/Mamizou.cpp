@@ -392,7 +392,7 @@ void Mamizou::update()
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_DASH);
 		}
 		if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 2) {
-			this->Unknown487C20();
+			this->checkTurnAround();
 			return;
 		}
 		break;
@@ -422,7 +422,7 @@ void Mamizou::update()
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_DASH);
 		}
 		if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 2) {
-			this->Unknown487C20();
+			this->checkTurnAround();
 			return;
 		}
 		break;
