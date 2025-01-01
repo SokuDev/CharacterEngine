@@ -213,6 +213,8 @@ void Mamizou::update()
 		this->_init = true;
 		this->_transformPlayer->gameData.opponent = this->gameData.opponent;
 	}
+	//if (!this->_transformed && (this->frameState.actionId < 50 || this->frameState.actionId >= 150))
+	//	this->_transform();
 	if (SokuLib::checkKeyOneshot(DIK_F1, false, false, false)) {
 		if (!this->_transformed) {
 			this->setAction(SokuLib::ACTION_IDLE);
@@ -225,6 +227,21 @@ void Mamizou::update()
 		this->_transformPlayer->update();
 		this->_postTransformCall();
 		return;
+	}
+	if (
+		SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN <= this->frameState.actionId && this->frameState.actionId <= SokuLib::ACTION_AIR_GUARD &&
+		!this->blockObjectSpawned
+	) {
+		float yOffset;
+
+		this->blockObjectSpawned = true;
+		if (this->frameState.actionId <= SokuLib::ACTION_RIGHTBLOCK_HIGH_HUGE_BLOCKSTUN)
+			yOffset = 100;
+		else if (this->frameState.actionId == SokuLib::ACTION_AIR_GUARD)
+			yOffset = 150;
+		else //if (SokuLib::ACTION_RIGHTBLOCK_LOW_SMALL_BLOCKSTUN <= this->frameState.actionId && this->frameState.actionId <= SokuLib::ACTION_RIGHTBLOCK_LOW_HUGE_BLOCKSTUN)
+			yOffset = 40;
+		this->createObject(998, (float)(this->direction * 57) + this->position.x, this->position.y + yOffset, this->direction, 1);
 	}
 	this->spinRotationCenter.x = 0;
 	this->spinRotationCenter.y = 115;
@@ -469,7 +486,10 @@ void Mamizou::update()
 				this->position.y + (float)(SokuLib::rand() % 200),
 				this->direction, 1
 			);
-		this->advanceFrame();
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			return;
+		}
 		if (this->frameState.sequenceId == 1 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
 			this->dashTimer = 0;
 			this->updateGroundMovement(FAD_SPEED_X);
@@ -500,7 +520,10 @@ void Mamizou::update()
 				this->position.y + (float)(SokuLib::rand() % 200),
 				this->direction, 1
 			);
-		this->advanceFrame();
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			return;
+		}
 		if (this->frameState.sequenceId == 1 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
 			this->updateGroundMovement(BAD_SPEED_X);
 			this->speed.y = BAD_SPEED_Y;
@@ -831,8 +854,9 @@ bool Mamizou::_processAAirborne()
 	if (this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL))
 		return false;
 
-	return false;
+	//return false;
 	if (
+		(hKeys == 0 || hBuffKeys == 0) &&
 		(this->inputData.keyInput.verticalAxis < 0 || this->inputData.bufferedKeyInput.verticalAxis < 0) &&
 		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_j8A)
 	) {
@@ -850,6 +874,7 @@ bool Mamizou::_processAAirborne()
 	}
 
 	if (
+		(this->inputData.keyInput.verticalAxis == 0 || this->inputData.bufferedKeyInput.verticalAxis == 0) &&
 		(hKeys > 0 || hBuffKeys > 0) &&
 		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_j6A)
 	) {

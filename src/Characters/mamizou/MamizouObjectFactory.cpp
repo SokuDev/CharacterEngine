@@ -20,7 +20,7 @@ SokuLib::v2::GameObject *MamizouObjectFactory::construct(SokuLib::v2::Player *ow
 	case 802:
 		return new Smoke();
 	case 998:
-		return new RotatingBlockingObject(120, 74, 40);
+		return new RotatingBlockingObject(150, 100, 40);
 	default:
 		return new BasicObject();
 	}

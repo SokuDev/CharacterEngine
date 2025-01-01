@@ -13,6 +13,7 @@
 #define flightTargetAngle gpShort[1]
 #define flightAngleDiff gpShort[2]
 #define flightTimer gpShort[3]
+#define solidarityAlpha gpShort[4]
 #define flightSpeed gpFloat[0]
 #define flightAngle gpFloat[1]
 
@@ -318,9 +319,9 @@ void Tewi::update()
 			this->frameState.actionId == SokuLib::ACTION_USING_SC_ID_206
 		) && this->frameState.sequenceId == 1)
 			this->setAction(SokuLib::ACTION_IDLE);
-		this->unknown7D8 += 15;
-		this->renderInfos.color.a = 255 - this->unknown7D8;
-		if (this->unknown7D8 >= 255) {
+		this->solidarityAlpha += 15;
+		this->renderInfos.color.a = 255 - this->solidarityAlpha;
+		if (this->solidarityAlpha >= 255) {
 			this->renderInfos.xRotation = 0;
 			this->renderInfos.yRotation = 0;
 			this->renderInfos.zRotation = 0;
@@ -335,7 +336,7 @@ void Tewi::update()
 			SokuLib::camera.forcedXCenter = this->gameData.opponent->position.x;
 			SokuLib::camera.forceYCenter = true;
 			SokuLib::camera.forcedYCenter = 50;
-			this->unknown7D8 = 0;
+			this->solidarityAlpha = 0;
 		}
 		return;
 	}
@@ -665,7 +666,10 @@ void Tewi::update()
 				this->position.y + (float)(SokuLib::rand() % 200),
 				this->direction, 1
 			);
-		this->advanceFrame();
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			return;
+		}
 		if (this->frameState.sequenceId == 1 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
 			this->dashTimer = 0;
 			this->updateGroundMovement(this->_hammer ? FAD_SPEED_X : HAMMER_FAD_SPEED_X);
@@ -696,7 +700,10 @@ void Tewi::update()
 				this->position.y + (float)(SokuLib::rand() % 200),
 				this->direction, 1
 			);
-		this->advanceFrame();
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			return;
+		}
 		if (this->frameState.sequenceId == 1 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
 			this->updateGroundMovement(this->_hammer ? BAD_SPEED_X : HAMMER_BAD_SPEED_X);
 			this->speed.y = this->_hammer ? BAD_SPEED_Y : HAMMER_BAD_SPEED_Y;
@@ -3193,7 +3200,7 @@ void Tewi::initializeAction()
 		this->center.x = 0.0;
 		this->center.y = 95.0;
 		this->flightSpeed = FLIGHT_SPEED;
-		this->unknown7EC = 0;
+		this->gpFloat[4] = 0;
 		break;
 	case ACTION_STAND_PICKUP_HAMMER_FROM_AIR:
 	case ACTION_STAND_PICKUP_HAMMER_FROM_GROUND:
@@ -3644,6 +3651,7 @@ bool Tewi::_processAAirborne()
 
 	if (this->_hammer) {
 		if (
+			(hKeys == 0 || hBuffKeys == 0) &&
 			(this->inputData.keyInput.verticalAxis < 0 || this->inputData.bufferedKeyInput.verticalAxis < 0) &&
 			this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_j8A)
 		) {
@@ -3661,6 +3669,7 @@ bool Tewi::_processAAirborne()
 		}
 
 		if (
+			(this->inputData.keyInput.verticalAxis == 0 || this->inputData.bufferedKeyInput.verticalAxis == 0) &&
 			(hKeys > 0 || hBuffKeys > 0) &&
 			this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_j6A)
 		) {
@@ -3688,6 +3697,7 @@ bool Tewi::_processAAirborne()
 		}
 	} else {
 		if (
+			(hKeys == 0 || hBuffKeys == 0) &&
 			(this->inputData.keyInput.verticalAxis < 0 || this->inputData.bufferedKeyInput.verticalAxis < 0) &&
 			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_j8A_HAMMER)
 		) {
@@ -3705,6 +3715,7 @@ bool Tewi::_processAAirborne()
 		}
 
 		if (
+			(this->inputData.keyInput.verticalAxis == 0 || this->inputData.bufferedKeyInput.verticalAxis == 0) &&
 			(hKeys > 0 || hBuffKeys > 0) &&
 			this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_j6A_HAMMER)
 		) {
