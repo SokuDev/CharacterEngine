@@ -11,10 +11,15 @@
 
 class Mamizou : public SokuLib::v2::Player {
 private:
+	enum TransformKind : char {
+		KIND_TIMER,
+	};
+
 	Player *_transformPlayer = nullptr;
 	bool _transformed = false;
 	bool _init = false;
 	bool _forward = true;
+	TransformKind _transformKind = KIND_TIMER;
 	SokuLib::v2::CharacterFrameData *_savedFrameData;
 	SokuLib::v2::CharacterSequenceData *_savedSequenceData;
 
@@ -27,7 +32,7 @@ private:
 	static constexpr float BE4_IMPULSE_UP = 4;
 	static constexpr float BE4_GRAVITY = 0.5;
 
-	static constexpr float FAR_RANGE = 80;
+	static constexpr float FAR_RANGE = 120;
 
 	static constexpr float MAX_DASH_HOLD = 45;
 
@@ -64,6 +69,7 @@ private:
 	static constexpr float BAD_SPEED_Y = 3.5;
 	static constexpr float BAD_GRAVITY = 0.35;
 
+	bool _tryDoUntransformedMove();
 
 	bool _processAGrounded();
 	bool _processBGrounded();
@@ -93,7 +99,8 @@ private:
 
 public:
 	enum Moves {
-		ACTION_d623B = 500,
+		ACTION_d623b = SokuLib::ACTION_DEFAULT_SKILL1_B,
+		ACTION_d22b = SokuLib::ACTION_DEFAULT_SKILL2_B,
 	};
 
 	Mamizou(SokuLib::PlayerInfo &info);

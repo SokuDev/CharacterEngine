@@ -84,7 +84,6 @@ private:
 
 public:
 	enum Moves {
-		ACTION_d623B = 500,
 	};
 
 	Mamizou(SokuLib::PlayerInfo &info);

@@ -13,6 +13,13 @@
 #define printf(...)
 #endif
 
+#define dashTimer gpShort[0]
+#define flightTargetAngle gpShort[1]
+#define flightAngleDiff gpShort[2]
+#define flightTimer gpShort[3]
+#define flightSpeed gpFloat[0]
+#define flightAngle gpFloat[1]
+
 Mamizou::Mamizou(SokuLib::PlayerInfo &info) :
 	SokuLib::v2::Player(info)
 {
@@ -96,8 +103,6 @@ void Mamizou::_highJumpUpdate(float xSpeed, float ySpeed, float gravity)
 
 void Mamizou::update()
 {
-	if (this->_other)
-		this->_other->gameData.opponent = this->gameData.opponent;
 	this->spinRotationCenter.x = 0;
 	this->spinRotationCenter.y = 57;
 	if (this->hitStop)
@@ -1116,7 +1121,7 @@ bool Mamizou::_useSkillCard(int id)
 
 	int index = id - 100;
 	int slot = index % 4;
-	int action = ACTION_d623B + index * 8;
+	int action = SokuLib::ACTION_DEFAULT_SKILL1_B + slot * 20 + (index / 4) * 5;
 
 	if (!this->isGrounded())
 		action += 2;

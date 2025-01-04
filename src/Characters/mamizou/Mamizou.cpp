@@ -749,6 +749,128 @@ void Mamizou::update()
 		this->_highJumpUpdate(F_HIGH_JUMP_FD_SPEED_X, HIGH_JUMP_SPEED_Y, HIGH_JUMP_GRAVITY);
 		break;
 
+	case SokuLib::ACTION_4A:
+	case SokuLib::ACTION_5A:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
+		break;
+	case SokuLib::ACTION_6A:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId < 1 && this->inputData.keyInput.a == 0)
+			this->chargedAttack = false;
+		if (this->frameState.sequenceId == 0) {
+			if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0 && this->chargedAttack) {
+				this->nextSequence();
+				this->createEffect(0x3E, (float)(this->direction * -80) + this->position.x, this->position.y + 122.0, this->direction, 1);
+			}
+			if (this->frameState.poseId == 6 && this->frameState.poseFrame == 0) {
+				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+				this->speed.x = 10;
+			}
+			if (this->frameState.poseId >= 7 && this->speed.x != 0)
+				this->speed.x -= 0.5;
+		} else if (this->frameState.sequenceId == 1) {
+			if (this->frameState.poseId == 0 && this->frameState.currentFrame == 0) {
+				this->setAction(SokuLib::ACTION_IDLE);
+				return;
+			}
+			if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
+				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+				this->speed.x = 12.5;
+			}
+			if (this->frameState.poseId >= 4 && this->speed.x != 0)
+				this->speed.x -= 0.5;
+		}
+		break;
+	case SokuLib::ACTION_2A:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_CROUCHED);
+		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
+		break;
+	case SokuLib::ACTION_f5A:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
+		if (this->speed.x > 0)
+			this->speed.x -= 0.85;
+		if (this->speed.x < 0)
+			this->speed.x = 0;
+		break;
+	case SokuLib::ACTION_j5A:
+		if (this->applyAirMechanics())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
+		this->speed.y -= this->gravity.y;
+		break;
+
+	case ACTION_d623b:
+		if (this->frameState.sequenceId != 3)
+			this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 1) {
+			if (this->frameState.poseId == 0 && this->frameState.currentFrame == 0)
+				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+			if (this->frameState.currentFrame == 20 + this->effectiveSkillLevel[0] * 5)
+				this->nextSequence();
+			if (this->collisionType == COLLISION_TYPE_INVUL) {
+				this->setSequence(3);
+				for (int i = 0; i < 50; i++) {
+					float params[5];
+					float x = this->position.x + SokuLib::rand(150) - 75;
+					float y = this->position.y + SokuLib::rand(200);
+
+					params[0] = std::atan2(this->position.y + 100 - y, this->position.x - x) + M_PI;
+					params[1] = SokuLib::rand(200) / 100.f + 0.5;
+					params[2] = SokuLib::rand(4);
+					params[3] = SokuLib::rand(10) + 10;
+					params[4] = SokuLib::rand(40) - 20;
+					this->createObject(802, x, y, SokuLib::rand(100) < 50 ? -1 : 1, 1, params);
+				}
+				this->playSFX(0);
+				this->position.x = this->gameData.opponent->position.x;
+				this->position.y = this->gameData.opponent->position.y + 400;
+				this->speed.y = -10;
+				this->collisionType = COLLISION_TYPE_NONE;
+				this->collisionLimit = 1;
+				this->gameData.opponent->hitStop = 10;
+			}
+		} else if (this->frameState.sequenceId == 3) {
+			if (this->frameState.poseId == 0 && this->frameState.currentFrame == 0) {
+				this->setAction(SokuLib::ACTION_IDLE);
+				return;
+			}
+			this->speed.y -= 1;
+			if (this->isGrounded()) {
+				this->nextSequence();
+				this->playSFX(1);
+			}
+		}
+		break;
+
+	case ACTION_d22b:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 10 - this->effectiveSkillLevel[1] * 2) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			this->_transform();
+			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+		}
+		break;
+
 	case SokuLib::ACTION_TALISMAN:
 		this->applyGroundMechanics();
 		if (this->advanceFrame())
@@ -802,10 +924,12 @@ bool Mamizou::setAction(short action)
 		} else
 			this->_unTransform();
 	}
-	if (this->_transformed) {
-		if (this->_forward)
+	if (this->_transformed && this->_forward) {
+		if (action < SokuLib::ACTION_5A) {
 			this->_transformPlayer->setAction(action);
-		return true;
+			return true;
+		} else
+			this->_unTransform();
 	}
 	return SokuLib::v2::Player::setAction(action);
 }
@@ -840,6 +964,33 @@ void Mamizou::initializeAction()
 		this->flightSpeed = FLIGHT_SPEED;
 		this->gpFloat[4] = 0;
 		break;
+	case SokuLib::ACTION_j5A:
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->collisionLimit = 1;
+		break;
+	case SokuLib::ACTION_6A:
+		this->chargedAttack = true;
+	case SokuLib::ACTION_5A:
+	case SokuLib::ACTION_4A:
+	case SokuLib::ACTION_2A:
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->collisionLimit = 1;
+		this->speed = {0, 0};
+		break;
+	case SokuLib::ACTION_f5A:
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->collisionLimit = 1;
+		this->speed = {15, 0};
+		break;
+	case ACTION_d623b:
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->collisionLimit = 1;
+		this->speed = {0, 0};
+		break;
+	case ACTION_d22b:
+		this->_transformKind = KIND_TIMER;
+		this->speed = {0, 0};
+		break;
 	default:
 		Player::initializeAction();
 		break;
@@ -854,7 +1005,6 @@ bool Mamizou::_processAAirborne()
 	if (this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL))
 		return false;
 
-	//return false;
 	if (
 		(hKeys == 0 || hBuffKeys == 0) &&
 		(this->inputData.keyInput.verticalAxis < 0 || this->inputData.bufferedKeyInput.verticalAxis < 0) &&
@@ -1055,8 +1205,6 @@ bool Mamizou::_processAGrounded()
 	auto hBuffKeys = this->inputData.bufferedKeyInput.horizontalAxis * this->direction;
 	short dashAction = SokuLib::ACTION_66A;
 
-	return false;
-
 	if (
 		this->frameState.actionId == SokuLib::ACTION_FORWARD_DASH &&
 		this->inputData.keyInput.verticalAxis == 0 &&
@@ -1081,7 +1229,7 @@ bool Mamizou::_processAGrounded()
 		return true;
 	}
 
-	if (
+	/*if (
 		std::abs(this->position.x - this->gameData.opponent->position.x) >= FAR_RANGE &&
 		!(hKeys < 0 || hBuffKeys < 0) &&
 		(this->inputData.keyInput.verticalAxis > 0 || this->inputData.bufferedKeyInput.verticalAxis > 0) &&
@@ -1090,9 +1238,10 @@ bool Mamizou::_processAGrounded()
 		this->renderInfos.zRotation = 0.0;
 		this->setAction(SokuLib::ACTION_f2A);
 		return true;
-	} else if (
+	} else */
+	if (
 		(this->inputData.keyInput.verticalAxis > 0 || this->inputData.bufferedKeyInput.verticalAxis > 0) &&
-		(this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_2A) || this->frameState.actionId == SokuLib::ACTION_2A)
+		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_2A)
 	) {
 		this->renderInfos.zRotation = 0.0;
 		this->setAction(SokuLib::ACTION_2A);
@@ -1110,7 +1259,7 @@ bool Mamizou::_processAGrounded()
 
 	if (
 		(hKeys < 0 || hBuffKeys < 0) &&
-		(this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_4A) || this->frameState.actionId == SokuLib::ACTION_4A)
+		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_4A)
 	) {
 		this->renderInfos.zRotation = 0.0;
 		this->setAction(SokuLib::ACTION_4A);
@@ -1266,6 +1415,14 @@ bool Mamizou::_processSkillsGrounded()
 		this->currentSpirit < 200
 	)
 		return false;
+	if (this->inputData.commandCombination._623b && this->_useSkill(true, 0, ACTION_d623b))
+		return true;
+	if (this->inputData.commandCombination._623c && this->_useSkill(true, 0, ACTION_d623b))
+		return true;
+	if (this->inputData.commandCombination._22b && this->_useSkill(true, 1, ACTION_d22b + this->_transformed))
+		return true;
+	if (this->inputData.commandCombination._22c && this->_useSkill(true, 1, ACTION_d22b + this->_transformed))
+		return true;
 	return false;
 }
 
@@ -1274,13 +1431,16 @@ bool Mamizou::_canUseCard(int id)
 	if (id < 100)
 		return true;
 
+	switch (id) {
+	case 100:
+	case 101:
+		return this->isGrounded();
+	}
 	return false;
 }
 
 bool Mamizou::_useSkillCard(int id)
 {
-	if (!this->_canUseCard(id))
-		return false;
 	if (this->gameData.sequenceData->actionLock > 50)
 		return false;
 	if (
@@ -1294,10 +1454,12 @@ bool Mamizou::_useSkillCard(int id)
 		this->setAction(SokuLib::ACTION_SKILL_CARD);
 		return true;
 	}
+	if (!this->_canUseCard(id))
+		return false;
 
 	int index = id - 100;
 	int slot = index % 4;
-	int action = ACTION_d623B + index * 8;
+	int action = SokuLib::ACTION_DEFAULT_SKILL1_B + slot * 20 + (index / 4) * 5;
 
 	if (!this->isGrounded())
 		action += 2;
@@ -1372,6 +1534,42 @@ void Mamizou::_processInputsGrounded()
 		return;
 }
 
+bool Mamizou::_tryDoUntransformedMove()
+{
+	auto frameFlags = this->_transformPlayer->gameData.frameData->frameFlags;
+
+	if (this->_transformPlayer->stopwatchTimeLeft)
+		return false;
+	if (!frameFlags.cancellable)
+		return false;
+	if (this->_transformPlayer->confusionDebuffTimer)
+		return false;
+	if (
+		this->_transformPlayer->isGrounded() &&
+		!this->handInfo.hand.empty() &&
+		(
+			(this->inputData.keyInput.spellcard != 0 && this->inputData.keyInput.spellcard < 3) ||
+			this->inputData.bufferedKeyInput.spellcard != 0
+		) &&
+		this->unknown836 == 0 && this->_transformPlayer->unknown836 == 0 &&
+		this->canActivateCard(0) &&
+		this->_canUseCard(this->handInfo.hand[0].id)
+	) {
+		auto &card = this->handInfo.hand[0];
+
+		if (0   <= card.id && card.id < 100 && this->useSystemCard(this->gameData.sequenceData->actionLock))
+			return true;
+		if (100 <= card.id && card.id < 200 && this->_useSkillCard(card.id))
+			return true;
+		if (200 <= card.id && card.id < 300 && this->_useSpellCard(card.id))
+			return true;
+	}
+	if (this->isOnGround())
+		return this->_processSkillsGrounded();
+	else
+		return this->_processSkillsAirborne();
+}
+
 void Mamizou::handleInputs()
 {
 	auto frameFlags = this->gameData.frameData->frameFlags;
@@ -1380,13 +1578,20 @@ void Mamizou::handleInputs()
 		return;
 
 	if (this->_transformed) {
+		if (this->_transformKind == KIND_TIMER) {
+			if (this->_tryDoUntransformedMove())
+				return;
+			this->inputData.commandCombination.value = 0;
+		}
+	}
+	if (this->_transformed) {
 		this->_preTransformCall();
 		this->_transformPlayer->handleInputs();
 		this->_postTransformCall();
 		return;
 	}
 	if (frameFlags.cancellable || frameFlags.highJumpCancellable) {
-		auto uVar10 = *(unsigned *)&this->inputData.commandCombination;
+		auto uVar10 = this->inputData.commandCombination.value;
 
 		// For story mode
 		if (699 < uVar10 && uVar10 < 800) {
@@ -1683,7 +1888,8 @@ void Mamizou::_unTransform()
 	this->_transformed = false;
 	this->gameData.frameData = this->_savedFrameData;
 	this->gameData.sequenceData = this->_savedSequenceData;
-	this->skillIndex = -1;
+	this->confusionDebuffTimer = this->_transformPlayer->confusionDebuffTimer;
+	this->SORDebuffTimer = this->_transformPlayer->SORDebuffTimer;
 	for (int i = 0; i < 50; i++) {
 		float params[5];
 		float x = this->position.x + SokuLib::rand(150) - 75;
