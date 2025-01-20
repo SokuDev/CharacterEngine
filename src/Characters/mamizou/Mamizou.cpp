@@ -123,13 +123,16 @@ Mamizou::Mamizou(SokuLib::PlayerInfo &info) :
 		extra.palette = -info.palette - 1;
 		extra.effectiveDeck.clear();
 		this->_transformPlayer = SokuLib::v2::GameDataManager::createPlayer(extra);
-		this->_transformPlayer->initialize();
-		this->_transformPlayer->setAction(SokuLib::ACTION_IDLE);
 		this->objectList = new MamizouGameObjectList(*this, *this->_transformPlayer);
 	} else {
 		this->objectList = new GameObjectList<MamizouObjectFactory>(this);
 		this->_init = true;
 	}
+}
+
+Mamizou::~Mamizou()
+{
+	delete this->_transformPlayer;
 }
 
 bool Mamizou::_checkDashSlide()
@@ -209,24 +212,54 @@ void Mamizou::_highJumpUpdate(float xSpeed, float ySpeed, float gravity)
 
 void Mamizou::update()
 {
+	float params[3];
+
 	if (!this->_init) {
 		this->_init = true;
 		this->_transformPlayer->gameData.opponent = this->gameData.opponent;
 	}
 	//if (!this->_transformed && (this->frameState.actionId < 50 || this->frameState.actionId >= 150))
 	//	this->_transform();
-	if (SokuLib::checkKeyOneshot(DIK_F1, false, false, false)) {
-		if (!this->_transformed) {
-			this->setAction(SokuLib::ACTION_IDLE);
-			this->_transform();
-		} else
-			this->_unTransform();
-	}
 	if (this->_transformed) {
+		auto oldAction = this->frameState.actionId;
+
+		if (this->_transformKind == KIND_TIMER) {
+			this->_transformTimer--;
+			if (this->_transformTimer == 0) {
+				this->_unTransform();
+				this->setAction(this->isOnGround() ? ACTION_FORCE_TIMER_UNTRANSFORM : ACTION_FORCE_TIMER_UNTRANSFORM_AIR);
+				this->_transformTimerDelay = 0;
+				this->_transformTimer = TIMER_COOLDOWN_MAX;
+				this->_transformedCooldown = true;
+				return;
+			}
+		} else if (this->_transformKind == KIND_SINGLE) {
+			auto frameFlags = this->_transformPlayer->gameData.frameData->frameFlags;
+
+			if (
+				this->_transformPlayer->frameState.actionId >= SokuLib::ACTION_5A &&
+				this->_transformPlayer->frameState.actionId &&
+				frameFlags.cancellable &&
+				this->_transformPlayer->collisionType != COLLISION_TYPE_NONE &&
+				this->_transformPlayer->collisionType != COLLISION_TYPE_INVUL
+			) {
+				this->_unTransform();
+				this->setAction(this->isOnGround() ? ACTION_a1_22b_UNTRANSFORM : ACTION_ja1_22b_UNTRANSFORM);
+				return;
+			}
+		}
 		this->_preTransformCall();
 		this->_transformPlayer->update();
 		this->_postTransformCall();
+		if (this->_transformKind == KIND_SINGLE && oldAction > this->frameState.actionId && oldAction >= SokuLib::ACTION_5A) {
+			this->_unTransform();
+			this->setAction(this->isOnGround() ? ACTION_a1_22b_UNTRANSFORM : ACTION_ja1_22b_UNTRANSFORM);
+		}
 		return;
+	} else if (this->_transformPlayer) {
+		this->_transformPlayer->position = {-1000, 1000};
+		this->_transformPlayer->speed = {0, 0};
+		this->_transformPlayer->update();
 	}
 	if (
 		SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN <= this->frameState.actionId && this->frameState.actionId <= SokuLib::ACTION_AIR_GUARD &&
@@ -245,6 +278,19 @@ void Mamizou::update()
 	}
 	this->spinRotationCenter.x = 0;
 	this->spinRotationCenter.y = 115;
+
+	if (this->_transformedCooldown) {
+		this->_transformTimer--;
+		if (this->_transformTimer == 0) {
+			this->_transformedCooldown = false;
+			this->_transformTimerDelay = 0;
+			this->_transformTimer = TIMER_MAX;
+		}
+	} else if (this->_transformTimerDelay)
+		this->_transformTimerDelay--;
+	else if (this->_transformTimer < TIMER_MAX)
+		this->_transformTimer++;
+
 	if (this->hitStop)
 		return;
 	if (this->gameData.opponent->timeStop)
@@ -569,7 +615,6 @@ void Mamizou::update()
 					this->setSequence(4);
 					return;
 				}
-				puts("Nope");
 			}
 			if (this->frameState.sequenceId == 9)
 				this->setSequence(5);
@@ -751,11 +796,22 @@ void Mamizou::update()
 
 	case SokuLib::ACTION_4A:
 	case SokuLib::ACTION_5A:
+	case SokuLib::ACTION_5AA:
 		this->applyGroundMechanics();
-		if (this->advanceFrame())
+		if (this->_checkDashSlide())
 			this->setAction(SokuLib::ACTION_IDLE);
 		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
+		break;
+	case SokuLib::ACTION_3A:
+	case SokuLib::ACTION_5AAAA:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_CROUCHED);
+		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
+			this->playSFX(3);
+			this->createObject(803, this->position.x + this->direction * 134, this->position.y, this->direction, 1);
+		}
 		break;
 	case SokuLib::ACTION_6A:
 		this->applyGroundMechanics();
@@ -789,21 +845,63 @@ void Mamizou::update()
 		break;
 	case SokuLib::ACTION_2A:
 		this->applyGroundMechanics();
-		if (this->advanceFrame())
+		if (this->_checkDashSlide())
 			this->setAction(SokuLib::ACTION_CROUCHED);
-		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0)
-			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
+		if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_LIGHT_ATTACK);
 		break;
+	case SokuLib::ACTION_5AAA:
 	case SokuLib::ACTION_f5A:
+	case SokuLib::ACTION_66A:
 		this->applyGroundMechanics();
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
 		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 		if (this->speed.x > 0)
-			this->speed.x -= 0.85;
+			this->speed.x -= 0.70;
 		if (this->speed.x < 0)
 			this->speed.x = 0;
+		break;
+	case SokuLib::ACTION_5AAAAA:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (!this->_transformPlayer)
+			this->chargedAttack = false;
+		if (this->frameState.sequenceId == 0 && this->frameState.poseId < 2 && this->frameState.poseFrame < 4 && this->inputData.keyInput.a == 0)
+			this->chargedAttack = false;
+		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 1 && this->frameState.poseFrame == 4) {
+			if (this->chargedAttack)
+				this->createEffect(0x3E, (float)(this->direction * -80) + this->position.x, this->position.y + 122.0, this->direction, 1);
+			else
+				this->nextPose();
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 0) {
+			params[0] = 0;
+			params[1] = 15;
+			for (int i = 0; i < 8; i++) {
+				params[2] = SokuLib::rand(400) / 100;
+				if (params[2] >= 4)
+					params[2] = 3;
+				this->createObject(806, this->position.x + SokuLib::cos(params[0]) * 50, this->position.y + 100 - SokuLib::sin(params[0]) * 50, this->direction, 1, params);
+				params[0] += 45;
+			}
+			if (this->chargedAttack) {
+				this->_transform(false);
+				this->_transformKind = KIND_SINGLE;
+			} else
+				this->playSFX(0);
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 20) {
+			auto old = this->frameState;
+
+			this->nextSequence();
+			this->setPose(old.poseId);
+			this->frameState.poseFrame = old.poseFrame;
+		}
+		if (this->frameState.sequenceId == 2 && this->frameState.currentFrame == 12)
+			this->nextSequence();
 		break;
 	case SokuLib::ACTION_j5A:
 		if (this->applyAirMechanics())
@@ -813,6 +911,481 @@ void Mamizou::update()
 		if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 		this->speed.y -= this->gravity.y;
+		break;
+	case SokuLib::ACTION_j6A:
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.currentFrame == 1) {
+			params[0] = SokuLib::ACTION_j6A;
+			params[1] = 9;
+			params[2] = 0;
+			this->createObject(805, this->position.x , this->position.y, this->direction, 1, params);
+			params[2] = 1;
+			this->createObject(805, this->position.x , this->position.y, this->direction, -1, params);
+			this->playSFX(3);
+		}
+		this->speed.y -= this->gravity.y;
+		if (this->getGroundHeight() >= this->position.y)
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+		break;
+	case SokuLib::ACTION_j2A:
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		else if (this->frameState.sequenceId == 0) {
+			this->speed.y -= this->gravity.y;
+			if (this->getGroundHeight() >= this->position.y && this->frameState.poseId < 5)
+				this->setAction(SokuLib::ACTION_IDLE);
+		} else if (this->frameState.sequenceId == 1) {
+			this->speed.y -= this->gravity.y;
+			if (this->getGroundHeight() >= this->position.y + this->speed.y && this->frameState.currentFrame != 0) {
+				this->setSequence(2);
+				this->playSFX(2);
+				this->position.y = this->getGroundHeight();
+				this->speed = {0, 0};
+			}
+		}
+		if (this->frameState.sequenceId == 0) {
+			if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0) {
+				this->createObject(804, this->position.x , this->position.y, this->direction, -1);
+				this->playSFX(3);
+			}
+		}
+		if (this->frameState.sequenceId == 2) {
+			if (this->frameState.poseId > 2)
+				this->speed.y -= this->gravity.y;
+			else if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0) {
+				this->speed.x = -5;
+				this->speed.y = 10;
+				this->gravity.y = 0.75;
+			}
+		} else if (this->frameState.sequenceId == 3) {
+			this->speed.y -= this->gravity.y;
+			this->collisionType = COLLISION_TYPE_HIT;
+		}
+		break;
+	case SokuLib::ACTION_j8A:
+		if (this->applyAirMechanics())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 1 && this->frameState.poseFrame == 0)
+			this->createObject(809, this->position.x, this->position.y, this->direction, -1);
+		if (this->frameState.sequenceId == 1 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
+			if (this->inputData.keyInput.a == 0 && this->frameState.currentFrame != 0) {
+				this->nextSequence();
+				return;
+			}
+			this->playSFX(6);
+			this->collisionType = COLLISION_TYPE_NONE;
+			this->collisionLimit = 1;
+
+			auto old = this->speed.y;
+
+			if (this->inputData.keyInput.verticalAxis < 0)
+				this->speed.y += 13;
+			else if (this->inputData.keyInput.verticalAxis == 0)
+				this->speed.y += 10;
+			else
+				this->speed.y += 7;
+			if (this->speed.y >= 20)
+				this->speed.y = max(old, 20);
+		}
+		if (this->position.y >= 680)
+			this->speed.y = 0;
+		this->speed.y -= this->gravity.y;
+		break;
+
+	case SokuLib::ACTION_5B:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId < 1 && this->inputData.keyInput.b == 0)
+			this->chargedAttack = false;
+		if (this->frameState.sequenceId == 0) {
+			if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0 && this->chargedAttack) {
+				this->nextSequence();
+				this->createEffect(0x3E, (float)(this->direction * 50) + this->position.x, this->position.y + 90, this->direction, 1);
+			}
+			if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
+				float params[5] = {
+					0, 10, 0,
+					this->position.x + (float)(this->direction * 150),
+					this->position.y + 90
+				};
+
+				this->consumeSpirit(200, 40);
+				this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+				this->playSFX(4);
+			}
+			if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0) {
+				float params[5] = {
+					0, 10, 0,
+					this->position.x + (float)(this->direction * 130),
+					this->position.y + 130
+				};
+
+				this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+				params[4] = this->position.y + 50;
+				this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+				this->playSFX(4);
+			}
+		} else if (this->frameState.sequenceId == 1) {
+			if (this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
+				this->setAction(SokuLib::ACTION_IDLE);
+				break;
+			}
+			if (this->frameState.poseId == 1 && this->frameState.poseFrame == 0) {
+				float params[5] = {
+					0, 10, 0,
+					this->position.x + (float)(this->direction * 150),
+					this->position.y + 90
+				};
+
+				this->consumeSpirit(200, 40);
+				this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+				this->playSFX(4);
+			}
+			if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0) {
+				float params[5] = {
+					0, 10, 0,
+					this->position.x + (float)(this->direction * 130),
+					this->position.y + 130
+				};
+
+				this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+				params[4] = this->position.y + 50;
+				this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+				params[4] = this->position.y + 90;
+				this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+				this->playSFX(4);
+			}
+			if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
+				float params[5] = {
+					0, 10, 0,
+					this->position.x + (float)(this->direction * 110),
+					this->position.y + 170
+				};
+
+				this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+				params[4] = this->position.y + 10;
+				this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+				params[4] = this->position.y + 50;
+				this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+				params[4] = this->position.y + 130;
+				this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+				this->playSFX(4);
+			}
+		}
+		break;
+	case SokuLib::ACTION_2B:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
+			float params[5] = {
+				-90, 10, 0,
+				this->position.x + (float)(this->direction * 90),
+				this->position.y + 30
+			};
+
+			this->consumeSpirit(200, 40);
+			this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+			this->playSFX(4);
+		}
+		if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0) {
+			float params[5] = {
+				-90, 10, 0,
+				this->position.x + (float)(this->direction * 140),
+				this->position.y + 30
+			};
+
+			this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+			this->playSFX(4);
+		}
+		if (this->frameState.poseId == 6 && this->frameState.poseFrame == 0) {
+			float params[5] = {
+				-90, 10, 0,
+				this->position.x + (float)(this->direction * 190),
+				this->position.y + 30
+			};
+
+			this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+			this->playSFX(4);
+		}
+		break;
+	case SokuLib::ACTION_6B:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
+			float params[5] = {
+				0, 10, 3,
+				this->position.x + (float)(this->direction * 150),
+				this->position.y + 90
+			};
+
+			this->collisionType = COLLISION_TYPE_HIT;
+			this->consumeSpirit(200, 40);
+			this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
+			this->playSFX(4);
+		}
+		break;
+
+
+	case SokuLib::ACTION_j5B:
+		if (this->advanceFrame() || this->applyAirMechanics())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId < 1 && this->inputData.keyInput.b == 0)
+			this->chargedAttack = false;
+		if (this->frameState.sequenceId == 0) {
+			if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0 && this->chargedAttack) {
+				this->nextSequence();
+				this->createEffect(0x3E, (float)(this->direction * 30) + this->position.x, this->position.y + 140, this->direction, 1);
+			}
+			if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
+				float params[5] = {
+					0, 10, 0,
+					this->position.x + (float)(this->direction * 150),
+					this->position.y + 140
+				};
+
+				this->consumeSpirit(200, 40);
+				this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+				this->playSFX(4);
+			}
+			if (this->frameState.poseId == 4 && this->frameState.poseFrame == 4) {
+				float params[5] = {
+					0, 10, 0,
+					this->position.x + (float)(this->direction * 130),
+					this->position.y + 190
+				};
+
+				this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+				params[4] = this->position.y + 90;
+				this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+				this->playSFX(4);
+			}
+			if (this->frameState.poseId >= 7)
+				this->speed.y -= this->gravity.y;
+		} else if (this->frameState.sequenceId == 1) {
+			if (this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
+				this->setAction(SokuLib::ACTION_FALLING);
+				break;
+			}
+			if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0) {
+				float params[5] = {
+					0, 10, 0,
+					this->position.x + (float)(this->direction * 150),
+					this->position.y + 140
+				};
+
+				this->consumeSpirit(200, 40);
+				this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+				this->playSFX(4);
+			}
+			if (this->frameState.poseId == 2 && this->frameState.poseFrame == 4) {
+				float params[5] = {
+					0, 10, 0,
+					this->position.x + (float)(this->direction * 130),
+					this->position.y + 190
+				};
+
+				this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+				params[4] = this->position.y + 90;
+				this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+				params[4] = this->position.y + 140;
+				this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+				this->playSFX(4);
+			}
+			if (this->frameState.poseId == 2 && this->frameState.poseFrame == 8) {
+				float params[5] = {
+					0, 10, 0,
+					this->position.x + (float)(this->direction * 110),
+					this->position.y + 260
+				};
+
+				this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+				params[4] = this->position.y + 30;
+				this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+				params[4] = this->position.y + 90;
+				this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+				params[4] = this->position.y + 190;
+				this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+				this->playSFX(4);
+			}
+			if (this->frameState.poseId >= 5)
+				this->speed.y -= this->gravity.y;
+		}
+		break;
+	case SokuLib::ACTION_j2B:
+		if (this->advanceFrame() || this->applyAirMechanics())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
+			float params[5] = {
+				55, 10, 0,
+				this->position.x + (float)(this->direction * 30),
+				this->position.y + 90
+			};
+
+			this->consumeSpirit(200, 40);
+			this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+			this->playSFX(4);
+		}
+		if (this->frameState.poseId == 4 && this->frameState.poseFrame == 4) {
+			float params[5] = {
+				55, 10, 0,
+				this->position.x + (float)(this->direction * 90),
+				this->position.y + 90
+			};
+
+			this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+			this->playSFX(4);
+		}
+		if (this->frameState.poseId == 4 && this->frameState.poseFrame == 8) {
+			float params[5] = {
+				55, 10, 0,
+				this->position.x + (float)(this->direction * 150),
+				this->position.y + 90
+			};
+
+			this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
+			this->playSFX(4);
+		}
+		if (this->frameState.poseId >= 7)
+			this->speed.y -= this->gravity.y;
+		break;
+	case SokuLib::ACTION_j6B:
+		if (this->advanceFrame() || this->applyAirMechanics())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
+			float params[5] = {
+				0, 10, 3,
+				this->position.x + (float)(this->direction * 150),
+				this->position.y + 190
+			};
+
+			this->consumeSpirit(200, 40);
+			this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 140, this->direction, 1, params);
+			this->playSFX(4);
+		}
+		if (this->frameState.poseId >= 7)
+			this->speed.y -= this->gravity.y;
+		break;
+
+	case SokuLib::ACTION_2C:
+		this->applyGroundMechanics();
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_CROUCHED);
+			return;
+		}
+		if (this->frameState.poseId == 1 && this->frameState.poseFrame == 0)
+			this->createObject(807, this->position.x + (this->direction * 70), this->position.y - 160, this->direction, 1);
+		if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
+			this->playSFX(5);
+			this->consumeSpirit(200, 60);
+			this->collisionType = COLLISION_TYPE_HIT;
+		}
+		break;
+	case SokuLib::ACTION_6C:
+		this->applyGroundMechanics();
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			return;
+		}
+		if (this->frameState.poseId == 1 && this->frameState.poseFrame == 0)
+			this->createObject(801, this->position.x + (this->direction * 200), this->position.y + 700, this->direction, 1);
+		if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0) {
+			this->playSFX(6);
+			this->collisionType = COLLISION_TYPE_HIT;
+			this->consumeSpirit(200, 60);
+		}
+		break;
+	case SokuLib::ACTION_5C:
+		this->applyGroundMechanics();
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			return;
+		}
+		if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0) {
+			this->playSFX(5);
+			this->collisionType = COLLISION_TYPE_HIT;
+			params[0] = 0;
+			params[1] = 15;
+			params[2] = 0.5;
+			this->consumeSpirit(200, 60);
+			this->createObject(808, this->position.x + (this->direction * 50), this->position.y + 100, this->direction, 1, params);
+		}
+		break;
+	case SokuLib::ACTION_j2C:
+		if (this->frameState.sequenceId >= 2 && this->applyAirMechanics())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId >= 2 && this->applyAirMechanics())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			return;
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 0) {
+			this->playSFX(5);
+			this->collisionType = COLLISION_TYPE_HIT;
+			params[0] = 45;
+			params[1] = 15;
+			params[2] = 0.5;
+			this->consumeSpirit(200, 60);
+			this->createObject(808, this->position.x + (this->direction * 50), this->position.y + 100, this->direction, 1, params);
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 8)
+			this->nextSequence();
+		if (this->frameState.sequenceId == 2 && this->frameState.currentFrame == 12)
+			this->nextSequence();
+		if (this->frameState.sequenceId == 3)
+			this->speed.y -= this->gravity.y;
+		break;
+	case SokuLib::ACTION_j6C:
+		if (this->frameState.sequenceId >= 2 && this->applyAirMechanics())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			return;
+		}
+		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 1 && this->frameState.poseFrame == 0)
+			this->createObject(801, this->position.x + (this->direction * 200), this->position.y + 650, this->direction, 1);
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 0) {
+			this->playSFX(6);
+			this->consumeSpirit(200, 60);
+			this->collisionType = COLLISION_TYPE_HIT;
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 8)
+			this->nextSequence();
+		if (this->frameState.sequenceId == 2 && this->frameState.currentFrame == 12)
+			this->nextSequence();
+		if (this->frameState.sequenceId == 3)
+			this->speed.y -= this->gravity.y;
+		break;
+	case SokuLib::ACTION_j5C:
+		if (this->frameState.sequenceId >= 2 && this->applyAirMechanics())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			return;
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 0) {
+			this->playSFX(5);
+			this->collisionType = COLLISION_TYPE_HIT;
+			params[0] = 0;
+			params[1] = 15;
+			params[2] = 0.5;
+			this->consumeSpirit(200, 60);
+			this->createObject(808, this->position.x + (this->direction * 50), this->position.y + 100, this->direction, 1, params);
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 8)
+			this->nextSequence();
+		if (this->frameState.sequenceId == 2 && this->frameState.currentFrame == 12)
+			this->nextSequence();
+		if (this->frameState.sequenceId == 3)
+			this->speed.y -= this->gravity.y;
 		break;
 
 	case ACTION_d623b:
@@ -861,10 +1434,96 @@ void Mamizou::update()
 		break;
 
 	case ACTION_d22b:
+	case ACTION_d22b_UNTRANSFORM:
 		this->applyGroundMechanics();
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
-		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 10 - this->effectiveSkillLevel[1] * 2) {
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame >= 10 - this->effectiveSkillLevel[1] * 2) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			this->_transform();
+			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+		}
+		break;
+
+	case ACTION_FORCE_TIMER_UNTRANSFORM:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 0 && this->frameState.currentFrame >= 60 - this->effectiveSkillLevel[1] * 5)
+			this->nextSequence();
+		break;
+
+	case ACTION_FORCE_TIMER_UNTRANSFORM_AIR:
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId == 0 && this->frameState.currentFrame >= 60 - this->effectiveSkillLevel[1] * 5)
+			this->nextSequence();
+		break;
+
+	case ACTION_a1_22b:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame >= 20 - this->effectiveSkillLevel[5] * 4) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			this->_transform();
+			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+		}
+		break;
+	case ACTION_ja1_22b:
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame >= 20 - this->effectiveSkillLevel[5] * 4) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			this->_transform();
+			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+		}
+		break;
+
+	case ACTION_a1_22b_UNTRANSFORM:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 0 && this->frameState.currentFrame >= 9 - this->effectiveSkillLevel[5] * 2) {
+			auto old = this->frameState;
+
+			this->nextSequence();
+			this->setPose(old.poseId);
+			this->frameState.poseFrame = old.poseFrame;
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 30)
+			this->nextSequence();
+		break;
+	case ACTION_ja1_22b_UNTRANSFORM:
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.sequenceId == 0 && this->frameState.currentFrame >= 9 - this->effectiveSkillLevel[5] * 2) {
+			auto old = this->frameState;
+
+			this->nextSequence();
+			this->setPose(old.poseId);
+			this->frameState.poseFrame = old.poseFrame;
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 30)
+			this->nextSequence();
+		break;
+
+	case ACTION_a2_22b:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 10) {
+			this->_transformStacks--;
+			this->setAction(SokuLib::ACTION_IDLE);
+			this->_transform();
+			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+		}
+		break;
+	case ACTION_ja2_22b:
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 10) {
+			this->_transformStacks--;
 			this->setAction(SokuLib::ACTION_IDLE);
 			this->_transform();
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
@@ -921,21 +1580,23 @@ bool Mamizou::setAction(short action)
 
 			this->_transformPlayer->speed = this->speed;
 			return b;
-		} else
-			this->_unTransform();
+		}
+		this->_unTransform();
 	}
 	if (this->_transformed && this->_forward) {
 		if (action < SokuLib::ACTION_5A) {
 			this->_transformPlayer->setAction(action);
 			return true;
-		} else
-			this->_unTransform();
+		}
+		this->_unTransform();
 	}
-	return SokuLib::v2::Player::setAction(action);
+	return Player::setAction(action);
 }
 
 void Mamizou::initializeAction()
 {
+	float params[3];
+
 	if (this->_transformed) {
 		if (this->frameState.actionId >= 50 && this->frameState.actionId < 150)
 			Player::initializeAction();
@@ -948,10 +1609,14 @@ void Mamizou::initializeAction()
 	}
 	switch (this->frameState.actionId) {
 	case SokuLib::ACTION_WALK_FORWARD:
-		this->speed.x = FRONT_WALK_SPEED;;
+		this->speed.x = FRONT_WALK_SPEED;
 		break;
 	case SokuLib::ACTION_WALK_BACKWARD:
 		this->speed.x = BACK_WALK_SPEED;
+		break;
+	case ACTION_FORCE_TIMER_UNTRANSFORM_AIR:
+		this->speed = {0, 0};
+		this->gravity.y = JUMP_GRAVITY;
 		break;
 	case SokuLib::ACTION_FLY:
 		this->resetRenderInfo();
@@ -964,23 +1629,70 @@ void Mamizou::initializeAction()
 		this->flightSpeed = FLIGHT_SPEED;
 		this->gpFloat[4] = 0;
 		break;
+	case SokuLib::ACTION_j8A:
+		this->gravity.y = 0.4;
+	case SokuLib::ACTION_j6A:
+	case SokuLib::ACTION_j2A:
 	case SokuLib::ACTION_j5A:
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		break;
+	case SokuLib::ACTION_j5B:
+		this->chargedAttack = true;
+	case SokuLib::ACTION_j5C:
+	case SokuLib::ACTION_j2C:
+	case SokuLib::ACTION_j6C:
+	case SokuLib::ACTION_j2B:
+	case SokuLib::ACTION_j6B:
+		this->collisionType = COLLISION_TYPE_HIT;
+		this->collisionLimit = 1;
+		if (this->speed.x > 3)
+			this->speed.x = 3;
+		if (this->speed.x < -3)
+			this->speed.x = -3;
+		if (this->speed.y > 3)
+			this->speed.y = 3;
+		if (this->speed.y < -3)
+			this->speed.y = -3;
+		this->gravity.y = FALLING_GRAVITY;
+		break;
+	case SokuLib::ACTION_5B:
+	case SokuLib::ACTION_5AAAAA:
+		this->chargedAttack = true;
+	case SokuLib::ACTION_6C:
+	case SokuLib::ACTION_5C:
+	case SokuLib::ACTION_2C:
+	case SokuLib::ACTION_2B:
+	case SokuLib::ACTION_6B:
+		this->collisionType = COLLISION_TYPE_HIT;
+		this->speed = {0, 0};
+		break;
 	case SokuLib::ACTION_6A:
 		this->chargedAttack = true;
-	case SokuLib::ACTION_5A:
-	case SokuLib::ACTION_4A:
-	case SokuLib::ACTION_2A:
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		this->speed = {0, 0};
 		break;
-	case SokuLib::ACTION_f5A:
+	case SokuLib::ACTION_3A:
+	case SokuLib::ACTION_5AAAA:
+		this->speed = {0, 0};
+	case SokuLib::ACTION_5A:
+	case SokuLib::ACTION_5AA:
+	case SokuLib::ACTION_4A:
+	case SokuLib::ACTION_2A:
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->collisionLimit = 1;
+		break;
+	case SokuLib::ACTION_66A:
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		this->speed = {15, 0};
+		break;
+	case SokuLib::ACTION_f5A:
+	case SokuLib::ACTION_5AAA:
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->collisionLimit = 1;
+		this->speed = {12, 0};
 		break;
 	case ACTION_d623b:
 		this->collisionType = COLLISION_TYPE_NONE;
@@ -989,6 +1701,18 @@ void Mamizou::initializeAction()
 		break;
 	case ACTION_d22b:
 		this->_transformKind = KIND_TIMER;
+		this->speed = {0, 0};
+		break;
+	case ACTION_a1_22b:
+	case ACTION_ja1_22b:
+		this->_transformKind = KIND_SINGLE;
+	case ACTION_a1_22b_UNTRANSFORM:
+	case ACTION_ja1_22b_UNTRANSFORM:
+		this->speed = {0, 0};
+		break;
+	case ACTION_a2_22b:
+	case ACTION_ja2_22b:
+		this->_transformKind = KIND_STACK;
 		this->speed = {0, 0};
 		break;
 	default:
@@ -1061,7 +1785,6 @@ bool Mamizou::_processBAirborne()
 	if ((this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL)) || this->currentSpirit < 200)
 		return false;
 
-	return false;
 	if (
 		(this->inputData.keyInput.verticalAxis > 0 || this->inputData.bufferedKeyInput.verticalAxis > 0) &&
 		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_j2B)
@@ -1071,14 +1794,14 @@ bool Mamizou::_processBAirborne()
 		return true;
 	}
 
-	/*if (
+	if (
 		(hKeys > 0 || hBuffKeys > 0) &&
 		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_j6B)
 	) {
 		this->renderInfos.zRotation = 0.0;
 		this->setAction(SokuLib::ACTION_j6B);
 		return true;
-	}*/
+	}
 
 	if (this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_j5B)) {
 		this->renderInfos.zRotation = 0.0;
@@ -1092,8 +1815,6 @@ bool Mamizou::_processCAirborne()
 {
 	auto hKeys = this->inputData.keyInput.horizontalAxis * this->direction;
 	auto hBuffKeys = this->inputData.bufferedKeyInput.horizontalAxis * this->direction;
-
-	return false;
 
 	if (
 		(
@@ -1159,6 +1880,18 @@ bool Mamizou::_processSkillsAirborne()
 		this->currentSpirit < 200
 	)
 		return false;
+
+	if (!this->_transformPlayer)
+		return false;
+
+	bool used22 = this->inputData.commandCombination._22b || this->inputData.commandCombination._22c;
+
+	if (!this->_transformed) {
+		if (used22 && this->_useSkill(true, 5, ACTION_ja1_22b))
+			return true;
+		if (this->_transformStacks && used22 && this->_useSkill(true, 9, ACTION_ja2_22b))
+			return true;
+	}
 	return false;
 }
 
@@ -1169,8 +1902,7 @@ void Mamizou::_processInputsAirborne()
 		((this->inputData.keyInput.spellcard != 0 && this->inputData.keyInput.spellcard < 3) || this->inputData.bufferedKeyInput.spellcard != 0) &&
 		this->confusionDebuffTimer == 0 &&
 		this->unknown836 == 0 &&
-		this->canActivateCard(0) &&
-		this->_canUseCard(this->handInfo.hand[0].id)
+		this->canActivateCard(0)
 	) {
 		auto &card = this->handInfo.hand[0];
 
@@ -1241,7 +1973,7 @@ bool Mamizou::_processAGrounded()
 	} else */
 	if (
 		(this->inputData.keyInput.verticalAxis > 0 || this->inputData.bufferedKeyInput.verticalAxis > 0) &&
-		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_2A)
+		(this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_2A) || this->frameState.actionId == SokuLib::ACTION_2A)
 	) {
 		this->renderInfos.zRotation = 0.0;
 		this->setAction(SokuLib::ACTION_2A);
@@ -1259,7 +1991,7 @@ bool Mamizou::_processAGrounded()
 
 	if (
 		(hKeys < 0 || hBuffKeys < 0) &&
-		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_4A)
+		(this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_4A) || this->frameState.actionId == SokuLib::ACTION_4A)
 	) {
 		this->renderInfos.zRotation = 0.0;
 		this->setAction(SokuLib::ACTION_4A);
@@ -1283,6 +2015,10 @@ bool Mamizou::_processAGrounded()
 		ok = true;
 		break;
 	case SokuLib::ACTION_5AAAA:
+		action = SokuLib::ACTION_5AAAAA;
+		ok = true;
+		break;
+	case SokuLib::ACTION_5AAAAA:
 		return false;
 	}
 
@@ -1311,28 +2047,26 @@ bool Mamizou::_processBGrounded()
 		return true;
 	}
 
-	return false;
-
 	if ((this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL)) || this->currentSpirit < 200)
 		return false;
 
 	if (
 		(this->inputData.keyInput.verticalAxis > 0 || this->inputData.bufferedKeyInput.verticalAxis > 0) &&
 		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_2B)
-		) {
+	) {
 		this->renderInfos.zRotation = 0.0;
 		this->setAction(SokuLib::ACTION_2B);
 		return true;
 	}
 
-/*	if (
+	if (
 		(hKeys > 0 || hBuffKeys > 0) &&
-		this->gameData.sequenceData->actionLock <= this->getMoveLock(ACTION_6B)
+		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_6B)
 	) {
 		this->renderInfos.zRotation = 0.0;
-		this->setAction(ACTION_6B);
+		this->setAction(SokuLib::ACTION_6B);
 		return true;
-	}*/
+	}
 
 	if (this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_5B)) {
 		this->renderInfos.zRotation = 0.0;
@@ -1358,8 +2092,6 @@ bool Mamizou::_processCGrounded()
 		this->setAction(dashAction);
 		return true;
 	}
-
-	return false;
 
 	if (
 		(
@@ -1388,15 +2120,6 @@ bool Mamizou::_processCGrounded()
 		return true;
 	}
 
-	if (
-		(hKeys < 0 || hBuffKeys < 0) &&
-		this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_4C)
-	) {
-		this->renderInfos.zRotation = 0.0;
-		this->setAction(SokuLib::ACTION_4C);
-		return true;
-	}
-
 	if (this->gameData.sequenceData->actionLock <= this->getMoveLock(SokuLib::ACTION_5C)) {
 		this->renderInfos.zRotation = 0.0;
 		this->setAction(SokuLib::ACTION_5C);
@@ -1419,10 +2142,23 @@ bool Mamizou::_processSkillsGrounded()
 		return true;
 	if (this->inputData.commandCombination._623c && this->_useSkill(true, 0, ACTION_d623b))
 		return true;
-	if (this->inputData.commandCombination._22b && this->_useSkill(true, 1, ACTION_d22b + this->_transformed))
-		return true;
-	if (this->inputData.commandCombination._22c && this->_useSkill(true, 1, ACTION_d22b + this->_transformed))
-		return true;
+
+	if (!this->_transformPlayer)
+		return false;
+
+	bool used22 = this->inputData.commandCombination._22b || this->inputData.commandCombination._22c;
+
+	if (this->_transformed) {
+		if (used22 && this->_useSkill(true, 1, ACTION_d22b_UNTRANSFORM))
+			return true;
+	} else {
+		if (!this->_transformedCooldown && used22 && this->_useSkill(true, 1, ACTION_d22b))
+			return true;
+		if (used22 && this->_useSkill(true, 5, ACTION_a1_22b))
+			return true;
+		if (this->_transformStacks && used22 && this->_useSkill(true, 9, ACTION_a2_22b))
+			return true;
+	}
 	return false;
 }
 
@@ -1435,8 +2171,12 @@ bool Mamizou::_canUseCard(int id)
 	case 100:
 	case 101:
 		return this->isGrounded();
+	case 105:
+	case 109:
+		return true;
+	default:
+		return false;
 	}
-	return false;
 }
 
 bool Mamizou::_useSkillCard(int id)
@@ -1448,18 +2188,20 @@ bool Mamizou::_useSkillCard(int id)
 		(this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL)
 	)
 		return false;
+
+	int index = id - 100;
+	int slot = index % 4;
+	int action = SokuLib::ACTION_DEFAULT_SKILL1_B + slot * 20 + (index / 4) * 5;
+
 	if (this->inputData.keyInput.verticalAxis || this->inputData.keyInput.horizontalAxis) {
 		if (!this->isGrounded())
 			return false;
+		this->_onSkillUpgrade(index, this->skilledSkillLevel[index]);
 		this->setAction(SokuLib::ACTION_SKILL_CARD);
 		return true;
 	}
 	if (!this->_canUseCard(id))
 		return false;
-
-	int index = id - 100;
-	int slot = index % 4;
-	int action = SokuLib::ACTION_DEFAULT_SKILL1_B + slot * 20 + (index / 4) * 5;
 
 	if (!this->isGrounded())
 		action += 2;
@@ -1469,6 +2211,7 @@ bool Mamizou::_useSkillCard(int id)
 		this->skillCancelCount++;
 		this->skillCancelsUsed[slot] = true;
 	}
+	this->_onSkillUpgrade(index, this->skilledSkillLevel[index]);
 	this->eventSkillUse();
 	this->onSkillUpgrade();
 	this->useSkill(action, this->gameData.sequenceData->moveLock);
@@ -1487,6 +2230,8 @@ bool Mamizou::_useSpellCard(int id)
 		(this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL)
 	)
 		return false;
+	if (!this->_canUseCard(id))
+		return false;
 
 	id += 400;
 	if (!this->isGrounded())
@@ -1502,8 +2247,7 @@ void Mamizou::_processInputsGrounded()
 		((this->inputData.keyInput.spellcard != 0 && this->inputData.keyInput.spellcard < 3) || this->inputData.bufferedKeyInput.spellcard != 0) &&
 		this->confusionDebuffTimer == 0 &&
 		this->unknown836 == 0 &&
-		this->canActivateCard(0) &&
-		this->_canUseCard(this->handInfo.hand[0].id)
+		this->canActivateCard(0)
 	) {
 		auto &card = this->handInfo.hand[0];
 
@@ -1552,8 +2296,7 @@ bool Mamizou::_tryDoUntransformedMove()
 			this->inputData.bufferedKeyInput.spellcard != 0
 		) &&
 		this->unknown836 == 0 && this->_transformPlayer->unknown836 == 0 &&
-		this->canActivateCard(0) &&
-		this->_canUseCard(this->handInfo.hand[0].id)
+		this->canActivateCard(0)
 	) {
 		auto &card = this->handInfo.hand[0];
 
@@ -1583,11 +2326,29 @@ void Mamizou::handleInputs()
 				return;
 			this->inputData.commandCombination.value = 0;
 		}
+		if (
+			this->_transformKind == KIND_STACK &&
+			this->_transformPlayer->frameState.actionId &&
+			frameFlags.cancellable &&
+			this->collisionType != COLLISION_TYPE_NONE &&
+			this->collisionType != COLLISION_TYPE_INVUL &&
+			this->inputData.commandCombination._22d
+		) {
+			this->_unTransform();
+			this->setAction(this->isOnGround() ? SokuLib::ACTION_IDLE : SokuLib::ACTION_FALLING);
+			return;
+		}
 	}
 	if (this->_transformed) {
+		unsigned oldAction = this->_transformPlayer->frameState.actionId;
+
 		this->_preTransformCall();
 		this->_transformPlayer->handleInputs();
 		this->_postTransformCall();
+		if (this->_transformKind == KIND_SINGLE && oldAction > this->frameState.actionId && oldAction >= SokuLib::ACTION_5A) {
+			this->_unTransform();
+			this->setAction(this->isOnGround() ? ACTION_a1_22b_UNTRANSFORM : ACTION_ja1_22b_UNTRANSFORM);
+		}
 		return;
 	}
 	if (frameFlags.cancellable || frameFlags.highJumpCancellable) {
@@ -1771,12 +2532,58 @@ void Mamizou::applyTransform()
 
 void Mamizou::initialize()
 {
-	if (this->_transformed) {
-		this->_preTransformCall();
+	Player::initialize();
+	if (this->_transformPlayer) {
+		this->_addTimerGui();
+		this->_addStackGui();
 		this->_transformPlayer->initialize();
-		this->_postTransformCall();
-	} else
-		Player::initialize();
+		this->_transformPlayer->setAction(SokuLib::ACTION_IDLE);
+		if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_SANAE)
+			this->_transformPlayer->objectList->clear();
+	}
+}
+
+void Mamizou::_onSkillUpgrade(int id, int oldLevel)
+{
+	if (id == 1)
+		this->_transformKind = KIND_TIMER;
+	if (id == 5)
+		this->_transformKind = KIND_SINGLE;
+	if (id == 9) {
+		if (oldLevel < 0)
+			this->_transformStacks = 0;
+		this->_transformKind = KIND_STACK;
+		this->_transformStacks += STACK_PER_LEVEL;
+		if (this->_transformStacks > MAX_STACKS)
+			this->_transformStacks = MAX_STACKS;
+	}
+}
+
+void Mamizou::_addStackGui()
+{
+	if (this->teamId == 0)
+		this->createObject(997, 56,  380, SokuLib::RIGHT, 3);
+	else
+		this->createObject(997, 584, 380, SokuLib::LEFT, 3);
+}
+
+void Mamizou::_addTimerGui()
+{
+	float params[3] = {0, 0, 0};
+
+	if (this->teamId == 0) {
+		this->createObject(996, 56,  376, SokuLib::RIGHT, 3, params);
+		params[2] = 1;
+		this->createObject(996, 161, 422, SokuLib::RIGHT, 3, params);
+		params[2] = 3;
+		this->createObject(996, 161, 422, SokuLib::RIGHT, 3, params);
+	} else {
+		this->createObject(996, 584, 376, SokuLib::LEFT, 3, params);
+		params[2] = 1;
+		this->createObject(996, 479, 422, SokuLib::LEFT, 3, params);
+		params[2] = 3;
+		this->createObject(996, 479, 422, SokuLib::LEFT, 3, params);
+	}
 }
 
 bool Mamizou::VUnknown48()
@@ -1859,15 +2666,19 @@ void Mamizou::_postTransformCall()
 	this->collisionLimit = this->_transformPlayer->collisionLimit;
 }
 
-void Mamizou::_transform()
+void Mamizou::_transform(bool spawnEffects)
 {
 	this->_transformed = true;
 	this->_savedFrameData = this->gameData.frameData;
 	this->_savedSequenceData = this->gameData.sequenceData;
+	this->_transformPlayer->collisionType = COLLISION_TYPE_NONE;
 	if (this->isGrounded())
 		this->_transformPlayer->setAction(SokuLib::ACTION_IDLE);
 	else
 		this->_transformPlayer->setAction(SokuLib::ACTION_FALLING);
+	this->playSFX(0);
+	if (!spawnEffects)
+		return;
 	for (int i = 0; i < 50; i++) {
 		float params[5];
 		float x = this->position.x + SokuLib::rand(150) - 75;
@@ -1880,11 +2691,20 @@ void Mamizou::_transform()
 		params[4] = SokuLib::rand(40) - 20;
 		this->createObject(802, x, y, SokuLib::rand(100) < 50 ? -1 : 1, 1, params);
 	}
-	this->playSFX(0);
 }
 
 void Mamizou::_unTransform()
 {
+	if (this->_transformKind == KIND_TIMER)
+		this->_transformTimerDelay = TIMER_DELAY;
+
+	if (this->skilledSkillLevel[1] >= 0)
+		this->_transformKind = KIND_TIMER;
+	if (this->skilledSkillLevel[5] >= 0)
+		this->_transformKind = KIND_SINGLE;
+	if (this->skilledSkillLevel[9] >= 0)
+		this->_transformKind = KIND_STACK;
+
 	this->_transformed = false;
 	this->gameData.frameData = this->_savedFrameData;
 	this->gameData.sequenceData = this->_savedSequenceData;

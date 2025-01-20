@@ -26,7 +26,14 @@ extern "C" __declspec(dllexport) size_t getObjectSize()
 
 extern "C" __declspec(dllexport) int APIENTRY DllMain(HMODULE, DWORD fdwReason, LPVOID)
 {
-	printf("Mamizou::DllMain(%lu)\n", fdwReason);
+	const char *names[] = {
+		"DLL_PROCESS_DETACH",
+		"DLL_PROCESS_ATTACH",
+		"DLL_THREAD_ATTACH",
+		"DLL_THREAD_DETACH"
+	};
+
+	printf("Mamizou::DllMain(%s)\n", names[fdwReason]);
 	if (fdwReason == DLL_PROCESS_ATTACH)
 		Mamizou::hook();
 	if (fdwReason == DLL_PROCESS_DETACH)

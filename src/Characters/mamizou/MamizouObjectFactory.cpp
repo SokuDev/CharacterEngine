@@ -6,7 +6,18 @@
 #include "BasicObject.hpp"
 #include "AnglableObject.hpp"
 #include "RotatingBlockingObject.hpp"
+#include "objects/FrogShadow.hpp"
 #include "objects/Smoke.hpp"
+#include "objects/YoukaiShadow.hpp"
+#include "objects/YoukaiShadow2.hpp"
+#include "objects/Gui/TimerGui.hpp"
+#include "objects/Gui/StackGui.hpp"
+#include "objects/LeafSpawner.hpp"
+#include "objects/SmokeBullet.hpp"
+#include "objects/Umbrella2C.hpp"
+#include "objects/BirdShadow.hpp"
+#include "objects/BucketYoukai.hpp"
+#include "objects/Umbrella5C.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -17,8 +28,30 @@ SokuLib::v2::GameObject *MamizouObjectFactory::construct(SokuLib::v2::Player *ow
 	printf("MamizouObjectFactory::construct(%i)\n", action);
 
 	switch (action) {
+	case 800:
+		return new LeafSpawner();
+	case 801:
+		return new BucketYoukai();
 	case 802:
 		return new Smoke();
+	case 803:
+		return new YoukaiShadow();
+	case 804:
+		return new FrogShadow();
+	case 805:
+		return new YoukaiShadow2();
+	case 806:
+		return new SmokeBullet();
+	case 807:
+		return new Umbrella2C();
+	case 808:
+		return new Umbrella5C();
+	case 809:
+		return new BirdShadow();
+	case 996:
+		return new TimerGui();
+	case 997:
+		return new StackGui();
 	case 998:
 		return new RotatingBlockingObject(150, 100, 40);
 	default:

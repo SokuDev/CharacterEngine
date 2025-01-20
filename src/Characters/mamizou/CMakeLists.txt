@@ -27,6 +27,28 @@ add_library(
 	MamizouObjectFactory.hpp
 	objects/Smoke.cpp
 	objects/Smoke.hpp
+	objects/YoukaiShadow.cpp
+	objects/YoukaiShadow.hpp
+	objects/YoukaiShadow2.cpp
+	objects/YoukaiShadow2.hpp
+	objects/FrogShadow.cpp
+	objects/FrogShadow.hpp
+	objects/Gui/TimerGui.cpp
+	objects/Gui/TimerGui.hpp
+	objects/Gui/StackGui.cpp
+	objects/Gui/StackGui.hpp
+	objects/LeafSpawner.cpp
+	objects/LeafSpawner.hpp
+	objects/SmokeBullet.cpp
+	objects/SmokeBullet.hpp
+	objects/Umbrella2C.cpp
+	objects/Umbrella2C.hpp
+	objects/BirdShadow.cpp
+	objects/BirdShadow.hpp
+	objects/BucketYoukai.cpp
+	objects/BucketYoukai.hpp
+	objects/Umbrella5C.cpp
+	objects/Umbrella5C.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)

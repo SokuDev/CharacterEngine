@@ -11,11 +11,26 @@
 
 class Mamizou : public SokuLib::v2::Player {
 private:
+	static constexpr unsigned MAX_STACKS = 8;
+	static constexpr unsigned STACK_PER_LEVEL = 2;
+	static constexpr unsigned TIMER_COOLDOWN_MAX = 900;
+	static constexpr unsigned TIMER_MAX = 450;
+	static constexpr unsigned TIMER_DELAY = 150;
+
+	friend class TimerGui;
+	friend class StackGui;
+
 	enum TransformKind : char {
 		KIND_TIMER,
+		KIND_SINGLE,
+		KIND_STACK
 	};
 
 	Player *_transformPlayer = nullptr;
+	unsigned _transformTimerDelay = TIMER_DELAY;
+	unsigned _transformTimer = TIMER_MAX;
+	unsigned _transformStacks = 0;
+	bool _transformedCooldown = false;
 	bool _transformed = false;
 	bool _init = false;
 	bool _forward = true;
@@ -32,7 +47,7 @@ private:
 	static constexpr float BE4_IMPULSE_UP = 4;
 	static constexpr float BE4_GRAVITY = 0.5;
 
-	static constexpr float FAR_RANGE = 120;
+	static constexpr float FAR_RANGE = 110;
 
 	static constexpr float MAX_DASH_HOLD = 45;
 
@@ -49,7 +64,7 @@ private:
 	static constexpr float HIGH_JUMP_SPEED_NEUTRAL_Y = 16.5;
 	static constexpr float HIGH_JUMP_GRAVITY = 0.5;
 
-	static constexpr float FALLING_GRAVITY = 1;
+	static constexpr float FALLING_GRAVITY = 0.6;
 
 	static constexpr float INITIAL_DASH_SPEED = 10;
 	static constexpr float TOP_DASH_SPEED = 8;
@@ -87,6 +102,7 @@ private:
 	bool _useSkillCard(int id);
 	bool _useSpellCard(int id);
 
+	void _onSkillUpgrade(int id, int oldLevel);
 	bool _useSkill(bool input, unsigned char id, unsigned short action);
 	bool _checkDashSlide();
 	void _jumpUpdate(float xSpeed);
@@ -94,17 +110,31 @@ private:
 
 	void _preTransformCall();
 	void _postTransformCall();
-	void _transform();
+	void _transform(bool spawnEffects = true);
 	void _unTransform();
+
+	void _addTimerGui();
+	void _addStackGui();
 
 public:
 	enum Moves {
 		ACTION_d623b = SokuLib::ACTION_DEFAULT_SKILL1_B,
 		ACTION_d22b = SokuLib::ACTION_DEFAULT_SKILL2_B,
+		ACTION_d22b_UNTRANSFORM = SokuLib::ACTION_DEFAULT_SKILL2_C,
+		ACTION_FORCE_TIMER_UNTRANSFORM = SokuLib::ACTION_DEFAULT_SKILL2_AIR_B,
+		ACTION_FORCE_TIMER_UNTRANSFORM_AIR = SokuLib::ACTION_DEFAULT_SKILL2_AIR_C,
+
+		ACTION_a1_22b = SokuLib::ACTION_ALT1_SKILL2_B,
+		ACTION_a1_22b_UNTRANSFORM = SokuLib::ACTION_ALT1_SKILL2_C,
+		ACTION_ja1_22b = SokuLib::ACTION_ALT1_SKILL2_AIR_B,
+		ACTION_ja1_22b_UNTRANSFORM = SokuLib::ACTION_ALT1_SKILL2_AIR_C,
+
+		ACTION_a2_22b = SokuLib::ACTION_ALT2_SKILL2_B,
+		ACTION_ja2_22b = SokuLib::ACTION_ALT2_SKILL2_AIR_B,
 	};
 
 	Mamizou(SokuLib::PlayerInfo &info);
-	~Mamizou() override = default;
+	~Mamizou() override;
 
 	void render() override;
 	void update() override;
@@ -119,6 +149,7 @@ public:
 	void onRenderEnd() override;
 	void setActionSequence(short action, short sequence) override;
 	void setSequence(short sequence) override;
+
 	void resetSequence() override;
 	bool nextSequence() override;
 	void prevSequence() override;

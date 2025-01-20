@@ -1,3 +1,32 @@
 {
-	"802": "Smoke effect"
+	"323": "5AAAAA",
+	"401": "6B",
+	"405": "j.6B",
+	"411": "6C",
+	"415": "j.6C",
+
+	"500": "d.623b (Parry)",
+	"520": "d.22b (Transform timer)",
+	"521": "d.22b (Transform timer) Un-transform",
+	"522": "d.22b (Transform timer) Forced un-transform",
+	"523": "j.d.22b (Transform timer) Forced un-transform",
+
+	"525": "a.22b (Transform one time)",
+	"526": "a.22b (Transform one time) Un-transform",
+	"527": "j.a.22b (Transform one time)",
+	"528": "j.a.22b (Transform one time) Un-transform",
+
+	"530": "a.22b (Transform stack)",
+	"532": "j.a.22b (Transform stack)",
+
+	"800": "B objects",
+	"801": "6C objects",
+	"802": "Smoke effect",
+	"803": "5AAA/3A effect",
+	"804": "j.2A effect",
+	"805": "j.6A effect",
+	"806": "5AAAAA objects",
+	"807": "2C objects",
+	"808": "5C objects",
+	"809": "j.8A effect"
 }

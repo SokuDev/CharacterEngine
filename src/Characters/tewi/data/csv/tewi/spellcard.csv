@@ -2,7 +2,12 @@
 255 Enemy Cards
 2 Spell Cards
 1 Skill Cards
-0 System Cards",Cost,"Card description text:
+0 System Cards","Cost or skill input:
+0 236
+1 214
+2 623
+3 421
+4 22","Card description text:
 Description that appears when you select a card on the deck construction screen","Appearance Stages
 Appears from the stage with the number onwards
 0 is initial possession
@@ -17,16 +22,16 @@ Acquisition by lottery
 Common 60%
 Uncommon 30%
 Rare 10%",,,,,,,,sort
-100,"Hare Orb",1,2,"Strike with potent impact with the  mallet while moving forward at high velocity. Strike through the        opponent with your entire body      without the mallet.",0,1,104,1,108,1,0,0,3,100
-101,"Rabbit Orb",1,0,"Toss out a bouncing orb of energy   towards the opponent. It will       disappear after a few hits.",0,1,105,1,109,1,0,0,3,110
+100,"Hare Orb",1,2,"Strike with potent impact with the  mallet while moving forward at high velocity. Strike through the        opponent with your entire body      without the mallet.",0,1,104,1,108,1,0,0,3,110
+101,"Rabbit Orb",1,0,"Toss out a bouncing orb of energy   towards the opponent. It will       disappear after a few hits.",0,1,105,1,109,1,0,0,3,100
 102,"Race To The Bottom",1,1,"Reveal a pit in the ground.         A spring-like effect will push the  defenseless victim towards the      skies.",0,1,106,1,110,1,0,0,3,120
 103,"Throw & Catch",1,4,"Throw the mallet with all your mighttowards the enemy making it crash   into the wall. Order an underling toretrieve it after having it thrown.",0,1,107,1,111,1,0,0,3,140
-104,"Set & Strike",1,2,"Sets an orb in front of yourself    and enter a stance. Pressing any    key will strike the orb with an     attack making it bounce all over theplace.",0,1,108,1,0,1,0,0,3,101
-105,"Hare Hunt",1,0,"Rabbit underlings are sent forward  charging the enemy with great       strength. The rabbits are accustomedto breaking through projectiles.",0,1,109,1,0,1,0,0,3,111
+104,"Set & Strike",1,2,"Sets an orb in front of yourself    and enter a stance. Pressing any    key will strike the orb with an     attack making it bounce all over theplace.",0,1,108,1,0,1,0,0,3,111
+105,"Hare Hunt",1,0,"Rabbit underlings are sent forward  charging the enemy with great       strength. The rabbits are accustomedto breaking through projectiles.",0,1,109,1,0,1,0,0,3,101
 106,"Underground Business",1,1,"Send rabbits underground through a  burrow. Can be sent out anytime to  trip the opponent over. The more    rabbits are sent underground\, the   more will appear to attack.",0,1,110,1,0,1,0,0,3,121
 107,"Hammerang",1,4,"Throw your mallet with vigorous     force\, and it will return back like a boomerang. When mallet-less you   will recall the mallet to yourself.",0,1,111,1,0,1,0,0,3,141
-108,"Illusory Rabbit",1,2,"Have a rabbit underling act as a    decoy. If struck\, the rabbit will   surprise the opponent. The rabbits  love participating in Tewi's pranks.",0,1,112,1,0,1,0,0,3,102
-109,"Subterranean Animism",1,0,"Tewi uses her mallet to trigger a   spike trap under the opponent.      Without her mallet she calls an     underling to trip the opponent.",0,1,113,1,0,1,0,0,3,112
+108,"Illusory Rabbit",1,2,"Have a rabbit underling act as a    decoy. If struck\, the rabbit will   surprise the opponent. The rabbits  love participating in Tewi's pranks.",0,1,112,1,0,1,0,0,3,112
+109,"Subterranean Animism",1,0,"Tewi uses her mallet to trigger a   spike trap under the opponent.      Without her mallet she calls an     underling to trip the opponent.",0,1,113,1,0,1,0,0,3,102
 110,"Bamboo Farm",1,1,"Trigger a hidden Bamboo Trap. The   bamboo is quite tall\, covering a lotof space. The evergreen bamboo neverfails.",0,1,114,1,0,1,0,0,3,122
 111,"Hidden Burrow",1,4,"Hide yourself while secretly moving around the screen. With the mallet  move back or forward\, while without it you can summon it on the opponentor move to its location.",0,1,115,1,0,1,0,0,3,142
 200,"Earth Sign \"Hare Run\"",2,5,"Grabs the opponent and throw her    into the air. Press a key to catch  the opponent on the way down. The   better the timing\, the better the   reward.",0,2,203,4,0,0,0,0,3,250

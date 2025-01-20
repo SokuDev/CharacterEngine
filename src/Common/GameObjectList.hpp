@@ -71,8 +71,12 @@ public:
 	void update() override
 	{
 		if (this->_player->gameData.opponent->timeStop == 0)
-			for (size_t i = 0; i < this->_objects.size(); i++)
-				this->_objects[i]->update();
+			for (size_t i = 0; i < this->_objects.size(); i++) {
+				if (this->_objects[i]->hitStop)
+					this->_objects[i]->hitStop--;
+				else
+					this->_objects[i]->update();
+			}
 
 		this->_list.erase(std::remove_if(this->_list.begin(), this->_list.end(), [](SokuLib::v2::GameObject *a){
 			return a->lifetime == 0;
