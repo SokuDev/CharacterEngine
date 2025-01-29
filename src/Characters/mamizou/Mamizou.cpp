@@ -1392,17 +1392,17 @@ void Mamizou::update()
 		break;
 
 	case ACTION_d623b:
-		if (this->frameState.sequenceId != 3)
+		if (this->frameState.sequenceId != 4)
 			this->applyGroundMechanics();
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
 		if (this->frameState.sequenceId == 1) {
 			if (this->frameState.poseId == 0 && this->frameState.currentFrame == 0)
 				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
-			if (this->frameState.currentFrame == 20 + this->effectiveSkillLevel[0] * 5)
+			if (this->frameState.currentFrame == 20)
 				this->nextSequence();
 			if (this->collisionType == COLLISION_TYPE_INVUL) {
-				this->setSequence(3);
+				this->setSequence(4);
 				for (int i = 0; i < 50; i++) {
 					float params[5];
 					float x = this->position.x + SokuLib::rand(150) - 75;
@@ -1423,7 +1423,10 @@ void Mamizou::update()
 				this->collisionLimit = 1;
 				this->gameData.opponent->hitStop = 10;
 			}
-		} else if (this->frameState.sequenceId == 3) {
+		} else if (this->frameState.sequenceId == 2) {
+			if (this->frameState.currentFrame == 20 - this->effectiveSkillLevel[0] * 4)
+				this->nextSequence();
+		} else if (this->frameState.sequenceId == 4) {
 			if (this->frameState.poseId == 0 && this->frameState.currentFrame == 0) {
 				this->setAction(SokuLib::ACTION_IDLE);
 				return;
