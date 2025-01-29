@@ -18,6 +18,7 @@
 #include "objects/BirdShadow.hpp"
 #include "objects/BucketYoukai.hpp"
 #include "objects/Umbrella5C.hpp"
+#include "objects/CrabYoukai.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -48,6 +49,8 @@ SokuLib::v2::GameObject *MamizouObjectFactory::construct(SokuLib::v2::Player *ow
 		return new Umbrella5C();
 	case 809:
 		return new BirdShadow();
+	case 820:
+		return new CrabYoukai();
 	case 996:
 		return new TimerGui();
 	case 997:

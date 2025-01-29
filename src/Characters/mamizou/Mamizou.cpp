@@ -229,7 +229,10 @@ void Mamizou::update()
 				this->_unTransform();
 				this->setAction(this->isOnGround() ? ACTION_FORCE_TIMER_UNTRANSFORM : ACTION_FORCE_TIMER_UNTRANSFORM_AIR);
 				this->_transformTimerDelay = 0;
-				this->_transformTimer = TIMER_COOLDOWN_MAX;
+				if (SokuLib::mainMode != SokuLib::BATTLE_MODE_PRACTICE || SokuLib::subMode != SokuLib::BATTLE_SUBMODE_PLAYING1)
+					this->_transformTimer = TIMER_COOLDOWN_MAX;
+				else
+					this->_transformTimer = 1;
 				this->_transformedCooldown = true;
 				return;
 			}
@@ -1460,6 +1463,43 @@ void Mamizou::update()
 			this->nextSequence();
 		break;
 
+	case ACTION_d214b:
+	case ACTION_jd214b:
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			break;
+		}
+		if (this->frameState.sequenceId == 0) {
+			if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0) {
+				this->createObject(820, this->position.x + (this->direction * 50), this->position.y + 80, this->direction, -1);
+				this->playSFX(3);
+			}
+		} else if (this->frameState.sequenceId == 1) {
+			if (this->frameState.currentFrame == 0) {
+				this->speed.x = 10;
+				this->speed.y = 15;
+			}
+			this->speed.y -= this->gravity.y;
+			if (this->getGroundHeight() >= this->position.y + this->speed.y && this->frameState.currentFrame != 0) {
+				this->nextSequence();
+				this->playSFX(2);
+				this->position.y = this->getGroundHeight();
+				this->speed = {0, 0};
+			}
+		} else if (this->frameState.sequenceId == 2) {
+			if (this->frameState.poseId > 2)
+				this->speed.y -= this->gravity.y;
+			else if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0) {
+				this->speed.x = -5;
+				this->speed.y = 10;
+				this->gravity.y = 0.75;
+			}
+		} else if (this->frameState.sequenceId == 3) {
+			this->speed.y -= this->gravity.y;
+			this->collisionType = COLLISION_TYPE_HIT;
+		}
+		break;
+
 	case ACTION_a1_22b:
 		this->applyGroundMechanics();
 		if (this->advanceFrame())
@@ -1703,6 +1743,13 @@ void Mamizou::initializeAction()
 		this->_transformKind = KIND_TIMER;
 		this->speed = {0, 0};
 		break;
+	case ACTION_d214b:
+	case ACTION_jd214b:
+		this->gravity.y = 1;
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->collisionLimit = 1;
+		this->speed = {0, 0};
+		break;
 	case ACTION_a1_22b:
 	case ACTION_ja1_22b:
 		this->_transformKind = KIND_SINGLE;
@@ -1883,6 +1930,11 @@ bool Mamizou::_processSkillsAirborne()
 
 	if (!this->_transformPlayer)
 		return false;
+
+	if (this->inputData.commandCombination._214b && this->_useSkill(true, 2, ACTION_jd214b))
+		return true;
+	if (this->inputData.commandCombination._214c && this->_useSkill(true, 2, ACTION_jd214b))
+		return true;
 
 	bool used22 = this->inputData.commandCombination._22b || this->inputData.commandCombination._22c;
 
@@ -2141,6 +2193,10 @@ bool Mamizou::_processSkillsGrounded()
 	if (this->inputData.commandCombination._623b && this->_useSkill(true, 0, ACTION_d623b))
 		return true;
 	if (this->inputData.commandCombination._623c && this->_useSkill(true, 0, ACTION_d623b))
+		return true;
+	if (this->inputData.commandCombination._214b && this->_useSkill(true, 2, ACTION_d214b))
+		return true;
+	if (this->inputData.commandCombination._214c && this->_useSkill(true, 2, ACTION_d214b))
 		return true;
 
 	if (!this->_transformPlayer)

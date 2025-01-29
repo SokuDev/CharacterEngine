@@ -49,6 +49,8 @@ add_library(
 	objects/BucketYoukai.hpp
 	objects/Umbrella5C.cpp
 	objects/Umbrella5C.hpp
+	objects/CrabYoukai.cpp
+	objects/CrabYoukai.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)

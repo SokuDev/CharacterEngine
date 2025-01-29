@@ -45830,7 +45830,7 @@
 	<move id="809" index="0" loop="0" movelock="20" actionlock="0">
 		<frame image="guardObject.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="96" texheight="96" xoffset="48" yoffset="48" duration="999" rendergroup="2">
 			<blend mode="1" color="ffffffff" xscale="100" yscale="100" vertflip="0" horzflip="0" angle="0"/>
-			<traits damage="300" proration="920" chipdamage="75" spiritdamage="32" untech="45" power="100" limit="4" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="30" onblockcardgain="30" onairhitsetsequence="71" ongroundhitsetsequence="0" xspeed="300" yspeed="600" onhitsfx="2" onhiteffect="2" attacklevel="1">
+			<traits damage="300" proration="920" chipdamage="75" spiritdamage="32" untech="45" power="100" limit="4" onhitplayerstun="0" onhitenemystun="10" onblockplayerstun="0" onblockenemystun="10" onhitcardgain="30" onblockcardgain="30" onairhitsetsequence="71" ongroundhitsetsequence="0" xspeed="300" yspeed="600" onhitsfx="2" onhiteffect="2" attacklevel="1">
 				<highrightblock/>
 				<lowrightblock/>
 				<airblockable/>
@@ -51523,10 +51523,9 @@
 				<spellattacktype/>
 			</traits>
 			<attack>
-				<box left="43" up="-178" right="122" down="-90"/>
-				<box left="34" up="-136" right="136" down="-64"/>
-				<box left="59" up="-200" right="101" down="-161"/>
-				<box left="12" up="-222" right="79" down="-155"/>
+				<box left="43" up="-314" right="122" down="-90"/>
+				<box left="34" up="-232" right="136" down="-64"/>
+				<box left="12" up="-332" right="79" down="-155"/>
 			</attack>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
@@ -52137,10 +52136,9 @@
 				<spellattacktype/>
 			</traits>
 			<attack>
-				<box left="43" up="-178" right="122" down="-90"/>
-				<box left="34" up="-136" right="136" down="-64"/>
-				<box left="59" up="-200" right="101" down="-161"/>
-				<box left="12" up="-222" right="79" down="-155"/>
+				<box left="43" up="-314" right="122" down="-90"/>
+				<box left="34" up="-232" right="136" down="-64"/>
+				<box left="12" up="-332" right="79" down="-155"/>
 			</attack>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
@@ -52613,7 +52611,7 @@
 	<move id="853" index="0" loop="0" movelock="20" actionlock="0">
 		<frame image="guardObject.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="96" texheight="96" xoffset="48" yoffset="48" duration="999" rendergroup="2">
 			<blend mode="1" color="ffffffff" xscale="100" yscale="100" vertflip="0" horzflip="0" angle="0"/>
-			<traits damage="300" proration="920" chipdamage="75" spiritdamage="32" untech="45" power="100" limit="4" onhitplayerstun="10" onhitenemystun="10" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="30" onblockcardgain="30" onairhitsetsequence="71" ongroundhitsetsequence="0" xspeed="300" yspeed="600" onhitsfx="2" onhiteffect="2" attacklevel="1">
+			<traits damage="300" proration="920" chipdamage="75" spiritdamage="32" untech="45" power="100" limit="4" onhitplayerstun="0" onhitenemystun="10" onblockplayerstun="0" onblockenemystun="10" onhitcardgain="30" onblockcardgain="30" onairhitsetsequence="71" ongroundhitsetsequence="0" xspeed="300" yspeed="600" onhitsfx="2" onhiteffect="2" attacklevel="1">
 				<highrightblock/>
 				<lowrightblock/>
 				<airblockable/>

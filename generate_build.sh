@@ -1,7 +1,18 @@
 #!/bin/sh
 
-if ! type shady-cli; then
-	export PATH="$(dirname $0)/shady/:$PATH"
+if [ -z $WINDIR ]; then
+	if ! type shady-cli; then
+		export PATH="$(dirname $0)/shady/:$PATH"
+	fi
+	type shady-cli || exit
+	OPTIONS=-j
+else
+	if ! type shady-cli.exe; then
+		export PATH="$(realpath $(dirname $0))/shady/:$PATH"
+	fi
+	type shady-cli.exe || exit
+	alias "shady-cli=shady-cli.exe"
+	OPTIONS=
 fi
 
 if [ $# -lt 1 ]; then
@@ -9,11 +20,17 @@ if [ $# -lt 1 ]; then
 	exit 1
 fi
 
+if ! type jq; then
+	function jq() {
+		grep "$(echo $1 | cut -d . -f 2-)" | cut -f 2 -d : | sed -r 's/^\s*([^,\s]*)\s*,?\s*$/\1/g'
+	}
+fi
+
 OUTPUT="$(realpath $1)"
 cd "$(dirname $0)"
 
-cmake --build $OUTPUT --target CharacterEngine -- -j || exit
-cmake --build $OUTPUT --target Soku2Loader -- -j || exit
+cmake --build $OUTPUT --target CharacterEngine -- $OPTIONS || exit
+cmake --build $OUTPUT --target Soku2Loader -- $OPTIONS || exit
 
 rm -f "$OUTPUT/Soku2Addon.zip"
 rm -f "$OUTPUT/CharacterEngine.zip"
@@ -35,7 +52,6 @@ mkdir -p "$OUTPUT/standalone/config/info"
 echo 'set_version("3.0")' > "$OUTPUT/standalone/config/SOKU2_base.lua"
 echo > "$OUTPUT/standalone/config/info/characters_base.csv"
 
-
 for character in `ls src/Characters/`; do
 	echo "Checking $character"
 	OUT="$OUTPUT/$character"
@@ -45,7 +61,10 @@ for character in `ls src/Characters/`; do
 	else
 		FILES=""
 		mkdir -p "$OUT/data"
-		if [ -f "$OUT/$character.dat" ]; then
+		if ! [ -z "$2" ]; then
+			echo 'Not checking assets'
+		elif [ -f "$OUT/$character.dat" ]; then
+			echo "Checking diff"
 			DATE1=$(stat -c '%Y' "$OUT/$character.dat")
 			for file in `find "$IN/data" -name "*.png" -o -name "*.xml" -o -name "*wav" -o -name "*.csv" -o -name "*.pal" -o -name "${character}_labels.json"`; do
 				DATE2=$(stat -c '%Y' "$file")
@@ -57,6 +76,7 @@ for character in `ls src/Characters/`; do
 				fi
 			done
 		else
+			echo "Generating structure"
 			for file in `find "$IN/data" -name "*.png" -o -name "*.xml" -o -name "*wav" -o -name "*.csv" -o -name "*.pal" -o -name "${character}_labels.json"`; do
 				RESULT="$OUT/data/$(echo $file | tail -c +$(echo "$IN/data/" | wc -c) | sed 's/.json$/.txt/g')"
 				mkdir -p $(dirname "$RESULT")
@@ -78,13 +98,14 @@ for character in `ls src/Characters/`; do
 		fi
 		DLL="$(cat "$IN/character.json" | jq .character_dll | sed -r 's/^"(.*)"$/\1/g')"
 		echo "Building $DLL"
-		cmake --build $OUTPUT --target $(echo $DLL | sed -r 's/^(.*)\..*$/\1/g') -- -j
-		mkdir -p "$OUTPUT/Soku2_package/characters/$character" "$OUTPUT/standalone/characters/$character"
-		cp "$OUTPUT/src/Characters/$character/$DLL" "$OUT/$character.dat" "$IN/character.json" "$OUTPUT/standalone/characters/$character"
-		cp "$OUTPUT/src/Characters/$character/$DLL" "$OUT/$character.dat" "$IN/character.json" "$OUTPUT/Soku2_package/characters/$character"
-		echo ";#" > "$OUTPUT/Soku2_package/characters/$character/dummy.asm"
-		echo "return function() end" > "$OUTPUT/Soku2_package/characters/$character/dummy.lua"
-		cat "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" > "$OUTPUT/Soku2_package/characters/$character/deck.cfg"
+		if cmake --build $OUTPUT --target $(echo $DLL | sed -r 's/^(.*)\..*$/\1/g') -- $OPTIONS; then
+			mkdir -p "$OUTPUT/Soku2_package/characters/$character" "$OUTPUT/standalone/characters/$character"
+			cp "$OUTPUT/src/Characters/$character/$DLL" "$OUT/$character.dat" "$IN/character.json" "$OUTPUT/standalone/characters/$character"
+			cp "$OUTPUT/src/Characters/$character/$DLL" "$OUT/$character.dat" "$IN/character.json" "$OUTPUT/Soku2_package/characters/$character"
+			echo ";#" > "$OUTPUT/Soku2_package/characters/$character/dummy.asm"
+			echo "return function() end" > "$OUTPUT/Soku2_package/characters/$character/dummy.lua"
+			cat "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" > "$OUTPUT/Soku2_package/characters/$character/deck.cfg"
+		fi
 	fi
 done
 cd "$OUTPUT/Soku2_package"
