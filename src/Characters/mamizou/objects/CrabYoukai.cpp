@@ -21,7 +21,9 @@ void CrabYoukai::update()
 		this->renderInfos.scale.y = this->renderInfos.scale.x;
 		if (
 			this->parentPlayerB->frameState.actionId != Mamizou::ACTION_d214b &&
-			this->parentPlayerB->frameState.actionId != Mamizou::ACTION_jd214b
+			this->parentPlayerB->frameState.actionId != Mamizou::ACTION_d214c &&
+			this->parentPlayerB->frameState.actionId != Mamizou::ACTION_jd214b &&
+			this->parentPlayerB->frameState.actionId != Mamizou::ACTION_jd214c
 		)
 			this->lifetime = 0;
 	}
@@ -54,7 +56,9 @@ void CrabYoukai::update()
 			this->resetForces();
 		} else if (
 			this->parentPlayerB->frameState.actionId != Mamizou::ACTION_d214b &&
-			this->parentPlayerB->frameState.actionId != Mamizou::ACTION_jd214b
+			this->parentPlayerB->frameState.actionId != Mamizou::ACTION_d214c &&
+			this->parentPlayerB->frameState.actionId != Mamizou::ACTION_jd214b &&
+			this->parentPlayerB->frameState.actionId != Mamizou::ACTION_jd214c
 		)
 			this->lifetime = 0;
 	} else {

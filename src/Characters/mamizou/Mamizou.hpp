@@ -22,8 +22,9 @@ private:
 
 	enum TransformKind : char {
 		KIND_TIMER,
-		KIND_SINGLE,
-		KIND_STACK
+		KIND_SINGLE_HIT,
+		KIND_STACK,
+		KIND_FULL_MOVE
 	};
 
 	Player *_transformPlayer = nullptr;
@@ -84,7 +85,7 @@ private:
 	static constexpr float BAD_SPEED_Y = 3.5;
 	static constexpr float BAD_GRAVITY = 0.35;
 
-	bool _tryDoUntransformedMove();
+	bool _tryDoUntransformedMove(bool spellsOnly);
 
 	bool _processAGrounded();
 	bool _processBGrounded();
@@ -124,9 +125,16 @@ public:
 		ACTION_d22b_UNTRANSFORM = SokuLib::ACTION_DEFAULT_SKILL2_C,
 		ACTION_FORCE_TIMER_UNTRANSFORM = SokuLib::ACTION_DEFAULT_SKILL2_AIR_B,
 		ACTION_FORCE_TIMER_UNTRANSFORM_AIR = SokuLib::ACTION_DEFAULT_SKILL2_AIR_C,
-		
+
 		ACTION_d214b = SokuLib::ACTION_DEFAULT_SKILL3_B,
+		ACTION_d214c = SokuLib::ACTION_DEFAULT_SKILL3_C,
 		ACTION_jd214b = SokuLib::ACTION_DEFAULT_SKILL3_AIR_B,
+		ACTION_jd214c = SokuLib::ACTION_DEFAULT_SKILL3_AIR_C,
+
+		ACTION_d236b = SokuLib::ACTION_DEFAULT_SKILL4_B,
+		ACTION_d236c = SokuLib::ACTION_DEFAULT_SKILL4_C,
+		ACTION_jd236b = SokuLib::ACTION_DEFAULT_SKILL4_AIR_B,
+		ACTION_jd236c = SokuLib::ACTION_DEFAULT_SKILL4_AIR_C,
 
 		ACTION_a1_22b = SokuLib::ACTION_ALT1_SKILL2_B,
 		ACTION_a1_22b_UNTRANSFORM = SokuLib::ACTION_ALT1_SKILL2_C,

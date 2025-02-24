@@ -19,6 +19,9 @@
 #include "objects/BucketYoukai.hpp"
 #include "objects/Umbrella5C.hpp"
 #include "objects/CrabYoukai.hpp"
+#include "objects/LanternYoukai.hpp"
+#include "objects/RegularSmoke.hpp"
+#include "objects/HotPot.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -49,8 +52,14 @@ SokuLib::v2::GameObject *MamizouObjectFactory::construct(SokuLib::v2::Player *ow
 		return new Umbrella5C();
 	case 809:
 		return new BirdShadow();
+	case 810:
+		return new RegularSmoke();
 	case 820:
 		return new CrabYoukai();
+	case 825:
+		return new LanternYoukai();
+	case 850:
+		return new HotPot();
 	case 996:
 		return new TimerGui();
 	case 997:

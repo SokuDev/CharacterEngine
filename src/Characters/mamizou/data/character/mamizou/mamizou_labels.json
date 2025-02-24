@@ -6,6 +6,7 @@
 	"415": "j.6C",
 
 	"500": "d.623b (Parry)",
+
 	"520": "d.22b (Transform timer)",
 	"521": "d.22b (Transform timer) Un-transform",
 	"522": "d.22b (Transform timer) Forced un-transform",
@@ -17,16 +18,30 @@
 	"528": "j.a.22b (Transform one time) Un-transform",
 
 	"530": "a.22b (Transform stack)",
+	"531": "a.22c (Transform stack)",
 	"532": "j.a.22b (Transform stack)",
+
+	"540": "d.214b ()",
+	"541": "d.214c ()",
+	"542": "j.d.214b ()",
+	"543": "j.d.214c ()",
+
+	"560": "d.236b ()",
+	"561": "d.236c ()",
+	"562": "j.d.236b ()",
+	"563": "j.d.236c ()",
 
 	"800": "B objects",
 	"801": "6C objects",
-	"802": "Smoke effect",
-	"803": "5AAA/3A effect",
-	"804": "j.2A effect",
-	"805": "j.6A effect",
+	"802": "Smoke objects",
+	"803": "5AAA/3A objects",
+	"804": "j.2A objects",
+	"805": "j.6A objects",
 	"806": "5AAAAA objects",
 	"807": "2C objects",
 	"808": "5C objects",
-	"809": "j.8A effect"
+	"809": "j.8A objects",
+	"810": "d623 objects",
+	"820": "d214 objects",
+	"825": "d236 objects"
 }

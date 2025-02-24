@@ -51,6 +51,12 @@ add_library(
 	objects/Umbrella5C.hpp
 	objects/CrabYoukai.cpp
 	objects/CrabYoukai.hpp
+	objects/LanternYoukai.cpp
+	objects/LanternYoukai.hpp
+	objects/RegularSmoke.cpp
+	objects/RegularSmoke.hpp
+	objects/HotPot.cpp
+	objects/HotPot.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)
