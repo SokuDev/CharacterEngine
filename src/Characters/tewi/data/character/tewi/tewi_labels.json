@@ -21,6 +21,7 @@
 	"19": "Backward Jump",
 	"20": "Falling",
 	"21": "Landing",
+	"22": "$FF8000Old walk",
 
 	"208": "$CC6644Neutral High Jump",
 	"209": "$CC6644Forward High Jump",
@@ -149,15 +150,17 @@
 
 	"548": "a.214B (Underground Business)",
 	"549": "a.214C (Underground Business)",
+	"551": "j.a.214C (Underground Business)",
 	"552": "$CC6644h.a.214B (Underground Business)",
 	"553": "$CC6644h.a.214C (Underground Business)",
+	"555": "$CC6644j.h.a.214C (Underground Business)",
 
-	"556": "a.214B (Hammerang)",
-	"557": "a.214C (Hammerang)",
-	"560": "$CC6644h.a.214B (Hammerang)",
-	"561": "$CC6644h.a.214C (Hammerang)",
-	"562": "$CC6644h.j.a.214B (Hammerang)",
-	"563": "$CC6644h.j.a.214C (Hammerang)",
+	"556": "a.22B (Hammerang)",
+	"557": "a.22C (Hammerang)",
+	"560": "$CC6644h.a.22B (Hammerang)",
+	"561": "$CC6644h.a.22C (Hammerang)",
+	"562": "$CC6644h.j.a.22B (Hammerang)",
+	"563": "$CC6644h.j.a.22C (Hammerang)",
 
 	"564": "a.623B (Illusory Rabbit)",
 	"565": "a.623C (Illusory Rabbit)",
@@ -265,6 +268,7 @@
 	"859": "Bamboo Farm (B) objects",
 	"860": "Bamboo Farm (C) objects",
 	"861": "Hidden Burrow objects",
+	"862": "F.I.W.B. objects",
 
 	"990": "Sakuya tail object",
 	"991": "Reisen tail object"

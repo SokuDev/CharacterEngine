@@ -24,7 +24,7 @@ void SpinningSmoke::update()
 	this->customData[0] += this->spinAmount;
 	this->customData[1] *= 0.95;
 	this->spinAmount += this->spinAccel;
-	this->spinAccel += 0.1;
+	this->spinAccel += 0.025;
 	this->position.x = this->direction * (this->customData[1] + 50.0) * cos(this->customData[0] * M_PI / 180) + this->parentPlayerB->position.x;
 	this->position.y = (this->customData[1] + 50.0) * sin(this->customData[0] * M_PI / 180) * 0.25 + this->parentPlayerB->position.y + this->spinAccel;
 	if (this->fadeDir == 0) {

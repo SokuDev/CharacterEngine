@@ -59,6 +59,18 @@ void SpellTrapHole::update()
 		return;
 	if (this->lifetime == 0)
 		return;
+	if (this->frameState.sequenceId >= 5) {
+		if (this->renderInfos.color.a <= this->customData[3]) {
+			this->lifetime = 0;
+			return;
+		}
+		this->renderInfos.zRotation += this->direction * 2;
+		this->renderInfos.color.a -= this->customData[3];
+		this->position.x += this->customData[0];
+		this->position.y += this->customData[1];
+		this->customData[1] -= this->customData[4];
+		return;
+	}
 	if (this->frameState.sequenceId == 2) {
 		if (this->checkTurnIntoCrystals(false, 0, 0)) {
 			this->lifetime = 0;
@@ -67,6 +79,20 @@ void SpellTrapHole::update()
 		this->advanceFrame();
 		this->position.x = this->parentObject->position.x - (62 * 2 * this->parentObject->renderInfos.scale.x) * this->direction;
 		this->position.y = this->getGroundHeight();
+		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
+			for (int i = 0; i < 6; i++) {
+				float params[] = {
+					SokuLib::rand(1000) / 100.f * -this->direction,
+					SokuLib::rand(200) / 100.f + 4,
+					SokuLib::rand(300) / 100 + 5.f,
+					5, 0.5
+				};
+
+				if (params[2] > 7)
+					params[2] = 7;
+				this->createObject(this->frameState.actionId, this->position.x - (this->direction * 20), this->position.y, this->direction, 1, params);
+			}
+		}
 		if (this->parentObject->renderInfos.scale.x == 1)
 			this->lifetime = 0;
 		return;
@@ -105,6 +131,25 @@ void SpellTrapHole::update()
 			this->parentPlayerB->playSFX(14);
 		this->renderInfos.scale.x = f / ((float) HOLE_FADE_IN + 1);
 		this->renderInfos.scale.y = f / ((float) HOLE_FADE_IN + 1);
+		this->gpFloat[0] += this->renderInfos.scale.x * 2 + 0.1;
+		while (this->gpFloat[0] > 1) {
+			float params[] = {
+				(SokuLib::rand(2000) / 100.f - 5) * this->renderInfos.scale.x,
+				(SokuLib::rand(400) / 100.f + 3) * (this->renderInfos.scale.y + 1),
+				SokuLib::rand(600) / 100 + 5.f,
+				2, 1
+			};
+
+			this->gpFloat[0]--;
+			if (params[2] > 10)
+				params[2] = 10;
+			this->createObject(
+				this->frameState.actionId,
+				this->position.x + (SokuLib::rand(HOLE_RADIUS * 10) / 10.f - HOLE_RADIUS / 2) * this->renderInfos.scale.x,
+				this->position.y - (this->renderInfos.scale.y * 50),
+				this->direction, 1, params
+			);
+		}
 		if (f > HOLE_FADE_IN) {
 			this->collisionLimit = STAY_TIME;
 			this->collisionType = COLLISION_TYPE_NONE;

@@ -42,6 +42,7 @@
 #include "objects/UnexpectedAssistanceObject/Utsuho.hpp"
 #include "objects/UnexpectedAssistanceObject/Suwako.hpp"
 #include "objects/UnexpectedAssistanceObject/Namazu.hpp"
+#include "objects/FIWBAfterImage.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -132,6 +133,8 @@ SokuLib::v2::GameObject *TewiObjectFactory::construct(SokuLib::v2::Player *owner
 	case 859:
 	case 860:
 		return new Bamboo();
+	case 862:
+		return new FIWBAfterImage();
 	case 998:
 		return new RotatingBlockingObject(120, 74, 40);
 	default:

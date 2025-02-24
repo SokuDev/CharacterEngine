@@ -8,6 +8,7 @@
 
 #define angle customData[0]
 #define velocity customData[1]
+#define alphaReduce customData[2]
 #define nbBounceOnGround customData[2]
 #define beingHeld customData[3]
 #define canStickOnWalls customData[3]
@@ -17,7 +18,12 @@ void Hammer::update()
 {
 	if (this->parentPlayerB->timeStop)
 		return;
+	if (this->lifetime == 0)
+		return;
 	if (this->frameState.sequenceId == 12) {
+		float params[3] = {370, this->renderInfos.zRotation, 50};
+
+		this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1, params);
 		if (this->HP <= 0 && this->collisionLimit) {
 			this->collisionLimit = 0;
 			this->canStickOnWalls = 0;
@@ -56,6 +62,9 @@ void Hammer::update()
 		this->angle = fmod(atan2(this->parentPlayerB->position.y + 75 - this->position.y, this->parentPlayerB->position.x - this->position.x) * 180 / M_PI + 360, 360);
 		this->velocity += 0.5;
 	} else if (this->frameState.sequenceId == 11) {
+		float params[3] = {370, this->renderInfos.zRotation, 50};
+
+		this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1, params);
 		if (this->HP <= 0) {
 			this->collisionLimit = 0;
 			this->canStickOnWalls = 0;
@@ -87,10 +96,10 @@ void Hammer::update()
 		}
 	} else if (this->frameState.sequenceId == 10) {
 		this->renderInfos.zRotation = this->velocity;
-		if (this->renderInfos.color.a < 25)
+		if (this->renderInfos.color.a < this->alphaReduce)
 			this->lifetime = 0;
 		else
-			this->renderInfos.color.a -= 25;
+			this->renderInfos.color.a -= this->alphaReduce;
 	} else if (this->frameState.sequenceId == 9) {
 		if (
 			(this->position.x <= SokuLib::camera.leftEdge && this->speed.x <= 0) ||
@@ -118,7 +127,7 @@ void Hammer::update()
 			this->setSequence(7);
 		}
 
-		float params[2] = {370, this->renderInfos.zRotation};
+		float params[3] = {370, this->renderInfos.zRotation, 25};
 
 		this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1, params);
 		this->position += this->speed;
@@ -140,6 +149,11 @@ void Hammer::update()
 		}
 		this->speed.x = std::cos(this->angle * M_PI / 180) * this->velocity;
 		this->speed.y = std::sin(this->angle * M_PI / 180) * this->velocity;
+		if (this->velocity >= 30) {
+			float params[3] = {370, this->renderInfos.zRotation, 50};
+
+			this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1, params);
+		}
 		if (
 			((Tewi *)this->parentPlayerB)->getHammerPickTimer() == 0 &&
 			this->noAutoPickUp == 0 &&
@@ -176,8 +190,12 @@ void Hammer::update()
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_SLAP_HIT);
 		}
 	} else if (this->frameState.sequenceId == 0 || this->frameState.sequenceId == 7 || this->frameState.sequenceId == 13) {
+		float params[3] = {370, this->renderInfos.zRotation, 50};
+
 		if (this->frameState.sequenceId == 0 && this->checkTurnIntoCrystals(false, 0, 0))
 			this->setSequence(7);
+		if (this->frameState.sequenceId == 13)
+			this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1, params);
 		if (this->collisionLimit) {
 			if (this->HP <= 0) {
 				this->collisionLimit = 0;

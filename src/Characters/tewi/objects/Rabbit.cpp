@@ -9,7 +9,7 @@ void Rabbit::update()
 {
 	if (this->parentPlayerB->timeStop)
 		return;
-	if (this->checkTurnIntoCrystals(false, 2, 2)) {
+	if (this->customData[2] == 0 && this->checkTurnIntoCrystals(false, 2, 2)) {
 		this->lifetime = 0;
 		return;
 	}
@@ -37,7 +37,7 @@ void Rabbit::update()
 	if (this->position.x < 0 || this->position.x > 1300)
 		this->lifetime = 0;
 	// TODO: Find a better way to do this
-	if (this->parentPlayerB->frameState.poseId == 0 && this->customData[2] != 0)
+	if (this->parentPlayerB->frameState.poseId == 0 && this->customData[2] == 0)
 		switch (this->parentPlayerB->frameState.actionId) {
 		case Tewi::ACTION_a1_236B:
 		case Tewi::ACTION_a1_236B_HAMMER:

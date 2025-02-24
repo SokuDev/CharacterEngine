@@ -8,6 +8,18 @@ void IllusionRabbit::update()
 {
 	if (this->parentPlayerB->timeStop)
 		return;
+	if (this->frameState.sequenceId > 1) {
+		if (this->renderInfos.color.a <= 5) {
+			this->lifetime = 0;
+			return;
+		}
+		this->renderInfos.zRotation += this->direction * 2;
+		this->renderInfos.color.a -= 5;
+		this->position.x += this->customData[0];
+		this->position.y += this->customData[1];
+		this->customData[1] -= 0.5;
+		return;
+	}
 	if (this->frameState.sequenceId == 1) {
 		if (this->advanceFrame())
 			this->lifetime = 0;
@@ -27,6 +39,8 @@ void IllusionRabbit::update()
 		this->nextPose();
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->position = this->gameData.opponent->position;
+		this->speed = {0, 0};
+		this->gravity.y = 0;
 		return;
 	} else if (this->collisionType) {
 		this->renderInfos.color.a -= 11;
@@ -46,6 +60,7 @@ void IllusionRabbit::update()
 	if (this->frameState.poseId == 6 && this->frameState.poseFrame == 0) {
 		this->speed = {0, 20};
 		this->parentPlayerB->playSFX(3);
+		this->gravity.y = 0.5;
 		this->renderInfos.color.a -= 11;
 	}
 }

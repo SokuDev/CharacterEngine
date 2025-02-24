@@ -16,7 +16,6 @@ public:
 	void initializeAction() override;
 
 	void prepareFade();
-	void prepareTexture();
 };
 
 

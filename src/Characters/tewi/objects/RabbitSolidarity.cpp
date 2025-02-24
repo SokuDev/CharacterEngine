@@ -90,6 +90,7 @@ void RabbitSolidarity::_hammerlessUpdate()
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 100 * this->direction, this->gameData.opponent->position.y - 20, this->direction, 2, params);
 	}
+	/*
 	if (this->frameState.currentFrame == 200) { // T j.5A
 		params[2] = 8;
 		this->parentPlayerB->direction = -this->parentPlayerB->direction;
@@ -102,17 +103,18 @@ void RabbitSolidarity::_hammerlessUpdate()
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 100 * this->direction, this->gameData.opponent->position.y - 20, this->direction, 2, params);
 	}
-	if (this->frameState.currentFrame == 250) { // T j.2[A]
+	*/
+	if (this->frameState.currentFrame == 200) { // T Dive Kick
 		params[2] = 9;
 		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
-		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 200 * this->direction, this->gameData.opponent->position.y - 40, this->direction, 2, params);
+		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 250 * this->direction, this->gameData.opponent->position.y + 160, this->direction, 2, params);
 	}
-	if (this->frameState.currentFrame == 280) { // R j.6A
+	if (this->frameState.currentFrame == 230) { // R j.6A
 		params[2] = 16;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 150 * this->direction, 50, this->direction, 2, params);
 	}
-	if (this->frameState.currentFrame >= 300) { // Object death
+	if (this->frameState.currentFrame >= 250) { // Object death
 		if (this->renderInfos.color.a <= 20)
 			this->lifetime = 0;
 		else
@@ -180,24 +182,39 @@ void RabbitSolidarity::update()
 			this->lifetime = 0;
 			return;
 		}
-		if (this->frameState.currentFrame >= 250)
-			SokuLib::camera.forcedYCenter = 50;
-		else if (this->frameState.currentFrame >= 183)
-			SokuLib::camera.forcedYCenter = 212;
-		else if (this->frameState.currentFrame >= 150)
-			SokuLib::camera.forcedYCenter = 150.f + (this->frameState.currentFrame - 150.f) * 4;
-		else if (this->frameState.currentFrame >= 100)
-			SokuLib::camera.forcedYCenter = this->frameState.currentFrame;
-		else {
-			if (this->gameData.opponent->position.x < 240)
-				this->gameData.opponent->position.x += 2;
-			if (this->gameData.opponent->position.x > 1040)
-				this->gameData.opponent->position.x -= 2;
-		}
-		if (this->parentPlayerB->frameState.actionId == SokuLib::ACTION_USING_SC_ID_206)
+		if (this->parentPlayerB->frameState.actionId == SokuLib::ACTION_USING_SC_ID_206) {
+			if (this->frameState.currentFrame >= 220)
+				SokuLib::camera.forcedYCenter = 50;
+			else if (this->frameState.currentFrame >= 183)
+				SokuLib::camera.forcedYCenter = 212;
+			else if (this->frameState.currentFrame >= 150)
+				SokuLib::camera.forcedYCenter = 150.f + (this->frameState.currentFrame - 150.f) * 4;
+			else if (this->frameState.currentFrame >= 100)
+				SokuLib::camera.forcedYCenter = this->frameState.currentFrame;
+			else {
+				if (this->gameData.opponent->position.x < 240)
+					this->gameData.opponent->position.x += 2;
+				if (this->gameData.opponent->position.x > 1040)
+					this->gameData.opponent->position.x -= 2;
+			}
 			this->_hammerlessUpdate();
-		else
+		} else {
+			if (this->frameState.currentFrame >= 250)
+				SokuLib::camera.forcedYCenter = 50;
+			else if (this->frameState.currentFrame >= 183)
+				SokuLib::camera.forcedYCenter = 212;
+			else if (this->frameState.currentFrame >= 150)
+				SokuLib::camera.forcedYCenter = 150.f + (this->frameState.currentFrame - 150.f) * 4;
+			else if (this->frameState.currentFrame >= 100)
+				SokuLib::camera.forcedYCenter = this->frameState.currentFrame;
+			else {
+				if (this->gameData.opponent->position.x < 240)
+					this->gameData.opponent->position.x += 2;
+				if (this->gameData.opponent->position.x > 1040)
+					this->gameData.opponent->position.x -= 2;
+			}
 			this->_hammerUpdate();
+		}
 		break;
 	case 1: // Reisen f.5A
 		if (this->frameState.currentFrame == 0) {
@@ -271,16 +288,19 @@ void RabbitSolidarity::update()
 		else
 			this->speed.y -= 1;
 		break;
-	case 9: // Tewi j.2A
+	case 9: // Tewi j.2A / Dive Kick
 		if (this->frameState.currentFrame == 0) {
 			this->lifetime = 0;
 			return;
 		}
 		if (this->parentPlayerB->frameState.actionId == SokuLib::ACTION_USING_SC_ID_206) {
-			if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0)
-				this->createEffect(0x3E, (float)(this->direction * 12) + this->position.x, this->position.y + 122.0, this->direction, 1);
-			if (this->frameState.poseFrame == 0 && this->frameState.poseId == 4)
+			if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0) {
+				this->speed.x = 5;
+				this->speed.y = -20;
 				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+			}
+			this->position.x += this->speed.x * this->direction;
+			this->position.y += this->speed.y;
 			if (this->frameState.poseId >= 6) {
 				if (this->renderInfos.color.a <= 15)
 					this->lifetime = 0;

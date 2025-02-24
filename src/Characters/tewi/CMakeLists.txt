@@ -97,6 +97,8 @@ add_library(
 	objects/UnexpectedAssistanceObject/Suwako.hpp
 	objects/UnexpectedAssistanceObject/Namazu.cpp
 	objects/UnexpectedAssistanceObject/Namazu.hpp
+	objects/FIWBAfterImage.cpp
+	objects/FIWBAfterImage.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)

@@ -7,6 +7,7 @@
 #include "../Tewi.hpp"
 
 #define T 15
+#define disabled gpShort[0]
 
 void TaCRabbit::update()
 {
@@ -26,11 +27,15 @@ void TaCRabbit::update()
 
 	auto hammer = ((Tewi *)this->parentPlayerB)->getHammer();
 
-	if (!hammer) {
-		this->lifetime = 0;
+	this->advanceFrame();
+	if (!hammer || this->disabled) {
+		this->disabled = 1;
+		if (this->renderInfos.color.a <= 25)
+			this->lifetime = 0;
+		else
+			this->renderInfos.color.a -= 25;
 		return;
 	}
-	this->advanceFrame();
 	if (this->HP <= 0) {
 		this->renderInfos.color.a -= 15;
 		if (!this->renderInfos.color.a)
@@ -57,12 +62,17 @@ void TaCRabbit::update()
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_HIT);
 			this->createEffect(2, hammer->position.x, hammer->position.y, this->direction, 1);
+			this->createEffect(129, (-this->direction * 80) + hammer->position.x, this->position.y, -this->direction, -1);
 			hammer->collisionLimit = 1;
 			hammer->collisionType = COLLISION_TYPE_NONE;
 			hammer->customData[3] = 0;
 			hammer->layer = 1;
-		} else if (this->frameState.poseId == 5)
-			this->lifetime = 1;
+		} else if (this->frameState.poseId >= 3) {
+			if (this->renderInfos.color.a <= 25)
+				this->lifetime = 0;
+			else
+				this->renderInfos.color.a -= 25;
+		}
 	} else if (hammer->frameState.sequenceId == 8) {
 		hammer->customData[1] = 0;
 		hammer->direction = this->direction;
@@ -124,6 +134,8 @@ void TaCRabbit::update()
 				break;
 			if (hammer->position.x == 0 || hammer->position.x == 1280)
 				hammer->setSequence(6);
+			else if (hammer->isOnGround())
+				hammer->setSequence(1);
 			else
 				hammer->setSequence(0);
 			hammer->customData[3] = 0;
