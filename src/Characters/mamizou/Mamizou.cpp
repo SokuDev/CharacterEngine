@@ -1702,6 +1702,27 @@ void Mamizou::update()
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 		}
 		break;
+	case ACTION_a2_22c:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 1) {
+			if (this->frameState.currentFrame == 0)
+				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+			if (this->frameState.currentFrame >= 20 && !this->inputData.keyInput.c) {
+				this->nextSequence();
+				this->collisionType = COLLISION_TYPE_HIT;
+				break;
+			}
+			this->_transformStackCharge++;
+			if (this->_transformStacks >= MAX_STACKS)
+				this->_transformStackCharge = 0;
+			if (this->_transformStackCharge >= METER_PER_STACK) {
+				this->_transformStacks++;
+				this->_transformStackCharge -= METER_PER_STACK;
+			}
+		}
+		break;
 	case ACTION_ja2_22b:
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
@@ -1979,6 +2000,7 @@ void Mamizou::initializeAction()
 		this->_transformKind = KIND_SINGLE_HIT;
 	case ACTION_a1_22b_UNTRANSFORM:
 	case ACTION_ja1_22b_UNTRANSFORM:
+	case ACTION_a2_22c:
 		this->speed = {0, 0};
 		break;
 	case ACTION_a2_22b:
@@ -2450,7 +2472,9 @@ bool Mamizou::_processSkillsGrounded()
 			return true;
 		if (used22 && this->_useSkill(true, 5, ACTION_a1_22b))
 			return true;
-		if (this->_transformStacks && used22 && this->_useSkill(true, 9, ACTION_a2_22b))
+		if (this->_transformStacks && this->inputData.commandCombination._22b && this->_useSkill(true, 9, ACTION_a2_22b))
+			return true;
+		if (this->_transformStacks < MAX_STACKS && this->inputData.commandCombination._22c && this->_useSkill(true, 9, ACTION_a2_22c))
 			return true;
 	}
 	return false;
@@ -2575,7 +2599,7 @@ void Mamizou::_processInputsGrounded()
 		return;
 }
 
-bool Mamizou::_tryDoUntransformedMove(bool spellsOnly)
+bool Mamizou::_tryDoUntransformedMove(bool cardsOnly, bool spellsOnly)
 {
 	auto frameFlags = this->_transformPlayer->gameData.frameData->frameFlags;
 
@@ -2604,7 +2628,7 @@ bool Mamizou::_tryDoUntransformedMove(bool spellsOnly)
 		if (200 <= card.id && card.id < 300 && this->_useSpellCard(card.id))
 			return true;
 	}
-	if (spellsOnly)
+	if (spellsOnly || cardsOnly)
 		return false;
 	if (this->isOnGround())
 		return this->_processSkillsGrounded();
@@ -2621,7 +2645,7 @@ void Mamizou::handleInputs()
 
 	if (this->_transformed) {
 		if (this->_transformKind == KIND_TIMER) {
-			if (this->_tryDoUntransformedMove(false))
+			if (this->_tryDoUntransformedMove(false, false))
 				return;
 			this->inputData.commandCombination.value = 0;
 		}
@@ -2637,10 +2661,10 @@ void Mamizou::handleInputs()
 			this->setAction(this->isOnGround() ? SokuLib::ACTION_IDLE : SokuLib::ACTION_FALLING);
 			return;
 		}
-		if (this->_transformKind == KIND_STACK && this->_tryDoUntransformedMove(true))
+		if (this->_transformKind == KIND_STACK && this->_tryDoUntransformedMove(true, false))
 			return;
 		if (this->_transformKind == KIND_FULL_MOVE) {
-			if (this->_tryDoUntransformedMove(false))
+			if (this->_tryDoUntransformedMove(false, false))
 				return;
 			this->inputData.commandCombination.value = 0;
 		}
@@ -2964,6 +2988,19 @@ void Mamizou::_preTransformCall()
 	this->_transformPlayer->hitStop = this->hitStop;
 	this->_transformPlayer->weatherId = this->weatherId;
 
+	this->_transformPlayer->attackPower = this->attackPower;
+	this->_transformPlayer->defensePower = this->defensePower;
+	this->_transformPlayer->unknown538 = this->unknown538;
+	this->_transformPlayer->unknown53C = this->unknown53C;
+	this->_transformPlayer->unknown540 = this->unknown540;
+	this->_transformPlayer->spellDmgMultiplier = this->spellDmgMultiplier;
+	this->_transformPlayer->specialDmgMultiplier = this->specialDmgMultiplier;
+	this->_transformPlayer->meterGainMultiplier = this->meterGainMultiplier;
+	this->_transformPlayer->lifeStealMultiplier = this->lifeStealMultiplier;
+	this->_transformPlayer->discardMultiplier = this->discardMultiplier;
+	this->_transformPlayer->reflectDamageMultiplier = this->reflectDamageMultiplier;
+	this->_transformPlayer->unknown55C = this->unknown55C;
+
 	this->_transformPlayer->grazeTimer = this->grazeTimer;
 	this->_transformPlayer->meleeInvulTimer = this->meleeInvulTimer;
 	this->_transformPlayer->projectileInvulTimer = this->projectileInvulTimer;
@@ -3052,6 +3089,19 @@ void Mamizou::_postTransformCall()
 		if (this->gameData.patternMap->find(this->_transformPlayer->frameState.actionId) != this->gameData.patternMap->end())
 			this->setAction(this->_transformPlayer->frameState.actionId);
 	}
+
+	this->attackPower = this->_transformPlayer->attackPower;
+	this->defensePower = this->_transformPlayer->defensePower;
+	this->unknown538 = this->_transformPlayer->unknown538;
+	this->unknown53C = this->_transformPlayer->unknown53C;
+	this->unknown540 = this->_transformPlayer->unknown540;
+	this->spellDmgMultiplier = this->_transformPlayer->spellDmgMultiplier;
+	this->specialDmgMultiplier = this->_transformPlayer->specialDmgMultiplier;
+	this->meterGainMultiplier = this->_transformPlayer->meterGainMultiplier;
+	this->lifeStealMultiplier = this->_transformPlayer->lifeStealMultiplier;
+	this->discardMultiplier = this->_transformPlayer->discardMultiplier;
+	this->reflectDamageMultiplier = this->_transformPlayer->reflectDamageMultiplier;
+	this->unknown55C = this->_transformPlayer->unknown55C;
 }
 
 void Mamizou::_transform(bool spawnEffects)

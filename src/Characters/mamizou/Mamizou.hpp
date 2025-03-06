@@ -13,6 +13,7 @@ class Mamizou : public SokuLib::v2::Player {
 private:
 	static constexpr unsigned MAX_STACKS = 8;
 	static constexpr unsigned STACK_PER_LEVEL = 2;
+	static constexpr unsigned METER_PER_STACK = 150;
 	static constexpr unsigned TIMER_COOLDOWN_MAX = 900;
 	static constexpr unsigned TIMER_MAX = 450;
 	static constexpr unsigned TIMER_DELAY = 150;
@@ -31,6 +32,7 @@ private:
 	unsigned _transformTimerDelay = TIMER_DELAY;
 	unsigned _transformTimer = TIMER_MAX;
 	unsigned _transformStacks = 0;
+	unsigned _transformStackCharge = 0;
 	bool _transformedCooldown = false;
 	bool _transformed = false;
 	bool _init = false;
@@ -85,7 +87,7 @@ private:
 	static constexpr float BAD_SPEED_Y = 3.5;
 	static constexpr float BAD_GRAVITY = 0.35;
 
-	bool _tryDoUntransformedMove(bool spellsOnly);
+	bool _tryDoUntransformedMove(bool cardsOnly, bool spellsOnly);
 
 	bool _processAGrounded();
 	bool _processBGrounded();
@@ -142,6 +144,7 @@ public:
 		ACTION_ja1_22b_UNTRANSFORM = SokuLib::ACTION_ALT1_SKILL2_AIR_C,
 
 		ACTION_a2_22b = SokuLib::ACTION_ALT2_SKILL2_B,
+		ACTION_a2_22c = SokuLib::ACTION_ALT2_SKILL2_C,
 		ACTION_ja2_22b = SokuLib::ACTION_ALT2_SKILL2_AIR_B,
 	};
 
