@@ -86,7 +86,8 @@ void TrapHole::update()
 			for (int x = this->position.x - HOLE_RADIUS; x < this->position.x + HOLE_RADIUS; x++) {
 				if (x < 0 || x >= 1280)
 					continue;
-				SokuLib::v2::groundHeight[x] = -HOLE_DEPTH;
+				if (SokuLib::v2::groundHeight[x] <= 0 && SokuLib::v2::groundHeight[x] >= -HOLE_DEPTH)
+					SokuLib::v2::groundHeight[x] = -HOLE_DEPTH;
 			}
 		}
 	} else if (this->frameState.sequenceId == 1) {

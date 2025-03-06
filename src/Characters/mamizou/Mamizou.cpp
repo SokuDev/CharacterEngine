@@ -1552,6 +1552,9 @@ void Mamizou::update()
 		} else if (this->frameState.sequenceId == 3) {
 			this->speed.y -= this->gravity.y;
 			this->collisionType = COLLISION_TYPE_HIT;
+		} else if (this->frameState.sequenceId == 4) {
+			if (this->applyAirMechanics())
+				this->setAction(SokuLib::ACTION_FALLING);
 		}
 		break;
 
@@ -1711,9 +1714,28 @@ void Mamizou::update()
 		break;
 
 	case SokuLib::ACTION_USING_SC_ID_200:
-		if (this->advanceFrame())
+		if (this->frameState.sequenceId == 5 && this->frameState.currentFrame == 0) {
+			this->speed.x = -6;
+			this->speed.y = 6;
+			this->gravity.y = 0.7;
+		}
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_FALLING);
+			break;
+		}
+		if (this->frameState.sequenceId == 4 && this->frameState.currentFrame == 0)
 			this->setAction(SokuLib::ACTION_IDLE);
-		this->applyGroundMechanics();
+		if (this->frameState.sequenceId < 4)
+			this->applyGroundMechanics();
+		else
+			this->speed.y -= this->gravity.y;
+		if (this->frameState.sequenceId == 4) {
+			this->gpShort[0]++;
+			if (this->gpShort[0] < 12)
+				this->renderInfos.color.a = this->gpShort[0] * 20;
+			else
+				this->renderInfos.color.a = 255;
+		}
 		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 0) {
 			this->spellStopCounter = 40;
 			this->playSpellBackground(4, 120);
@@ -2722,6 +2744,24 @@ bool Mamizou::VUnknown60(int a)
 
 void Mamizou::render()
 {
+//	SokuLib::DxVertex vertices[1280];
+
+//	for (int i = 0; i < 1280; i++) {
+//		vertices[i].color = 0xFFFFFFFF;
+//		vertices[i].x = (SokuLib::camera.translate.x + i) * SokuLib::camera.scale;
+//		vertices[i].y = (SokuLib::camera.translate.y - SokuLib::v2::groundHeight[i]) * SokuLib::camera.scale;
+//		vertices[i].z = 0;
+//		vertices[i].rhw = 1;
+//		vertices[i].u = 0;
+//		vertices[i].v = 0;
+//	}
+//	SokuLib::textureMgr.setTexture(0, 0);
+
+//	HRESULT r = SokuLib::pd3dDev->DrawPrimitiveUP(D3DPT_LINESTRIP, 1279, vertices, sizeof(*vertices));
+
+//	if (r != D3D_OK)
+//		printf("Error: %d\n", r);
+
 	if (this->_transformed)
 		this->_transformPlayer->render();
 	else
@@ -3106,16 +3146,18 @@ void Mamizou::hook()
 {
 	DWORD old;
 
-	VirtualProtect((void *)0x46E07E, 5, PAGE_EXECUTE_READWRITE, &old);
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+	*(char *)0x48894C = 0xEB;
 	og_FUN_0046a240 = SokuLib::TamperNearJmpOpr(0x46E07E, FUN_0046a240);
-	VirtualProtect((void *)0x46E07E, 5, old, &old);
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
 }
 
 void Mamizou::unhook()
 {
 	DWORD old;
 
-	VirtualProtect((void *)0x46E07E, 5, PAGE_EXECUTE_READWRITE, &old);
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+	*(char *)0x48894C = 0x74;
 	SokuLib::TamperNearJmpOpr(0x46E07E, og_FUN_0046a240);
-	VirtualProtect((void *)0x46E07E, 5, old, &old);
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
 }

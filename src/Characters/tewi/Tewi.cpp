@@ -2698,7 +2698,7 @@ void Tewi::update()
 		if (this->frameState.sequenceId == 1) {
 			SokuLib::camera.shake = 2;
 			if (this->frameState.currentFrame < 120 && this->frameState.currentFrame % 2 == 0) {
-				float rabbitData[3] = {5.f + SokuLib::rand(15), 5.f + SokuLib::rand(15), 1};
+				float rabbitData[3] = {5.f + SokuLib::rand(15), 5.f + SokuLib::rand(15), 0};
 				float x = 640 - this->direction * 640;
 
 				if (SokuLib::rand(2) != 0) {

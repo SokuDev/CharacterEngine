@@ -4,7 +4,20 @@
 
 #include "HotPot.hpp"
 
-#define animationStarted gpShort[0]
+#define MIN_BORDER_SPACING 200
+#define WALL_X 200
+#define HITBOX_X 225
+#define RING_SIZE 50
+#define HITBOX_Y 250
+#define HITBOX_INNER_HIT 200
+#define HITBOX_INNER 150
+
+#define OWNER_STARTED 1
+#define OPPONENT_STARTED 2
+#define OWNER_HIT 4
+#define OPPONENT_HIT 8
+
+#define startedFlag gpShort[0]
 #define animationCounter gpShort[1]
 #define disappear gpShort[2]
 #define smokeTimer gpShort[3]
@@ -29,6 +42,20 @@ void HotPot::update()
 	case 0:
 	case 1:
 	case 2:
+		if (this->frameState.sequenceId == 0)
+			for (int i = 0; i < RING_SIZE * this->renderInfos.scale.x; i++) {
+				int j = (int)(this->position.x + WALL_X * this->renderInfos.scale.x - i);
+				int k = (int)(this->position.x - WALL_X * this->renderInfos.scale.x + i);
+
+				if (j >= 0 && j < 1280)
+					SokuLib::v2::groundHeight[j] = 0;
+				if (k >= 0 && k < 1280)
+					SokuLib::v2::groundHeight[k] = 0;
+			}
+		if (this->position.x - MIN_BORDER_SPACING * this->renderInfos.scale.x < 40)
+			this->position.x = 40 + MIN_BORDER_SPACING * this->renderInfos.scale.x;
+		if (this->position.x + MIN_BORDER_SPACING * this->renderInfos.scale.x > 1240)
+			this->position.x = 1240 - MIN_BORDER_SPACING * this->renderInfos.scale.x;
 		if (this->frameState.currentFrame < 30) {
 			this->renderInfos.scale.x = 0.1 + 0.9 * this->frameState.currentFrame / 30;
 			this->renderInfos.scale.y = this->renderInfos.scale.x;
@@ -56,10 +83,23 @@ void HotPot::update()
 		if (this->disappear) {
 			this->renderInfos.scale.x -= 0.05;
 			this->renderInfos.scale.y = this->renderInfos.scale.x;
-			if (this->renderInfos.scale.x <= 0.05)
+			if (this->renderInfos.scale.x <= 0.05) {
+				this->renderInfos.scale.x = 0;
 				this->lifetime = 0;
-			break;
+			}
 		}
+		if (this->frameState.sequenceId == 0)
+			for (int i = 0; i < RING_SIZE * this->renderInfos.scale.x; i++) {
+				int j = (int)(this->position.x + WALL_X * this->renderInfos.scale.x - i);
+				int k = (int)(this->position.x - WALL_X * this->renderInfos.scale.x + i);
+
+				if (j >= 0 && j < 1280)
+					SokuLib::v2::groundHeight[j] = HITBOX_Y * this->renderInfos.scale.y;
+				if (k >= 0 && k < 1280)
+					SokuLib::v2::groundHeight[k] = HITBOX_Y * this->renderInfos.scale.y;
+			}
+		if (this->disappear)
+			break;
 		this->smokeTimer += this->animationCounter / 10 + 1;
 		while (this->smokeTimer >= 16) {
 			params[0] = SokuLib::rand(400) / 100 - 2;
@@ -69,17 +109,47 @@ void HotPot::update()
 			this->smokeTimer -= 16;
 		}
 
-		if (
-			this->collisionType == COLLISION_TYPE_HIT ||
-			this->collisionType == COLLISION_TYPE_ARMORED
-		) {
+		if (this->startedFlag & OWNER_HIT) {
+			this->parentPlayerB->advanceFrame();
+			this->parentPlayerB->grabInvulTimer = 1;
+			this->parentPlayerB->projectileInvulTimer = 1;
+			this->parentPlayerB->meleeInvulTimer = 1;
+			if (!(this->startedFlag & OWNER_STARTED)) {
+				this->parentPlayerB->untech = 2;
+				this->parentPlayerB->hitStop = 2;
+				this->parentPlayerB->position.x += this->position.x;
+				this->parentPlayerB->position.x /= 2;
+				this->parentPlayerB->position.y += this->parentPlayerB->speed.y;
+				if (this->parentPlayerB->gravity.y <= 0)
+					this->parentPlayerB->gravity.y = 1;
+				this->parentPlayerB->speed.y -= this->parentPlayerB->gravity.y;
+				if (this->position.y + 100 > this->parentPlayerB->position.y) {
+					this->startedFlag |= OWNER_STARTED;
+					this->parentPlayerB->position.x = this->position.x - this->direction * 50;
+					this->parentPlayerB->position.y = this->position.y + 275;
+					this->parentPlayerB->speed.x = 0;
+					this->parentPlayerB->speed.y = 0;
+					this->parentPlayerB->gravity.y = 0;
+					this->parentPlayerB->setActionSequence(SokuLib::ACTION_USING_SC_ID_200, 4);
+					this->parentPlayerB->renderInfos.color.a = 0;
+					this->parentPlayerB->gpShort[0] = 0;
+				}
+			} else {
+				this->parentPlayerB->HP += 4;
+				if (this->parentPlayerB->HP > this->parentPlayerB->maxHP)
+					this->parentPlayerB->HP = this->parentPlayerB->maxHP;
+				this->parentPlayerB->position.x = this->position.x - this->direction * 50;
+				this->parentPlayerB->position.y = this->position.y + 275;
+			}
+		}
+		if (this->startedFlag & OPPONENT_HIT) {
 			this->gameData.opponent->untech = 10;
 			this->gameData.opponent->hitStop = 10;
 			this->gameData.opponent->advanceFrame();
 			this->gameData.opponent->grabInvulTimer = 1;
 			this->gameData.opponent->projectileInvulTimer = 1;
 			this->gameData.opponent->meleeInvulTimer = 1;
-			if (!this->animationStarted) {
+			if (!(this->startedFlag & OPPONENT_STARTED)) {
 				this->gameData.opponent->position.x += this->position.x;
 				this->gameData.opponent->position.x /= 2;
 				this->gameData.opponent->position.y += this->gameData.opponent->speed.y;
@@ -87,7 +157,7 @@ void HotPot::update()
 					this->gameData.opponent->gravity.y = 1;
 				this->gameData.opponent->speed.y -= this->gameData.opponent->gravity.y;
 				if (this->position.y + 100 > this->gameData.opponent->position.y) {
-					this->animationStarted = true;
+					this->startedFlag |= OPPONENT_STARTED;
 					this->gameData.opponent->position.x = this->position.x;
 					this->gameData.opponent->position.y = this->position.y + 100;
 					this->gameData.opponent->setAction(106);
@@ -101,18 +171,37 @@ void HotPot::update()
 					this->renderInfos.color.b -= 3;
 				else if (this->renderInfos.color.g)
 					this->renderInfos.color.g -= 3;
+				this->gameData.opponent->position.x = this->position.x;
+				this->gameData.opponent->position.y = this->position.y + 100;
 				if (this->animationCounter == 240) {
-					SokuLib::camera.shake = 10;
+					params[0] = 0;
+					params[1] = 0;
+					if (this->startedFlag & OWNER_HIT) {
+						this->parentPlayerB->renderInfos.yRotation = 0;
+						this->parentPlayerB->position.y -= 100;
+						this->parentPlayerB->setAction(72);
+						this->parentPlayerB->untech = 400;
+						this->parentPlayerB->grabInvulTimer = 0;
+						this->parentPlayerB->projectileInvulTimer = 0;
+						this->parentPlayerB->meleeInvulTimer = 0;
+						params[2] = 15;
+					} else
+						params[2] = 3;
 					this->gameData.opponent->renderInfos.yRotation = 0;
 					this->gameData.opponent->setAction(72);
 					this->gameData.opponent->untech = 400;
 					this->gameData.opponent->grabInvulTimer = 0;
 					this->gameData.opponent->projectileInvulTimer = 0;
 					this->gameData.opponent->meleeInvulTimer = 0;
+					if (this->startedFlag & OWNER_STARTED)
+						this->parentPlayerB->nextSequence();
 					this->lifetime = 0;
-					for (int i = 3; i < 14; i++) {
-						params[0] = 0;
-						params[1] = 0;
+					for (int i = 0; i < RING_SIZE * this->renderInfos.scale.x; i++) {
+						SokuLib::v2::groundHeight[(int)(this->position.x + WALL_X * this->renderInfos.scale.x - i)] = 0;
+						SokuLib::v2::groundHeight[(int)(this->position.x - WALL_X * this->renderInfos.scale.x + i)] = 0;
+					}
+					this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, 1, params);
+					for (int i = 4; i < 14; i++) {
 						params[2] = i;
 						this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, 1, params);
 					}
@@ -124,11 +213,28 @@ void HotPot::update()
 					}
 				}
 			}
-		} else if (this->frameState.currentFrame == 720)
+		} else if (this->frameState.currentFrame == 720) {
 			this->disappear = true;
-		else
+			if (this->startedFlag & OWNER_STARTED)
+				this->parentPlayerB->nextSequence();
+		} else {
+			if (
+				this->gameData.opponent->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN &&
+				this->gameData.opponent->frameState.actionId < SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN &&
+				!this->gameData.opponent->hitStop &&
+				!this->parentPlayerB->timeStop
+			) {
+				if (std::abs(this->position.x - this->gameData.opponent->position.x) < 2)
+					this->gameData.opponent->position.x = this->position.x;
+				else if (this->position.x > this->gameData.opponent->position.x)
+					this->gameData.opponent->position.x += 2;
+				else
+					this->gameData.opponent->position.x -= 2;
+			}
 			this->_handleCollisions(this->gameData.opponent, this->frameState.currentFrame >= 30);
-		this->_handleCollisions(this->parentPlayerB, false);
+		}
+		if (!(this->startedFlag & OWNER_HIT))
+			this->_handleCollisions(this->parentPlayerB, this->frameState.currentFrame >= 30);
 		break;
 	case 4:
 	case 5:
@@ -189,6 +295,7 @@ void HotPot::initializeAction()
 		this->renderInfos.scale.y = 0.1;
 		break;
 	case 3:
+	case 15:
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		break;
@@ -201,36 +308,42 @@ void HotPot::initializeAction()
 
 void HotPot::_handleCollisions(SokuLib::v2::Player *player, bool canHit)
 {
-#define HITBOX_X 225
-#define RING_SIZE 50
-#define HITBOX_Y 250
-#define HITBOX_INNER_HIT 200
-#define HITBOX_INNER 150
-
 	auto diff = std::abs(player->position.x - this->position.x);
+	bool isHit = canHit;
 
 	if (diff > HITBOX_X * this->renderInfos.scale.x)
 		return;
 	if (diff > (HITBOX_X - RING_SIZE) * this->renderInfos.scale.x) {
 		if (player->position.y > this->position.y + HITBOX_Y * this->renderInfos.scale.y)
 			return;
-		canHit = false;
+		isHit = false;
 	} else if (player->position.y > this->position.y + HITBOX_INNER * this->renderInfos.scale.y)
 		return;
-	if (canHit && player->position.y > this->position.y + HITBOX_INNER_HIT * this->renderInfos.scale.y)
-		canHit = false;
-	if (canHit && !player->damageLimited) {
-		this->damageOpponent(0, 1000, 1, false);
-		this->parentPlayerB->playSFX(7);
-		if (player->frameState.actionId < SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN || player->frameState.actionId >= SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN)
-			player->setAction(SokuLib::ACTION_FALLING);
-		this->collisionType = COLLISION_TYPE_HIT;
-		this->parentPlayerB->playSFX(8);
+	if (isHit && player->position.y > this->position.y + HITBOX_INNER_HIT * this->renderInfos.scale.y)
+		isHit = false;
+	if (isHit) {
+		if (player->grabInvulTimer)
+			return;
+		if (player->damageLimited)
+			return;
+		if (this->parentPlayerB == player) {
+			this->parentPlayerB->playSFX(7);
+			this->startedFlag |= OWNER_HIT;
+		} else {
+			this->damageOpponent(0, 1000, 1, false);
+			this->parentPlayerB->playSFX(7);
+			if (player->frameState.actionId < SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN || player->frameState.actionId >= SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN)
+				player->setAction(SokuLib::ACTION_FALLING);
+			this->startedFlag |= OPPONENT_HIT;
+			this->parentPlayerB->playSFX(8);
+		}
 		return;
 	}
-	if (player->position.x < this->position.x)
-		player->position.x += this->position.x - HITBOX_X * this->renderInfos.scale.x;
-	else
-		player->position.x += this->position.x + HITBOX_X * this->renderInfos.scale.x;
-	player->position.x /= 2;
+	if (!canHit) {
+		if (player->position.x < this->position.x)
+			player->position.x += this->position.x - HITBOX_X * this->renderInfos.scale.x;
+		else
+			player->position.x += this->position.x + HITBOX_X * this->renderInfos.scale.x;
+		player->position.x /= 2;
+	}
 }
