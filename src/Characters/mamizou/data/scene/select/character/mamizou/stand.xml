@@ -13,28 +13,12 @@
 		<frame image="stand009.bmp" index="9" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="61" texheight="97" xoffset="40" yoffset="97" duration="5" rendergroup="1" />
 	</animation>
 	<animation id="1" index="0" loop="0">
-		<frame image="tewiPreLoop000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop006.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop007.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop008.bmp" index="8" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop009.bmp" index="9" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop010.bmp" index="10" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop011.bmp" index="11" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop012.bmp" index="12" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop013.bmp" index="13" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop014.bmp" index="14" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop015.bmp" index="15" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop016.bmp" index="16" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="1" rendergroup="1" />
-		<frame image="tewiPreLoop017.bmp" index="17" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="6" rendergroup="1" />
-		<frame image="tewiPreLoop018.bmp" index="18" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="240" xoffset="44" yoffset="220" duration="2" rendergroup="1" />
+		<frame image="specialAa000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="59" texheight="97" xoffset="38" yoffset="96" duration="2" rendergroup="1"/>
+		<frame image="specialAa001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="61" texheight="97" xoffset="40" yoffset="96" duration="2" rendergroup="1"/>
+		<frame image="specialAa002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="62" texheight="99" xoffset="43" yoffset="99" duration="2" rendergroup="1"/>
+		<frame image="specialAa003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="63" texheight="101" xoffset="43" yoffset="101" duration="2" rendergroup="1"/>
 	</animation>
 	<animation id="2" index="0" loop="1">
-		<frame image="tewiLoop000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="72" texheight="76" xoffset="24" yoffset="76" duration="4" rendergroup="1"/>
-		<frame image="tewiLoop001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="71" texheight="77" xoffset="23" yoffset="77" duration="4" rendergroup="1"/>
+		<frame image="statue000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="57" texheight="100" xoffset="35" yoffset="100" duration="4" rendergroup="1"/>
 	</animation>
 </animpattern>

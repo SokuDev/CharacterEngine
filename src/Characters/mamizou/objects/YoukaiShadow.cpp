@@ -35,6 +35,10 @@ void YoukaiShadow::initializeAction()
 	switch (this->parentPlayerB->frameState.actionId) {
 	case SokuLib::ACTION_3A:
 		this->setSequence(0);
+		if (this->parentPlayerB->frameState.sequenceId == 1) {
+			this->renderInfos.scale.x = 2;
+			this->renderInfos.scale.y = 2;
+		}
 		break;
 	case SokuLib::ACTION_5AAAA:
 		this->setSequence(0);

@@ -814,9 +814,26 @@ void Mamizou::update()
 		this->applyGroundMechanics();
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_CROUCHED);
-		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
-			this->playSFX(3);
-			this->createObject(803, this->position.x + this->direction * 134, this->position.y, this->direction, 1);
+		if (this->frameState.sequenceId < 1 && this->inputData.keyInput.a == 0)
+			this->chargedAttack = false;
+		if (this->frameState.sequenceId == 0) {
+			if (this->frameState.poseId == 2 && this->frameState.poseFrame == 0 && this->chargedAttack) {
+				this->nextSequence();
+				this->createEffect(0x3E, (float)(this->direction * 80) + this->position.x, this->position.y + 22.0, this->direction, 1);
+			}
+			if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
+				this->playSFX(3);
+				this->createObject(803, this->position.x + this->direction * 134, this->position.y, this->direction, 1);
+			}
+		} else if (this->frameState.sequenceId == 1) {
+			if (this->frameState.poseId == 0 && this->frameState.currentFrame == 0) {
+				this->setAction(SokuLib::ACTION_CROUCHED);
+				return;
+			}
+			if (this->frameState.poseId == 1 && this->frameState.poseFrame == 0) {
+				this->playSFX(3);
+				this->createObject(803, this->position.x + this->direction * 134, this->position.y, this->direction, 1);
+			}
 		}
 		break;
 	case SokuLib::ACTION_6A:
@@ -1942,6 +1959,7 @@ void Mamizou::initializeAction()
 		this->speed = {0, 0};
 		break;
 	case SokuLib::ACTION_3A:
+		this->chargedAttack = true;
 	case SokuLib::ACTION_5AAAA:
 		this->speed = {0, 0};
 	case SokuLib::ACTION_5A:
