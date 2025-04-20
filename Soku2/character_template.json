@@ -1,0 +1,12 @@
+{
+    "internal_name": "{{class_name}}",
+    "index": {{ID}},
+    "index_named_assets": true,
+    "character_dll": "{{ClassName}}.dll",
+    "data": "{{class_name}}.dat",
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "{{SHORT_NAME}}",
+    "full_name": "{{FULL_NAME}}",
+    "skill_inputs": [{{SKILLS}}],
+    "enabled": true
+}

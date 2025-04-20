@@ -66,21 +66,25 @@ for character in `ls src/Characters/`; do
 		elif [ -f "$OUT/$character.dat" ]; then
 			echo "Checking diff"
 			DATE1=$(stat -c '%Y' "$OUT/$character.dat")
+			IFS="
+"
 			for file in `find "$IN/data" -name "*.png" -o -name "*.xml" -o -name "*wav" -o -name "*.csv" -o -name "*.pal" -o -name "${character}_labels.json"`; do
 				DATE2=$(stat -c '%Y' "$file")
 				RESULT="$OUT/data/$(echo $file | tail -c +$(echo "$IN/data/" | wc -c) | sed 's/.json$/.txt/g')"
 				if [ $DATE1 -lt $DATE2 ] || ! [ -f $(echo $RESULT | sed 's/\.xml$/\.pat/g' | sed 's/\.csv$/\.cv1/g' | sed 's/\.png$/\.cv2/g' | sed 's/\.wav$/\.cv3/g') ]; then
 					mkdir -p $(dirname "$RESULT")
-					cp -f $file $RESULT
+					cp -f "$file" "$RESULT"
 					FILES="yes"
 				fi
 			done
 		else
 			echo "Generating structure"
+			IFS="
+"
 			for file in `find "$IN/data" -name "*.png" -o -name "*.xml" -o -name "*wav" -o -name "*.csv" -o -name "*.pal" -o -name "${character}_labels.json"`; do
 				RESULT="$OUT/data/$(echo $file | tail -c +$(echo "$IN/data/" | wc -c) | sed 's/.json$/.txt/g')"
 				mkdir -p $(dirname "$RESULT")
-				cp -f $file $RESULT
+				cp -f "$file" $RESULT
 				FILES="yes"
 			done
 		fi

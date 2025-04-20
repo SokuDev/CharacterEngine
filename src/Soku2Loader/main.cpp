@@ -99,7 +99,6 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 	wchar_t moduleFile[MAX_PATH];
 	wchar_t modulePath[1024];
 	HMODULE module[sizeof(key) / sizeof(*key)];
-	FARPROC init[sizeof(key) / sizeof(*key)];
 
 	GetModuleFileNameW(hMyModule, parentPath, MAX_PATH);
 	PathRemoveFileSpecW(parentPath);
@@ -110,11 +109,13 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 		GetPrivateProfileStringW(L"Module", key[i], L"", moduleFile, sizeof(moduleFile) / sizeof(*moduleFile), iniPath);
 		if (!*moduleFile)
 			continue;
+
 		if (PathIsRelativeW(moduleFile)) {
 			wcscpy(modulePath, parentPath);
 			PathAppendW(modulePath, moduleFile);
 		} else
 			wcscpy(modulePath, moduleFile);
+
 		module[i] = LoadLibraryW(modulePath);
 		if (!module[i]) {
 			for (int j = 0; j < i; j++)
@@ -122,14 +123,29 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 			MessageBoxW(nullptr, (L"Failed to load Soku2: " + std::wstring(modulePath) + L": " + GetLastErrorAsString()).c_str(), L"Soku2 loading error", MB_ICONERROR);
 			return false;
 		}
-		init[i] = GetProcAddress(module[i], "Initialize");
-		if (!init[i]) {
+
+		auto check = (bool (*)(const BYTE hash[16]))GetProcAddress(module[i], "CheckVersion");
+		if (!check) {
+			for (int j = 0; j <= i; j++)
+				FreeLibrary(module[j]);
+			MessageBoxW(nullptr, (L"Failed to load Soku2: " + std::wstring(modulePath) + L": Failed to get CheckVersion: " + GetLastErrorAsString()).c_str(), L"Soku2 loading error", MB_ICONERROR);
+			return false;
+		}
+		if (!check(SokuLib::targetHash)) {
+			for (int j = 0; j <= i; j++)
+				FreeLibrary(module[j]);
+			MessageBoxW(nullptr, (L"Failed to load Soku2: " + std::wstring(modulePath) + L": CheckVersion failed").c_str(), L"Soku2 loading error", MB_ICONERROR);
+			return false;
+		}
+
+		auto init = (bool (*)(HMODULE hMyModule, HMODULE hParentModule))GetProcAddress(module[i], "Initialize");
+		if (!init) {
 			for (int j = 0; j <= i; j++)
 				FreeLibrary(module[j]);
 			MessageBoxW(nullptr, (L"Failed to load Soku2: " + std::wstring(modulePath) + L": Failed to get Initialize: " + GetLastErrorAsString()).c_str(), L"Soku2 loading error", MB_ICONERROR);
 			return false;
 		}
-		if (!((bool (*)(HMODULE hMyModule, HMODULE hParentModule))init[i])(module[i], hMyModule)) {
+		if (!init(module[i], hMyModule)) {
 			for (int j = 0; j <= i; j++)
 				FreeLibrary(module[j]);
 			MessageBoxW(nullptr, (L"Failed to load Soku2: " + std::wstring(modulePath) + L": Initialize failed").c_str(), L"Soku2 loading error", MB_ICONERROR);
