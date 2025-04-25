@@ -433,7 +433,7 @@ def assemble(line, pos, debug, labels):
 			raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Expected 1 or 2 operands")
 		op, size, extra_ind = get_reg_size(args[0], mnemonic)
 		if mnemonic in ['FNSTCW', 'FLDCW'] and size == 0:
-			size = 16
+			size = 32
 		if op != REG_TYPE_INDIRECT:
 			raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Invalid operand")
 		has_reg1 = extra_ind[0] is not None
@@ -443,12 +443,28 @@ def assemble(line, pos, debug, labels):
 		regM = (extra_ind[1]['valueR'], extra_ind[1]['valueM']) if has_regM else None
 		regI = (extra_ind[2]['value'], extra_ind[2]['size']) if has_regI else (0, 0)
 		imm_size = 1
-		if size == 64:
+		if mnemonic == 'FILD':
+			if size == 64:
+				opcode = [opcodes[1]]
+			elif size == 32:
+				opcode = [opcodes[2]]
+			elif size == 16:
+				opcode = [opcodes[1]]
+			else:
+				raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): {size} bits operand not supported")
+		elif size == 64:
+			opcode = [opcodes[1]]
+		elif size == 32:
+			opcode = [opcodes[2]]
+		elif size == 16 and mnemonic == 'FILD':
 			opcode = [opcodes[1]]
 		else:
-			opcode = [opcodes[2]]
+			raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): {size} bits operand not supported")
 		flag_pos = len(opcode)
-		opcode.append(opcodes[0])
+		if size == 64 and mnemonic == 'FILD':
+			opcode.append(0x28)
+		else:
+			opcode.append(opcodes[0])
 
 		if reg1 == 5:
 			has_regI = True
@@ -691,15 +707,16 @@ def assemble(line, pos, debug, labels):
 			has_regI = True
 		elif has_reg1:
 			opcode[flag_pos] |= reg1
-		if has_reg1 and has_regI and has_regM:
+		if has_reg1 and has_regM:
 			opcode[flag_pos] |= 0x4
 			opcode.append(reg1 | (regM[0] << 3) | (regM[1] << 6))
-			if regI[1] <= 8:
-				opcode[flag_pos] |= 0x40
-			else:
-				opcode[flag_pos] |= 0x80
-				imm_size = 4
-			opcode += list(regI[0].to_bytes(imm_size, byteorder='little', signed=True))
+			if has_regI:
+				if regI[1] <= 8:
+					opcode[flag_pos] |= 0x40
+				else:
+					opcode[flag_pos] |= 0x80
+					imm_size = 4
+				opcode += list(regI[0].to_bytes(imm_size, byteorder='little', signed=True))
 		elif has_regI and has_regM:
 			opcode[flag_pos] |= 0x4
 			opcode.append(0x5 | (regM[0] << 3) | (regM[1] << 6))
@@ -984,6 +1001,7 @@ def main():
 	parser.add_argument('-b', '--base', help="Base character class.", required=True)
 	parser.add_argument('-v', '--csv', help="Soku2 character CSV.", required=True)
 	parser.add_argument('-c', '--class_name', help="Name of class emited.", required=True)
+	parser.add_argument('-p', '--patches_only', help="Output only the patches source files.", action='store_true')
 	parser.add_argument('-e', '--emit_unused', help="Parse and emit unused assembly blocks in the patch file. By default, they are not parsed.", action='store_true')
 	parser.add_argument('-d', '--debug', action='store_true')
 	parser.add_argument('-2', '--debug2', action='store_true')
@@ -1024,9 +1042,9 @@ def main():
 			name = line.split(' ')[-1]
 			try:
 				elem = next(f for f in function_blocks if f['name'] == name)
-				print(f"{colored('error', 'red')}: line {pos} on declaration of {name}: {name} has already been declared at line {elem['pos']}.")
-				has_error = True
-			except StopIteration as e:
+				current_fct = name
+				emit_error(f"{name} has already been declared at line {elem['pos']}.")
+			except StopIteration:
 				pass
 			function_blocks.append({'name': name, 'asm': block, 'pos': start})
 		else:
@@ -1037,7 +1055,8 @@ def main():
 			line_index += 1
 
 	used = set(f['name'] for f in locations)
-	unused = [f['name'] for f in function_blocks if f['name'] not in used]
+	declared = set(f['name'] for f in function_blocks)
+	unused = set(f for f in declared if f not in used)
 
 	if args.debug:
 		print("Function blocks found:\n - " + "\n - ".join(map(lambda d: f"'{d['name']}' declared line {d['pos']}:\n{"\n".join(map(lambda g: f'\t{g[1]} ; line {g[0]}' if ':' not in g[1] else g[1], d['asm']))}", function_blocks)))
@@ -1143,10 +1162,10 @@ def main():
 		offset = location['address'] - 0x400000
 		decoder = iced_x86.Decoder(32, soku_data[offset:offset + location['size']], ip=location['address'])
 		instr = decoder.decode()
-		if location['name'] not in used:
+		if location['name'] not in declared:
 			PATCH_BYTECODE += f"// Created from use at line {location['pos']}\n"
-			PATCH_BYTECODE += f"static PatchByteCode {location['name']}_patchByteCode = {{ nullptr, 0, nullptr, 0 }}\n"
-			used.add(location['name'])
+			PATCH_BYTECODE += f"static PatchByteCode {location['name']}_patchByteCode = {{ nullptr, 0, nullptr, 0 }};\n"
+			declared.add(location['name'])
 			current_line = location['pos']
 			emit_warning(f'{location['name']} was never declared')
 		PATCH_SKELETONS += '\tPatchSkeleton{ '
@@ -1219,80 +1238,105 @@ def main():
 				PATCH_SKELETONS_INDICES += f"\t{",".join(map(lambda d: f'{d: 4d}', indices[i:i + 16]))},\n"
 			PATCH_SKELETONS_INDICES += "};\n"
 
-	patches_header_template = (patches_header_template
-			   .replace('{{CLASS_NAME}}', CLASS_NAME)
-			   .replace('{{ClassName}}', ClassName)
-			   .replace('{{BaseName}}', BaseName))
-	patches_source_template = (patches_source_template
-			   .replace('{{CLASS_NAME}}', CLASS_NAME)
-			   .replace('{{ClassName}}', ClassName)
-			   .replace('{{BaseName}}', BaseName)
-			   .replace('{{PATCH_BYTECODE}}', PATCH_BYTECODE)
-			   .replace('{{PATCH_SKELETONS}}', PATCH_SKELETONS)
-			   .replace('{{PATCH_SKELETONS_INDICES}}', PATCH_SKELETONS_INDICES))
-	header_template = (header_template
-			   .replace('{{CLASS_NAME}}', CLASS_NAME)
-			   .replace('{{ClassName}}', ClassName)
-			   .replace('{{BaseName}}', BaseName))
-	source_template = (source_template
-			   .replace('{{CLASS_NAME}}', CLASS_NAME)
-			   .replace('{{ClassName}}', ClassName)
-			   .replace('{{BaseName}}', BaseName))
-	entry_point_template = (entry_point_template
-				.replace('{{MAJOR}}', MAJOR)
-				.replace('{{MINOR}}', MINOR)
-				.replace('{{ClassName}}', ClassName)
-				.replace('{{BaseName}}', BaseName))
-	cmake_template = (cmake_template
-			  .replace('{{ClassName}}', ClassName))
-	version_template = (version_template
-			    .replace('{{MAJOR}}', MAJOR)
-			    .replace('{{MINOR}}', MINOR)
-			    .replace('{{ClassName}}', ClassName)
-			    .replace('{{BaseName}}', BaseName))
-	character_template = (character_template
-			      .replace('{{class_name}}', class_name)
-			      .replace('{{ClassName}}', ClassName)
-			      .replace('{{ID}}', csv[0])
-			      .replace('{{SHORT_NAME}}', csv[2])
-			      .replace('{{FULL_NAME}}', csv[3])
-			      .replace('{{SKILLS}}', ", ".join(csv[4].split(','))))
+	if args.patches_only:
+		patches_header_template = (patches_header_template
+					   .replace('{{CLASS_NAME}}', CLASS_NAME)
+					   .replace('{{ClassName}}', ClassName)
+					   .replace('{{BaseName}}', BaseName))
+		patches_source_template = (patches_source_template
+					   .replace('{{CLASS_NAME}}', CLASS_NAME)
+					   .replace('{{ClassName}}', ClassName)
+					   .replace('{{BaseName}}', BaseName)
+					   .replace('{{PATCH_BYTECODE}}', PATCH_BYTECODE)
+					   .replace('{{PATCH_SKELETONS}}', PATCH_SKELETONS)
+					   .replace('{{PATCH_SKELETONS_INDICES}}', PATCH_SKELETONS_INDICES))
 
-	if args.debug2 or args.output_path == '-':
-		print(f" ---------- {ClassName}.hpp ---------- ")
-		print(header_template, end="")
-		print(f" ---------- {ClassName}.cpp ---------- ")
-		print(source_template, end="")
-		print(f" ---------- code_patches.hpp ---------- ")
-		print(patches_header_template, end="")
-		print(f" ---------- code_patches.cpp ---------- ")
-		print(patches_source_template, end="")
-		print(" ---------- entry_point.cpp ---------- ")
-		print(entry_point_template, end="")
-		print(" ---------- CMakeLists.txt ---------- ")
-		print(cmake_template, end="")
-		print(" ---------- version.rc ---------- ")
-		print(version_template, end="")
-		print(" ---------- character.json ---------- ")
-		print(character_template, end="")
+		if args.debug2 or args.output_path == '-':
+			print(f" ---------- code_patches.hpp ---------- ")
+			print(patches_header_template, end="")
+			print(f" ---------- code_patches.cpp ---------- ")
+			print(patches_source_template, end="")
 
-	if args.output_path != '-':
-		with open(f'{args.output_path}/{ClassName}.hpp', "w") as fd:
-			fd.write(header_template)
-		with open(f'{args.output_path}/{ClassName}.cpp', "w") as fd:
-			fd.write(source_template)
-		with open(f'{args.output_path}/code_patches.hpp', "w") as fd:
-			fd.write(patches_header_template)
-		with open(f'{args.output_path}/code_patches.cpp', "w") as fd:
-			fd.write(patches_source_template)
-		with open(f'{args.output_path}/entry_point.cpp', "w") as fd:
-			fd.write(entry_point_template)
-		with open(f'{args.output_path}/CMakeLists.txt', "w") as fd:
-			fd.write(cmake_template)
-		with open(f'{args.output_path}/version.rc', "w") as fd:
-			fd.write(version_template)
-		with open(f'{args.output_path}/character.json', "w") as fd:
-			fd.write(character_template)
+		if args.output_path != '-':
+			with open(f'{args.output_path}/code_patches.hpp', "w") as fd:
+				fd.write(patches_header_template)
+			with open(f'{args.output_path}/code_patches.cpp', "w") as fd:
+				fd.write(patches_source_template)
+	else:
+		patches_header_template = (patches_header_template
+				   .replace('{{CLASS_NAME}}', CLASS_NAME)
+				   .replace('{{ClassName}}', ClassName)
+				   .replace('{{BaseName}}', BaseName))
+		patches_source_template = (patches_source_template
+				   .replace('{{CLASS_NAME}}', CLASS_NAME)
+				   .replace('{{ClassName}}', ClassName)
+				   .replace('{{BaseName}}', BaseName)
+				   .replace('{{PATCH_BYTECODE}}', PATCH_BYTECODE)
+				   .replace('{{PATCH_SKELETONS}}', PATCH_SKELETONS)
+				   .replace('{{PATCH_SKELETONS_INDICES}}', PATCH_SKELETONS_INDICES))
+		header_template = (header_template
+				   .replace('{{CLASS_NAME}}', CLASS_NAME)
+				   .replace('{{ClassName}}', ClassName)
+				   .replace('{{BaseName}}', BaseName))
+		source_template = (source_template
+				   .replace('{{CLASS_NAME}}', CLASS_NAME)
+				   .replace('{{ClassName}}', ClassName)
+				   .replace('{{BaseName}}', BaseName))
+		entry_point_template = (entry_point_template
+					.replace('{{MAJOR}}', MAJOR)
+					.replace('{{MINOR}}', MINOR)
+					.replace('{{ClassName}}', ClassName)
+					.replace('{{BaseName}}', BaseName))
+		cmake_template = (cmake_template
+				  .replace('{{ClassName}}', ClassName))
+		version_template = (version_template
+				    .replace('{{MAJOR}}', MAJOR)
+				    .replace('{{MINOR}}', MINOR)
+				    .replace('{{ClassName}}', ClassName)
+				    .replace('{{BaseName}}', BaseName))
+		character_template = (character_template
+				      .replace('{{class_name}}', class_name)
+				      .replace('{{ClassName}}', ClassName)
+				      .replace('{{ID}}', csv[0])
+				      .replace('{{SHORT_NAME}}', csv[2])
+				      .replace('{{FULL_NAME}}', csv[3])
+				      .replace('{{SKILLS}}', ", ".join(csv[4].split(','))))
+
+		if args.debug2 or args.output_path == '-':
+			print(f" ---------- {ClassName}.hpp ---------- ")
+			print(header_template, end="")
+			print(f" ---------- {ClassName}.cpp ---------- ")
+			print(source_template, end="")
+			print(f" ---------- code_patches.hpp ---------- ")
+			print(patches_header_template, end="")
+			print(f" ---------- code_patches.cpp ---------- ")
+			print(patches_source_template, end="")
+			print(" ---------- entry_point.cpp ---------- ")
+			print(entry_point_template, end="")
+			print(" ---------- CMakeLists.txt ---------- ")
+			print(cmake_template, end="")
+			print(" ---------- version.rc ---------- ")
+			print(version_template, end="")
+			print(" ---------- character.json ---------- ")
+			print(character_template, end="")
+
+		if args.output_path != '-':
+			with open(f'{args.output_path}/{ClassName}.hpp', "w") as fd:
+				fd.write(header_template)
+			with open(f'{args.output_path}/{ClassName}.cpp', "w") as fd:
+				fd.write(source_template)
+			with open(f'{args.output_path}/code_patches.hpp', "w") as fd:
+				fd.write(patches_header_template)
+			with open(f'{args.output_path}/code_patches.cpp', "w") as fd:
+				fd.write(patches_source_template)
+			with open(f'{args.output_path}/entry_point.cpp', "w") as fd:
+				fd.write(entry_point_template)
+			with open(f'{args.output_path}/CMakeLists.txt', "w") as fd:
+				fd.write(cmake_template)
+			with open(f'{args.output_path}/version.rc', "w") as fd:
+				fd.write(version_template)
+			with open(f'{args.output_path}/character.json', "w") as fd:
+				fd.write(character_template)
 
 
 if __name__ == '__main__':

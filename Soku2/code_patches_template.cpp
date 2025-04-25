@@ -80,7 +80,7 @@ AppliedPatch &AppliedPatch::operator=(AppliedPatch &&o) noexcept
 {{PATCH_SKELETONS_INDICES}}
 
 
-static std::vector<Patch> compiledPatches;
+std::vector<Patch> compiledPatches;
 std::vector<Patch *> objectUpdate_patches;
 std::vector<Patch *> objectInitializeAction_patches;
 std::vector<Patch *> update_patches;

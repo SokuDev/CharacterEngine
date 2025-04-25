@@ -49,6 +49,7 @@ public:
 	AppliedPatch &operator=(AppliedPatch &&o) noexcept;
 };
 
+extern std::vector<Patch> compiledPatches;
 extern std::vector<Patch *> objectUpdate_patches;
 extern std::vector<Patch *> objectInitializeAction_patches;
 extern std::vector<Patch *> update_patches;
