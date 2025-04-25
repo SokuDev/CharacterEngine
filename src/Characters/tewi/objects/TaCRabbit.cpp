@@ -36,7 +36,7 @@ void TaCRabbit::update()
 			this->renderInfos.color.a -= 25;
 		return;
 	}
-	if (this->HP <= 0) {
+	if (this->hp <= 0) {
 		this->renderInfos.color.a -= 15;
 		if (!this->renderInfos.color.a)
 			this->lifetime = 0;
@@ -149,7 +149,7 @@ void TaCRabbit::update()
 void TaCRabbit::initializeAction()
 {
 	this->skillIndex = 3;
-	this->HP = 1;
+	this->hp = 1;
 	this->lifetime = 2;
 }
 

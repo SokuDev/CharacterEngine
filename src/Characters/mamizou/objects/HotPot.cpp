@@ -135,9 +135,9 @@ void HotPot::update()
 					this->parentPlayerB->gpShort[0] = 0;
 				}
 			} else {
-				this->parentPlayerB->HP += 4;
-				if (this->parentPlayerB->HP > this->parentPlayerB->maxHP)
-					this->parentPlayerB->HP = this->parentPlayerB->maxHP;
+				this->parentPlayerB->hp += 4;
+				if (this->parentPlayerB->hp > this->parentPlayerB->maxHP)
+					this->parentPlayerB->hp = this->parentPlayerB->maxHP;
 				this->parentPlayerB->position.x = this->position.x - this->direction * 50;
 				this->parentPlayerB->position.y = this->position.y + 275;
 			}

@@ -1910,7 +1910,7 @@ void Tewi::update()
 				this->playSFX(0);
 				this->_hammerPickTimer = 20;
 				this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams);
-				this->_hammer->HP = 10000;
+				this->_hammer->hp = 10000;
 				this->_hammer->setSequence(13);
 				this->_hammer->skillIndex = 3;
 				this->_hammer->gravity.y = 0;
@@ -2241,7 +2241,7 @@ void Tewi::update()
 			this->_hammer->skillIndex = 7;
 			this->_hammer->collisionLimit = 1;
 			this->_hammer->collisionType = COLLISION_TYPE_NONE;
-			this->_hammer->HP = 1000 + 250 * this->effectiveSkillLevel[7];
+			this->_hammer->hp = 1000 + 250 * this->effectiveSkillLevel[7];
 			this->_hammer->setSequence(11);
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 		}
@@ -4829,7 +4829,7 @@ unsigned Tewi::getHammerPickTimer()
 	return this->_hammerPickTimer;
 }
 
-constexpr auto operator_bracket = &SokuLib::Deque<SokuLib::Card>::operator[];
+constexpr SokuLib::Card &(SokuLib::Deque<SokuLib::Card>:: *operator_bracket)(size_t) = &SokuLib::Deque<SokuLib::Card>::operator[];
 
 void __declspec(naked) tewiRevivePreventDeath()
 {
@@ -4839,7 +4839,7 @@ void __declspec(naked) tewiRevivePreventDeath()
 		//     defender->characterIndex == SokuLib::CHARACTER_TEWI)
 		// ) {
 		//     if (
-		//         defender->HP <= 0 &&
+		//         defender->hp <= 0 &&
 		//         defender->confusionDebuffTimer == 0 &&
 		//         !defender->handInfo.hand.empty() &&
 		//         defender->handInfo.hand[0]->id == 211 &&
@@ -4849,7 +4849,7 @@ void __declspec(naked) tewiRevivePreventDeath()
 		//         )
 		//     ) {
 		//         ((Tewi *)defender)->revive = true;
-		//         defender->HP = 1;
+		//         defender->hp = 1;
 		//         defender->untech = 900;
 		//         if (hitAnimation <= 70 || hitAnimation >= 200)
 		//             hitAnimation = 71;
@@ -4865,7 +4865,7 @@ void __declspec(naked) tewiRevivePreventDeath()
 		CMP [ESI + 0x34C], 35
 		JNZ noChange
 
-		// if (defender->HP <= 0)
+		// if (defender->hp <= 0)
 		CMP word ptr [ESI + 0x184], 0
 		JG noChange
 
@@ -4905,7 +4905,7 @@ void __declspec(naked) tewiRevivePreventDeath()
 	doIt:
 		// ((Tewi *)defender)->revive = true;
 		MOV byte ptr [ESI + 0x890], 1
-		// defender->HP = 1;
+		// defender->hp = 1;
 		MOV word ptr [ESI + 0x184], 1
 		// defender->untech = 900;
 		MOV word ptr [ESI + 0x4BA], 900

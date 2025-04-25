@@ -3010,7 +3010,7 @@ void Mamizou::_preTransformCall()
 	this->_transformPlayer->defensePower = this->defensePower;
 	this->_transformPlayer->unknown538 = this->unknown538;
 	this->_transformPlayer->unknown53C = this->unknown53C;
-	this->_transformPlayer->unknown540 = this->unknown540;
+	this->_transformPlayer->bonusProration = this->bonusProration;
 	this->_transformPlayer->spellDmgMultiplier = this->spellDmgMultiplier;
 	this->_transformPlayer->specialDmgMultiplier = this->specialDmgMultiplier;
 	this->_transformPlayer->meterGainMultiplier = this->meterGainMultiplier;
@@ -3044,7 +3044,7 @@ void Mamizou::_preTransformCall()
 	this->_transformPlayer->SORDebuffTimer = this->SORDebuffTimer;
 	this->_transformPlayer->healCharmTimer = this->healCharmTimer;
 
-	this->_transformPlayer->HP = this->HP;
+	this->_transformPlayer->hp = this->hp;
 	this->_transformPlayer->redHP = this->redHP;
 	this->_transformPlayer->spiritRegenDelay = this->spiritRegenDelay;
 	this->_transformPlayer->currentSpirit = this->currentSpirit;
@@ -3065,7 +3065,7 @@ void Mamizou::_postTransformCall()
 	this->gameData.frameData = this->_transformPlayer->gameData.frameData;
 	this->skillIndex = this->_transformPlayer->skillIndex;
 
-	this->HP = this->_transformPlayer->HP;
+	this->hp = this->_transformPlayer->hp;
 	this->redHP = this->_transformPlayer->redHP;
 	this->spiritRegenDelay = this->_transformPlayer->spiritRegenDelay;
 	this->currentSpirit = this->_transformPlayer->currentSpirit;
@@ -3112,7 +3112,7 @@ void Mamizou::_postTransformCall()
 	this->defensePower = this->_transformPlayer->defensePower;
 	this->unknown538 = this->_transformPlayer->unknown538;
 	this->unknown53C = this->_transformPlayer->unknown53C;
-	this->unknown540 = this->_transformPlayer->unknown540;
+	this->bonusProration = this->_transformPlayer->bonusProration;
 	this->spellDmgMultiplier = this->_transformPlayer->spellDmgMultiplier;
 	this->specialDmgMultiplier = this->_transformPlayer->specialDmgMultiplier;
 	this->meterGainMultiplier = this->_transformPlayer->meterGainMultiplier;

@@ -27,7 +27,7 @@ void KillingRabbit::update()
 
 	this->checkGrazed(0);
 	this->advanceFrame();
-	if (this->HP <= 0) {
+	if (this->hp <= 0) {
 		this->renderInfos.color.a -= 15;
 		if (!this->renderInfos.color.a)
 			this->lifetime = 0;
@@ -104,7 +104,7 @@ void KillingRabbit::update()
 void KillingRabbit::initializeAction()
 {
 	this->skillIndex = 3;
-	this->HP = 500;
+	this->hp = 500;
 	this->lifetime = 2;
 	this->collisionLimit = 2;
 }

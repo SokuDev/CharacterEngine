@@ -38,7 +38,7 @@ namespace UnexpectedAssistance
 			this->speed.y = this->speed.y - 0.5;
 			break;
 		case 1:
-			if (this->HP < 0) {
+			if (this->hp < 0) {
 				this->setSequence(6);
 				this->speed.x = 0.0;
 				this->speed.y = 7.5;
@@ -53,7 +53,7 @@ namespace UnexpectedAssistance
 			if (
 				(std::pow(this->position.x - this->gameData.opponent->position.x, 2) < 2500 && std::pow(this->position.y - this->gameData.opponent->position.y, 2) < 10000) ||
 				this->position.y < this->getGroundHeight() ||
-				this->HP < 0
+				this->hp < 0
 		    	) {
 				SokuLib::camera.shake = 10;
 				this->renderInfos.shaderType = 1;
@@ -148,7 +148,7 @@ namespace UnexpectedAssistance
 			}
 			if (
 				(std::pow(this->position.x - this->gameData.opponent->position.x, 2) <= 10000 &&std::pow(this->position.y - this->gameData.opponent->position.y, 2) <= 10000) ||
-				this->HP < 0
+				this->hp < 0
 			) {
 				SokuLib::camera.shake = 10;
 				this->renderInfos.shaderType = 1;
@@ -173,7 +173,7 @@ namespace UnexpectedAssistance
 				this->speed.y + this->position.y <= this->getGroundHeight() + this->unknown380 ||
 				(std::pow(this->position.x - this->gameData.opponent->position.x, 2) < 2500 && std::pow(this->position.y - this->gameData.opponent->position.y, 2) < 10000) ||
 				this->position.y < this->getGroundHeight() + this->unknown380 ||
-				this->HP < 0
+				this->hp < 0
 			) {
 				SokuLib::camera.shake = 10;
 				this->renderInfos.shaderType = 1;
@@ -193,7 +193,7 @@ namespace UnexpectedAssistance
 			}
 			break;
 		case 9:
-			if (this->HP < 0) {
+			if (this->hp < 0) {
 				this->setSequence(6);
 				this->speed.x = 0.0;
 				this->speed.y = 7.5;
@@ -213,7 +213,7 @@ namespace UnexpectedAssistance
 			this->speed.y = this->speed.y - 0.5;
 			break;
 		case 10:
-			if (this->HP < 0) {
+			if (this->hp < 0) {
 				this->setSequence(6);
 				this->speed.x = 0.0;
 				this->speed.y = 7.5;
@@ -251,7 +251,7 @@ namespace UnexpectedAssistance
 			if (
 				(std::pow(this->position.x - this->gameData.opponent->position.x, 2) <= 2500 && std::pow(this->position.y - this->gameData.opponent->position.y, 2) <= 10000) ||
 				this->position.y < this->getGroundHeight() + this->unknown380 ||
-				this->HP < 0
+				this->hp < 0
 			) {
 				SokuLib::camera.shake = 10.0;
 				this->setSequence(6);

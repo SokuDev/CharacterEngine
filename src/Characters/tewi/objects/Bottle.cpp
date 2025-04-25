@@ -82,11 +82,11 @@ void Bottle::update()
 				timer(this) -= this->customData[1];
 			}
 			while (timer2(this) >= this->customData[3]) {
-				this->gameData.opponent->HP--;
+				this->gameData.opponent->hp--;
 				timer2(this) -= this->customData[3];
 			}
-			if (this->gameData.opponent->HP <= 0)
-				this->gameData.opponent->HP = 1;
+			if (this->gameData.opponent->hp <= 0)
+				this->gameData.opponent->hp = 1;
 		} else {
 			this->gameData.opponent->renderInfos.color.g = 255;
 			this->gameData.opponent->renderInfos.color.b = 255;

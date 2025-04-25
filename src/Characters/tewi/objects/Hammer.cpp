@@ -24,7 +24,7 @@ void Hammer::update()
 		float params[3] = {370, this->renderInfos.zRotation, 50};
 
 		this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1, params);
-		if (this->HP <= 0 && this->collisionLimit) {
+		if (this->hp <= 0 && this->collisionLimit) {
 			this->collisionLimit = 0;
 			this->canStickOnWalls = 0;
 			this->nbBounceOnGround = 0;
@@ -65,7 +65,7 @@ void Hammer::update()
 		float params[3] = {370, this->renderInfos.zRotation, 50};
 
 		this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1, params);
-		if (this->HP <= 0) {
+		if (this->hp <= 0) {
 			this->collisionLimit = 0;
 			this->canStickOnWalls = 0;
 			this->nbBounceOnGround = 0;
@@ -92,7 +92,7 @@ void Hammer::update()
 			this->collisionLimit = 1;
 			this->collisionType = COLLISION_TYPE_NONE;
 			this->nextSequence();
-			this->HP = 500;
+			this->hp = 500;
 		}
 	} else if (this->frameState.sequenceId == 10) {
 		this->renderInfos.zRotation = this->velocity;
@@ -197,7 +197,7 @@ void Hammer::update()
 		if (this->frameState.sequenceId == 13)
 			this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, -1, params);
 		if (this->collisionLimit) {
-			if (this->HP <= 0) {
+			if (this->hp <= 0) {
 				this->collisionLimit = 0;
 				this->canStickOnWalls = 0;
 				this->nbBounceOnGround = 0;
@@ -289,7 +289,7 @@ void Hammer::initializeAction()
 		this->setSequence(this->angle - 360);
 		return;
 	}
-	this->HP = 500;
+	this->hp = 500;
 	this->gravity.y = 1;
 	this->collisionLimit = 1;
 	this->unknown360 = 4;

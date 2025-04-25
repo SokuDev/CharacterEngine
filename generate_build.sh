@@ -104,8 +104,11 @@ for character in `ls src/Characters/`; do
 		echo "Building $DLL"
 		if cmake --build $OUTPUT --target $(echo $DLL | sed -r 's/^(.*)\..*$/\1/g') -- $OPTIONS; then
 			mkdir -p "$OUTPUT/Soku2_package/characters/$character" "$OUTPUT/standalone/characters/$character"
+			PDB="$(echo $DLL | rev | cut -d '.' -f 2- | rev).pdb"
 			cp "$OUTPUT/src/Characters/$character/$DLL" "$OUT/$character.dat" "$IN/character.json" "$OUTPUT/standalone/characters/$character"
 			cp "$OUTPUT/src/Characters/$character/$DLL" "$OUT/$character.dat" "$IN/character.json" "$OUTPUT/Soku2_package/characters/$character"
+			cp "$OUTPUT/src/Characters/$character/$PDB" "$OUT/$character.dat" "$IN/character.json" "$OUTPUT/standalone/characters/$character"
+			cp "$OUTPUT/src/Characters/$character/$PDB" "$OUT/$character.dat" "$IN/character.json" "$OUTPUT/Soku2_package/characters/$character"
 			echo ";#" > "$OUTPUT/Soku2_package/characters/$character/dummy.asm"
 			echo "return function() end" > "$OUTPUT/Soku2_package/characters/$character/dummy.lua"
 			cat "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" "$IN/data/csv/$character/deck.csv" > "$OUTPUT/Soku2_package/characters/$character/deck.cfg"

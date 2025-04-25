@@ -73,7 +73,7 @@ void UnexpectedAssistance::Komachi::update()
 		this->gpFloat[0] += 2;
 		this->gpFloat[0] += (1.0 - this->renderInfos.scale.x) * 10.0;
 		FUN_00439020(this, 0, this->gpFloat[0]);
-		if (0x167 < this->frameState.currentFrame || this->gameData.opponent->HP < 1)
+		if (0x167 < this->frameState.currentFrame || this->gameData.opponent->hp < 1)
 			this->gpShort[0] = 1;
 		if (this->gpShort[0] == 0) {
 			if (std::abs(this->position.x - this->gameData.opponent->position.x) <= 100.0)

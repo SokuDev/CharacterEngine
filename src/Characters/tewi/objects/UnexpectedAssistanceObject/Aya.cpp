@@ -40,7 +40,7 @@ void UnexpectedAssistance::Aya::update()
 	if (this->frameState.sequenceId == 0) {
 		this->speed.x = ((this->customData[0] - this->position.x) / 1280.f) * 40.f * this->direction;
 		this->speed.y = ((this->customData[1] - this->position.y) / 1280.f) * 40.f;
-		if (this->HP < 0) {
+		if (this->hp < 0) {
 			this->setSequence(2);
 			this->speed.x = 0;
 			this->speed.y = 0;
@@ -52,7 +52,7 @@ void UnexpectedAssistance::Aya::update()
 			this->speed.y = -30.0;
 		}
 	} else if (this->frameState.sequenceId == 1) {
-		if (this->HP < 0) {
+		if (this->hp < 0) {
 			this->setSequence(2);
 			this->speed.x *= 0.1;
 			this->speed.y *= 0.1;

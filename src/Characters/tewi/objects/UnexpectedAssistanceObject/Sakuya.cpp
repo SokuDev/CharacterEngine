@@ -59,7 +59,7 @@ namespace UnexpectedAssistance
 			return;
 		if (this->collisionType == COLLISION_TYPE_5)
 			this->lifetime = 0;
-		if (this->frameState.sequenceId == 0 && this->parentPlayerB->HP > 0) {
+		if (this->frameState.sequenceId == 0 && this->parentPlayerB->hp > 0) {
 			if (this->direction * this->speed.x < 0 && this->position.x <= SokuLib::camera.leftEdge && this->_handleBorderBounce((this->direction == SokuLib::LEFT) * 180))
 				return;
 			if (this->direction * this->speed.x > 0 && this->position.x >= SokuLib::camera.rightEdge && this->_handleBorderBounce((this->direction == SokuLib::RIGHT) * 180))
