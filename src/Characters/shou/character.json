@@ -1,0 +1,12 @@
+{
+    "internal_name": "shou",
+    "index": 30,
+    "index_named_assets": true,
+    "character_dll": "Shou.dll",
+    "data": "shou.dat",
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "Shou",
+    "full_name": "Shou Toramaru",
+    "skill_inputs": [214, 22, 236, 623],
+    "enabled": true
+}

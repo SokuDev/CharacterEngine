@@ -1,0 +1,12 @@
+{
+    "internal_name": "murasa",
+    "index": 31,
+    "index_named_assets": true,
+    "character_dll": "Murasa.dll",
+    "data": "murasa.dat",
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "Murasa",
+    "full_name": "Minamitsu Murasa",
+    "skill_inputs": [236, 623, 214, 22],
+    "enabled": true
+}

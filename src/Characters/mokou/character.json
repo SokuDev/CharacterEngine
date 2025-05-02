@@ -1,0 +1,12 @@
+{
+    "internal_name": "mokou",
+    "index": 28,
+    "index_named_assets": true,
+    "character_dll": "Mokou.dll",
+    "data": "mokou.dat",
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "Mokou",
+    "full_name": "Fujiwara no Mokou",
+    "skill_inputs": [236, 214, 22, 421],
+    "enabled": true
+}

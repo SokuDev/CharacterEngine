@@ -1,0 +1,12 @@
+{
+    "internal_name": "ran",
+    "index": 34,
+    "index_named_assets": true,
+    "character_dll": "Ran.dll",
+    "data": "ran.dat",
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "Ran",
+    "full_name": "Ran",
+    "skill_inputs": [623, 214, 236, 22],
+    "enabled": true
+}

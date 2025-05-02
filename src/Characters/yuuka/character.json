@@ -1,0 +1,12 @@
+{
+    "internal_name": "yuuka",
+    "index": 26,
+    "index_named_assets": true,
+    "character_dll": "Yuuka.dll",
+    "data": "yuuka.dat",
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "Yuuka",
+    "full_name": "Yuuka Kazami",
+    "skill_inputs": [623, 236, 22, 214],
+    "enabled": true
+}

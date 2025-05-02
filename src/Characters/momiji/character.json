@@ -1,0 +1,12 @@
+{
+    "internal_name": "momiji",
+    "index": 22,
+    "index_named_assets": true,
+    "character_dll": "Momiji.dll",
+    "data": "momiji.dat",
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "Momiji",
+    "full_name": "Momiji Inubashiri",
+    "skill_inputs": [236, 214, 421, 623],
+    "enabled": true
+}

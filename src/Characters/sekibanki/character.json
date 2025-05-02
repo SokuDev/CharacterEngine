@@ -1,0 +1,12 @@
+{
+    "internal_name": "sekibanki",
+    "index": 32,
+    "index_named_assets": true,
+    "character_dll": "Sekibanki.dll",
+    "data": "sekibanki.dat",
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "Sekibanki",
+    "full_name": "Sekibanki",
+    "skill_inputs": [236, 623, 214, 22],
+    "enabled": true
+}

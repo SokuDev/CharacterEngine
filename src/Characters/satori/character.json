@@ -1,0 +1,12 @@
+{
+    "internal_name": "satori",
+    "index": 33,
+    "index_named_assets": true,
+    "character_dll": "Satori.dll",
+    "data": "satori.dat",
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "Satori",
+    "full_name": "Satori Komeiji",
+    "skill_inputs": [214, 236, 421, 623],
+    "enabled": true
+}

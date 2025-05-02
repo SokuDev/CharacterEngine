@@ -1,0 +1,12 @@
+{
+    "internal_name": "kaguya",
+    "index": 27,
+    "index_named_assets": true,
+    "character_dll": "Kaguya.dll",
+    "data": "kaguya.dat",
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "Kaguya",
+    "full_name": "Kaguya Houraisan",
+    "skill_inputs": [236, 22, 623, 214, 421],
+    "enabled": true
+}

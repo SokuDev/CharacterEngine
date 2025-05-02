@@ -1,0 +1,12 @@
+{
+    "internal_name": "orin",
+    "index": 25,
+    "index_named_assets": true,
+    "character_dll": "Orin.dll",
+    "data": "orin.dat",
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "Rin",
+    "full_name": "Rin Kaenbyou",
+    "skill_inputs": [236, 214, 22, 623],
+    "enabled": true
+}

@@ -1,0 +1,12 @@
+{
+    "internal_name": "flandre",
+    "index": 24,
+    "index_named_assets": true,
+    "character_dll": "Flandre.dll",
+    "data": "flandre.dat",
+    "skill_sprite_sheet": "sheet_skill.png",
+    "short_name": "Flandre",
+    "full_name": "Flandre Scarlet",
+    "skill_inputs": [236, 214, 623, 22],
+    "enabled": true
+}
