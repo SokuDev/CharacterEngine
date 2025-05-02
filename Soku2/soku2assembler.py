@@ -1108,8 +1108,12 @@ def main():
 	PATCH_BYTECODE = ""
 	PATCH_SKELETONS = ""
 	PATCH_SKELETONS_INDICES = ""
+	APPLY_ALLOC_SIZE = 0
+	INTERNAL_ALLOC_SIZE = 0
+	blocks_by_name = {}
 
 	for block in assembled_blocks:
+		blocks_by_name[block['name']] = block
 		comments = block['comments']
 		current_comment = 0
 		code_max = 0
@@ -1168,11 +1172,15 @@ def main():
 			declared.add(location['name'])
 			current_line = location['pos']
 			emit_warning(f'{location['name']} was never declared')
+			blocks_by_name[location['name']] = { 'bytecode': [], 'comments': [], 'unlinked': [], 'name': location['name'], 'pos': location['pos'] }
+
 		PATCH_SKELETONS += '\tPatchSkeleton{ '
 		PATCH_SKELETONS += f'{location['name']}_patchByteCode, {" " * (max_size - len(location['name']))}'
 		PATCH_SKELETONS += f'(void *)0x{location['address']:06X}, '
 		PATCH_SKELETONS += f'{location['size']:2}'
 		PATCH_SKELETONS += f'}}, // Declared line {location['pos']}. Patch on {instr:iXrsU}\n'
+		APPLY_ALLOC_SIZE += location['size'] + 8
+		INTERNAL_ALLOC_SIZE += len(blocks_by_name[location['name']]['bytecode']) + 5 + 12
 	PATCH_SKELETONS += '};\n'
 
 	vtable = game_vtables[base]
@@ -1228,6 +1236,7 @@ def main():
 		exit(1)
 
 	for key, indices in arrays.items():
+		INTERNAL_ALLOC_SIZE += len(indices) * 4
 		if not indices:
 			PATCH_SKELETONS_INDICES += f"static std::vector<unsigned> {key};\n"
 		elif len(indices) < 16:
@@ -1238,12 +1247,20 @@ def main():
 				PATCH_SKELETONS_INDICES += f"\t{",".join(map(lambda d: f'{d: 4d}', indices[i:i + 16]))},\n"
 			PATCH_SKELETONS_INDICES += "};\n"
 
+	# Update will call create object, which will apply the patches again
+	# And that one may also call create object and so on.
+	# We support up to 8 recursive calls.
+	APPLY_ALLOC_SIZE *= 8
 	if args.patches_only:
 		patches_header_template = (patches_header_template
+					   .replace('{{APPLY_ALLOC_SIZE}}', str(APPLY_ALLOC_SIZE))
+					   .replace('{{INTERNAL_ALLOC_SIZE}}', str(INTERNAL_ALLOC_SIZE))
 					   .replace('{{CLASS_NAME}}', CLASS_NAME)
 					   .replace('{{ClassName}}', ClassName)
 					   .replace('{{BaseName}}', BaseName))
 		patches_source_template = (patches_source_template
+					   .replace('{{APPLY_ALLOC_SIZE}}', str(APPLY_ALLOC_SIZE))
+					   .replace('{{INTERNAL_ALLOC_SIZE}}', str(INTERNAL_ALLOC_SIZE))
 					   .replace('{{CLASS_NAME}}', CLASS_NAME)
 					   .replace('{{ClassName}}', ClassName)
 					   .replace('{{BaseName}}', BaseName)
@@ -1264,16 +1281,20 @@ def main():
 				fd.write(patches_source_template)
 	else:
 		patches_header_template = (patches_header_template
-				   .replace('{{CLASS_NAME}}', CLASS_NAME)
-				   .replace('{{ClassName}}', ClassName)
-				   .replace('{{BaseName}}', BaseName))
+					   .replace('{{APPLY_ALLOC_SIZE}}', str(APPLY_ALLOC_SIZE))
+					   .replace('{{INTERNAL_ALLOC_SIZE}}', str(INTERNAL_ALLOC_SIZE))
+					   .replace('{{CLASS_NAME}}', CLASS_NAME)
+					   .replace('{{ClassName}}', ClassName)
+					   .replace('{{BaseName}}', BaseName))
 		patches_source_template = (patches_source_template
-				   .replace('{{CLASS_NAME}}', CLASS_NAME)
-				   .replace('{{ClassName}}', ClassName)
-				   .replace('{{BaseName}}', BaseName)
-				   .replace('{{PATCH_BYTECODE}}', PATCH_BYTECODE)
-				   .replace('{{PATCH_SKELETONS}}', PATCH_SKELETONS)
-				   .replace('{{PATCH_SKELETONS_INDICES}}', PATCH_SKELETONS_INDICES))
+					   .replace('{{INTERNAL_ALLOC_SIZE}}', str(INTERNAL_ALLOC_SIZE))
+					   .replace('{{APPLY_ALLOC_SIZE}}', str(APPLY_ALLOC_SIZE))
+					   .replace('{{CLASS_NAME}}', CLASS_NAME)
+					   .replace('{{ClassName}}', ClassName)
+					   .replace('{{BaseName}}', BaseName)
+					   .replace('{{PATCH_BYTECODE}}', PATCH_BYTECODE)
+					   .replace('{{PATCH_SKELETONS}}', PATCH_SKELETONS)
+					   .replace('{{PATCH_SKELETONS_INDICES}}', PATCH_SKELETONS_INDICES))
 		header_template = (header_template
 				   .replace('{{CLASS_NAME}}', CLASS_NAME)
 				   .replace('{{ClassName}}', ClassName)

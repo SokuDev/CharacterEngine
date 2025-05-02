@@ -6,7 +6,10 @@
 
 #ifndef _DEBUG
 #define puts(...)
+#define printf(...)
 #endif
+
+static_assert(sizeof(AppliedPatch) == 8);
 
 GameObjectList_{{ClassName}}::GameObjectList_{{ClassName}}(SokuLib::v2::Player *player) :
 	SokuLib::v2::GameObjectList_{{BaseName}}(player)
@@ -14,7 +17,7 @@ GameObjectList_{{ClassName}}::GameObjectList_{{ClassName}}(SokuLib::v2::Player *
 
 void GameObjectList_{{ClassName}}::update()
 {
-	std::vector<AppliedPatch> appliedPatches;
+	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(objectUpdate_patches) + std::size(objectInitializeAction_patches));
 	for (auto &patch : objectUpdate_patches)
@@ -28,7 +31,7 @@ void GameObjectList_{{ClassName}}::update()
 
 SokuLib::v2::GameObject *GameObjectList_{{ClassName}}::createObject(SokuLib::v2::GameObject *a0, SokuLib::v2::Player *a1, short a2, float a3, float a4, char a5, char a6, void* a7, unsigned int a8)
 {
-	std::vector<AppliedPatch> appliedPatches;
+	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(objectInitializeAction_patches));
 	for (auto &patch : objectInitializeAction_patches)
@@ -59,7 +62,7 @@ void {{ClassName}}::unhook()
 
 void {{ClassName}}::update()
 {
-	std::vector<AppliedPatch> appliedPatches;
+	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(update_patches));
 	for (auto &patch : update_patches)
@@ -71,7 +74,7 @@ void {{ClassName}}::update()
 
 void {{ClassName}}::initializeAction()
 {
-	std::vector<AppliedPatch> appliedPatches;
+	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(initializeAction_patches));
 	for (auto &patch : initializeAction_patches)
@@ -83,7 +86,7 @@ void {{ClassName}}::initializeAction()
 
 void {{ClassName}}::initialize()
 {
-	std::vector<AppliedPatch> appliedPatches;
+	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(initialize_patches));
 	for (auto &patch : initialize_patches)
@@ -95,7 +98,7 @@ void {{ClassName}}::initialize()
 
 void {{ClassName}}::handleInputs()
 {
-	std::vector<AppliedPatch> appliedPatches;
+	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(handleInputs_patches));
 	for (auto &patch : handleInputs_patches)
@@ -107,7 +110,7 @@ void {{ClassName}}::handleInputs()
 
 void {{ClassName}}::VUnknown58()
 {
-	std::vector<AppliedPatch> appliedPatches;
+	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown58_patches));
 	for (auto &patch : VUnknown58_patches)
@@ -119,7 +122,7 @@ void {{ClassName}}::VUnknown58()
 
 void {{ClassName}}::VUnknown5C()
 {
-	std::vector<AppliedPatch> appliedPatches;
+	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown5C_patches));
 	for (auto &patch : VUnknown5C_patches)
@@ -131,7 +134,7 @@ void {{ClassName}}::VUnknown5C()
 
 bool {{ClassName}}::VUnknown60(int a)
 {
-	std::vector<AppliedPatch> appliedPatches;
+	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown60_patches));
 	for (auto &patch : VUnknown60_patches)

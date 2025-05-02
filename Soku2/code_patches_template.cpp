@@ -2,15 +2,17 @@
 #include <SokuLib.hpp>
 #include "code_patches.hpp"
 
+StackedMemory<{{APPLY_ALLOC_SIZE}}> applyMemory;
+StackedMemory<{{INTERNAL_ALLOC_SIZE}}> internalMemory;
+Allocator applyAllocator{applyMemory};
+PatchListAllocator patchListAllocator{internalMemory};
+TrampolineAllocator trampolineAllocator{internalMemory};
+
 Patch::Patch(const PatchSkeleton &skeleton) :
 	location(skeleton.location),
 	patchSize(skeleton.patchSize),
 	trampoline(nullptr)
 {}
-Patch::~Patch()
-{
-	delete[] this->trampoline;
-}
 
 Patch::Patch(Patch &o)
 {
@@ -34,7 +36,7 @@ Patch &Patch::operator=(Patch &&o) noexcept
 
 AppliedPatch::AppliedPatch(const Patch *patch) :
 	_patch(patch),
-	_oldData(new unsigned char[patch->patchSize])
+	_oldData(applyMemory.alloc(patch->patchSize))
 {
 	DWORD old;
 
@@ -52,7 +54,7 @@ AppliedPatch::~AppliedPatch()
 	VirtualProtect(this->_patch->location, this->_patch->patchSize, PAGE_EXECUTE_WRITECOPY, &old);
 	memcpy(this->_patch->location, this->_oldData, this->_patch->patchSize);
 	VirtualProtect(this->_patch->location, this->_patch->patchSize, old, &old);
-	delete[] this->_oldData;
+	applyMemory.dealloc(this->_oldData);
 }
 
 AppliedPatch::AppliedPatch(AppliedPatch &o)
@@ -80,22 +82,22 @@ AppliedPatch &AppliedPatch::operator=(AppliedPatch &&o) noexcept
 {{PATCH_SKELETONS_INDICES}}
 
 
-std::vector<Patch> compiledPatches;
-std::vector<Patch *> objectUpdate_patches;
-std::vector<Patch *> objectInitializeAction_patches;
-std::vector<Patch *> update_patches;
-std::vector<Patch *> initializeAction_patches;
-std::vector<Patch *> initialize_patches;
-std::vector<Patch *> handleInputs_patches;
-std::vector<Patch *> VUnknown58_patches;
-std::vector<Patch *> VUnknown5C_patches;
-std::vector<Patch *> VUnknown60_patches;
+std::vector<Patch, TrampolineAllocator> compiledPatches{trampolineAllocator};
+std::vector<Patch *, PatchListAllocator> objectUpdate_patches{patchListAllocator};
+std::vector<Patch *, PatchListAllocator> objectInitializeAction_patches{patchListAllocator};
+std::vector<Patch *, PatchListAllocator> update_patches{patchListAllocator};
+std::vector<Patch *, PatchListAllocator> initializeAction_patches{patchListAllocator};
+std::vector<Patch *, PatchListAllocator> initialize_patches{patchListAllocator};
+std::vector<Patch *, PatchListAllocator> handleInputs_patches{patchListAllocator};
+std::vector<Patch *, PatchListAllocator> VUnknown58_patches{patchListAllocator};
+std::vector<Patch *, PatchListAllocator> VUnknown5C_patches{patchListAllocator};
+std::vector<Patch *, PatchListAllocator> VUnknown60_patches{patchListAllocator};
 
 static Patch compilePatch(const PatchSkeleton &skeleton)
 {
 	Patch result{skeleton};
 
-	result.trampoline = new unsigned char[skeleton.byteCode.byteCodeLength + 5];
+	result.trampoline = internalMemory.alloc(skeleton.byteCode.byteCodeLength + 5);
 	memcpy(result.trampoline, skeleton.byteCode.byteCode, skeleton.byteCode.byteCodeLength);
 	for (int i = 0; i < skeleton.byteCode.jumpsSize; i++) {
 		JumpTarget &jump = skeleton.byteCode.jumps[i];
@@ -108,7 +110,7 @@ static Patch compilePatch(const PatchSkeleton &skeleton)
 	return result;
 }
 
-static void allocateTrampolines(std::vector<Patch> &result)
+static void allocateTrampolines(std::vector<Patch, TrampolineAllocator> &result)
 {
 	result.reserve(std::size(patchList));
 	for (auto &patch : patchList)
@@ -116,7 +118,7 @@ static void allocateTrampolines(std::vector<Patch> &result)
 }
 
 template<typename T>
-static void getPatchList(const T &skeletons, std::vector<Patch *> &result)
+static void getPatchList(const T &skeletons, std::vector<Patch *, PatchListAllocator> &result)
 {
 	result.reserve(std::size(skeletons));
 	for (auto &skeleton : skeletons)
@@ -125,6 +127,7 @@ static void getPatchList(const T &skeletons, std::vector<Patch *> &result)
 
 void initPatches()
 {
+	assert(trampolineAllocator.getIndex() == 0);
 	allocateTrampolines(compiledPatches);
 	getPatchList(skeletonsForObjectUpdate, objectUpdate_patches);
 	getPatchList(skeletonsForObjectInitializeAction, objectInitializeAction_patches);
@@ -135,6 +138,8 @@ void initPatches()
 	getPatchList(skeletonsForVUnknown58, VUnknown58_patches);
 	getPatchList(skeletonsForVUnknown5C, VUnknown5C_patches);
 	getPatchList(skeletonsForVUnknown60, VUnknown60_patches);
+	printf("Internal memory used %zu/{{INTERNAL_ALLOC_SIZE}}\n", internalMemory.getIndex());
+	assert(internalMemory.getIndex() == {{INTERNAL_ALLOC_SIZE}});
 }
 
 void clearPatches()
