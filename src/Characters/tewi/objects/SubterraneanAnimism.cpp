@@ -38,7 +38,7 @@ void SubterraneanAnimism::initializeAction()
 {
 	this->collisionLimit = 1;
 	if (this->frameState.actionId == 858) {
-		this->setSequence(min(4, this->parentPlayerB->effectiveSkillLevel[9] - 1));
+		this->setSequence(max(0, min(4, this->parentPlayerB->effectiveSkillLevel[9] - 1)));
 		this->parentPlayerB->playSFX(57);
 		return;
 	}
