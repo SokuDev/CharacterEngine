@@ -1,4 +1,4 @@
-// Version 0.7
+// Version 0.8
 
 #include "SokuLib.hpp"
 #include "Orin.hpp"

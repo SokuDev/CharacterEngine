@@ -48,4 +48,18 @@ src/Characters/*/pack
 *.cv2
 *.cv3
 *.cv4
-src/Characters/suikaboss/
+
+# Soku2 data files
+src/Characters/clownpiece/data
+src/Characters/flandre/data
+src/Characters/kaguya/data
+src/Characters/mima/data
+src/Characters/mokou/data
+src/Characters/momiji/data
+src/Characters/murasa/data
+src/Characters/orin/data
+src/Characters/ran/data
+src/Characters/satori/data
+src/Characters/sekibanki/data
+src/Characters/shou/data
+src/Characters/yuuka/data

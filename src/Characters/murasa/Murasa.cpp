@@ -17,6 +17,10 @@ GameObjectList_Murasa::GameObjectList_Murasa(SokuLib::v2::Player *player) :
 
 void GameObjectList_Murasa::update()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(objectUpdate_patches) + std::size(objectInitializeAction_patches));
@@ -27,10 +31,16 @@ void GameObjectList_Murasa::update()
 	puts("-> GameObjectList_Murasa::update()");
 	SokuLib::v2::GameObjectList_Suika::update();
 	puts("<- GameObjectList_Murasa::update()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 SokuLib::v2::GameObject *GameObjectList_Murasa::createObject(SokuLib::v2::GameObject *a0, SokuLib::v2::Player *a1, short a2, float a3, float a4, char a5, char a6, void* a7, unsigned int a8)
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(objectInitializeAction_patches));
@@ -39,6 +49,8 @@ SokuLib::v2::GameObject *GameObjectList_Murasa::createObject(SokuLib::v2::GameOb
 	puts("-> GameObjectList_Murasa::createObject()");
 	auto obj = SokuLib::v2::GameObjectList_Suika::createObject(a0, a1, a2, a3, a4, a5, a6, a7, a8);
 	puts("<- GameObjectList_Murasa::createObject()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return obj;
 }
 
@@ -62,6 +74,10 @@ Murasa::Murasa(SokuLib::PlayerInfo &info) :
 
 void Murasa::update()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(update_patches));
@@ -70,10 +86,16 @@ void Murasa::update()
 	puts("-> Murasa::update()");
 	SokuLib::v2::PlayerSuika::update();
 	puts("<- Murasa::update()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Murasa::initializeAction()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(initializeAction_patches));
@@ -82,10 +104,16 @@ void Murasa::initializeAction()
 	puts("-> Murasa::initializeAction()");
 	SokuLib::v2::PlayerSuika::initializeAction();
 	puts("<- Murasa::initializeAction()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Murasa::initialize()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(initialize_patches));
@@ -94,10 +122,16 @@ void Murasa::initialize()
 	puts("-> Murasa::initialize()");
 	SokuLib::v2::PlayerSuika::initialize();
 	puts("<- Murasa::initialize()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Murasa::handleInputs()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(handleInputs_patches));
@@ -106,10 +140,16 @@ void Murasa::handleInputs()
 	puts("-> Murasa::handleInputs()");
 	SokuLib::v2::PlayerSuika::handleInputs();
 	puts("<- Murasa::handleInputs()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Murasa::VUnknown58()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown58_patches));
@@ -118,10 +158,16 @@ void Murasa::VUnknown58()
 	puts("-> Murasa::VUnknown58()");
 	SokuLib::v2::PlayerSuika::VUnknown58();
 	puts("<- Murasa::VUnknown58()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Murasa::VUnknown5C()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown5C_patches));
@@ -130,10 +176,16 @@ void Murasa::VUnknown5C()
 	puts("-> Murasa::VUnknown5C()");
 	SokuLib::v2::PlayerSuika::VUnknown5C();
 	puts("<- Murasa::VUnknown5C()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 bool Murasa::VUnknown60(int a)
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown60_patches));
@@ -142,5 +194,7 @@ bool Murasa::VUnknown60(int a)
 	puts("-> Murasa::VUnknown60()");
 	auto b = SokuLib::v2::PlayerSuika::VUnknown60(a);
 	puts("<- Murasa::VUnknown60()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;
 }

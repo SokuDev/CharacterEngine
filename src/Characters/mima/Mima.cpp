@@ -17,6 +17,10 @@ GameObjectList_Mima::GameObjectList_Mima(SokuLib::v2::Player *player) :
 
 void GameObjectList_Mima::update()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(objectUpdate_patches) + std::size(objectInitializeAction_patches));
@@ -27,10 +31,16 @@ void GameObjectList_Mima::update()
 	puts("-> GameObjectList_Mima::update()");
 	SokuLib::v2::GameObjectList_Iku::update();
 	puts("<- GameObjectList_Mima::update()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 SokuLib::v2::GameObject *GameObjectList_Mima::createObject(SokuLib::v2::GameObject *a0, SokuLib::v2::Player *a1, short a2, float a3, float a4, char a5, char a6, void* a7, unsigned int a8)
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(objectInitializeAction_patches));
@@ -39,6 +49,8 @@ SokuLib::v2::GameObject *GameObjectList_Mima::createObject(SokuLib::v2::GameObje
 	puts("-> GameObjectList_Mima::createObject()");
 	auto obj = SokuLib::v2::GameObjectList_Iku::createObject(a0, a1, a2, a3, a4, a5, a6, a7, a8);
 	puts("<- GameObjectList_Mima::createObject()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return obj;
 }
 
@@ -62,6 +74,10 @@ Mima::Mima(SokuLib::PlayerInfo &info) :
 
 void Mima::update()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(update_patches));
@@ -70,10 +86,16 @@ void Mima::update()
 	puts("-> Mima::update()");
 	SokuLib::v2::PlayerIku::update();
 	puts("<- Mima::update()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Mima::initializeAction()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(initializeAction_patches));
@@ -82,10 +104,16 @@ void Mima::initializeAction()
 	puts("-> Mima::initializeAction()");
 	SokuLib::v2::PlayerIku::initializeAction();
 	puts("<- Mima::initializeAction()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Mima::initialize()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(initialize_patches));
@@ -94,10 +122,16 @@ void Mima::initialize()
 	puts("-> Mima::initialize()");
 	SokuLib::v2::PlayerIku::initialize();
 	puts("<- Mima::initialize()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Mima::handleInputs()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(handleInputs_patches));
@@ -106,10 +140,16 @@ void Mima::handleInputs()
 	puts("-> Mima::handleInputs()");
 	SokuLib::v2::PlayerIku::handleInputs();
 	puts("<- Mima::handleInputs()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Mima::VUnknown58()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown58_patches));
@@ -118,10 +158,16 @@ void Mima::VUnknown58()
 	puts("-> Mima::VUnknown58()");
 	SokuLib::v2::PlayerIku::VUnknown58();
 	puts("<- Mima::VUnknown58()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Mima::VUnknown5C()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown5C_patches));
@@ -130,10 +176,16 @@ void Mima::VUnknown5C()
 	puts("-> Mima::VUnknown5C()");
 	SokuLib::v2::PlayerIku::VUnknown5C();
 	puts("<- Mima::VUnknown5C()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 bool Mima::VUnknown60(int a)
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown60_patches));
@@ -142,5 +194,7 @@ bool Mima::VUnknown60(int a)
 	puts("-> Mima::VUnknown60()");
 	auto b = SokuLib::v2::PlayerIku::VUnknown60(a);
 	puts("<- Mima::VUnknown60()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;
 }

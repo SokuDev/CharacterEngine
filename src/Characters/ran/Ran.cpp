@@ -17,6 +17,10 @@ GameObjectList_Ran::GameObjectList_Ran(SokuLib::v2::Player *player) :
 
 void GameObjectList_Ran::update()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(objectUpdate_patches) + std::size(objectInitializeAction_patches));
@@ -27,10 +31,16 @@ void GameObjectList_Ran::update()
 	puts("-> GameObjectList_Ran::update()");
 	SokuLib::v2::GameObjectList_Sakuya::update();
 	puts("<- GameObjectList_Ran::update()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 SokuLib::v2::GameObject *GameObjectList_Ran::createObject(SokuLib::v2::GameObject *a0, SokuLib::v2::Player *a1, short a2, float a3, float a4, char a5, char a6, void* a7, unsigned int a8)
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(objectInitializeAction_patches));
@@ -39,6 +49,8 @@ SokuLib::v2::GameObject *GameObjectList_Ran::createObject(SokuLib::v2::GameObjec
 	puts("-> GameObjectList_Ran::createObject()");
 	auto obj = SokuLib::v2::GameObjectList_Sakuya::createObject(a0, a1, a2, a3, a4, a5, a6, a7, a8);
 	puts("<- GameObjectList_Ran::createObject()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return obj;
 }
 
@@ -62,6 +74,10 @@ Ran::Ran(SokuLib::PlayerInfo &info) :
 
 void Ran::update()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(update_patches));
@@ -70,10 +86,16 @@ void Ran::update()
 	puts("-> Ran::update()");
 	SokuLib::v2::PlayerSakuya::update();
 	puts("<- Ran::update()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Ran::initializeAction()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(initializeAction_patches));
@@ -82,10 +104,16 @@ void Ran::initializeAction()
 	puts("-> Ran::initializeAction()");
 	SokuLib::v2::PlayerSakuya::initializeAction();
 	puts("<- Ran::initializeAction()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Ran::initialize()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(initialize_patches));
@@ -94,10 +122,16 @@ void Ran::initialize()
 	puts("-> Ran::initialize()");
 	SokuLib::v2::PlayerSakuya::initialize();
 	puts("<- Ran::initialize()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Ran::handleInputs()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(handleInputs_patches));
@@ -106,10 +140,16 @@ void Ran::handleInputs()
 	puts("-> Ran::handleInputs()");
 	SokuLib::v2::PlayerSakuya::handleInputs();
 	puts("<- Ran::handleInputs()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Ran::VUnknown58()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown58_patches));
@@ -118,10 +158,16 @@ void Ran::VUnknown58()
 	puts("-> Ran::VUnknown58()");
 	SokuLib::v2::PlayerSakuya::VUnknown58();
 	puts("<- Ran::VUnknown58()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Ran::VUnknown5C()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown5C_patches));
@@ -130,10 +176,16 @@ void Ran::VUnknown5C()
 	puts("-> Ran::VUnknown5C()");
 	SokuLib::v2::PlayerSakuya::VUnknown5C();
 	puts("<- Ran::VUnknown5C()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 bool Ran::VUnknown60(int a)
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown60_patches));
@@ -142,5 +194,7 @@ bool Ran::VUnknown60(int a)
 	puts("-> Ran::VUnknown60()");
 	auto b = SokuLib::v2::PlayerSakuya::VUnknown60(a);
 	puts("<- Ran::VUnknown60()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;
 }

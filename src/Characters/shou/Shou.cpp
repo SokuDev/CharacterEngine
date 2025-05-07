@@ -17,6 +17,10 @@ GameObjectList_Shou::GameObjectList_Shou(SokuLib::v2::Player *player) :
 
 void GameObjectList_Shou::update()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(objectUpdate_patches) + std::size(objectInitializeAction_patches));
@@ -27,10 +31,16 @@ void GameObjectList_Shou::update()
 	puts("-> GameObjectList_Shou::update()");
 	SokuLib::v2::GameObjectList_Tenshi::update();
 	puts("<- GameObjectList_Shou::update()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 SokuLib::v2::GameObject *GameObjectList_Shou::createObject(SokuLib::v2::GameObject *a0, SokuLib::v2::Player *a1, short a2, float a3, float a4, char a5, char a6, void* a7, unsigned int a8)
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(objectInitializeAction_patches));
@@ -39,6 +49,8 @@ SokuLib::v2::GameObject *GameObjectList_Shou::createObject(SokuLib::v2::GameObje
 	puts("-> GameObjectList_Shou::createObject()");
 	auto obj = SokuLib::v2::GameObjectList_Tenshi::createObject(a0, a1, a2, a3, a4, a5, a6, a7, a8);
 	puts("<- GameObjectList_Shou::createObject()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return obj;
 }
 
@@ -62,6 +74,10 @@ Shou::Shou(SokuLib::PlayerInfo &info) :
 
 void Shou::update()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(update_patches));
@@ -70,10 +86,16 @@ void Shou::update()
 	puts("-> Shou::update()");
 	SokuLib::v2::PlayerTenshi::update();
 	puts("<- Shou::update()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Shou::initializeAction()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(initializeAction_patches));
@@ -82,10 +104,16 @@ void Shou::initializeAction()
 	puts("-> Shou::initializeAction()");
 	SokuLib::v2::PlayerTenshi::initializeAction();
 	puts("<- Shou::initializeAction()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Shou::initialize()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(initialize_patches));
@@ -94,10 +122,16 @@ void Shou::initialize()
 	puts("-> Shou::initialize()");
 	SokuLib::v2::PlayerTenshi::initialize();
 	puts("<- Shou::initialize()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Shou::handleInputs()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(handleInputs_patches));
@@ -106,10 +140,16 @@ void Shou::handleInputs()
 	puts("-> Shou::handleInputs()");
 	SokuLib::v2::PlayerTenshi::handleInputs();
 	puts("<- Shou::handleInputs()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Shou::VUnknown58()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown58_patches));
@@ -118,10 +158,16 @@ void Shou::VUnknown58()
 	puts("-> Shou::VUnknown58()");
 	SokuLib::v2::PlayerTenshi::VUnknown58();
 	puts("<- Shou::VUnknown58()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 void Shou::VUnknown5C()
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown5C_patches));
@@ -130,10 +176,16 @@ void Shou::VUnknown5C()
 	puts("-> Shou::VUnknown5C()");
 	SokuLib::v2::PlayerTenshi::VUnknown5C();
 	puts("<- Shou::VUnknown5C()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
 bool Shou::VUnknown60(int a)
 {
+	DWORD old;
+
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
 	appliedPatches.reserve(std::size(VUnknown60_patches));
@@ -142,5 +194,7 @@ bool Shou::VUnknown60(int a)
 	puts("-> Shou::VUnknown60()");
 	auto b = SokuLib::v2::PlayerTenshi::VUnknown60(a);
 	puts("<- Shou::VUnknown60()");
+	appliedPatches.clear();
+	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;
 }

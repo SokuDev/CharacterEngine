@@ -38,22 +38,16 @@ AppliedPatch::AppliedPatch(const Patch *patch) :
 	_patch(patch),
 	_oldData(applyMemory.alloc(patch->patchSize))
 {
-	DWORD old;
-
 	memcpy(this->_oldData, patch->location, patch->patchSize);
-	VirtualProtect(patch->location, patch->patchSize, PAGE_EXECUTE_WRITECOPY, &old);
 	memset(patch->location, 0x90, patch->patchSize);
 	SokuLib::TamperNearJmp((DWORD)patch->location, patch->trampoline);
-	VirtualProtect(patch->location, patch->patchSize, old, &old);
 }
 
 AppliedPatch::~AppliedPatch()
 {
 	DWORD old;
 
-	VirtualProtect(this->_patch->location, this->_patch->patchSize, PAGE_EXECUTE_WRITECOPY, &old);
 	memcpy(this->_patch->location, this->_oldData, this->_patch->patchSize);
-	VirtualProtect(this->_patch->location, this->_patch->patchSize, old, &old);
 	applyMemory.dealloc(this->_oldData);
 }
 

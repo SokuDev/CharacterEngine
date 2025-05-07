@@ -1710,13 +1710,64 @@ void Mamizou::update()
 
 	case ACTION_a2_22b:
 		this->applyGroundMechanics();
+	case ACTION_ja2_22b:
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
-		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 10) {
-			this->_transformStacks--;
-			this->setAction(SokuLib::ACTION_IDLE);
-			this->_transform();
-			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+		if (this->frameState.sequenceId == 1) {
+			if (this->frameState.currentFrame < 30) {
+				if (this->frameState.currentFrame % 10 == 0) {
+					this->playSFX(0);
+					for (int i = 0; i < 4; i++) {
+						float params[5];
+						float x = this->position.x + SokuLib::rand(150) - 75;
+						float y = this->position.y + SokuLib::rand(200);
+
+						params[0] = std::atan2(this->position.y + 100 - y, this->position.x - x) + M_PI;
+						params[1] = SokuLib::rand(200) / 100.f + 0.5;
+						params[2] = SokuLib::rand(4);
+						params[3] = SokuLib::rand(10) + 10;
+						params[4] = SokuLib::rand(40) - 20;
+						this->createObject(802, x, y, SokuLib::rand(100) < 50 ? -1 : 1, 1, params);
+					}
+				}
+			} else if (this->frameState.currentFrame < 60) {
+				if (this->frameState.currentFrame % 6 == 0) {
+					this->playSFX(0);
+					for (int i = 0; i < 6; i++) {
+						float params[5];
+						float x = this->position.x + SokuLib::rand(150) - 75;
+						float y = this->position.y + SokuLib::rand(200);
+
+						params[0] = std::atan2(this->position.y + 100 - y, this->position.x - x) + M_PI;
+						params[1] = SokuLib::rand(200) / 100.f + 0.5;
+						params[2] = SokuLib::rand(4);
+						params[3] = SokuLib::rand(10) + 10;
+						params[4] = SokuLib::rand(40) - 20;
+						this->createObject(802, x, y, SokuLib::rand(100) < 50 ? -1 : 1, 1, params);
+					}
+				}
+			} else if (this->frameState.currentFrame < 75) {
+				if (this->frameState.currentFrame % 3 == 0) {
+					this->playSFX(0);
+					for (int i = 0; i < 8; i++) {
+						float params[5];
+						float x = this->position.x + SokuLib::rand(150) - 75;
+						float y = this->position.y + SokuLib::rand(200);
+
+						params[0] = std::atan2(this->position.y + 100 - y, this->position.x - x) + M_PI;
+						params[1] = SokuLib::rand(200) / 100.f + 0.5;
+						params[2] = SokuLib::rand(4);
+						params[3] = SokuLib::rand(10) + 10;
+						params[4] = SokuLib::rand(40) - 20;
+						this->createObject(802, x, y, SokuLib::rand(100) < 50 ? -1 : 1, 1, params);
+					}
+				}
+			} else if (this->frameState.currentFrame == 75) {
+				this->_transformStacks--;
+				this->setAction(SokuLib::ACTION_IDLE);
+				this->_transform();
+				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+			}
 		}
 		break;
 	case ACTION_a2_22c:
@@ -1731,23 +1782,16 @@ void Mamizou::update()
 				this->collisionType = COLLISION_TYPE_HIT;
 				break;
 			}
-			this->_transformStackCharge++;
+			this->_transformStackCharge += this->effectiveSkillLevel[9] / 4 + 1;
+			if (this->frameState.currentFrame % 4 < this->effectiveSkillLevel[9] % 4)
+				this->_transformStackCharge++;
 			if (this->_transformStacks >= MAX_STACKS)
 				this->_transformStackCharge = 0;
 			if (this->_transformStackCharge >= METER_PER_STACK) {
+				SokuLib::playSEWaveBuffer(SokuLib::SFX_CARD_DRAWN);
 				this->_transformStacks++;
 				this->_transformStackCharge -= METER_PER_STACK;
 			}
-		}
-		break;
-	case ACTION_ja2_22b:
-		if (this->advanceFrame())
-			this->setAction(SokuLib::ACTION_IDLE);
-		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 10) {
-			this->_transformStacks--;
-			this->setAction(SokuLib::ACTION_IDLE);
-			this->_transform();
-			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 		}
 		break;
 
@@ -1828,19 +1872,33 @@ void Mamizou::update()
 bool Mamizou::setAction(short action)
 {
 	printf("Mamizou::setAction(%i)\n", action);
-	if (this->_transformed && action >= 50 && action < 180) {
-		this->_transformPlayer->setAction(action);
+	if (this->_transformed && action >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN && action < SokuLib::ACTION_FORWARD_AIRTECH) {
 		// TODO: For blocking, though something is still wrong here.
 		//       We get pushed normally on block, but for some reason,
 		//       the opponent doesn't when we are in the corner.
 		//       Normally, the opponent takes the push back we would have
 		//       took if we are in the corner, but that doesn't happen here.
-		if (action >= 150) {
-			bool b = SokuLib::v2::Player::setAction(action);
+		if (
+			action >= SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN || (
+				this->_transformKind == KIND_STACK && (this->_transformStacks || (
+					this->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN &&
+					this->frameState.actionId < SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN
+				))
+			)
+		) {
+			if (action < SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN && (
+				this->frameState.actionId < SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN ||
+				this->frameState.actionId >= SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN
+			) && this->_transformKind == KIND_STACK)
+				this->_transformStacks--;
+			this->_transformPlayer->unknown1A4 = this->unknown1A4;
+			this->_transformPlayer->unknown1A8 = this->unknown1A8;
 
-			this->_transformPlayer->speed = this->speed;
-			return b;
+			bool b = this->_transformPlayer->setAction(action);
+
+			return SokuLib::v2::Player::setAction(action) && b;
 		}
+		this->_transformPlayer->setAction(action);
 		this->_unTransform();
 	}
 	if (this->_transformed && this->_forward) {
@@ -2698,6 +2756,20 @@ void Mamizou::handleInputs()
 			this->setAction(this->isOnGround() ? SokuLib::ACTION_IDLE : SokuLib::ACTION_FALLING);
 			return;
 		}
+		if (
+			this->_transformKind == KIND_STACK &&
+			this->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN &&
+			this->frameState.actionId < SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN &&
+			this->inputData.commandCombination._22d
+		) {
+			this->_unTransform();
+			this->setSequence(this->_transformPlayer->frameState.sequenceId);
+			for (unsigned i = 0; i < this->_transformPlayer->frameState.currentFrame; i++)
+				this->advanceFrame();
+			this->renderInfos = this->_transformPlayer->renderInfos;
+			this->center = this->spinRotationCenter.to<float>();
+			return;
+		}
 	}
 	if (this->_transformed) {
 		unsigned oldAction = this->_transformPlayer->frameState.actionId;
@@ -2932,8 +3004,10 @@ void Mamizou::_onSkillUpgrade(int id, int oldLevel)
 			this->_transformStacks = 0;
 		this->_transformKind = KIND_STACK;
 		this->_transformStacks += STACK_PER_LEVEL;
-		if (this->_transformStacks > MAX_STACKS)
+		if (this->_transformStacks >= MAX_STACKS) {
 			this->_transformStacks = MAX_STACKS;
+			this->_transformStackCharge = 0;
+		}
 	}
 }
 
