@@ -1439,6 +1439,13 @@ void Mamizou::update()
 		if (this->frameState.sequenceId == 3)
 			this->speed.y -= this->gravity.y;
 		break;
+	case SokuLib::ACTION_66C:
+		// Normally not possible, so let's just go back to idle
+		if (this->isGrounded())
+			this->setAction(SokuLib::ACTION_IDLE);
+		else
+			this->setAction(SokuLib::ACTION_FALLING);
+		break;
 
 	case ACTION_d623b:
 		this->skillIndex = 0;
