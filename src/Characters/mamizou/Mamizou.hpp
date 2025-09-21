@@ -7,6 +7,7 @@
 
 
 #include <SokuLib.hpp>
+#include <set>
 #include "Memory.hpp"
 
 class Mamizou : public SokuLib::v2::Player {
@@ -37,9 +38,12 @@ private:
 	bool _transformed = false;
 	bool _init = false;
 	bool _forward = true;
+	bool _neverTransformed = true;
+	bool _stayTransformed = true;
 	TransformKind _transformKind = KIND_TIMER;
 	SokuLib::v2::CharacterFrameData *_savedFrameData;
 	SokuLib::v2::CharacterSequenceData *_savedSequenceData;
+	std::set<std::pair<unsigned short, unsigned short>> _restingActions;
 
 	static constexpr float BACKDASH_DECEL = 2;
 	static constexpr float BACKDASH_IMPULSE = -10.0;
@@ -113,6 +117,8 @@ private:
 
 	void _preTransformCall();
 	void _postTransformCall();
+	void _preUntransformCall();
+	void _postUntransformCall();
 	void _transform(bool spawnEffects = true);
 	void _unTransform();
 
