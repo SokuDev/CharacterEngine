@@ -16,7 +16,7 @@ void UnexpectedAssistance::Suwako::update()
 		return;
 	switch (this->frameState.sequenceId) {
 	case 0:
-		if (this->collisionType == COLLISION_TYPE_5) {
+		if (this->collisionType == COLLISION_TYPE_BULLET_ABSORBED) {
 			this->lifetime = 0;
 			return;
 		}
