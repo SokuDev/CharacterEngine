@@ -130,6 +130,7 @@ void HotPot::update()
 					this->parentPlayerB->speed.x = 0;
 					this->parentPlayerB->speed.y = 0;
 					this->parentPlayerB->gravity.y = 0;
+					this->parentPlayerB->gpShort[0] = 200;
 					this->parentPlayerB->setActionSequence(SokuLib::ACTION_USING_SC_ID_200, 4);
 					this->parentPlayerB->renderInfos.color.a = 0;
 					this->parentPlayerB->gpShort[0] = 0;

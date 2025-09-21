@@ -2917,6 +2917,8 @@ void Mamizou::onRenderEnd()
 
 void Mamizou::setActionSequence(short action, short sequence)
 {
+	if (this->gpShort[0] == 200 && this->_transformed)
+		this->_unTransform();
 	if (this->_transformed)
 		this->_transformPlayer->setActionSequence(action, sequence);
 	else
