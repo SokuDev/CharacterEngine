@@ -33,8 +33,14 @@ public:
 	{
 		SokuLib::v2::GameObject *obj = Factory::construct(this->_player, action);
 
-		this->_objects.emplace_back(obj);
+		this->_mutex.lock();
+		if (!this->_unusedIndexes.empty()) {
+			this->_objects[this->_unusedIndexes.front()].reset(obj);
+			this->_unusedIndexes.pop_front();
+		} else
+			this->_objects.emplace_back(obj);
 		this->_list.push_back(obj);
+		this->_mutex.unlock();
 		obj->parentPlayer = this->_player;
 		obj->parentPlayerB = this->_player;
 		obj->gameData.owner = this->_player;
@@ -58,37 +64,63 @@ public:
 
 	void clear() override
 	{
+		this->_mutex.lock();
 		this->_list.clear();
 		this->_objects.clear();
+		this->_mutex.unlock();
 	}
 
 	void updatePhysics() override
 	{
-		for (auto &o : this->_objects)
+		for (auto &o : this->_list)
 			o->updatePhysics();
 	}
 
 	void update() override
 	{
-		if (this->_player->gameData.opponent->timeStop == 0)
-			for (const auto &object : this->_objects) {
-				if (object->hitStop)
-					object->hitStop--;
-				else
-					object->update();
-			}
+		for (const auto &object : this->_list) {
+			if (object->hitStop)
+				object->hitStop--;
+			else
+				object->update();
+		}
 
-		this->_list.erase(std::remove_if(this->_list.begin(), this->_list.end(), [](SokuLib::v2::GameObject *a){
-			return a->lifetime == 0;
-		}), this->_list.end());
-		this->_objects.erase(std::remove_if(this->_objects.begin(), this->_objects.end(), [](std::unique_ptr<SokuLib::v2::GameObject> &a){
-			return a->lifetime == 0;
-		}), this->_objects.end());
+		//this->_list.erase(std::remove_if(this->_list.begin(), this->_list.end(), [](SokuLib::v2::GameObject *a){
+		//	return a->lifetime == 0;
+		//}), this->_list.end());
+		// FIXME: Crashes for some reason now!? Seems to corrupt the vector in some way. The manual way under seems to work.
+		//this->_objects.erase(std::remove_if(this->_objects.begin(), this->_objects.end(), [](std::unique_ptr<SokuLib::v2::GameObject> &a){
+		//	return a->lifetime == 0;
+		//}), this->_objects.end());
+		size_t i = 0;
+		size_t j = 0;
+		auto liter = this->_list.begin();
+
+		while (i < this->_objects.size()) {
+			if (this->_objects[i]->lifetime == 0) {
+				this->_list.erase(liter);
+				goto nextIter;
+			}
+			if (i == j)
+				goto validObject;
+			this->_objects[j].swap(this->_objects[i]);
+		validObject:
+			j++;
+		nextIter:
+			i++;
+			liter++;
+		}
+
+		auto endPtr = this->_objects.m_first + j;
+
+		while (j < this->_objects.size())
+			this->_objects[j++].reset();
+		this->_objects.m_last = endPtr;
 	}
 
 	void render1(char layer) override
 	{
-		for (auto &o : this->_objects) {
+		for (auto o : this->_list) {
 			if (o->layer != layer)
 				continue;
 			if (o->unknown154 != nullptr)
@@ -103,19 +135,19 @@ public:
 
 	void render2() override
 	{
-		for (auto &o : this->_objects)
+		for (auto o : this->_list)
 			o->render2();
 	}
 
 	void updateCamera() override
 	{
-		for (auto &o : this->_objects)
-			((void (*)(void *))0x46A780)(&*o);
+		for (auto o : this->_list)
+			((void (*)(void *))0x46A780)(o);
 	}
 
 	void replaceOpponent(SokuLib::v2::Player *a0, SokuLib::v2::Player *a1) override
 	{
-		for (auto &o : this->_objects)
+		for (auto o : this->_list)
 			if (o->gameData.opponent == a0)
 				o->gameData.opponent = a1;
 	}
