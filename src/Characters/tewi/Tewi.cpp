@@ -2373,7 +2373,7 @@ void Tewi::update()
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
 		if (this->frameState.sequenceId == 0 && this->frameState.currentFrame == 20) {
-			SokuLib::Vector2f pos{this->gameData.opponent->position.x - (100 + 200 * (this->frameState.actionId % 2)) * this->direction, this->gameData.opponent->getGroundHeight()};
+			SokuLib::Vector2f pos{this->gameData.opponent->position.x - (100 + 100 * (this->frameState.actionId % 2)) * this->direction, this->gameData.opponent->getGroundHeight()};
 
 			this->createObject(857, pos.x, pos.y, this->direction, 1)->skillIndex = 9;
 			for (int i = 0; i < 4; i++) {
@@ -2434,6 +2434,37 @@ void Tewi::update()
 		if (this->frameState.sequenceId == 2 && this->frameState.currentFrame == 30)
 			this->nextSequence();
 		break;
+
+	case ACTION_ja2_236B:
+	case ACTION_ja2_236C: {
+		if (this->applyAirMechanics())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_FALLING);
+		if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0) {
+			SokuLib::Vector2f pos{
+				this->gameData.opponent->position.x - (100 + 100 * (this->frameState.actionId % 2)) * this->direction,
+				this->gameData.opponent->getGroundHeight()
+			};
+
+			this->collisionType = COLLISION_TYPE_HIT;
+			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+
+			this->createObject(857, pos.x, pos.y, this->direction, 1)->skillIndex = 9;
+			for (int i = 0; i < 4; i++) {
+				float params[] = {
+					SokuLib::rand(1000) / 100.f * -this->direction,
+					SokuLib::rand(200) / 100.f + 4,
+					SokuLib::rand(300) / 100 + 2.f
+				};
+
+				if (params[2] > 4)
+					params[2] = 4;
+				this->createObject(855, pos.x, pos.y, this->direction, 1, params);
+			}
+		}
+		break;
+	}
 
 	case ACTION_a2_214B:
 	case ACTION_a2_214C:
@@ -3692,6 +3723,8 @@ void Tewi::initializeAction()
 		if (this->groundDashCount == 0)
 			this->speed.x = 0.0;
 		break;
+	case ACTION_ja2_236B:
+	case ACTION_ja2_236C:
 	case ACTION_ja1_236B:
 	case ACTION_ja1_236C:
 	case ACTION_ja1_236B_HAMMER:
@@ -4044,9 +4077,13 @@ bool Tewi::_processSkillsAirborne()
 			return true;
 		if (this->_useSkill(this->inputData.commandCombination._236c, 1, ACTION_jd236C))
 			return true;
-		if (this->effectiveSkillLevel[5] >= 2 && this->_useSkill(this->inputData.commandCombination._236b, 5, ACTION_ja1_236B))
+		if (this->_useSkill(this->inputData.commandCombination._236b, 5, ACTION_ja1_236B))
 			return true;
-		if (this->effectiveSkillLevel[5] >= 2 && this->_useSkill(this->inputData.commandCombination._236c, 5, ACTION_ja1_236C))
+		if (this->_useSkill(this->inputData.commandCombination._236c, 5, ACTION_ja1_236C))
+			return true;
+		if (this->_useSkill(this->inputData.commandCombination._236b, 9, ACTION_ja2_236B))
+			return true;
+		if (this->_useSkill(this->inputData.commandCombination._236c, 9, ACTION_ja2_236C))
 			return true;
 
 		if (this->_rabbitsStored && this->_useSkill(this->inputData.commandCombination._214c, 6, ACTION_ja1_214C))
@@ -4070,9 +4107,9 @@ bool Tewi::_processSkillsAirborne()
 			return true;
 		if (this->_useSkill(this->inputData.commandCombination._236c, 1, ACTION_jd236C_HAMMER))
 			return true;
-		if (this->effectiveSkillLevel[5] >= 2 && this->_useSkill(this->inputData.commandCombination._236b, 5, ACTION_ja1_236B_HAMMER))
+		if (this->_useSkill(this->inputData.commandCombination._236b, 5, ACTION_ja1_236B_HAMMER))
 			return true;
-		if (this->effectiveSkillLevel[5] >= 2 && this->_useSkill(this->inputData.commandCombination._236c, 5, ACTION_ja1_236C_HAMMER))
+		if (this->_useSkill(this->inputData.commandCombination._236c, 5, ACTION_ja1_236C_HAMMER))
 			return true;
 
 		if (this->_rabbitsStored && this->_useSkill(this->inputData.commandCombination._214c, 6, ACTION_ja1_214C_HAMMER))
@@ -4573,11 +4610,14 @@ bool Tewi::_canUseCard(int id)
 		if (this->effectiveSkillLevel[5] != 0 || SokuLib::activeWeather == SokuLib::WEATHER_SPRINKLE)
 			return true;
 		return this->isGrounded();
+	case 109:
+		if (this->_hammer)
+			return true;
+		return this->isGrounded();
 	case 102:
 	case 104:
 	case 106:
 	case 108:
-	case 109:
 	case 110:
 	case 200:
 	case 202:

@@ -244,6 +244,8 @@ public:
 		ACTION_a2_623C_HAMMER =                  569,
 		ACTION_a2_236B =                         572,
 		ACTION_a2_236C =                         573,
+		ACTION_ja2_236B =                        574,
+		ACTION_ja2_236C =                        575,
 		ACTION_a2_236B_HAMMER =                  576,
 		ACTION_a2_236C_HAMMER =                  577,
 		ACTION_a2_214B =                         580,
