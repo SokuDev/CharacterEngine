@@ -1234,10 +1234,12 @@ void Tewi::update()
 			this->applyGroundMechanics();
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.sequenceId == 0)
+			this->speed.x *= 0.85;
 		if (this->frameState.sequenceId == 1 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0) {
-			this->speed.x = 15;
-			this->speed.y = 6;
-			this->gravity.y = 0.75;
+			this->speed.x = 18;
+			this->speed.y = 10;
+			this->gravity.y = 1;
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
 		}
 		break;
