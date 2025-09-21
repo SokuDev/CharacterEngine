@@ -182,6 +182,9 @@ void SpellTrapHole::update()
 				SokuLib::camera.shake = min(this->rabbitShootTimer / 6, 5);
 		} else
 			this->collisionLimit = 0;
+	} else if (this->collisionType == COLLISION_TYPE_HIT_ENTITY) {
+		this->collisionLimit++;
+		this->collisionType = COLLISION_TYPE_NONE;
 	} else if (this->collisionType || (this->collisionLimit && this->checkTurnIntoCrystals(false, 10, 50, 0, -50)))
 		this->collisionLimit = 0;
 	this->advanceFrame();
