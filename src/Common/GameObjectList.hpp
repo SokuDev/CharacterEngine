@@ -71,11 +71,11 @@ public:
 	void update() override
 	{
 		if (this->_player->gameData.opponent->timeStop == 0)
-			for (size_t i = 0; i < this->_objects.size(); i++) {
-				if (this->_objects[i]->hitStop)
-					this->_objects[i]->hitStop--;
+			for (const auto &object : this->_objects) {
+				if (object->hitStop)
+					object->hitStop--;
 				else
-					this->_objects[i]->update();
+					object->update();
 			}
 
 		this->_list.erase(std::remove_if(this->_list.begin(), this->_list.end(), [](SokuLib::v2::GameObject *a){
