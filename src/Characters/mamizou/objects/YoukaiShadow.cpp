@@ -8,6 +8,8 @@
 
 void YoukaiShadow::update()
 {
+	if (this->parentPlayerB->timeStop)
+		return;
 	if (
 		this->parentPlayerB->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN &&
 		this->parentPlayerB->frameState.actionId < SokuLib::ACTION_FORWARD_DASH

@@ -11,6 +11,8 @@ void Smoke::update()
 	this->position.y += std::sin(this->customData[0]) * this->customData[1];
 	this->customData[1] -= 0.01;
 	this->renderInfos.zRotation += this->customData[4];
+	this->renderInfos.scale.x += this->customData[7];
+	this->renderInfos.scale.y += this->customData[8];
 	if (this->renderInfos.color.a <= this->customData[3]) {
 		this->renderInfos.color.a = 0;
 		this->lifetime = 0;
@@ -20,6 +22,8 @@ void Smoke::update()
 
 void Smoke::initializeAction()
 {
+	this->renderInfos.scale.x = this->customData[5];
+	this->renderInfos.scale.y = this->customData[6];
 	this->renderInfos.zRotation = SokuLib::rand(360);
 	this->setSequence(this->customData[2]);
 }

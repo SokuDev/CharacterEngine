@@ -136,6 +136,8 @@ void HotPot::update()
 					this->parentPlayerB->gpShort[0] = 0;
 				}
 			} else {
+				this->parentPlayerB->speed.x = 0;
+				this->parentPlayerB->speed.y = 0;
 				this->parentPlayerB->hp += 4;
 				if (this->parentPlayerB->hp > this->parentPlayerB->maxHP)
 					this->parentPlayerB->hp = this->parentPlayerB->maxHP;

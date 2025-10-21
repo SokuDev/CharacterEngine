@@ -8,6 +8,8 @@
 
 void YoukaiShadow2::update()
 {
+	if (this->parentPlayerB->timeStop)
+		return;
 	if (this->parentPlayerB->frameState.actionId != this->customData[0])
 		this->lifetime = 0;
 	if (this->parentPlayerB->timeStop || this->parentPlayerB->hitStop)

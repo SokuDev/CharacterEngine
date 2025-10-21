@@ -8,6 +8,8 @@
 
 #include <SokuLib.hpp>
 #include <set>
+#include <map>
+#include <deque>
 #include "Memory.hpp"
 
 class Mamizou : public SokuLib::v2::Player {
@@ -18,22 +20,43 @@ private:
 	static constexpr unsigned TIMER_COOLDOWN_MAX = 900;
 	static constexpr unsigned TIMER_MAX = 450;
 	static constexpr unsigned TIMER_DELAY = 150;
+	static constexpr unsigned SPELL_TIMER_MAX = 900;
+	static constexpr unsigned DEBUFF_TIMER_MAX = 600;
 
+	friend class TimerDebuffGui;
+	friend class TimerSpellGui;
 	friend class TimerGui;
 	friend class StackGui;
+	friend class CardSelect;
 
 	enum TransformKind : char {
 		KIND_TIMER,
 		KIND_SINGLE_HIT,
 		KIND_STACK,
-		KIND_FULL_MOVE
+		KIND_FULL_MOVE,
+		KIND_SPELL_TIMER,
+		KIND_DEBUFF_TIMER
+	};
+
+	struct SpellCard {
+		unsigned id;
+		int tex;
+		int cost;
 	};
 
 	Player *_transformPlayer = nullptr;
+	std::vector<std::pair<unsigned, std::array<int, 3>>> _opponentSkillCards;
+	std::vector<unsigned char> _selectedCards;
+	std::vector<SpellCard> _allOpponentSpellCards;
+	std::vector<std::pair<unsigned, int>> _opponentSpellCards;
 	unsigned _transformTimerDelay = TIMER_DELAY;
 	unsigned _transformTimer = TIMER_MAX;
 	unsigned _transformStacks = 0;
 	unsigned _transformStackCharge = 0;
+	unsigned char _spellCost = 0;
+	unsigned char _currentCard = 0;
+	unsigned char _currentSelection = 0;
+	unsigned char _currentAnimal = 0;
 	bool _transformedCooldown = false;
 	bool _transformed = false;
 	bool _init = false;
@@ -43,6 +66,9 @@ private:
 	TransformKind _transformKind = KIND_TIMER;
 	SokuLib::v2::CharacterFrameData *_savedFrameData;
 	SokuLib::v2::CharacterSequenceData *_savedSequenceData;
+	SokuLib::Map<int, SokuLib::v2::CharacterSequenceData *> _originalMelees;
+	SokuLib::Map<int, SokuLib::v2::CharacterSequenceData *> _spellMelees;
+	std::deque<SokuLib::v2::CharacterSequenceData> _spellMeleesStorage;
 	std::set<std::pair<unsigned short, unsigned short>> _restingActions;
 
 	static constexpr float BACKDASH_DECEL = 2;
@@ -108,6 +134,7 @@ private:
 	virtual bool _canUseCard(int id);
 	bool _useSkillCard(int id);
 	bool _useSpellCard(int id);
+	bool _useTransformedCard(int id);
 
 	void _onSkillUpgrade(int id, int oldLevel);
 	bool _useSkill(bool input, unsigned char id, unsigned short action);
@@ -119,11 +146,21 @@ private:
 	void _postTransformCall();
 	void _preUntransformCall();
 	void _postUntransformCall();
-	void _transform(bool spawnEffects = true);
+	void _transform(bool spawnEffects = true, bool resetTransformee = true);
 	void _unTransform();
 
+	void _addRainbowGui();
+	void _addDebuffGui();
 	void _addTimerGui();
 	void _addStackGui();
+
+	void _fillHand();
+
+	void _setupOpponentDebuff();
+	void _cleanupOpponentDebuff();
+
+	void _updateOpponentDebuffed();
+	void _transformCard(SokuLib::Card &card);
 
 public:
 	enum Moves {

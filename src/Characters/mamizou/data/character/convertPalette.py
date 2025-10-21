@@ -1,6 +1,7 @@
 import sys
 import struct
 
+# convertPalette.py <mamizou_palette000.pal> <chr_palette000.pal> <chr_palette00-1.pal> <mamizou_paletteXXX.pal> <result.pal>
 defaultMamizouPal    = [i & 0x7FFF for i in struct.unpack("<c256H", open(sys.argv[1], "rb").read())[1:]]
 try:
 	defaultChrPal= [i & 0x7FFF for i in struct.unpack("<c256H", open(sys.argv[2], "rb").read())[1:]]

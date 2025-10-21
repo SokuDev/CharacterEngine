@@ -33,6 +33,10 @@ add_library(
 	objects/YoukaiShadow2.hpp
 	objects/FrogShadow.cpp
 	objects/FrogShadow.hpp
+	objects/Gui/TimerDebuffGui.cpp
+	objects/Gui/TimerDebuffGui.hpp
+	objects/Gui/TimerSpellGui.cpp
+	objects/Gui/TimerSpellGui.hpp
 	objects/Gui/TimerGui.cpp
 	objects/Gui/TimerGui.hpp
 	objects/Gui/StackGui.cpp
@@ -57,6 +61,10 @@ add_library(
 	objects/RegularSmoke.hpp
 	objects/HotPot.cpp
 	objects/HotPot.hpp
+	objects/Gui/CardSelect.cpp
+	objects/Gui/CardSelect.hpp
+	objects/DemonGate.cpp
+	objects/DemonGate.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)

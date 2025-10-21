@@ -22,6 +22,10 @@
 #include "objects/LanternYoukai.hpp"
 #include "objects/RegularSmoke.hpp"
 #include "objects/HotPot.hpp"
+#include "objects/Gui/TimerSpellGui.hpp"
+#include "objects/Gui/CardSelect.hpp"
+#include "objects/DemonGate.hpp"
+#include "objects/Gui/TimerDebuffGui.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -60,6 +64,14 @@ SokuLib::v2::GameObject *MamizouObjectFactory::construct(SokuLib::v2::Player *ow
 		return new LanternYoukai();
 	case 850:
 		return new HotPot();
+	case 852:
+		return new DemonGate();
+	case 993:
+		return new TimerDebuffGui();
+	case 994:
+		return new CardSelect();
+	case 995:
+		return new TimerSpellGui();
 	case 996:
 		return new TimerGui();
 	case 997:
