@@ -85,37 +85,12 @@ public:
 				object->update();
 		}
 
-		//this->_list.erase(std::remove_if(this->_list.begin(), this->_list.end(), [](SokuLib::v2::GameObject *a){
-		//	return a->lifetime == 0;
-		//}), this->_list.end());
-		// FIXME: Crashes for some reason now!? Seems to corrupt the vector in some way. The manual way under seems to work.
-		//this->_objects.erase(std::remove_if(this->_objects.begin(), this->_objects.end(), [](std::unique_ptr<SokuLib::v2::GameObject> &a){
-		//	return a->lifetime == 0;
-		//}), this->_objects.end());
-		size_t i = 0;
-		size_t j = 0;
-		auto liter = this->_list.begin();
-
-		while (i < this->_objects.size()) {
-			if (this->_objects[i]->lifetime == 0) {
-				this->_list.erase(liter);
-				goto nextIter;
-			}
-			if (i == j)
-				goto validObject;
-			this->_objects[j].swap(this->_objects[i]);
-		validObject:
-			j++;
-		nextIter:
-			i++;
-			liter++;
-		}
-
-		auto endPtr = this->_objects.m_first + j;
-
-		while (j < this->_objects.size())
-			this->_objects[j++].reset();
-		this->_objects.m_last = endPtr;
+		this->_list.erase(std::remove_if(this->_list.begin(), this->_list.end(), [](SokuLib::v2::GameObject *a){
+			return a->lifetime == 0;
+		}), this->_list.end());
+		this->_objects.erase(std::remove_if(this->_objects.begin(), this->_objects.end(), [](std::unique_ptr<SokuLib::v2::GameObject> &a){
+			return a->lifetime == 0;
+		}), this->_objects.end());
 	}
 
 	void render1(char layer) override
