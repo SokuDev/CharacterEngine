@@ -1,0 +1,245 @@
+## =======================================================================
+#Ÿ—˜‘äŒ
+## =======================================================================
+#VS—éå
+#‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X\
+## ‘äŒA==================
+#Label:ƒLƒƒƒ‰–¼+”š‚ÌŒ`‚Å“o˜^@˜A”Ô‚Å‘±‚¢‚Ä‚¢‚éŒÀ‚è‚ÌÅŒã‚Ü‚Å‚ª“o˜^‚³‚êAƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ‚³‚ê‚Ü‚·
+#‰ï˜b‘®‚ÍƒVƒiƒŠƒI‚ÅŒ¾‚¤ƒLƒƒƒ‰–¼‚ÌêŠ‚Éwin(Ÿ—˜ƒLƒƒƒ‰)lose(”s–kƒLƒƒƒ‰)‚Ì”­Œ¾‚É‚È‚è‚Ü‚·
+# Hi-lock: (("\\#.*$"            (0 '((t (:foreground "dark slate gray"))) t))) 
+# Hi-lock: (("^[ \t]*Label.*$"              (0 '((t (:foreground "royal blue"))) t))) 
+# Hi-lock: (("^[ \t]*Face.*$"              (0 '((t (:foreground "cornflower blue"))) t))) 
+# Hi-lock: (("^[ \t]*End.*$"            (0 '((t (:foreground "royal blue"))) t))) 
+# reimuR0  rare
+# reimuU0  usual
+# reimu0   •p”É
+
+Label:reimuU0
+Face:lose,•‰
+Face:win,Šğ
+You lost! Now you have to make a tea party
+at your shrine for me and my sister!.\
+End:
+
+
+Label:marisaU0
+Face:lose,•‰
+Face:win,Šğ
+The witch met the little vampire.\
+
+Face:win,Œˆ
+And then there were none.\
+End:
+
+
+Label:sakuyaU0
+Face:lose,•‰
+Face:win,“{
+No! I won't sleep early again!
+I have a new toy that I want to play with!\
+End:
+
+
+Label:aliceU0
+Face:lose,•‰
+Face:win,˜f
+Lots of magicians seem to get their way in here.
+Maybe they should make the security magic-proof?\
+End:
+
+
+Label:patchouliU0
+Face:lose,•‰
+Face:win,‹Á
+How can you move like that with asthma?\
+End:
+
+Label:patchouliU1
+Face:lose,•‰
+Face:win,“{
+Stop making it rain already!
+I promise I won't be out long.\
+End:
+
+
+Label:remiliaU0
+Face:lose,•‰
+Face:win,Šğ
+So big sister stay at home while I play with
+the shrine maiden and eat delicious sweets!\
+End:
+
+
+Label:suikaU0
+Face:lose,•‰
+Face:win,‹Á
+HonestlyA onis are so fun to play with.
+They all have such a nice personality!\
+End:
+
+
+Label:ayaU0
+Face:lose,•‰
+Face:win,•
+Maybe I should cook you as well to see how you taste.
+After all, fried crow can be as tasty as chickenA right?\
+End:
+
+Label:ayaU1
+Face:lose,•‰
+Face:win,“{
+Don't believe too much in the word of my sisterA
+she always acts like she knows it all.\
+End:
+
+
+Label:sanaeU0
+Face:lose,•‰
+Face:win,˜f
+Goddess? Faith? that's not the kind of
+things a vampire should worry about.\
+
+Face:win,Œˆ
+I can destroy all those things with the blink of an eye!\
+End:
+
+
+Label:meirinU0
+Face:lose,•‰
+Face:win,Š¾
+Don't worryA we won't reduce your salary just because you lost!\
+End:
+
+
+Label:utsuhoU0
+Face:lose,•‰
+Face:win,—]
+The power to create a Sun at command is no joke.
+FortunatelyA yours is easier to destroy!\
+End:
+
+
+Label:MomijiU0
+Face:lose,•‰
+Face:win,Šğ
+I've always wanted a pet dog! 
+Here! Bring the ball!\
+End:
+
+
+Label:clownpieceU0
+Face:lose,•‰
+Face:win,˜f
+You're quite strong! Are you really a fairy?\
+End:
+
+
+Label:flandreU0
+Face:lose,•‰
+Face:win,•
+One downA two to go! Though playing by myself
+is not that exciting at this point...\
+End:
+
+
+Label:orinU0
+Face:lose,•‰
+Face:win,Šğ
+HeyA can I bring some of your fairies home?
+I want to play with them!\
+End:
+
+
+Label:yuukaU0
+Face:lose,•‰
+Face:win,‹Á
+Such power! Now I know why the black white
+mimicked your attack.\
+End:
+
+
+Label:kaguyaU0
+Face:lose,•‰
+Face:win,Šğ
+Come on! I know you can't breakA
+so let's play a bit more!\
+End:
+
+
+Label:mokouU0
+Face:lose,•‰
+Face:win,Šğ
+You're like a toy that won't break!
+It's so much fun!\
+End:
+
+
+Label:mimaU0
+Face:lose,•‰
+Face:win,‹Á
+Your attacks are similar to the
+black and white one!\
+End:
+
+
+Label:shouU0
+Face:lose,•‰
+Face:win,Šğ
+Can I play to your shrine sometime?\
+End:
+
+
+Label:murasaU0
+Face:lose,•‰
+Face:win,Š¾
+That was scary! Please don't bring
+any more water inside the mansion!\
+End:
+
+Label:murasaU1
+Face:lose,•‰
+Face:win,•
+Sealed underground you say? Well, I don't have many
+reservations for staying in the basement myself.\
+End:
+
+
+Label:sekibankiU0
+Face:lose,•‰
+Face:win,“{
+WellAit's annoying that I can't suck blood
+because you don't have a neck.\
+End:
+
+
+Label:satoriU0
+Face:lose,•‰
+Face:win,—]
+Is your sister around? I want to play with her too!\
+End:
+
+
+Label:shinkiU0
+Face:lose,•‰
+Face:win,˜f
+I want to visit the demon realm!
+How do I get there?\
+End:
+
+
+Label:common0
+Face:win,Œˆ
+Come onA don't tell me it's already over!\
+End:
+
+Label:common1
+Face:win,Šğ
+That was fun! Let's play again another time!\
+End:
+
+Label:common2
+Face:win,•
+The mansion is quite lively these days.\
+End:
+
+´

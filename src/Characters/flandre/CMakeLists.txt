@@ -23,8 +23,8 @@ add_library(
 	entry_point.cpp
 	Flandre.hpp
 	Flandre.cpp
-	code_patches.cpp
-	code_patches.hpp
+	FlandreObjectFactory.cpp
+	FlandreObjectFactory.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)

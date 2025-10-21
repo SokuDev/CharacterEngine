@@ -1,4 +1,6 @@
-// Version 0.8
+//
+// Created by PinkySmile on 06/10/24.
+//
 
 #include "SokuLib.hpp"
 #include "Flandre.hpp"
@@ -19,7 +21,7 @@ extern "C" __declspec(dllexport) size_t getCharacterSize()
 extern "C" __declspec(dllexport) size_t getObjectSize()
 {
 	printf("Flandre::getObjectSize()\n");
-	return sizeof(SokuLib::v2::GameObjectRemilia);
+	return sizeof(BasicObject);
 }
 
 extern "C" __declspec(dllexport) int APIENTRY DllMain(HMODULE, DWORD fdwReason, LPVOID)
