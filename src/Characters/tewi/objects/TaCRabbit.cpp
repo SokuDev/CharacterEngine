@@ -66,6 +66,7 @@ void TaCRabbit::update()
 			hammer->collisionLimit = 1;
 			hammer->collisionType = COLLISION_TYPE_NONE;
 			hammer->customData[3] = 0;
+			hammer->hp = 10000;
 			hammer->layer = 1;
 		} else if (this->frameState.poseId >= 3) {
 			if (this->renderInfos.color.a <= 25)

@@ -359,7 +359,7 @@ void Tewi::update()
 		{60, 120}
 	};
 
-	if (SokuLib::checkKeyOneshot(DIK_F5, false, false, false) && SokuLib::mainMode == SokuLib::BATTLE_MODE_PRACTICE && SokuLib::subMode == SokuLib::BATTLE_SUBMODE_PLAYING1) {
+	if (this->teamId == 0 && SokuLib::checkKeyOneshot(DIK_F5, false, false, false) && SokuLib::mainMode == SokuLib::BATTLE_MODE_PRACTICE && SokuLib::subMode == SokuLib::BATTLE_SUBMODE_PLAYING1) {
 		SokuLib::playSEWaveBuffer(SokuLib::SFX_MENU_CONFIRM);
 		__practiceEffect = (__practiceEffect + 2) % (EFFECT_COUNT + 1) - 1;
 	}
