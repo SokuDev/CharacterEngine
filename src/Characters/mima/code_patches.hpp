@@ -124,9 +124,9 @@ public:
 static_assert(sizeof(AppliedPatch) == 8);
 static_assert(sizeof(Patch) == 12);
 
-typedef StackedAllocator<AppliedPatch, 5256> Allocator;
-typedef StackedAllocator<Patch, 1428> TrampolineAllocator;
-typedef StackedAllocator<Patch *, 1428> PatchListAllocator;
+typedef StackedAllocator<AppliedPatch, 28944> Allocator;
+typedef StackedAllocator<Patch, 20048> TrampolineAllocator;
+typedef StackedAllocator<Patch *, 20048> PatchListAllocator;
 extern Allocator applyAllocator;
 extern std::vector<Patch, TrampolineAllocator> compiledPatches;
 extern std::vector<Patch *, PatchListAllocator> objectUpdate_patches;
