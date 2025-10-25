@@ -3560,6 +3560,7 @@ void Mamizou::_cleanupOpponentDebuff()
 		this->gameData.opponent->setAction(SokuLib::ACTION_IDLE);
 	else
 		this->gameData.opponent->setAction(SokuLib::ACTION_FALLING);
+	this->gameData.opponent->renderInfos.zRotation = 0;
 	for (int i = 0; i < 50; i++) {
 		float params[9];
 		float x = this->gameData.opponent->position.x + SokuLib::rand(150) - 75;
@@ -4216,20 +4217,47 @@ void __fastcall FUN_0046a240(SokuLib::v2::Player *This)
 	memcpy(This->effectiveSkillLevel, transformPlayer->effectiveSkillLevel, sizeof(This->effectiveSkillLevel));
 }
 
-void __declspec(naked) checkIdleAnims()
+void __declspec(naked) checkIdleAnims_JGE()
 {
 	__asm {
 		CMP word ptr [EAX + 0x13C], 2000
-		JGE backToGame
+		JL normal
 
-		CMP word ptr [EAX + 0x13C], DX
-	backToGame:
+		CMP word ptr [EAX + 0x13C], DI
+		JGE normal
+
+		PUSH EAX
+		XOR EAX, EAX
+		CMP EAX, 1
+		POP EAX
+		RET
+
+	normal:
+		RET
+	}
+}
+
+void __declspec(naked) checkIdleAnims_JL()
+{
+	__asm {
+		CMP word ptr [EAX + 0x13C], 2000
+		JGE setLower
+
+		CMP word ptr [EAX + 0x13C], DI
+		RET
+
+	setLower:
+		PUSH EAX
+		MOV EAX, 0
+		CMP EAX, 1
+		POP EAX
 		RET
 	}
 }
 
 static unsigned char hook1_og[7];
 static unsigned char hook2_og[7];
+static unsigned char hook3_og[7];
 
 void Mamizou::hook()
 {
@@ -4241,12 +4269,17 @@ void Mamizou::hook()
 	og_FUN_0046a240 = SokuLib::TamperNearJmpOpr(0x46E07E, FUN_0046a240);
 
 	memcpy(hook1_og, (void *)0x46E143, 7);
-	SokuLib::TamperNearCall(0x46E143, checkIdleAnims);
+	SokuLib::TamperNearCall(0x46E143, checkIdleAnims_JGE);
 	*(unsigned short *)0x46E148 = 0x9090;
 
-	memcpy(hook1_og, (void *)0x46E16D, 7);
-	SokuLib::TamperNearCall(0x46E16D, checkIdleAnims);
+	memcpy(hook2_og, (void *)0x46E16D, 7);
+	SokuLib::TamperNearCall(0x46E16D, checkIdleAnims_JL);
 	*(unsigned short *)0x46E172 = 0x9090;
+
+	memcpy(hook3_og, (void *)0x46E120, 7);
+	SokuLib::TamperNearCall(0x46E120, checkIdleAnims_JL);
+	*(unsigned short *)0x46E125 = 0x9090;
+
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
 }
 
@@ -4260,5 +4293,6 @@ void Mamizou::unhook()
 
 	memcpy((void *)0x46E143, hook1_og, 7);
 	memcpy((void *)0x46E16D, hook2_og, 7);
+	memcpy((void *)0x46E120, hook3_og, 7);
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
 }
