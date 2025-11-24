@@ -51,7 +51,6 @@ src/Characters/*/pack
 
 # Soku2 data files
 src/Characters/clownpiece/data
-src/Characters/flandre/data
 src/Characters/kaguya/data
 src/Characters/mima/data
 src/Characters/mokou/data
