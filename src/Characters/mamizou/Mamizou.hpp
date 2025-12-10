@@ -99,11 +99,11 @@ private:
 
 	static constexpr float FALLING_GRAVITY = 0.6;
 
-	static constexpr float INITIAL_DASH_SPEED = 10;
-	static constexpr float TOP_DASH_SPEED = 8;
+	static constexpr float INITIAL_DASH_SPEED = 12;
+	static constexpr float TOP_DASH_SPEED = 9;
 	static constexpr float INITIAL_BE6_SPEED = 5;
 	static constexpr float TOP_BE6_SPEED = 3;
-	static constexpr float DASH_RECOVERY_DECEL = 0.75;
+	static constexpr float DASH_RECOVERY_DECEL = 0.5;
 
 	static constexpr float FLIGHT_TURN = 3.5;
 	static constexpr float FLIGHT_TURN_SUNNY = 5;

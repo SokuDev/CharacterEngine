@@ -16,6 +16,10 @@ void DemonGate::update()
 		this->advanceFrame();
 		this->position.x = this->parentPlayerB->position.x;
 		if (this->disappearing == 0) {
+			if (this->parentPlayerB->frameState.actionId != SokuLib::ACTION_USING_SC_ID_202) {
+				this->disappearing = 1;
+				return;
+			}
 			if (this->renderInfos.scale.x < 1) {
 				this->renderInfos.scale.x += 0.035;
 				this->renderInfos.scale.y += 0.035;
@@ -29,7 +33,7 @@ void DemonGate::update()
 			} else if (this->parentPlayerB->frameState.sequenceId >= 3) {
 				this->appearTimer++;
 			}
-			if (this->appearTimer % 9 == 1) {
+			if (this->appearTimer % 9 == 3) {
 				params[0] = SokuLib::rand(17) + 1;
 				if (params[0] >= 19)
 					params[0] = 18;
@@ -65,9 +69,8 @@ void DemonGate::update()
 		}
 		if (
 			this->collisionType == COLLISION_TYPE_BULLET_COLLIDE_HIGH_DENSITY ||
-			this->collisionType == COLLISION_TYPE_GRAZED ||
-			this->collisionType == COLLISION_TYPE_ARMORED ||
-			this->collisionType == COLLISION_TYPE_BULLET_COLLIDE_SAME_DENSITY
+			this->collisionType == COLLISION_TYPE_BULLET_COLLIDE_SAME_DENSITY ||
+			this->collisionType == COLLISION_TYPE_GRAZED
 		) {
 			this->collisionType = COLLISION_TYPE_NONE;
 			this->collisionLimit = 1;

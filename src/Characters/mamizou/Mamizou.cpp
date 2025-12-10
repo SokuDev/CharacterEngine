@@ -614,7 +614,7 @@ void Mamizou::update()
 			}
 			this->setAction(this->inputData.keyInput.verticalAxis > 0 ? SokuLib::ACTION_CROUCHED : SokuLib::ACTION_IDLE);
 		}
-		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 12 && this->frameState.poseFrame == 0) {
+		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 6 && this->frameState.poseFrame == 0) {
 			if (this->position.x > this->gameData.opponent->position.x) {
 				this->direction = SokuLib::LEFT;
 				return;
@@ -1084,7 +1084,6 @@ void Mamizou::update()
 		break;
 	case SokuLib::ACTION_5AAA:
 	case SokuLib::ACTION_f5A:
-	case SokuLib::ACTION_66A:
 		this->applyGroundMechanics();
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
@@ -1092,6 +1091,17 @@ void Mamizou::update()
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 		if (this->speed.x > 0)
 			this->speed.x -= 0.70;
+		if (this->speed.x < 0)
+			this->speed.x = 0;
+		break;
+	case SokuLib::ACTION_66A:
+		this->applyGroundMechanics();
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0)
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
+		if (this->speed.x > 0)
+			this->speed.x -= 0.5;
 		if (this->speed.x < 0)
 			this->speed.x = 0;
 		break;
@@ -1125,14 +1135,14 @@ void Mamizou::update()
 			} else
 				this->playSFX(0);
 		}
-		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 20) {
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 10) {
 			auto old = this->frameState;
 
 			this->nextSequence();
 			this->setPose(old.poseId);
 			this->frameState.poseFrame = old.poseFrame;
 		}
-		if (this->frameState.sequenceId == 2 && this->frameState.currentFrame == 12)
+		if (this->frameState.sequenceId == 2 && this->frameState.currentFrame == 6)
 			this->nextSequence();
 		break;
 	case SokuLib::ACTION_j5A:
@@ -2649,22 +2659,22 @@ bool Mamizou::_processSkillsAirborne()
 	if (!this->_transformPlayer)
 		return false;
 
-	if (this->inputData.commandCombination._214b && this->_useSkill(true, 2, ACTION_jd214b))
+	if (this->_useSkill(this->inputData.commandCombination._214b, 2, ACTION_jd214b))
 		return true;
-	if (this->inputData.commandCombination._214c && this->_useSkill(true, 2, ACTION_jd214c))
+	if (this->_useSkill(this->inputData.commandCombination._214c, 2, ACTION_jd214c))
 		return true;
 
-	if (this->inputData.commandCombination._236b && this->_useSkill(true, 2, ACTION_jd236b))
+	if (this->_useSkill(this->inputData.commandCombination._236b, 3, ACTION_jd236b))
 		return true;
-	if (this->inputData.commandCombination._236c && this->_useSkill(true, 2, ACTION_jd236c))
+	if (this->_useSkill(this->inputData.commandCombination._236c, 3, ACTION_jd236c))
 		return true;
 
 	bool used22 = this->inputData.commandCombination._22b || this->inputData.commandCombination._22c;
 
 	if (!this->_transformed) {
-		if (used22 && this->_useSkill(true, 5, ACTION_ja1_22b))
+		if (this->_useSkill(used22, 5, ACTION_ja1_22b))
 			return true;
-		if (this->_transformStacks && used22 && this->_useSkill(true, 9, ACTION_ja2_22b))
+		if (this->_transformStacks && this->_useSkill(used22, 9, ACTION_ja2_22b))
 			return true;
 	}
 	return false;
@@ -2920,17 +2930,17 @@ bool Mamizou::_processSkillsGrounded()
 		this->currentSpirit < 200
 	)
 		return false;
-	if (this->inputData.commandCombination._623b && this->_useSkill(true, 0, ACTION_d623b))
+	if (this->_useSkill(this->inputData.commandCombination._623b, 0, ACTION_d623b))
 		return true;
-	if (this->inputData.commandCombination._623c && this->_useSkill(true, 0, ACTION_d623b))
+	if (this->_useSkill(this->inputData.commandCombination._623c, 0, ACTION_d623b))
 		return true;
-	if (this->inputData.commandCombination._214b && this->_useSkill(true, 2, ACTION_d214b))
+	if (this->_useSkill(this->inputData.commandCombination._214b, 2, ACTION_d214b))
 		return true;
-	if (this->inputData.commandCombination._214c && this->_useSkill(true, 2, ACTION_d214c))
+	if (this->_useSkill(this->inputData.commandCombination._214c, 2, ACTION_d214c))
 		return true;
-	if (this->inputData.commandCombination._236b && this->_useSkill(true, 2, ACTION_d236b))
+	if (this->_useSkill(this->inputData.commandCombination._236b, 3, ACTION_d236b))
 		return true;
-	if (this->inputData.commandCombination._236c && this->_useSkill(true, 2, ACTION_d236c))
+	if (this->_useSkill(this->inputData.commandCombination._236c, 3, ACTION_d236c))
 		return true;
 
 	if (!this->_transformPlayer)
@@ -2939,16 +2949,16 @@ bool Mamizou::_processSkillsGrounded()
 	bool used22 = this->inputData.commandCombination._22b || this->inputData.commandCombination._22c;
 
 	if (this->_transformed) {
-		if (used22 && this->_useSkill(true, 1, ACTION_d22b_UNTRANSFORM))
+		if (this->_useSkill(used22, 1, ACTION_d22b_UNTRANSFORM))
 			return true;
 	} else {
-		if (!this->_transformedCooldown && used22 && this->_useSkill(true, 1, ACTION_d22b))
+		if (!this->_transformedCooldown && this->_useSkill(used22, 1, ACTION_d22b))
 			return true;
-		if (used22 && this->_useSkill(true, 5, ACTION_a1_22b))
+		if (this->_useSkill(used22, 5, ACTION_a1_22b))
 			return true;
-		if (this->_transformStacks && this->inputData.commandCombination._22b && this->_useSkill(true, 9, ACTION_a2_22b))
+		if (this->_transformStacks && this->_useSkill(this->inputData.commandCombination._22b, 9, ACTION_a2_22b))
 			return true;
-		if (this->_transformStacks < MAX_STACKS && this->inputData.commandCombination._22c && this->_useSkill(true, 9, ACTION_a2_22c))
+		if (this->_transformStacks < MAX_STACKS && this->_useSkill(this->inputData.commandCombination._22c, 9, ACTION_a2_22c))
 			return true;
 	}
 	return false;
