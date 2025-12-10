@@ -14,16 +14,23 @@
 #include "scenes.hpp"
 #include "giuroll.hpp"
 
+static unsigned tmp;
+static unsigned nbIndices;
+static std::vector<unsigned> characterSelectIndices;
 static SokuLib::Dequeue<unsigned short> cards;
 static std::vector<SokuLib::Sprite> extraSprites;
 static wchar_t profilePath[MAX_PATH];
 static std::map<void *, std::unique_ptr<CharacterModule>> loadedModules;
 static void (*og_loadDat)(const char *path);
 
+static std::vector<int> chrSelectNameTextures;
+static std::vector<SokuLib::Sprite> chrSelectNameSprites;
+static std::vector<int> chrSelectPortraitTextures;
+static std::vector<SokuLib::Sprite> chrSelectPortraitSprites;
+
+
 std::vector<CharacterModule> modules;
 
-
-static const unsigned createCustomCharacter_hook_ret = 0x46DE25;
 
 void loadExtraDatFiles(const char *path)
 {
@@ -69,6 +76,7 @@ static SokuLib::v2::Player *createCustomCharacter(int id, SokuLib::PlayerInfo &i
 	}
 }
 
+static const unsigned createCustomCharacter_hook_ret = 0x46DE25;
 static void __declspec(naked) createCustomCharacter_hook()
 {
 	__asm {
@@ -113,11 +121,6 @@ static void __declspec(naked) selectDeckSlot_hook()
 	}
 }
 
-static const unsigned chrSelectPortrait_hook_ret1 = 0x4212B3;
-static const unsigned chrSelectPortrait_hook_ret2 = 0x4212A3;
-static const unsigned chrSelectPortrait_hook_ret3 = 0x4212CC;
-static bool initSpritesDone = false;
-
 static const char *__fastcall getCharacterName(int index)
 {
 	for (const auto &module : modules)
@@ -136,6 +139,7 @@ static SokuLib::Sprite *__fastcall getCharacterSprite(int index)
 	return nullptr;
 }
 
+static bool initSpritesDone = false;
 static void initSprites()
 {
 	if (initSpritesDone)
@@ -151,6 +155,9 @@ static void initSprites()
 	}
 }
 
+static const unsigned chrSelectPortrait_hook_ret1 = 0x4212B3;
+static const unsigned chrSelectPortrait_hook_ret2 = 0x4212A3;
+static const unsigned chrSelectPortrait_hook_ret3 = 0x4212CC;
 static void __declspec(naked) chrSelectPortrait_hook()
 {
 	__asm {
@@ -180,7 +187,6 @@ static void __declspec(naked) chrSelectPortrait_hook()
 }
 
 static const unsigned getCreateCustomCharacterName_hook_ret = 0x43F3F8;
-
 static void __declspec(naked) getCreateCustomCharacterName_hook()
 {
 	__asm {
@@ -201,7 +207,28 @@ static void __declspec(naked) getCreateCustomCharacterName_hook()
 void loadCharacterModules()
 {
 	std::filesystem::path folderPath = profilePath;
-	int maxIndex = 34;
+	unsigned baseOrder[] = {
+		SokuLib::CHARACTER_SUIKA,
+		SokuLib::CHARACTER_YUKARI,
+		SokuLib::CHARACTER_YUYUKO,
+		SokuLib::CHARACTER_REMILIA,
+		SokuLib::CHARACTER_YOUMU,
+		SokuLib::CHARACTER_PATCHOULI,
+		SokuLib::CHARACTER_ALICE,
+		SokuLib::CHARACTER_SAKUYA,
+		SokuLib::CHARACTER_MARISA,
+		SokuLib::CHARACTER_REIMU,
+		SokuLib::CHARACTER_SANAE,
+		SokuLib::CHARACTER_CIRNO,
+		SokuLib::CHARACTER_MEILING,
+		SokuLib::CHARACTER_UTSUHO,
+		SokuLib::CHARACTER_SUWAKO,
+		SokuLib::CHARACTER_REISEN,
+		SokuLib::CHARACTER_AYA,
+		SokuLib::CHARACTER_KOMACHI,
+		SokuLib::CHARACTER_IKU,
+		SokuLib::CHARACTER_TENSHI,
+	};
 
 	folderPath /= L"characters";
 	for (auto &dir : std::filesystem::directory_iterator(folderPath)) {
@@ -225,6 +252,14 @@ void loadCharacterModules()
 	GiuRoll::load();
 	if (!modules.empty())
 		GiuRoll::setCharDataSize(modules.back().getIndex() + 1);
+
+	characterSelectIndices.reserve(modules.size() + 20);
+	for (size_t i = 0; i < std::ceil(modules.size() / 2.f); i++)
+		characterSelectIndices.push_back(modules[i * 2].getIndex());
+	characterSelectIndices.insert(characterSelectIndices.end(), std::begin(baseOrder), std::end(baseOrder));
+	for (size_t i = 0; i < modules.size() / 2; i++)
+		characterSelectIndices.push_back(modules[i * 2 + 1].getIndex());
+	nbIndices = characterSelectIndices.size();
 }
 
 void __fastcall onCharacterDeleted(void *This)
@@ -310,11 +345,111 @@ void generateSoku2Files()
 					luaPathStream << ' ';
 				luaPathStream << R"("dummy.lua",      "dummy.asm",      "deck.cfg"))" << std::endl;
 			}
-		} else if (line.ends_with("{{EXTRA_CHARACTERS_ORDER}}")) {
+		} else if (line.ends_with("{{EXTRA_CHARACTERS_DEFINITION}}")) {
 			for (auto &module : modules)
 				luaPathStream << "  " << module.getShortName() << ',' << std::endl;
+		} else if (line.ends_with("{{EXTRA_CHARACTERS_AFTER}}")) {
+			for (size_t i = 1; i < modules.size(); i += 2)
+				luaPathStream << "  " << modules[i].getShortName() << ',' << std::endl;
+		} else if (line.ends_with("{{EXTRA_CHARACTERS_BEFORE}}")) {
+			for (size_t i = modules.size() + modules.size() % 2; i > 0; i -= 2)
+				luaPathStream << "  " << modules[i - 2].getShortName() << ',' << std::endl;
 		} else
 			luaPathStream << line << std::endl;
+	}
+}
+
+void resetChrSelect()
+{
+	for (auto t : chrSelectNameTextures)
+		SokuLib::textureMgr.remove(t);
+	for (auto t : chrSelectPortraitTextures)
+		SokuLib::textureMgr.remove(t);
+	chrSelectNameTextures.clear();
+	chrSelectNameSprites.clear();
+	chrSelectPortraitTextures.clear();
+	chrSelectPortraitSprites.clear();
+
+	chrSelectNameTextures.reserve(20 + modules.size());
+	chrSelectNameSprites.reserve(20 + modules.size());
+	chrSelectPortraitTextures.reserve(20 + modules.size());
+	chrSelectPortraitSprites.reserve(20 + modules.size());
+}
+
+void __declspec(naked) setIndicesArraySize()
+{
+	__asm {
+		CALL resetChrSelect
+		MOV EAX, [nbIndices]
+		MOV ECX, 21
+		RET
+	}
+}
+
+void __fastcall addNameTexture(int tex)
+{
+	chrSelectNameTextures.push_back(tex);
+}
+
+void __fastcall addNameSprite(int w, int h)
+{
+	chrSelectNameSprites.emplace_back().setTexture2(chrSelectNameTextures.back(), 0, 0, w, h);
+}
+
+const unsigned __name_retValue = 0x4250A0;
+void __declspec(naked) loadNameSprites_hook()
+{
+	__asm {
+		CALL addNameTexture
+		MOV ECX, [ESP + 0x34]
+		MOV EDX, [ESP + 0x30]
+		CALL addNameSprite
+		JMP [__name_retValue]
+	}
+}
+
+void __fastcall addPortraitTexture(int tex)
+{
+	chrSelectPortraitTextures.push_back(tex);
+}
+
+void __fastcall addPortraitSprite(int w, int h)
+{
+	chrSelectPortraitSprites.emplace_back().setTexture2(chrSelectPortraitTextures.back(), 0, 0, w, h);
+}
+
+const unsigned __portrait_retValue = 0x425183;
+void __declspec(naked) loadPortraitSprites_hook()
+{
+	__asm {
+		MOV ECX, EAX
+		CALL addPortraitTexture
+		MOV ECX, [ESP + 0x34]
+		MOV EDX, [ESP + 0x30]
+		CALL addPortraitSprite
+		JMP [__portrait_retValue]
+	}
+}
+
+int getPortraitSize()
+{
+	int w;
+	int h;
+
+	SokuLib::textureMgr.getSize(chrSelectPortraitTextures.front(), &w, &h);
+	if (w * modules.size() < 640)
+		return w;
+	return 640 / modules.size();
+}
+
+void __declspec(naked) getPortraitSize_hook()
+{
+	__asm {
+		CALL getPortraitSize
+		MOV [tmp], EAX
+		FILD dword ptr [tmp]
+		FST dword ptr [ESP + 0x1C]
+		RET
 	}
 }
 
@@ -417,6 +552,22 @@ extern "C" __declspec(dllexport) bool Initialize(HMODULE hMyModule, HMODULE hPar
 		SokuLib::TamperNearJmpOpr(0x44E102, getCharacterCardObject);
 		SokuLib::TamperNearJmpOpr(0x44E11D, getCharacterCardObject);
 
+		/*
+		SokuLib::TamperNearCall(0x4248D1, setIndicesArraySize);
+		*(char *)0x4248DB = 0x4C;
+		*(unsigned **)0x4248E2 = characterSelectIndices.data();
+		// Skip check for character enabled
+		*(char *)0x425002 = 0xEB;
+
+		memset((void *)0x425068, 0x90, 0x38);
+		SokuLib::TamperNearJmp(0x425068, loadNameSprites_hook);
+
+		memset((void *)0x425161, 0x90, 0x22);
+		SokuLib::TamperNearJmp(0x425161, loadPortraitSprites_hook);
+
+		memset((void *)0x42526E, 0x90, 0x2D);
+		SokuLib::TamperNearCall(0x42526E, getPortraitSize_hook);
+		*/
 		// Filesystem first patch
 		/*
 		*(char *)0x40D1FB = 0xEB;
