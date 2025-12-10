@@ -78,6 +78,8 @@ public:
 
 	void update() override
 	{
+		if (this->_player->gameData.opponent->timeStop)
+			return;
 		for (const auto &object : this->_list) {
 			if (object->hitStop)
 				object->hitStop--;
