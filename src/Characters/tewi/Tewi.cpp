@@ -4602,14 +4602,11 @@ bool Tewi::_canUseCard(int id)
 	case 100:
 	case 101:
 	case 103:
+	case 105:
 	case 111:
 	case 201:
 	case 208:
 		return true;
-	case 105:
-		if (this->effectiveSkillLevel[5] != 0 || SokuLib::activeWeather == SokuLib::WEATHER_SPRINKLE)
-			return true;
-		return this->isGrounded();
 	case 109:
 		if (this->_hammer)
 			return true;
