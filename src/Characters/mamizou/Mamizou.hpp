@@ -101,8 +101,8 @@ private:
 
 	static constexpr float INITIAL_DASH_SPEED = 12;
 	static constexpr float TOP_DASH_SPEED = 9;
-	static constexpr float INITIAL_BE6_SPEED = 5;
-	static constexpr float TOP_BE6_SPEED = 3;
+	static constexpr float INITIAL_BE6_SPEED = 9;
+	static constexpr float TOP_BE6_SPEED = 6;
 	static constexpr float DASH_RECOVERY_DECEL = 0.5;
 
 	static constexpr float FLIGHT_TURN = 3.5;

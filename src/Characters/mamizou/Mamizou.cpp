@@ -1230,9 +1230,9 @@ void Mamizou::update()
 			if (this->inputData.keyInput.verticalAxis < 0)
 				this->speed.y += 13;
 			else if (this->inputData.keyInput.verticalAxis == 0)
-				this->speed.y += 10;
-			else
 				this->speed.y += 7;
+			else
+				this->speed.y += 3;
 			if (this->speed.y >= 20)
 				this->speed.y = max(old, 20);
 		}
@@ -1259,6 +1259,7 @@ void Mamizou::update()
 					this->position.y + 90
 				};
 
+				this->addCardMeter(20);
 				this->consumeSpirit(200, 40);
 				this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
 				this->playSFX(4);
@@ -1287,6 +1288,7 @@ void Mamizou::update()
 					this->position.y + 90
 				};
 
+				this->addCardMeter(20);
 				this->consumeSpirit(200, 40);
 				this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
 				this->playSFX(4);
@@ -1335,6 +1337,7 @@ void Mamizou::update()
 			};
 
 			this->consumeSpirit(200, 40);
+			this->addCardMeter(20);
 			this->createObject(800, this->position.x + (this->direction * 40), this->position.y + 48, this->direction, 1, params);
 			this->playSFX(4);
 		}
@@ -1370,8 +1373,8 @@ void Mamizou::update()
 				this->position.y + 90
 			};
 
-			this->collisionType = COLLISION_TYPE_HIT;
 			this->consumeSpirit(200, 40);
+			this->addCardMeter(20);
 			this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 90, this->direction, 1, params);
 			this->playSFX(4);
 		}
@@ -1395,6 +1398,7 @@ void Mamizou::update()
 				};
 
 				this->consumeSpirit(200, 40);
+				this->addCardMeter(20);
 				this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
 				this->playSFX(4);
 			}
@@ -1425,6 +1429,7 @@ void Mamizou::update()
 				};
 
 				this->consumeSpirit(200, 40);
+				this->addCardMeter(20);
 				this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
 				this->playSFX(4);
 			}
@@ -1473,6 +1478,7 @@ void Mamizou::update()
 			};
 
 			this->consumeSpirit(200, 40);
+			this->addCardMeter(20);
 			this->createObject(800, this->position.x + (this->direction * 30), this->position.y + 140, this->direction, 1, params);
 			this->playSFX(4);
 		}
@@ -1510,6 +1516,7 @@ void Mamizou::update()
 			};
 
 			this->consumeSpirit(200, 40);
+			this->addCardMeter(20);
 			this->createObject(800, this->position.x + (this->direction * 50), this->position.y + 140, this->direction, 1, params);
 			this->playSFX(4);
 		}
@@ -1553,6 +1560,7 @@ void Mamizou::update()
 		if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
 			this->playSFX(5);
 			this->consumeSpirit(200, 60);
+			this->addCardMeter(50);
 			this->collisionType = COLLISION_TYPE_HIT;
 		}
 		break;
@@ -1568,6 +1576,7 @@ void Mamizou::update()
 			this->playSFX(6);
 			this->collisionType = COLLISION_TYPE_HIT;
 			this->consumeSpirit(200, 60);
+			this->addCardMeter(50);
 		}
 		break;
 	case SokuLib::ACTION_5C:
@@ -1583,6 +1592,7 @@ void Mamizou::update()
 			params[1] = 15;
 			params[2] = 0.5;
 			this->consumeSpirit(200, 60);
+			this->addCardMeter(50);
 			this->createObject(808, this->position.x + (this->direction * 50), this->position.y + 100, this->direction, 1, params);
 		}
 		break;
@@ -1602,6 +1612,7 @@ void Mamizou::update()
 			params[1] = 15;
 			params[2] = 0.5;
 			this->consumeSpirit(200, 60);
+			this->addCardMeter(50);
 			this->createObject(808, this->position.x + (this->direction * 50), this->position.y + 100, this->direction, 1, params);
 		}
 		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 8)
@@ -1623,6 +1634,7 @@ void Mamizou::update()
 		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 0) {
 			this->playSFX(6);
 			this->consumeSpirit(200, 60);
+			this->addCardMeter(50);
 			this->collisionType = COLLISION_TYPE_HIT;
 		}
 		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 8)
@@ -1646,6 +1658,7 @@ void Mamizou::update()
 			params[1] = 15;
 			params[2] = 0.5;
 			this->consumeSpirit(200, 60);
+			this->addCardMeter(50);
 			this->createObject(808, this->position.x + (this->direction * 50), this->position.y + 100, this->direction, 1, params);
 		}
 		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 8)
@@ -1670,8 +1683,10 @@ void Mamizou::update()
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
 		if (this->frameState.sequenceId == 1) {
-			if (this->frameState.poseId == 0 && this->frameState.currentFrame == 0)
+			if (this->frameState.poseId == 0 && this->frameState.currentFrame == 0) {
 				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+				this->addCardMeter(70);
+			}
 			if (this->frameState.currentFrame == 20)
 				this->nextSequence();
 			if (this->collisionType == COLLISION_TYPE_INVUL) {
@@ -1735,6 +1750,7 @@ void Mamizou::update()
 			this->setAction(SokuLib::ACTION_IDLE);
 			this->_transform();
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+			this->addCardMeter(70);
 		}
 		break;
 
@@ -1769,6 +1785,7 @@ void Mamizou::update()
 			}
 		} else if (this->frameState.sequenceId == 1) {
 			if (this->frameState.currentFrame == 0) {
+				this->addCardMeter(70);
 				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 				if (this->frameState.actionId % 2 == 0) {
 					this->speed.x = 12.5;
@@ -1837,6 +1854,7 @@ void Mamizou::update()
 			params[2] = 2;
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
 			this->createObject(825, this->position.x + this->direction * 30, this->position.y + 110, this->direction, 1, params);
+			this->addCardMeter(70);
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 		}
 		break;
@@ -1877,6 +1895,7 @@ void Mamizou::update()
 			params[2] = 2;
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
 			this->createObject(825, this->position.x + this->direction * 30, this->position.y + 110, this->direction, 1, params);
+			this->addCardMeter(70);
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 		}
 		if (this->frameState.sequenceId == 2 && this->frameState.currentFrame == 10)
@@ -1895,6 +1914,7 @@ void Mamizou::update()
 			this->setAction(SokuLib::ACTION_IDLE);
 			this->_transform();
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+			this->addCardMeter(70);
 		}
 		break;
 	case ACTION_ja1_22b:
@@ -1904,6 +1924,7 @@ void Mamizou::update()
 			this->setAction(SokuLib::ACTION_FALLING);
 			this->_transform();
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+			this->addCardMeter(70);
 		}
 		break;
 
@@ -2006,6 +2027,7 @@ void Mamizou::update()
 				this->setAction(SokuLib::ACTION_IDLE);
 				this->_transform();
 				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+				this->addCardMeter(70);
 			}
 		}
 		break;
@@ -2014,8 +2036,10 @@ void Mamizou::update()
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
 		if (this->frameState.sequenceId == 1) {
-			if (this->frameState.currentFrame == 0)
+			if (this->frameState.currentFrame == 0) {
 				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+				this->addCardMeter(70);
+			}
 			if (this->frameState.currentFrame >= 20 && !this->inputData.keyInput.c) {
 				this->nextSequence();
 				this->collisionType = COLLISION_TYPE_HIT;
