@@ -62,6 +62,16 @@ public:
 	{
 		return this->_nextPtr - this->_buffer;
 	}
+
+	unsigned char *getBufferStart()
+	{
+		return this->_buffer;
+	}
+
+	size_t size()
+	{
+		return arenaSize;
+	}
 };
 
 template<typename T, size_t arenaSize>

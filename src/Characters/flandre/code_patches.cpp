@@ -2194,6 +2194,8 @@ static void getPatchList(const T &skeletons, std::vector<Patch *, PatchListAlloc
 
 void initPatches()
 {
+	DWORD old;
+
 	assert(trampolineAllocator.getIndex() == 0);
 	allocateTrampolines(compiledPatches);
 	getPatchList(skeletonsForObjectUpdate, objectUpdate_patches);
@@ -2207,6 +2209,9 @@ void initPatches()
 	getPatchList(skeletonsForVUnknown60, VUnknown60_patches);
 	printf("Internal memory used %zu/12230\n", internalMemory.getIndex());
 	assert(internalMemory.getIndex() == 12230);
+
+	VirtualProtect(internalMemory.getBufferStart(), internalMemory.size(), PAGE_EXECUTE_READWRITE, &old);
+	VirtualProtect(applyMemory.getBufferStart(), applyMemory.size(), PAGE_EXECUTE_READWRITE, &old);
 }
 
 void clearPatches()
