@@ -78,12 +78,10 @@ public:
 
 	void update() override
 	{
-		if (this->_player->gameData.opponent->timeStop)
-			return;
 		for (const auto &object : this->_list) {
 			if (object->hitStop)
-				object->hitStop--;
-			else
+				--object->hitStop;
+			else if (!this->_player->gameData.opponent->timeStop || object->ignoreOwnerTimestop)
 				object->update();
 		}
 
@@ -100,13 +98,13 @@ public:
 		for (auto o : this->_list) {
 			if (o->layer != layer)
 				continue;
-			if (o->unknown154 != nullptr)
-				((void (__thiscall *)(void *))0x4389D0)(o->unknown154);
+			if (o->clipMask)
+				((void (__thiscall *)(void *))0x4389D0)(o->clipMask);
 			if (o->tail)
 				o->tail->render();
 			o->render();
-			if (o->unknown154 != nullptr)
-				((void (__thiscall *)(void *))0x438B90)(o->unknown154);
+			if (o->clipMask)
+				((void (__thiscall *)(void *))0x438B90)(o->clipMask);
 		}
 	}
 

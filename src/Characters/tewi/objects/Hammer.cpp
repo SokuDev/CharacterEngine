@@ -13,6 +13,7 @@
 #define beingHeld customData[3]
 #define canStickOnWalls customData[3]
 #define noAutoPickUp customData[4]
+#define bounceLimit gpShort[0]
 
 void Hammer::update()
 {
@@ -176,7 +177,7 @@ void Hammer::update()
 		this->speed.x += (this->parentPlayer->position.x - this->position.x) / 1000;
 		this->speed.y += (this->parentPlayer->position.y + 75 - this->position.y) / 1000;
 		if (
-			((Tewi *)this->parentPlayerB)->getHammerPickTimer() == 0 &&
+			static_cast<Tewi *>(this->parentPlayerB)->getHammerPickTimer() == 0 &&
 			this->noAutoPickUp == 0 &&
 			std::pow(this->parentPlayerB->position.x - this->position.x, 2) + std::pow(this->parentPlayerB->position.y + 75 - this->position.y, 2) < 10000
 		) {
@@ -237,7 +238,7 @@ void Hammer::update()
 			this->position.x = 40;
 			this->speed.x *= -0.8f;
 			this->speed.y *= 0.8f;
-		} else if (!this->unknown360) {
+		} else if (!this->bounceLimit) {
 			this->position.x = 0;
 			this->speed.x = 0;
 			this->speed.y = 0;
@@ -251,7 +252,7 @@ void Hammer::update()
 			this->position.x = 1240;
 			this->speed.x = -this->speed.x * 0.8f;
 			this->speed.y = this->speed.y * 0.8f;
-		} else if (!this->unknown360) {
+		} else if (!this->bounceLimit) {
 			this->position.x = 1280;
 			this->speed.x = 0;
 			this->speed.y = 0;
@@ -266,7 +267,7 @@ void Hammer::update()
 			this->position.y = this->getGroundHeight();
 			this->speed.x = this->speed.x * 0.8f;
 			this->speed.y = -this->speed.y * 0.8f;
-		} else if (!this->unknown360) {
+		} else if (!this->bounceLimit) {
 			this->setSequence(1);
 			this->position.y = this->getGroundHeight();
 			this->speed.x = 0;
@@ -279,8 +280,8 @@ void Hammer::update()
 		this->speed.x = this->speed.x * 0.8f;
 		this->speed.y = -this->speed.y * 0.8f;
 	}
-	if (this->unknown360)
-		this->unknown360--;
+	if (this->bounceLimit)
+		this->bounceLimit--;
 }
 
 void Hammer::initializeAction()
@@ -292,7 +293,7 @@ void Hammer::initializeAction()
 	this->hp = 500;
 	this->gravity.y = 1;
 	this->collisionLimit = 1;
-	this->unknown360 = 4;
+	this->bounceLimit = 4;
 	this->speed.x = std::cos(this->angle * M_PI / 180) * this->velocity;
 	this->speed.y = std::sin(this->angle * M_PI / 180) * this->velocity;
 }

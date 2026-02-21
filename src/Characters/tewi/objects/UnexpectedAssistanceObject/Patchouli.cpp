@@ -246,7 +246,7 @@ namespace UnexpectedAssistance
 			return;
 		}
 		this->renderInfos.zRotation = this->customData[0];
-		this->unknown360 = 1;
+		this->ignoreOwnerTimestop = 1;
 		this->setSequence(this->customData[2]);
 		if (this->frameState.sequenceId == 4) {
 			this->renderInfos.scale.y = 0;

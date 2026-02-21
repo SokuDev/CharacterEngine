@@ -151,7 +151,7 @@ void UnexpectedAssistance::Remilia::initializeAction()
 	}
 	this->setSequence(this->customData[2]);
 	if (this->frameState.sequenceId == 0 || this->frameState.sequenceId == 1) {
-		this->unknown360 = 1;
+		this->ignoreOwnerTimestop = 1;
 	}
 	if (this->frameState.sequenceId == 2) {
 		this->renderInfos.zRotation = -this->customData[0];

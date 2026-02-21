@@ -4171,7 +4171,7 @@ void Tewi::_processInputsAirborne()
 		!this->handInfo.hand.empty() &&
 		((this->inputData.keyInput.spellcard != 0 && this->inputData.keyInput.spellcard < 3) || this->inputData.bufferedKeyInput.spellcard != 0) &&
 		this->confusionDebuffTimer == 0 &&
-		this->unknown836 == 0 &&
+		!this->lockCardUse &&
 		this->canActivateCard(0) &&
 		this->_canUseCard(this->handInfo.hand[0].id)
 	) {
@@ -4747,7 +4747,7 @@ void Tewi::_processInputsGrounded()
 		!this->handInfo.hand.empty() &&
 		((this->inputData.keyInput.spellcard != 0 && this->inputData.keyInput.spellcard < 3) || this->inputData.bufferedKeyInput.spellcard != 0) &&
 		this->confusionDebuffTimer == 0 &&
-		this->unknown836 == 0 &&
+		!this->lockCardUse &&
 		this->canActivateCard(0) &&
 		this->_canUseCard(this->handInfo.hand[0].id)
 	) {
@@ -4792,7 +4792,7 @@ void Tewi::handleInputs()
 		return;
 
 	if (frameFlags.cancellable || frameFlags.highJumpCancellable) {
-		auto uVar10 = *(unsigned *)&this->inputData.commandCombination;
+		auto uVar10 = this->inputData.commandCombination.value;
 
 		// For story mode
 		if (699 < uVar10 && uVar10 < 800) {
@@ -4846,19 +4846,6 @@ void Tewi::VUnknown5C()
 bool Tewi::VUnknown60(int a)
 {
 	return false;
-}
-
-void Tewi::unhook()
-{
-	DWORD old;
-	unsigned char oldData[] = {0x0F, 0xB7, 0x86, 0x84, 0x01, 0x00, 0x00};
-	unsigned char oldData2[] = {0x0F, 0xB7, 0x87, 0x84, 0x01, 0x00, 0x00};
-
-	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
-	*(char *)0x48894C = 0x74;
-	memcpy((void *)0x47B123, oldData, sizeof(oldData));
-	memcpy((void *)0x47B329, oldData2, sizeof(oldData2));
-	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
 }
 
 SokuLib::v2::GameObject *Tewi::getHammer() const
@@ -5016,11 +5003,19 @@ void __declspec(naked) tewiRevivePreventDeath2()
 	}
 }
 
+unsigned char oldData[7];
+unsigned char oldData2[7];
+char oldData3;
+
 void Tewi::hook()
 {
 	DWORD old;
 
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+	memcpy(oldData,  (void *)0x47B123, sizeof(oldData));
+	memcpy(oldData2, (void *)0x47B329, sizeof(oldData2));
+	oldData3 = *(char *)0x48894C;
+
 	SokuLib::TamperNearCall(0x47B123, tewiRevivePreventDeath);
 	*(char *)0x47B128 = 0x90;
 	*(char *)0x47B129 = 0x90;
@@ -5029,5 +5024,16 @@ void Tewi::hook()
 	*(char *)0x47B32F = 0x90;
 
 	*(char *)0x48894C = 0xEB;
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
+}
+
+void Tewi::unhook()
+{
+	DWORD old;
+
+	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+	memcpy((void *)0x47B123, oldData, sizeof(oldData));
+	memcpy((void *)0x47B329, oldData2, sizeof(oldData2));
+	*(char *)0x48894C = oldData3;
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
 }

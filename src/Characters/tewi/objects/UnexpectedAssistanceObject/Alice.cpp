@@ -320,7 +320,7 @@ namespace UnexpectedAssistance
 			if (this->frameState.sequenceId == 9)
 				this->unknown380 = SokuLib::rand(20) - 10.0;
 			this->isActive = true;
-			this->unknown138 = this->unknown380 - 6;
+			this->shadowOffset = this->unknown380 - 6;
 		}
 		if (this->frameState.sequenceId == 2) {
 			params[0] = 0.0;
