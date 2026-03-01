@@ -10,8 +10,6 @@
 
 void RabbitOrb::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	this->advanceFrame();
 	if (this->frameState.sequenceId == 0) {
 		if ((
@@ -68,10 +66,8 @@ void RabbitOrb::update()
 			this->speed.x *= -0.8f;
 			this->speed.y *= 0.8f;
 		}
-		if (this->collisionLimit == 0) {
-			this->renderInfos.color.g = this->collisionLimit * 155 / 5 + 100;
-			this->renderInfos.color.b = this->collisionLimit * 155 / 5 + 100;
-		}
+		if (this->collisionLimit == 0)
+			this->lifetime = 0;
 		return;
 	}
 	if (this->checkTurnIntoCrystals(false, 0, 0) || this->renderInfos.color.a <= 10) {

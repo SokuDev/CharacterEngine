@@ -1157,6 +1157,10 @@ void Tewi::update()
 		break;
 	case ACTION_j8A_HAMMER:
 		this->speed -= this->gravity;
+		if (this->speed.x > 4)
+			this->speed.x -= 0.5;
+		if (this->speed.x < -4)
+			this->speed.x += 0.5;
 		if (this->applyAirMechanics()) {
 			this->setAction(SokuLib::ACTION_LANDING);
 			this->position.y = this->getGroundHeight();
@@ -2248,7 +2252,7 @@ void Tewi::update()
 			return;
 		}
 		if (this->frameState.sequenceId == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 5) {
-			float hammerParams[5] = {90.f, 30, 0, 1, 0};
+			float hammerParams[5] = {90.f, 25, 0, 1, 0};
 
 			if (this->frameState.actionId % 2 == 0)
 				hammerParams[0] -= 90.f * this->direction;
@@ -2295,7 +2299,7 @@ void Tewi::update()
 				hammerParams[0] += 90.f * this->direction;
 			else
 				hammerParams[0] += 45.f * this->direction;
-			this->playSFX(0);
+			this->playSFX(56);
 			this->collisionType = COLLISION_TYPE_HIT;
 			this->_hammerPickTimer = 20;
 			this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams);
@@ -3070,8 +3074,6 @@ void Tewi::update()
 
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_IDLE);
-		if (this->frameState.sequenceId == 5 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0)
-			this->setAction(SokuLib::ACTION_FALLING);
 		if (this->frameState.sequenceId == 5) {
 			this->applyGroundMechanics();
 			this->resetForces();
@@ -3128,11 +3130,11 @@ void Tewi::update()
 				SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
 			}
 			this->center = {0, 78};
-			this->renderInfos.zRotation = 180 * this->frameState.poseFrame / this->frameState.poseDuration;
+			this->renderInfos.zRotation = 180.f * this->frameState.poseFrame / this->frameState.poseDuration;
 		} else if (this->frameState.sequenceId == 2) {
 			float params[] = {
 				this->renderInfos.zRotation,
-				(float)this->frameState.poseId
+				static_cast<float>(this->frameState.poseId)
 			};
 
 			this->createObject(862, this->position.x, this->position.y, this->direction, 1, params);
@@ -3150,8 +3152,6 @@ void Tewi::update()
 				this->nextSequence();
 				this->resetRenderInfo();
 				this->center = {0, 0};
-				this->speed = {-10, 15};
-				this->gravity.y = FALLING_GRAVITY;
 			} else if (this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
 				if (this->frameState.currentFrame % 8 == 0 || this->collisionType)
 					SokuLib::playSEWaveBuffer(SokuLib::SFX_MEDIUM_ATTACK);
@@ -3495,8 +3495,8 @@ void Tewi::initializeAction()
 	case SokuLib::ACTION_j2A:
 		this->chargedAttack = true;
 	case SokuLib::ACTION_j6A:
-	case SokuLib::ACTION_j5A:
 		this->gravity.y = FALLING_GRAVITY;
+	case SokuLib::ACTION_j5A:
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->hasMoveBeenReset = true;
 		this->collisionLimit = 1;
@@ -3664,7 +3664,10 @@ void Tewi::initializeAction()
 	case ACTION_a1_22B:
 	case ACTION_a1_22C:
 		this->_hammer->collisionType = COLLISION_TYPE_NONE;
-		this->_hammer->collisionLimit = 0;
+		if (this->effectiveSkillLevel[7] >= 3)
+			this->_hammer->collisionLimit = 1;
+		else
+			this->_hammer->collisionLimit = 0;
 		this->_hammer->customData[1] = 0;
 		this->_hammer->setSequence(12);
 		this->speed.x = 0;

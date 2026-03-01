@@ -48,8 +48,6 @@ void SaSOrb::_checkCollisionWithOwner()
 
 void SaSOrb::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	this->advanceFrame();
 	if (this->frameState.sequenceId == 1) {
 		if (this->checkTurnIntoCrystals(false, 0, 0) || this->renderInfos.color.a <= 10) {
@@ -112,10 +110,8 @@ void SaSOrb::update()
 		this->speed.x *= -0.8f;
 		this->speed.y *= 0.8f;
 	}
-	if (this->collisionLimit == 0) {
-		this->renderInfos.color.g = 100;
-		this->renderInfos.color.b = 100;
-	}
+	if (this->collisionLimit == 0)
+		this->lifetime = 0;
 }
 
 void SaSOrb::initializeAction()

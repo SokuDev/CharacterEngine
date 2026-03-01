@@ -87,7 +87,7 @@ void Hammer::update()
 		this->position += this->speed;
 		this->speed.x = std::cos(this->angle * M_PI / 180) * this->velocity;
 		this->speed.y = std::sin(this->angle * M_PI / 180) * this->velocity;
-		this->velocity -= 0.5;
+		this->velocity -= 0.45;
 		if (this->velocity <= 0) {
 			this->velocity = 0;
 			this->collisionLimit = 1;

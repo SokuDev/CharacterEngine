@@ -41,8 +41,6 @@ void TrapHole::render()
 
 void TrapHole::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->lifetime == 0)
 		return;
 	if (this->frameState.sequenceId == 0) {

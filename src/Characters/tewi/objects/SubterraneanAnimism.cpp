@@ -6,8 +6,6 @@
 
 void SubterraneanAnimism::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->checkTurnIntoCrystals(false, 5, 5)) {
 		this->lifetime = 0;
 		return;

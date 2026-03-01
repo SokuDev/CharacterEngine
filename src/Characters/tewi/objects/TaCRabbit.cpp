@@ -11,8 +11,6 @@
 
 void TaCRabbit::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->checkTurnIntoCrystals(false, 2, 2)) {
 		this->lifetime = 0;
 		return;
