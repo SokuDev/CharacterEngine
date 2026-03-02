@@ -617,6 +617,8 @@ void Tewi::update()
 			if (this->speed.x > 0)
 				this->speed.x = 0;
 		}
+		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 2 && this->_hammer)
+			this->nextPose();
 		if (!this->isGrounded() && (this->frameState.currentFrame % 5 == 0))
 			this->createEffect(
 				0x7c,
@@ -3357,14 +3359,9 @@ void Tewi::update()
 		this->frameState.actionId += 3;
 		break;
 
-	default: {
-		int old = this->frameState.poseFrame;
-
+	default:
 		this->updateDefaultBehavior();
-		// Fail-safe to prevent softlocks
-		if (old == this->frameState.poseFrame && this->advanceFrame())
-			this->setAction(SokuLib::ACTION_IDLE);
-	}}
+	}
 }
 
 bool Tewi::setAction(short action)

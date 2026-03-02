@@ -30,7 +30,7 @@ private:
 	static constexpr float HAMMER_BACKDASH_DECEL = 1.5;
 	static constexpr float HAMMER_BACKDASH_IMPULSE = -12.75;
 	static constexpr float BACKDASH_DECEL = 2;
-	static constexpr float BACKDASH_IMPULSE = -17.0;
+	static constexpr float BACKDASH_IMPULSE = -12.75;
 	static constexpr float BACKDASH_IMPULSE_UP = 3.5;
 	static constexpr float BACKDASH_GRAVITY = 0.75;
 	static constexpr float HAMMER_BE4_DECEL = 2.25;
@@ -102,7 +102,7 @@ private:
 	static constexpr float HAMMER_BAD_SPEED_X = (-9);
 	static constexpr float HAMMER_BAD_SPEED_Y = 4;
 	static constexpr float HAMMER_BAD_GRAVITY = 0.45;
-	static constexpr float BAD_SPEED_X = (-8);
+	static constexpr float BAD_SPEED_X = (-10.5);
 	static constexpr float BAD_SPEED_Y = 4;
 	static constexpr float BAD_GRAVITY = 0.5;
 

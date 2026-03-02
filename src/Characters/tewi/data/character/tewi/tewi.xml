@@ -5821,7 +5821,19 @@
 			</collision>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
-		<frame image="dashBack001.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="44" texheight="59" xoffset="50" yoffset="119" duration="2" rendergroup="0">
+		<frame image="dashBack001.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="44" texheight="59" xoffset="50" yoffset="119" duration="4" rendergroup="0">
+			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
+				<standing/>
+				<grabinvul/>
+				<melleinvul/>
+				<bulletinvul/>
+			</traits>
+			<collision>
+				<box left="-20" up="-118" right="20" down="-1"/>
+			</collision>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
+		</frame>
+		<frame image="dashBack001.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="44" texheight="59" xoffset="50" yoffset="119" duration="2" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<standing/>
 				<grazing/>
@@ -6173,7 +6185,7 @@
 		</frame>
 	</move>
 	<move id="203" index="0" loop="0" movelock="5" actionlock="4">
-		<frame image="dashBack000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="43" texheight="60" xoffset="50" yoffset="121" duration="1" rendergroup="0">
+		<frame image="dashBack000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="43" texheight="60" xoffset="50" yoffset="121" duration="3" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<airborne/>
 				<grazing/>
@@ -6186,7 +6198,7 @@
 			</hit>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
-		<frame image="dashBack001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="44" texheight="59" xoffset="50" yoffset="119" duration="1" rendergroup="0">
+		<frame image="dashBack001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="44" texheight="59" xoffset="50" yoffset="119" duration="5" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<airborne/>
 				<grazing/>
@@ -6199,7 +6211,7 @@
 			</hit>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
-		<frame image="dashBack002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="53" texheight="65" xoffset="56" yoffset="153" duration="1" rendergroup="0">
+		<frame image="dashBack002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="53" texheight="65" xoffset="56" yoffset="153" duration="2" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<airborne/>
 				<grazing/>
@@ -43503,7 +43515,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="attackHAb011.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="107" texheight="122" xoffset="60" yoffset="243" duration="4" rendergroup="0">
-			<traits damage="1250" proration="900" chipdamage="200" spiritdamage="1000" untech="300" power="100" limit="100" onhitplayerstun="20" onhitenemystun="20" onblockplayerstun="20" onblockenemystun="20" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="88" ongroundhitsetsequence="88" xspeed="1000" yspeed="-5000" onhitsfx="4" onhiteffect="4" attacklevel="3">
+			<traits damage="1250" proration="900" chipdamage="200" spiritdamage="400" untech="300" power="100" limit="100" onhitplayerstun="20" onhitenemystun="20" onblockplayerstun="20" onblockenemystun="20" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="88" ongroundhitsetsequence="88" xspeed="1000" yspeed="-5000" onhitsfx="4" onhiteffect="4" attacklevel="3">
 				<smashmodifier/>
 				<highrightblock/>
 				<airborne/>
