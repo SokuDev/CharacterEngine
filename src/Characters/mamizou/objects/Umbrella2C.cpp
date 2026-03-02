@@ -6,8 +6,6 @@
 
 void Umbrella2C::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->advanceFrame()) {
 		this->lifetime = 0;
 		return;

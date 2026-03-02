@@ -9,8 +9,6 @@
 
 void BucketYoukai::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	this->advanceFrame();
 	this->renderInfos.zRotation -= this->angularVelocity;
 	this->angularAcceleration *= 0.99;

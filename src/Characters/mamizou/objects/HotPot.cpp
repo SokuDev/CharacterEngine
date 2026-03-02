@@ -44,8 +44,8 @@ void HotPot::update()
 	case 2:
 		if (this->frameState.sequenceId == 0)
 			for (int i = 0; i < RING_SIZE * this->renderInfos.scale.x; i++) {
-				int j = (int)(this->position.x + WALL_X * this->renderInfos.scale.x - i);
-				int k = (int)(this->position.x - WALL_X * this->renderInfos.scale.x + i);
+				auto j = static_cast<int>(this->position.x + WALL_X * this->renderInfos.scale.x - i);
+				auto k = static_cast<int>(this->position.x - WALL_X * this->renderInfos.scale.x + i);
 
 				if (j >= 0 && j < 1280)
 					SokuLib::v2::groundHeight[j] = 0;
@@ -90,8 +90,8 @@ void HotPot::update()
 		}
 		if (this->frameState.sequenceId == 0)
 			for (int i = 0; i < RING_SIZE * this->renderInfos.scale.x; i++) {
-				int j = (int)(this->position.x + WALL_X * this->renderInfos.scale.x - i);
-				int k = (int)(this->position.x - WALL_X * this->renderInfos.scale.x + i);
+				auto j = static_cast<int>(this->position.x + WALL_X * this->renderInfos.scale.x - i);
+				auto k = static_cast<int>(this->position.x - WALL_X * this->renderInfos.scale.x + i);
 
 				if (j >= 0 && j < 1280)
 					SokuLib::v2::groundHeight[j] = HITBOX_Y * this->renderInfos.scale.y;

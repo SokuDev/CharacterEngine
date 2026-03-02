@@ -23,8 +23,6 @@ void LeafSpawner::update()
 {
 	float params[3];
 
-	if (this->parentPlayerB->timeStop)
-		return;
 	switch (this->frameState.sequenceId) {
 	case 0:
 	case 3:

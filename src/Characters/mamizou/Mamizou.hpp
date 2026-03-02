@@ -21,7 +21,7 @@ private:
 	static constexpr unsigned TIMER_MAX = 450;
 	static constexpr unsigned TIMER_DELAY = 150;
 	static constexpr unsigned SPELL_TIMER_MAX = 900;
-	static constexpr unsigned DEBUFF_TIMER_MAX = 600;
+	static constexpr unsigned DEBUFF_TIMER_MAX = 450;
 
 	friend class TimerDebuffGui;
 	friend class TimerSpellGui;
@@ -60,7 +60,6 @@ private:
 	bool _transformedCooldown = false;
 	bool _transformed = false;
 	bool _init = false;
-	bool _forward = true;
 	bool _neverTransformed = true;
 	bool _stayTransformed = true;
 	TransformKind _transformKind = KIND_TIMER;
@@ -70,6 +69,7 @@ private:
 	SokuLib::Map<int, SokuLib::v2::CharacterSequenceData *> _spellMelees;
 	std::deque<SokuLib::v2::CharacterSequenceData> _spellMeleesStorage;
 	std::set<std::pair<unsigned short, unsigned short>> _restingActions;
+	unsigned char *_characterBuffer;
 
 	static constexpr float BACKDASH_DECEL = 2;
 	static constexpr float BACKDASH_IMPULSE = -10.0;

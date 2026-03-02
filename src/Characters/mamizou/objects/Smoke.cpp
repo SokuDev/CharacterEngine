@@ -22,6 +22,7 @@ void Smoke::update()
 
 void Smoke::initializeAction()
 {
+	this->ignoreOwnerTimestop = 1;
 	this->renderInfos.scale.x = this->customData[5];
 	this->renderInfos.scale.y = this->customData[6];
 	this->renderInfos.zRotation = SokuLib::rand(360);

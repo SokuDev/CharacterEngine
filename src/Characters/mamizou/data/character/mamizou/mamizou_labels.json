@@ -31,6 +31,11 @@
 	"562": "j.d.236b ()",
 	"563": "j.d.236c ()",
 
+	"600": "Transformation \"Bunbuku Hot Soup Bath\"",
+	"602": "Transformation \"Gate of Hundred Demons\"",
+	"603": "Transformation \"Futatsuiwa Clan's Curse\"",
+	"604": "Transformation \"Ultimate Technique\"",
+
 	"800": "B objects",
 	"801": "6C objects",
 	"802": "Smoke objects",
@@ -43,5 +48,10 @@
 	"809": "j.8A objects",
 	"810": "d623 objects",
 	"820": "d214 objects",
-	"825": "d236 objects"
+	"825": "d236 objects",
+
+	"850": "Bunbuku Hot Soup Bath objects",
+	"852": "Gate of Hundred Demons objects",
+	"853": "Futatsuiwa Clan's Curse objects",
+	"854": "Ultimate Technique objects"
 }

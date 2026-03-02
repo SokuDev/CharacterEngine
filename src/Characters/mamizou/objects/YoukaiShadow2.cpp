@@ -8,13 +8,12 @@
 
 void YoukaiShadow2::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->parentPlayerB->frameState.actionId != this->customData[0])
 		this->lifetime = 0;
-	if (this->parentPlayerB->timeStop || this->parentPlayerB->hitStop)
+	this->position.x = this->parentPlayerB->position.x + this->parentPlayerB->speed.x;
+	this->position.y = this->parentPlayerB->position.y + this->parentPlayerB->speed.y;
+	if (this->parentPlayerB->hitStop && this->parentPlayerB->frameState.actionId == SokuLib::ACTION_j6A)
 		return;
-	this->position = this->parentPlayer->position + this->parentPlayer->speed;
 	if (this->advanceFrame() || this->frameState.currentFrame == 0) {
 		this->lifetime = 0;
 		return;

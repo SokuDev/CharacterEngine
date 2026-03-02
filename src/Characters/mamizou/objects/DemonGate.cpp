@@ -13,6 +13,7 @@ void DemonGate::update()
 
 	switch (this->frameState.sequenceId) {
 	case 0:
+		this->ignoreOwnerTimestop = 1;
 		this->advanceFrame();
 		this->position.x = this->parentPlayerB->position.x;
 		if (this->disappearing == 0) {
@@ -53,6 +54,7 @@ void DemonGate::update()
 		}
 		break;
 	case 19:
+		this->ignoreOwnerTimestop = 1;
 		this->advanceFrame();
 		this->position.x = this->parentPlayerB->position.x;
 		if (!this->parentObject || this->parentObject->disappearing) {
