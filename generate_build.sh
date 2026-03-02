@@ -26,7 +26,6 @@ if ! type jq; then
 	}
 fi
 
-CHARACTER="$2"
 OUTPUT="$(realpath $1)"
 cd "$(dirname $0)"
 
@@ -94,7 +93,7 @@ generate_character() {
 	fi
 }
 
-if [ -z "$CHARACTER" ]; then
+if [ $# -eq 1 ]; then
 	cmake --build $OUTPUT --target CharacterEngine -- $OPTIONS || exit
 	cmake --build $OUTPUT --target Soku2Loader -- $OPTIONS || exit
 
@@ -128,5 +127,8 @@ if [ -z "$CHARACTER" ]; then
 	echo "Generating CharacterEngine.zip"
 	zip ../CharacterEngine.zip -r .
 else
-	generate_character "$CHARACTER"
+	while [ $# -ge 2 ]; do
+		generate_character "$2"
+		shift
+	done
 fi
