@@ -41,6 +41,8 @@ add_library(
 	src/CharacterLoader/giuroll.hpp
 	src/CharacterLoader/scenes.cpp
 	src/CharacterLoader/scenes.hpp
+	src/CharacterLoader/CharacterEngineABI.cpp
+	src/CharacterLoader/CharacterEngineABI.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_include_directories("${PROJECT_NAME}" PRIVATE include SokuLib/directx "src/Common/")
@@ -78,6 +80,9 @@ add_library(
 	src/Common/Memory.hpp
 	src/Common/AnglableObject.cpp
 	src/Common/AnglableObject.hpp
+	src/Common/CharacterEngine.hpp
+	src/Common/CharacterEngineABI.cpp
+	src/Common/CharacterEngineABI.hpp
 )
 target_link_libraries(
 	CharacterEngineLibrary

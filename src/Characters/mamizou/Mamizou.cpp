@@ -6,6 +6,8 @@
 #include <map>
 #include <dinput.h>
 #include "Mamizou.hpp"
+
+#include "CharacterEngineABI.hpp"
 #include "MamizouObjectFactory.hpp"
 #include "GameObjectList.hpp"
 
@@ -189,7 +191,7 @@ Mamizou::Mamizou(SokuLib::PlayerInfo &info) :
 		else
 			extra.palette = -extra.palette - 1;
 		extra.effectiveDeck.clear();
-		this->_transformPlayer = SokuLib::v2::GameDataManager::createPlayer(extra);
+		this->_transformPlayer = abiPointer->createCharacter(extra.character, extra);
 		for (auto obj : this->_transformPlayer->objectList->getList())
 			this->_restingActions.emplace(obj->frameState.actionId, obj->frameState.sequenceId);
 		this->objectList = new MamizouGameObjectList(*this, *this->_transformPlayer, this->_restingActions);
@@ -203,7 +205,7 @@ Mamizou::Mamizou(SokuLib::PlayerInfo &info) :
 
 Mamizou::~Mamizou()
 {
-	delete this->_transformPlayer;
+	abiPointer->destroyCharacter(this->_transformPlayer);
 	for (auto &card : this->_opponentSpellCards)
 		SokuLib::textureMgr.remove(card.second);
 	for (auto &card : this->_allOpponentSpellCards)

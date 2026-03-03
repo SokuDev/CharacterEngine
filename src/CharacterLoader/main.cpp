@@ -10,6 +10,7 @@
 #include "Memory.hpp"
 #include "log.hpp"
 #include "cardSave.hpp"
+#include "CharacterEngineABI.hpp"
 #include "checkSoku2.hpp"
 #include "scenes.hpp"
 #include "giuroll.hpp"
@@ -20,7 +21,6 @@ static std::vector<unsigned> characterSelectIndices;
 static SokuLib::Dequeue<unsigned short> cards;
 static std::vector<SokuLib::Sprite> extraSprites;
 static wchar_t profilePath[MAX_PATH];
-static std::map<void *, std::unique_ptr<CharacterModule>> loadedModules;
 static void (*og_loadDat)(const char *path);
 
 static std::vector<int> chrSelectNameTextures;
@@ -29,51 +29,11 @@ static std::vector<int> chrSelectPortraitTextures;
 static std::vector<SokuLib::Sprite> chrSelectPortraitSprites;
 
 
-std::vector<CharacterModule> modules;
-
-
 void loadExtraDatFiles(const char *path)
 {
 	og_loadDat(path);
 	for (auto &module : modules)
 		SokuLib::v2::loadDatFile((module.getFolder() / module.getData()).string().c_str());
-}
-
-static SokuLib::v2::Player *createCustomCharacter(int id, SokuLib::PlayerInfo &info)
-{
-	CharacterModule *module = nullptr;
-
-	if (id < 0)
-		module = &modules[-id - 1];
-	else for (auto &i : modules)
-		if (i.getIndex() == id) {
-			 module = &i;
-			 break;
-		}
-	if (!module)
-		return nullptr;
-
-	module = new CharacterModule(*module);
-	while (true) {
-		try {
-			module->load();
-		} catch (std::exception &e) {
-			if (MessageBoxA(nullptr, ("Failed to create character: " + std::string(e.what())).c_str(), "CharacterEngine error", MB_RETRYCANCEL) == IDCANCEL)
-				return nullptr;
-			continue;
-		}
-		try {
-			auto chr = module->build(info);
-
-			loadedModules[chr].reset(module);
-			module->registerGR();
-			return chr;
-		} catch (std::exception &e) {
-			delete module;
-			if (MessageBoxA(nullptr, ("Failed to create character: " + std::string(e.what())).c_str(), "CharacterEngine error", MB_RETRYCANCEL) == IDCANCEL)
-				return nullptr;
-		}
-	}
 }
 
 static const unsigned createCustomCharacter_hook_ret = 0x46DE25;
@@ -84,7 +44,7 @@ static void __declspec(naked) createCustomCharacter_hook()
 		PUSH EDX
 		PUSH EDI
 		PUSH EAX
-		CALL createCustomCharacter
+		CALL createCharacter
 		ADD ESP, 8
 		POP EDX
 		POP ECX
@@ -264,10 +224,7 @@ void loadCharacterModules()
 
 void __fastcall onCharacterDeleted(void *This)
 {
-	auto it = loadedModules.find(This);
-
-	if (it != loadedModules.end())
-		loadedModules.erase(it);
+	loadedModules.erase(This);
 }
 
 void generateSoku2Files()

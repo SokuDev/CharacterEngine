@@ -2,6 +2,7 @@
 // Created by PinkySmile on 08/10/24.
 //
 
+#include "./CharacterEngineABI.hpp"
 #include "Memory.hpp"
 #include "CharacterModule.hpp"
 #include "giuroll.hpp"
@@ -68,6 +69,11 @@ void CharacterModule::load()
 		this->_getObjectSize = reinterpret_cast<size_t (*)()>(GetProcAddress(this->_module, "getObjectSize"));
 		if (!this->_getObjectSize)
 			throw std::runtime_error("Cannot load " + path.string() + ": GetProcAddress(\"getObjectSize\"): " + GetLastErrorAsString());
+
+		if (auto abiPtr = reinterpret_cast<CharacterEngineABI **>(GetProcAddress(this->_module, "abiPointer")))
+			*abiPtr = &abi;
+		else
+			printf("This module doesn't require the abi\n");
 	} catch (...) {
 		FreeLibrary(this->_module);
 		this->_module = nullptr;
@@ -85,11 +91,24 @@ void CharacterModule::unload()
 
 void CharacterModule::registerGR() const
 {
-	GiuRoll::setCharDataPos(this->_index, this->_getCharacterSize(), this->_getObjectSize());
+	GiuRoll::setCharDataPos(this->_index, this->getCharacterSize(), this->getObjectSize());
+}
+
+size_t CharacterModule::getObjectSize() const
+{
+	assert_exp_mt(this->_getObjectSize);
+	return this->_getObjectSize();
+}
+
+size_t CharacterModule::getCharacterSize() const
+{
+	assert_exp_mt(this->_getCharacterSize);
+	return this->_getCharacterSize();
 }
 
 SokuLib::v2::Player *CharacterModule::build(SokuLib::PlayerInfo &p) const
 {
+	assert_exp_mt(this->_buildCharacter);
 	return this->_buildCharacter(p);
 }
 
