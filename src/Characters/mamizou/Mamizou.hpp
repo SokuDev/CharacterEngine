@@ -70,6 +70,9 @@ private:
 	std::deque<SokuLib::v2::CharacterSequenceData> _spellMeleesStorage;
 	std::set<std::pair<unsigned short, unsigned short>> _restingActions;
 	unsigned char *_characterBuffer;
+	Player *_dummyCharacter;
+	size_t _bufferSize;
+	SokuLib::v2::CharacterSequenceData *_back;
 
 	static constexpr float BACKDASH_DECEL = 2;
 	static constexpr float BACKDASH_IMPULSE = -10.0;
@@ -116,6 +119,8 @@ private:
 	static constexpr float BAD_SPEED_X = (-8);
 	static constexpr float BAD_SPEED_Y = 3.5;
 	static constexpr float BAD_GRAVITY = 0.35;
+
+	void _fillCharacterBuffer();
 
 	bool _tryDoUntransformedMove(bool cardsOnly, bool spellsOnly);
 

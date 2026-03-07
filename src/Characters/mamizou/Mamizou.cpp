@@ -11,9 +11,9 @@
 #include "MamizouObjectFactory.hpp"
 #include "GameObjectList.hpp"
 
-// #ifndef _DEBUG
-// #define printf(...)
-// #endif
+#ifndef _DEBUG
+#define printf(...)
+#endif
 
 #define dashTimer gpShort[0]
 #define flightTargetAngle gpShort[1]
@@ -53,6 +53,7 @@ private:
 	SokuLib::List<SokuLib::v2::GameObject *> _mergedList;
 	SokuLib::v2::Player &_other;
 	Mamizou &_me;
+	std::vector<SokuLib::v2::GameObject *> _tmpObjects;
 
 public:
 	inline MamizouGameObjectList(Mamizou &player, SokuLib::v2::Player &other, const std::set<std::pair<unsigned short, unsigned short>> &restingActions) :
@@ -63,12 +64,6 @@ public:
 	{
 	}
 	~MamizouGameObjectList() override = default;
-
-	void restoreAlly(SokuLib::v2::Player *p) const
-	{
-		for (auto obj : this->_other.objectList->getList())
-			obj->gameData.ally = p;
-	}
 
 	void clear() override
 	{
@@ -85,7 +80,11 @@ public:
 	void update() override
 	{
 		GameObjectList::update();
-		this->restoreAlly(&this->_other);
+		for (auto obj : this->_other.objectList->getList())
+			if (obj->gameData.owner == this->_me._dummyCharacter)
+				obj->gameData.ally = this->_me._dummyCharacter;
+			else
+				obj->gameData.ally = &this->_other;
 		if (this->_me._transformed) {
 			this->_me._preTransformCall();
 			this->_other.objectList->update();
@@ -95,7 +94,8 @@ public:
 			this->_other.objectList->update();
 			this->_me._postUntransformCall();
 		}
-		this->restoreAlly(this->_player);
+		for (auto obj : this->_other.objectList->getList())
+			obj->gameData.ally = this->_player;
 	}
 
 	void render1(char layer) override
@@ -105,6 +105,8 @@ public:
 			return this->_other.objectList->render1(layer);
 
 		for (auto &o : this->_other.objectList->getList()) {
+			if (o->isGui)
+				continue;
 			if (this->_restingActions.contains({o->frameState.actionId, o->frameState.sequenceId}))
 				continue;
 			if (o->layer != layer)
@@ -124,9 +126,12 @@ public:
 		GameObjectList::render2();
 		if (this->_me._transformed)
 			return this->_other.objectList->render2();
-		for (auto o : this->_list)
+		for (auto o : this->_list) {
+			if (o->isGui)
+				continue;
 			if (!this->_restingActions.contains({o->frameState.actionId, o->frameState.sequenceId}))
 				o->render2();
+		}
 	}
 
 	void updateCamera() override
@@ -192,6 +197,9 @@ Mamizou::Mamizou(SokuLib::PlayerInfo &info) :
 			extra.palette = -extra.palette - 1;
 		extra.effectiveDeck.clear();
 		this->_transformPlayer = abiPointer->createCharacter(extra.character, extra);
+		this->_bufferSize = abiPointer->getCharacterSize(extra.character);
+		this->_characterBuffer = new unsigned char[this->_bufferSize];
+		this->_dummyCharacter = reinterpret_cast<Player *>(this->_characterBuffer);
 		for (auto obj : this->_transformPlayer->objectList->getList())
 			this->_restingActions.emplace(obj->frameState.actionId, obj->frameState.sequenceId);
 		this->objectList = new MamizouGameObjectList(*this, *this->_transformPlayer, this->_restingActions);
@@ -205,6 +213,7 @@ Mamizou::Mamizou(SokuLib::PlayerInfo &info) :
 
 Mamizou::~Mamizou()
 {
+	delete[] this->_characterBuffer;
 	abiPointer->destroyCharacter(this->_transformPlayer);
 	for (auto &card : this->_opponentSpellCards)
 		SokuLib::textureMgr.remove(card.second);
@@ -454,9 +463,32 @@ void Mamizou::update()
 				return;
 			}
 		}
-		this->_preTransformCall();
-		this->_transformPlayer->update();
-		this->_postTransformCall();
+		if (this->_transformKind == KIND_SPELL_TIMER) {
+			auto list = this->_transformPlayer->objectList->getList();
+
+			this->_fillCharacterBuffer();
+			this->_preTransformCall();
+			this->_transformPlayer->update();
+			this->_postTransformCall();
+
+			// Mark all objects created during the spell
+			auto newList = this->_transformPlayer->objectList->getList();
+			auto it = newList.end();
+
+			// New objects are appended at the end of the list
+			while (it != newList.begin()) {
+				--it;
+				if (std::find(list.begin(), list.end(), *it) != list.end())
+					break;
+				(*it)->gameData.owner = this->_dummyCharacter;
+			}
+			return;
+		} else {
+			this->_fillCharacterBuffer();
+			this->_preTransformCall();
+			this->_transformPlayer->update();
+			this->_postTransformCall();
+		}
 		if (this->_transformed && this->_transformKind == KIND_SINGLE_HIT && oldAction > this->frameState.actionId && oldAction >= SokuLib::ACTION_5A) {
 			this->_unTransform();
 			this->setAction(this->isOnGround() ? ACTION_a1_22b_UNTRANSFORM : ACTION_ja1_22b_UNTRANSFORM);
@@ -466,6 +498,7 @@ void Mamizou::update()
 		this->_transformPlayer->position = this->position;
 		this->_transformPlayer->speed = {0, 0};
 		this->riverMistAdditionalSpeed = 0;
+		this->_fillCharacterBuffer();
 		this->_preUntransformCall();
 		this->_transformPlayer->update();
 		this->_postUntransformCall();
@@ -1334,36 +1367,11 @@ void Mamizou::update()
 		if (this->advanceFrame())
 			this->setAction(SokuLib::ACTION_CROUCHED);
 		if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
-			float params[5] = {
-				-90, 10, 0,
-				this->position.x + (float)(this->direction * 90),
-				this->position.y + 30
-			};
-
+			params[2] = 10;
 			this->consumeSpirit(200, 40);
 			this->addCardMeter(20);
 			this->createObject(800, this->position.x + (this->direction * 40), this->position.y + 48, this->direction, 1, params);
-			this->playSFX(4);
-		}
-		if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0) {
-			float params[5] = {
-				-90, 10, 0,
-				this->position.x + (float)(this->direction * 140),
-				this->position.y + 30
-			};
-
-			this->createObject(800, this->position.x + (this->direction * 40), this->position.y + 48, this->direction, 1, params);
-			this->playSFX(4);
-		}
-		if (this->frameState.poseId == 6 && this->frameState.poseFrame == 0) {
-			float params[5] = {
-				-90, 10, 0,
-				this->position.x + (float)(this->direction * 190),
-				this->position.y + 30
-			};
-
-			this->createObject(800, this->position.x + (this->direction * 40), this->position.y + 48, this->direction, 1, params);
-			this->playSFX(4);
+			this->playSFX(3);
 		}
 		break;
 	case SokuLib::ACTION_6B:
@@ -3167,6 +3175,14 @@ void Mamizou::_processInputsGrounded()
 		return;
 }
 
+void Mamizou::_fillCharacterBuffer()
+{
+	memcpy(this->_characterBuffer, this->_transformPlayer, this->_bufferSize);
+	this->_dummyCharacter->gameData.owner = this->_dummyCharacter;
+	this->_dummyCharacter->gameData.ally  = this->_dummyCharacter;
+	this->_dummyCharacter->attackPower    = this->attackPower;
+}
+
 bool Mamizou::_tryDoUntransformedMove(bool cardsOnly, bool spellsOnly)
 {
 	auto frameFlags = this->_transformPlayer->gameData.frameData->frameFlags;
@@ -3631,11 +3647,8 @@ static bool pasteOnTop(LPDIRECT3DTEXTURE9 *output, LPDIRECT3DTEXTURE9 *input)
 {
 	D3DLOCKED_RECT resultRect;
 	D3DLOCKED_RECT originalRect;
-	SokuLib::Color *resultPixels;
-	SokuLib::Color *originalPixels;
-	HRESULT hret;
 
-	hret = (*input)->LockRect(0, &originalRect, nullptr, 0);
+	HRESULT hret = (*input)->LockRect(0, &originalRect, nullptr, 0);
 	if (FAILED(hret)) {
 		fprintf(stderr, "(*input)->LockRect(0, &r, nullptr, D3DLOCK_DISCARD) failed with code %li\n", hret);
 		return false;
@@ -3647,8 +3660,8 @@ static bool pasteOnTop(LPDIRECT3DTEXTURE9 *output, LPDIRECT3DTEXTURE9 *input)
 		return false;
 	}
 
-	resultPixels   = (SokuLib::Color *)resultRect.pBits;
-	originalPixels = (SokuLib::Color *)originalRect.pBits;
+	auto *resultPixels   = static_cast<SokuLib::Color *>(resultRect.pBits);
+	auto *originalPixels = static_cast<SokuLib::Color *>(originalRect.pBits);
 
 	for (int y = 0; y < 65; y++)
 		for (int x = 0; x < 41; x++)
@@ -3669,6 +3682,7 @@ void Mamizou::initialize()
 	Player::initialize();
 	if (!this->_transformPlayer)
 		return;
+	this->_back = (*this->gameData.patternMap)[5];
 	this->_transformPlayer->initialize();
 	this->_transformPlayer->setAction(SokuLib::ACTION_IDLE);
 	this->_addRainbowGui();
@@ -3687,7 +3701,8 @@ void Mamizou::initialize()
 	card2CostTexture.loadFromGame("data/card/mamizou/card_2cost.bmp");
 	card5CostTexture.loadFromGame("data/card/mamizou/card_5cost.bmp");
 
-	auto texture = card2CostTexture.getDXTexture();
+	auto texture2 = card2CostTexture.getDXTexture();
+	auto texture5 = card5CostTexture.getDXTexture();
 	std::map<unsigned, int> map;
 
 	do {
@@ -3708,7 +3723,7 @@ void Mamizou::initialize()
 				// TODO: Spawn an effect on top of the card
 				if (!SokuLib::textureMgr.loadTexture(&ret, buffer, nullptr, nullptr))
 					ret = 0;
-				else if (!pasteOnTop(SokuLib::textureMgr.Get(ret), card2CostTexture.getDXTexture())) {
+				else if (!pasteOnTop(SokuLib::textureMgr.Get(ret), texture2)) {
 					SokuLib::textureMgr.deallocate(ret);
 					ret = 0;
 				}
@@ -3722,7 +3737,7 @@ void Mamizou::initialize()
 
 			if (!SokuLib::textureMgr.loadTexture(&ret, buffer, nullptr, nullptr))
 				ret = 0;
-			else if (!pasteOnTop(SokuLib::textureMgr.Get(ret), card5CostTexture.getDXTexture())) {
+			else if (!pasteOnTop(SokuLib::textureMgr.Get(ret), texture5)) {
 				SokuLib::textureMgr.deallocate(ret);
 				ret = 0;
 			}

@@ -19,6 +19,12 @@
 #define FROG_GRAVITY 0.75
 #define FROG_IDLE_TIME 10
 
+#define RABBIT_SPEED_X 20
+#define RABBIT_JUMP_IMPULS 5
+#define RABBIT_GRAVITY 0.5
+#define RABBIT_IDLE_TIME 4
+
+
 void LeafSpawner::update()
 {
 	float params[3];
@@ -121,8 +127,51 @@ void LeafSpawner::update()
 		if (this->position.x > 1380)
 			this->lifetime = 0;
 		break;
+	case 10:
+		this->renderInfos.yRotation += 10;
+		while (this->renderInfos.yRotation > 180)
+			this->renderInfos.yRotation -= 360;
+		while (this->renderInfos.yRotation < -180)
+			this->renderInfos.yRotation += 360;
+		if (this->disabled) {
+			if (this->renderInfos.color.a < 20) {
+				this->lifetime = 0;
+				return;
+			}
+			this->renderInfos.color.a -= 20;
+			this->renderInfos.scale.x -= 0.075;
+			this->renderInfos.scale.y = this->renderInfos.scale.x;
+			break;
+		}
+		if (this->gpShort[2]) {
+			this->gpShort[2]--;
+			if (this->gpShort[2] == 0)
+				this->speed.y = RABBIT_JUMP_IMPULS;
+		} else {
+			this->position.x += RABBIT_SPEED_X * this->direction;
+			this->position.y += this->speed.y;
+			this->speed.y -= this->gravity.y;
+			if (this->position.y - 20 < this->getGroundHeight())
+				this->gpShort[2] = RABBIT_IDLE_TIME;
+		}
+		if (this->checkTurnIntoCrystals(false, 2, 5)) {
+			this->lifetime = 0;
+			return;
+		}
+		if (this->checkGrazed(10) || this->checkProjectileHit(1)) {
+			this->disabled = true;
+			return;
+		}
+		if (this->collisionType)
+			this->disabled = true;
+		if (this->position.x < -100)
+			this->lifetime = 0;
+		if (this->position.x > 1380)
+			this->lifetime = 0;
+		break;
 	case 2:
 	case 5:
+	case 11:
 		if (!this->parentB) {
 			this->lifetime = 0;
 			return;
@@ -139,6 +188,8 @@ void LeafSpawner::update()
 
 void LeafSpawner::initializeAction()
 {
+	float params[3];
+
 	this->setSequence(this->customData[2]);
 	switch (this->frameState.sequenceId) {
 	case 0:
@@ -149,5 +200,12 @@ void LeafSpawner::initializeAction()
 		this->stepX = (this->customData[3] - this->position.x) / LEAF_SPAWN_TIME;
 		this->stepY = (this->customData[4] - this->position.y) / LEAF_SPAWN_TIME;
 		break;
+	case 10:
+		params[2] = 11;
+		this->collisionLimit = 1;
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->gravity.y = RABBIT_GRAVITY;
+		this->speed.y = RABBIT_JUMP_IMPULS;
+		this->createChild(this->frameState.actionId, this->position.x, this->position.y, this->direction, 1, params);
 	}
 }
