@@ -10,11 +10,62 @@
 
 std::vector<CharacterModule> modules;
 std::map<void *, std::shared_ptr<CharacterModule>> loadedModules;
+static std::array<size_t, 22> baseCharacterSize = {
+	sizeof(SokuLib::v2::PlayerReimu),
+	sizeof(SokuLib::v2::PlayerMarisa),
+	sizeof(SokuLib::v2::PlayerSakuya),
+	sizeof(SokuLib::v2::PlayerAlice),
+	sizeof(SokuLib::v2::PlayerPatchouli),
+	sizeof(SokuLib::v2::PlayerYoumu),
+	sizeof(SokuLib::v2::PlayerRemilia),
+	sizeof(SokuLib::v2::PlayerYuyuko),
+	sizeof(SokuLib::v2::PlayerYukari),
+	sizeof(SokuLib::v2::PlayerSuika),
+	sizeof(SokuLib::v2::PlayerUdonge),
+	sizeof(SokuLib::v2::PlayerAya),
+	sizeof(SokuLib::v2::PlayerKomachi),
+	sizeof(SokuLib::v2::PlayerIku),
+	sizeof(SokuLib::v2::PlayerTenshi),
+	sizeof(SokuLib::v2::PlayerSanae),
+	sizeof(SokuLib::v2::PlayerChirno),
+	sizeof(SokuLib::v2::PlayerMeirin),
+	sizeof(SokuLib::v2::PlayerUtsuho),
+	sizeof(SokuLib::v2::PlayerSuwako),
+	0,
+	sizeof(SokuLib::v2::PlayerNamazu),
+};
+static std::array<size_t, 22> baseObjectSize = {
+	sizeof(SokuLib::v2::GameObjectReimu),
+	sizeof(SokuLib::v2::GameObjectMarisa),
+	sizeof(SokuLib::v2::GameObjectSakuya),
+	sizeof(SokuLib::v2::GameObjectAlice),
+	sizeof(SokuLib::v2::GameObjectPatchouli),
+	sizeof(SokuLib::v2::GameObjectYoumu),
+	sizeof(SokuLib::v2::GameObjectRemilia),
+	sizeof(SokuLib::v2::GameObjectYuyuko),
+	sizeof(SokuLib::v2::GameObjectYukari),
+	sizeof(SokuLib::v2::GameObjectSuika),
+	sizeof(SokuLib::v2::GameObjectUdonge),
+	sizeof(SokuLib::v2::GameObjectAya),
+	sizeof(SokuLib::v2::GameObjectKomachi),
+	sizeof(SokuLib::v2::GameObjectIku),
+	sizeof(SokuLib::v2::GameObjectTenshi),
+	sizeof(SokuLib::v2::GameObjectSanae),
+	sizeof(SokuLib::v2::GameObjectChirno),
+	sizeof(SokuLib::v2::GameObjectMeirin),
+	sizeof(SokuLib::v2::GameObjectUtsuho),
+	sizeof(SokuLib::v2::GameObjectSuwako),
+	0,
+	sizeof(SokuLib::v2::GameObjectNamazu),
+};
+
 
 size_t getCharacterSize(int id)
 {
-	if (id == INT32_MIN)
-		return 0;
+	assert_exp_ma(id != INT32_MIN);
+	assert_exp_ma(id != SokuLib::CHARACTER_RANDOM);
+	if (id >= 0 && id < baseCharacterSize.size())
+		return baseCharacterSize[id];
 	if (id < 0) {
 		if (-id > modules.size())
 			return 0;
@@ -23,13 +74,15 @@ size_t getCharacterSize(int id)
 	for (auto &module: loadedModules | std::views::values)
 		if (module->getIndex() == id)
 			return module->getCharacterSize();
-	return 0;
+	assert_exp_ma(false);
 }
 
 size_t getObjectSize(int id)
 {
-	if (id == INT32_MIN)
-		return 0;
+	assert_exp_ma(id != INT32_MIN);
+	assert_exp_ma(id != SokuLib::CHARACTER_RANDOM);
+	if (id >= 0 && id < baseObjectSize.size())
+		return baseObjectSize[id];
 	if (id < 0) {
 		if (-id > modules.size())
 			return 0;
@@ -38,7 +91,7 @@ size_t getObjectSize(int id)
 	for (auto &module: loadedModules | std::views::values)
 		if (module->getIndex() == id)
 			return module->getObjectSize();
-	return 0;
+	assert_exp_ma(false);
 }
 
 SokuLib::v2::Player *createCharacter(int id, SokuLib::PlayerInfo &info)
