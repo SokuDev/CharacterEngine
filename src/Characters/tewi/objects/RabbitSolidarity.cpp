@@ -5,6 +5,9 @@
 #include "RabbitSolidarity.hpp"
 #include "../Tewi.hpp"
 
+#define REISEN_SPAWN_DELAY 8
+#define delay gpShort[0]
+
 void RabbitSolidarity::_hammerUpdate()
 {
 	float params[3];
@@ -41,7 +44,7 @@ void RabbitSolidarity::_hammerUpdate()
 		params[2] = 9;
 		this->parentPlayerB->direction = -this->parentPlayerB->direction;
 		this->direction = this->parentPlayerB->direction;
-		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 200 * this->direction, this->gameData.opponent->position.y + 20, this->direction, 2, params);
+		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 200 * this->direction, this->gameData.opponent->position.y + 50, this->direction, 2, params);
 	}
 	if (this->frameState.currentFrame == 265) { // R j.6A
 		params[2] = 16;
@@ -133,6 +136,26 @@ void RabbitSolidarity::update()
 		this->hitStop--;
 		return;
 	}
+	if (this->frameState.sequenceId == 0) {
+		if (this->parentPlayerB->hitStop)
+			return;
+		this->delay++;
+		if (this->delay < REISEN_SPAWN_DELAY)
+			return;
+		if (this->delay == REISEN_SPAWN_DELAY) {
+			this->renderInfos.color.a = 0;
+			this->position = this->gameData.opponent->position;
+			this->position.y += 100;
+			this->gravity = this->gameData.opponent->gravity;
+			this->speed = this->gameData.opponent->speed;
+			if (this->gameData.opponent->direction != this->direction)
+				this->speed.x *= -1;
+			if (this->gameData.opponent->isGrounded()) {
+				this->gravity.y = 0;
+				this->speed.y = 0;
+			}
+		}
+	}
 	if (this->advanceFrame()) {
 		this->lifetime = 0;
 		return;
@@ -151,11 +174,18 @@ void RabbitSolidarity::update()
 				this->renderInfos.color.a = 255;
 		}
 		if (this->collisionType == COLLISION_TYPE_HIT) {
+			auto tewi = static_cast<Tewi *>(this->parentPlayerB);
+			unsigned short action;
+
 			params[2] = 6;
-			((Tewi *)this->parentPlayerB)->setRabbitAnimation();
+			tewi->setRabbitAnimation();
 			this->collisionType = COLLISION_TYPE_NONE;
 			this->parentPlayerB->playSFX(19);
-			this->createObject(this->frameState.actionId, min(1140, max(140, this->position.x)), 225, this->direction, 2, params);
+			if (tewi->getHammer())
+				action = 852;
+			else
+				action = 851;
+			this->createObject(action, min(1140, max(140, this->position.x)), 225, this->direction, 2, params);
 		}
 		if (this->frameState.poseId == 10 && this->frameState.poseFrame == 0)
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
@@ -535,16 +565,7 @@ void RabbitSolidarity::initializeAction()
 	this->collisionLimit = 1;
 	if (!this->customData) {
 		this->renderInfos.color.a = 0;
-		this->position = this->gameData.opponent->position;
-		this->position.y += 100;
-		this->gravity = this->gameData.opponent->gravity;
-		this->speed = this->gameData.opponent->speed;
-		if (this->gameData.opponent->direction != this->direction)
-			this->speed.x *= -1;
-		if (this->gameData.opponent->isGrounded()) {
-			this->gravity.y = 0;
-			this->speed.y = 0;
-		}
+		this->delay = 0;
 		return;
 	}
 	this->renderInfos.color.a = 0;

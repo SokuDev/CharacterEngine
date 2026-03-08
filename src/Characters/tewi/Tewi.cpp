@@ -2922,10 +2922,10 @@ void Tewi::update()
 				this->position.x -= this->speed.x * this->direction;
 			else if (this->speed.x > 0)
 				this->speed.x -= 0.5;
-			if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0)
+			if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
 				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
-			if (this->frameState.poseId == 6 && this->frameState.poseFrame == 0)
 				this->createObject(852, 0, 0, this->direction, 1);
+			}
 		}
 		if (this->frameState.sequenceId == 1) {
 			if (this->frameState.currentFrame == 0) {
@@ -2990,10 +2990,10 @@ void Tewi::update()
 				this->eventSpellUse();
 				this->eventWeatherCycle();
 			}
-			if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0)
+			if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0) {
 				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
-			if (this->frameState.poseId == 7 && this->frameState.poseFrame == 0)
 				this->createObject(851, 0, 0, this->direction, 1);
+			}
 		}
 		if (this->frameState.sequenceId == 1) {
 			if (this->frameState.currentFrame == 0) {
@@ -3085,12 +3085,7 @@ void Tewi::update()
 		if (!this->gameData.frameData->frameFlags.airborne)
 			this->applyGroundMechanics();
 		else if (this->frameState.sequenceId != 1 && this->applyAirMechanics()) {
-			if (this->frameState.sequenceId == 1) {
-				this->speed = {-4, 10};
-				this->gravity.y = FALLING_GRAVITY;
-				this->nextSequence();
-			} else
-				this->setSequence(5);
+			this->setSequence(5);
 			return;
 		}
 		if (this->frameState.sequenceId != 1)
