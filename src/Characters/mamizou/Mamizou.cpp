@@ -1836,88 +1836,16 @@ void Mamizou::update()
 	case ACTION_d236b:
 	case ACTION_d236c:
 		this->skillIndex = 3;
-		if (this->advanceFrame()) {
-			this->setAction(SokuLib::ACTION_FALLING);
-			break;
-		}
 		this->applyGroundMechanics();
-		if (this->collisionType == COLLISION_TYPE_GRAZED) {
-			this->collisionType = COLLISION_TYPE_NONE;
-			this->collisionLimit = 1;
-		}
-		if (this->frameState.poseId == 8)
-			this->collisionType = COLLISION_TYPE_HIT;
-		if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
-			if (this->frameState.actionId == ACTION_d236b)
-				params[0] = 0;
-			else
-				params[0] = -35;
-			params[1] = 0;
-			params[2] = 0;
-			this->createObject(825, this->position.x, this->position.y + 110, this->direction, -1, params);
-			params[2] = 1;
-			this->createObject(825, this->position.x, this->position.y + 110, this->direction, 1, params);
-			this->playSFX(5);
-		}
-		if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
-			if (this->frameState.actionId == ACTION_d236b)
-				params[0] = 70;
-			else
-				params[0] = 35;
-			params[1] = 0;
-			params[2] = 2;
-			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
-			this->createObject(825, this->position.x + this->direction * 30, this->position.y + 110, this->direction, 1, params);
-			this->addCardMeter(70);
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.poseId == 1 && this->frameState.poseFrame == 0) {
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
-		}
-		break;
-
-	case ACTION_jd236b:
-	case ACTION_jd236c:
-		this->skillIndex = 3;
-		if (this->advanceFrame()) {
-			this->setAction(SokuLib::ACTION_FALLING);
-			break;
-		}
-		if (this->applyAirMechanics()) {
-			this->setAction(SokuLib::ACTION_LANDING);
-			break;
-		}
-		if (this->collisionType == COLLISION_TYPE_GRAZED) {
-			this->collisionType = COLLISION_TYPE_NONE;
-			this->collisionLimit = 1;
-		}
-		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
-			if (this->frameState.actionId == ACTION_jd236b)
-				params[0] = 50;
-			else
-				params[0] = -35;
-			params[1] = 0;
-			params[2] = 0;
-			this->createObject(825, this->position.x, this->position.y + 110, this->direction, -1, params);
-			params[2] = 1;
-			this->createObject(825, this->position.x, this->position.y + 110, this->direction, 1, params);
-			this->playSFX(5);
-		}
-		if (this->frameState.sequenceId == 1 && this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
-			if (this->frameState.actionId == ACTION_jd236b)
-				params[0] = 120;
-			else
-				params[0] = 35;
-			params[1] = 0;
-			params[2] = 2;
-			SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
-			this->createObject(825, this->position.x + this->direction * 30, this->position.y + 110, this->direction, 1, params);
 			this->addCardMeter(70);
-			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
-		}
-		if (this->frameState.sequenceId == 2 && this->frameState.currentFrame == 10)
 			this->collisionType = COLLISION_TYPE_HIT;
-		if ((this->frameState.sequenceId == 2 && this->frameState.currentFrame >= 10) || this->frameState.sequenceId == 3)
-			this->speed.y -= this->gravity.y;
-		if (this->frameState.sequenceId == 2 && this->frameState.currentFrame == 20)
-			this->nextSequence();
+			params[2] = this->frameState.actionId - ACTION_d236b;
+			this->createObject(825, this->position.x, this->position.y, this->direction, -1, params);
+		}
 		break;
 
 	case ACTION_a1_22b:
@@ -2486,8 +2414,6 @@ void Mamizou::initializeAction()
 		break;
 	case ACTION_d236b:
 	case ACTION_d236c:
-	case ACTION_jd236b:
-	case ACTION_jd236c:
 		this->gravity.y = 0.6;
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
@@ -2698,11 +2624,6 @@ bool Mamizou::_processSkillsAirborne()
 	if (this->_useSkill(this->inputData.commandCombination._214b, 2, ACTION_jd214b))
 		return true;
 	if (this->_useSkill(this->inputData.commandCombination._214c, 2, ACTION_jd214c))
-		return true;
-
-	if (this->_useSkill(this->inputData.commandCombination._236b, 3, ACTION_jd236b))
-		return true;
-	if (this->_useSkill(this->inputData.commandCombination._236c, 3, ACTION_jd236c))
 		return true;
 
 	bool used22 = this->inputData.commandCombination._22b || this->inputData.commandCombination._22c;
