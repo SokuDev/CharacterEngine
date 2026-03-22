@@ -11,9 +11,9 @@
 #include "MamizouObjectFactory.hpp"
 #include "GameObjectList.hpp"
 
-#ifndef _DEBUG
-#define printf(...)
-#endif
+// #ifndef _DEBUG
+// #define printf(...)
+// #endif
 
 #define dashTimer gpShort[0]
 #define flightTargetAngle gpShort[1]
@@ -497,7 +497,6 @@ void Mamizou::update()
 	} else if (this->_transformPlayer) {
 		this->_transformPlayer->position = this->position;
 		this->_transformPlayer->speed = {0, 0};
-		this->riverMistAdditionalSpeed = 0;
 		this->_fillCharacterBuffer();
 		this->_preUntransformCall();
 		this->_transformPlayer->update();
@@ -3986,6 +3985,8 @@ void Mamizou::_preTransformCall()
 	this->_transformPlayer->gravity = this->gravity;
 	this->_transformPlayer->speed = this->speed;
 	this->_transformPlayer->position = this->position;
+	this->_transformPlayer->riverMistTimer = this->riverMistTimer;
+	this->_transformPlayer->riverMistAdditionalSpeed = 0;
 }
 
 void Mamizou::_postTransformCall()
@@ -4021,7 +4022,7 @@ void Mamizou::_postTransformCall()
 	this->gravity = this->_transformPlayer->gravity;
 	this->collisionType = this->_transformPlayer->collisionType;
 	this->collisionLimit = this->_transformPlayer->collisionLimit;
-	this->riverMistAdditionalSpeed = this->_transformPlayer->riverMistAdditionalSpeed;
+	this->riverMistAdditionalSpeed += this->_transformPlayer->riverMistAdditionalSpeed;
 	this->unknown4AC = this->_transformPlayer->unknown4AC;
 
 	this->grazeTimer = this->_transformPlayer->grazeTimer;
