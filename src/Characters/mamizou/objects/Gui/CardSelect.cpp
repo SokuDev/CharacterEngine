@@ -21,6 +21,7 @@ void CardSelect::update()
 
 void CardSelect::initializeAction()
 {
+	this->ignoreOwnerTimestop = 1;
 }
 
 void CardSelect::onRenderEnd()

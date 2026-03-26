@@ -65,6 +65,8 @@ add_library(
 	objects/Gui/CardSelect.hpp
 	objects/DemonGate.cpp
 	objects/DemonGate.hpp
+	objects/YoumuClone.cpp
+	objects/YoumuClone.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)

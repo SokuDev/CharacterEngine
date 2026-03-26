@@ -33,6 +33,7 @@ void StackGui::update()
 
 void StackGui::initializeAction()
 {
+	this->ignoreOwnerTimestop = 1;
 	this->isGui = true;
 	if (!this->parentB)
 		this->createChild(this->frameState.actionId, this->position.x + 3, this->position.y - 3, this->direction, this->layer);

@@ -83,6 +83,7 @@ add_library(
 	src/Common/CharacterEngine.hpp
 	src/Common/CharacterEngineABI.cpp
 	src/Common/CharacterEngineABI.hpp
+	src/Common/StackTrace.hpp
 )
 target_link_libraries(
 	CharacterEngineLibrary

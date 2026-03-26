@@ -96,6 +96,7 @@ void TimerGui::update()
 
 void TimerGui::initializeAction()
 {
+	this->ignoreOwnerTimestop = 1;
 	this->isGui = true;
 	this->setSequence(this->customData[2]);
 }

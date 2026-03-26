@@ -33,7 +33,7 @@
 
 int __practiceEffect = -1;
 
-static SokuLib::Action meleeActions[] = {
+static SokuLib::Action basicMeleeActions[] = {
 	SokuLib::ACTION_5A,
 	SokuLib::ACTION_f5A,
 	SokuLib::ACTION_6A,
@@ -45,6 +45,27 @@ static SokuLib::Action meleeActions[] = {
 	SokuLib::ACTION_j2A,
 	SokuLib::ACTION_j8A,
 	SokuLib::ACTION_4A,
+};
+static unsigned meleeActions[] = {
+	SokuLib::ACTION_5A,
+	SokuLib::ACTION_5AA,
+	SokuLib::ACTION_5AAA,
+	SokuLib::ACTION_5AAAA,
+	SokuLib::ACTION_f5A,
+	SokuLib::ACTION_6A,
+	SokuLib::ACTION_2A,
+	SokuLib::ACTION_3A,
+	SokuLib::ACTION_66A,
+	SokuLib::ACTION_j5A,
+	SokuLib::ACTION_j6A,
+	SokuLib::ACTION_j2A,
+	SokuLib::ACTION_j8A,
+	SokuLib::ACTION_4A,
+	Mamizou::ACTION_d623b,
+	Mamizou::ACTION_d214b,
+	Mamizou::ACTION_d214c,
+	Mamizou::ACTION_jd214b,
+	Mamizou::ACTION_jd214c,
 };
 
 class MamizouGameObjectList : public GameObjectList<MamizouObjectFactory> {
@@ -84,7 +105,7 @@ public:
 			if (obj->gameData.owner == this->_me._dummyCharacter)
 				obj->gameData.ally = this->_me._dummyCharacter;
 			else
-				obj->gameData.ally = &this->_other;
+				obj->gameData.ally = this->_player;
 		if (this->_me._transformed) {
 			this->_me._preTransformCall();
 			this->_other.objectList->update();
@@ -94,6 +115,12 @@ public:
 			this->_other.objectList->update();
 			this->_me._postUntransformCall();
 		}
+		this->_player->comboCount += this->_me._dummyCharacter->comboCount;
+		this->_player->comboDamage += this->_me._dummyCharacter->comboDamage;
+		this->_player->comboLimit += this->_me._dummyCharacter->comboLimit;
+		this->_player->comboRate *= this->_me._dummyCharacter->comboRate;
+		if (this->_player->comboTimer < this->_me._dummyCharacter->comboTimer)
+			this->_player->comboTimer = this->_me._dummyCharacter->comboTimer;
 		for (auto obj : this->_other.objectList->getList())
 			obj->gameData.ally = this->_player;
 	}
@@ -198,8 +225,9 @@ Mamizou::Mamizou(SokuLib::PlayerInfo &info) :
 		extra.effectiveDeck.clear();
 		this->_transformPlayer = abiPointer->createCharacter(extra.character, extra);
 		this->_bufferSize = abiPointer->getCharacterSize(extra.character);
-		this->_characterBuffer = new unsigned char[this->_bufferSize];
+		this->_characterBuffer = new unsigned char[this->_bufferSize + sizeof(*this->_frameStateBuffer)];
 		this->_dummyCharacter = reinterpret_cast<Player *>(this->_characterBuffer);
+		this->_frameStateBuffer = reinterpret_cast<FrameState *>(this->_characterBuffer + this->_bufferSize);
 		for (auto obj : this->_transformPlayer->objectList->getList())
 			this->_restingActions.emplace(obj->frameState.actionId, obj->frameState.sequenceId);
 		this->objectList = new MamizouGameObjectList(*this, *this->_transformPlayer, this->_restingActions);
@@ -468,7 +496,9 @@ void Mamizou::update()
 
 			this->_fillCharacterBuffer();
 			this->_preTransformCall();
+			this->_transformPlayer->gameData.ally = this;
 			this->_transformPlayer->update();
+			this->_transformPlayer->gameData.ally = this->_transformPlayer;
 			this->_postTransformCall();
 
 			// Mark all objects created during the spell
@@ -486,7 +516,9 @@ void Mamizou::update()
 		} else {
 			this->_fillCharacterBuffer();
 			this->_preTransformCall();
+			this->_transformPlayer->gameData.ally = this;
 			this->_transformPlayer->update();
+			this->_transformPlayer->gameData.ally = this->_transformPlayer;
 			this->_postTransformCall();
 		}
 		if (this->_transformed && this->_transformKind == KIND_SINGLE_HIT && oldAction > this->frameState.actionId && oldAction >= SokuLib::ACTION_5A) {
@@ -499,8 +531,12 @@ void Mamizou::update()
 		this->_transformPlayer->speed = {0, 0};
 		this->_fillCharacterBuffer();
 		this->_preUntransformCall();
+		this->_transformPlayer->gameData.ally = this;
 		this->_transformPlayer->update();
+		this->_transformPlayer->gameData.ally = this->_transformPlayer;
 		this->_postUntransformCall();
+		if (this->_transformed)
+			return;
 		if (this->_neverTransformed)
 			for (auto obj : this->_transformPlayer->objectList->getList())
 				this->_restingActions.emplace(obj->frameState.actionId, obj->frameState.sequenceId);
@@ -2268,10 +2304,8 @@ bool Mamizou::setAction(short action)
 		this->_preTransformCall();
 		this->_transformKind = KIND_FULL_MOVE;
 		if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_REMILIA) {
-			action = SokuLib::ACTION_3A;
 			this->_transformPlayer->setAction(SokuLib::ACTION_3A);
-			this->_transformPlayer->grazeTimer = 20;
-			this->grazeTimer = 20;
+			action = SokuLib::ACTION_3A;
 		} else if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_FLANDRE) {
 			this->_transformPlayer->setAction(SokuLib::ACTION_ALT2_SKILL1_B);
 			action = SokuLib::ACTION_ALT2_SKILL1_B;
@@ -2303,6 +2337,12 @@ void Mamizou::initializeAction()
 		this->_transformPlayer->initializeAction();
 		this->_postTransformCall();
 		return;
+	}
+	if (this->_transformPlayer) {
+		if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_REIMU) {
+			if (std::ranges::find(meleeActions, this->frameState.actionId) != std::end(meleeActions))
+				reinterpret_cast<SokuLib::v2::PlayerReimu *>(this->_transformPlayer)->fantasyHeavenAlreadyHit = 0;
+		}
 	}
 	switch (this->frameState.actionId) {
 	case SokuLib::ACTION_WALK_FORWARD:
@@ -2518,6 +2558,13 @@ bool Mamizou::_processBAirborne()
 	auto hKeys = this->inputData.keyInput.horizontalAxis * this->direction;
 	auto hBuffKeys = this->inputData.bufferedKeyInput.horizontalAxis * this->direction;
 
+	if (this->_transformPlayer && this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA) {
+		auto m = reinterpret_cast<SokuLib::v2::PlayerMarisa *>(this->_transformPlayer);
+
+		if (m->orreriesTimer)
+			return this->_tryDoTransformedBOrCAttack(true);
+	}
+
 	if ((this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL)) || this->currentSpirit < 200)
 		return false;
 
@@ -2552,13 +2599,14 @@ bool Mamizou::_processCAirborne()
 	auto hKeys = this->inputData.keyInput.horizontalAxis * this->direction;
 	auto hBuffKeys = this->inputData.bufferedKeyInput.horizontalAxis * this->direction;
 
-	if (
-		(
-			this->frameState.actionId >= SokuLib::ACTION_5A &&
-			(this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL)
-		) ||
-		this->currentSpirit < 200
-	)
+	if (this->_transformPlayer && this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA) {
+		auto m = reinterpret_cast<SokuLib::v2::PlayerMarisa *>(this->_transformPlayer);
+
+		if (m->orreriesTimer)
+			return this->_tryDoTransformedBOrCAttack(false);
+	}
+
+	if ((this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL)) || this->currentSpirit < 20)
 		return false;
 
 	if (
@@ -2795,6 +2843,13 @@ bool Mamizou::_processBGrounded()
 		return true;
 	}
 
+	if (this->_transformPlayer && this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA) {
+		auto m = reinterpret_cast<SokuLib::v2::PlayerMarisa *>(this->_transformPlayer);
+
+		if (m->orreriesTimer)
+			return this->_tryDoTransformedBOrCAttack(true);
+	}
+
 	if ((this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL)) || this->currentSpirit < 200)
 		return false;
 
@@ -2841,13 +2896,14 @@ bool Mamizou::_processCGrounded()
 		return true;
 	}
 
-	if (
-		(
-			this->frameState.actionId >= SokuLib::ACTION_5A &&
-			(this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL)
-		) ||
-		this->currentSpirit < 200
-	)
+	if (this->_transformPlayer && this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA) {
+		auto m = reinterpret_cast<SokuLib::v2::PlayerMarisa *>(this->_transformPlayer);
+
+		if (m->orreriesTimer)
+			return this->_tryDoTransformedBOrCAttack(false);
+	}
+
+	if ((this->frameState.actionId >= SokuLib::ACTION_5A && (this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL)) || this->currentSpirit < 200)
 		return false;
 
 	if (
@@ -2927,12 +2983,12 @@ bool Mamizou::_canUseCard(int id)
 	switch (id) {
 	case 100:
 	case 101:
+	case 103:
 	case 200:
 	case 202:
 	case 203:
 		return this->isGrounded();
 	case 102:
-	case 103:
 	case 105:
 	case 109:
 	case 204:
@@ -3004,6 +3060,36 @@ bool Mamizou::_useSpellCard(int id)
 	return true;
 }
 
+static Mamizou *m;
+void *__old_initializeAction;
+
+void __fastcall __fake_initializeAction(SokuLib::v2::Player *This)
+{
+	if (m->_transformKind == Mamizou::KIND_SPELL_TIMER) {
+		if (!m->handInfo.hand.empty()) {
+			This->handInfo.hand.resize(5);
+			This->handInfo.cardCount = 5;
+			for (auto &hand : This->handInfo.hand) {
+				hand.cost = 5;
+				hand.id = 204;
+			}
+		}
+		memset(&This->skilledSkillLevel, 0xFF, sizeof(This->skilledSkillLevel));
+		for (size_t i = 0; i < m->_selectedCards.size(); i++) {
+			This->skilledSkillLevel[i + m->_selectedCards.size() * m->_selectedCards[i]] = 4;
+			This->effectiveSkillLevel[i + m->_selectedCards.size() * m->_selectedCards[i]] = 4;
+		}
+	} else {
+		This->handInfo.hand.resize(m->handInfo.hand.size());
+		This->handInfo.cardCount = m->handInfo.cardCount;
+		for (size_t i = 0; i < m->handInfo.hand.size(); i++) {
+			This->handInfo.hand[i].cost = 2;
+			This->handInfo.hand[i].id = 201;
+		}
+	}
+	reinterpret_cast<void(__fastcall *)(SokuLib::v2::Player *This)>(__old_initializeAction)(This);
+}
+
 bool Mamizou::_useTransformedCard(int id)
 {
 	if (this->gameData.sequenceData->actionLock > 100)
@@ -3039,7 +3125,16 @@ bool Mamizou::_useTransformedCard(int id)
 	this->_transformPlayer->handInfo.hand[0].id = id;
 	this->_transformPlayer->handInfo.hand[0].cost = this->handInfo.hand[0].cost;
 
+	m = this;
+
+	DWORD o;
+	auto playerVtable = *reinterpret_cast<void ***>(this->_transformPlayer);
+
+	VirtualProtect(playerVtable, 4096, PAGE_EXECUTE_READWRITE, &o);
+	__old_initializeAction = SokuLib::TamperDword(&playerVtable[15], __fake_initializeAction);
 	this->_transformPlayer->handleInputs();
+	SokuLib::TamperDword(&playerVtable[15], __old_initializeAction);
+	VirtualProtect(playerVtable, 4096, o, &o);
 	if (this->_transformPlayer->frameState.actionId == old)
 		return false;
 	if (!this->_transformed)
@@ -3049,6 +3144,79 @@ bool Mamizou::_useTransformedCard(int id)
 	this->_postTransformCall();
 	this->_transformTimer = TIMER_MAX;
 	this->_transformTimerDelay = 0;
+	return true;
+}
+
+bool Mamizou::_tryDoTransformedBOrCAttack(bool isBAttack)
+{
+	auto old = this->_transformPlayer->frameState.actionId;
+
+	this->_preTransformCall();
+	memset(&this->_transformPlayer->inputData.keyInput, 0, sizeof(this->_transformPlayer->inputData.keyInput));
+	memset(&this->_transformPlayer->inputData.bufferedKeyInput, 0, sizeof(this->_transformPlayer->inputData.bufferedKeyInput));
+	this->_transformPlayer->inputData.keyInput.b = isBAttack * 2;
+	this->_transformPlayer->inputData.keyInput.c = !isBAttack * 2;
+	this->_transformPlayer->inputData.keyUpA = 0;
+	this->_transformPlayer->inputData.keyUpB = 0;
+	this->_transformPlayer->inputData.keyUpC = 0;
+	this->_transformPlayer->inputData.keyUpD = 0;
+	this->_transformPlayer->inputData.keyUpE = 0;
+	this->_transformPlayer->inputData.keyUpF = 0;
+	this->_transformPlayer->inputData.bufferTimer = 0;
+	this->_transformPlayer->inputData.unknown7AD[0] = 0;
+	this->_transformPlayer->inputData.unknown7AD[1] = 0;
+	this->_transformPlayer->inputData.unknown7AD[2] = 0;
+	this->_transformPlayer->inputData.commandInputBuffer.clear();
+	this->_transformPlayer->inputData.movementCombination.value = 0;
+	this->_transformPlayer->inputData.commandCombination.value = 0;
+
+	this->_transformPlayer->handleInputs();
+	if (this->_transformPlayer->frameState.actionId == old)
+		return false;
+	if (!this->_transformed)
+		this->_transform(true, false);
+	this->_transformKind = KIND_FULL_MOVE;
+	this->frameState.actionId = this->_transformPlayer->frameState.actionId;
+	this->_postTransformCall();
+	return true;
+}
+
+bool Mamizou::_tryDoTransformedCard()
+{
+	if (
+		(this->inputData.keyInput.spellcard == 0 || this->inputData.keyInput.spellcard > 3) &&
+		this->inputData.bufferedKeyInput.spellcard == 0
+	)
+		return false;
+
+	auto old = this->_transformPlayer->frameState.actionId;
+
+	this->_preTransformCall();
+	memset(&this->_transformPlayer->inputData.keyInput, 0, sizeof(this->_transformPlayer->inputData.keyInput));
+	memset(&this->_transformPlayer->inputData.bufferedKeyInput, 0, sizeof(this->_transformPlayer->inputData.bufferedKeyInput));
+	this->_transformPlayer->inputData.keyInput.spellcard = 1;
+	this->_transformPlayer->inputData.keyUpA = 0;
+	this->_transformPlayer->inputData.keyUpB = 0;
+	this->_transformPlayer->inputData.keyUpC = 0;
+	this->_transformPlayer->inputData.keyUpD = 0;
+	this->_transformPlayer->inputData.keyUpE = 0;
+	this->_transformPlayer->inputData.keyUpF = 0;
+	this->_transformPlayer->inputData.bufferTimer = 0;
+	this->_transformPlayer->inputData.unknown7AD[0] = 0;
+	this->_transformPlayer->inputData.unknown7AD[1] = 0;
+	this->_transformPlayer->inputData.unknown7AD[2] = 0;
+	this->_transformPlayer->inputData.commandInputBuffer.clear();
+	this->_transformPlayer->inputData.movementCombination.value = 0;
+	this->_transformPlayer->inputData.commandCombination.value = 0;
+
+	this->_transformPlayer->handleInputs();
+	if (this->_transformPlayer->frameState.actionId == old)
+		return false;
+	if (!this->_transformed)
+		this->_transform(true, false);
+	this->_transformKind = KIND_FULL_MOVE;
+	this->frameState.actionId = this->_transformPlayer->frameState.actionId;
+	this->_postTransformCall();
 	return true;
 }
 
@@ -3243,6 +3411,14 @@ void Mamizou::handleInputs()
 		}
 		return;
 	}
+	if (this->_transformPlayer) {
+		if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_IKU) {
+			auto i = reinterpret_cast<SokuLib::v2::PlayerIku *>(this->_transformPlayer);
+
+			if (i->veilsLikeTime && this->_tryDoTransformedCard())
+				return;
+		}
+	}
 	if (frameFlags.cancellable || frameFlags.highJumpCancellable) {
 		auto uVar10 = this->inputData.commandCombination.value;
 
@@ -3336,10 +3512,19 @@ void Mamizou::render()
 //	if (r != D3D_OK)
 //		printf("Error: %d\n", r);
 
-	if (this->_transformed)
-		this->_transformPlayer->render();
-	else
+	if (!this->_transformed) {
+		auto old = this->renderInfos;
+
+		if (
+			this->_transformPlayer &&
+			this->renderInfos.shaderType == 0 &&
+			this->renderInfos.color == SokuLib::Color::White
+		)
+			this->renderInfos = this->_transformPlayer->renderInfos;
 		SokuLib::v2::Player::render();
+		this->renderInfos = old;
+	} else
+		this->_transformPlayer->render();
 	if (this->teamId == 0 && __practiceEffect != -1) {
 		SokuLib::DrawUtils::Sprite sprite;
 
@@ -3609,6 +3794,9 @@ void Mamizou::initialize()
 	this->_addDebuffGui();
 	this->_addTimerGui();
 	this->_addStackGui();
+	if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_YOUMU)
+		this->createObject(0, this->position.x, this->position.y, this->direction, -1);
+
 	// TODO: Check if the opponent has extra GUI (like Sanae)
 	//       In that case, we should move ours; or theirs out of the way and also probably display it all the time?
 
@@ -3719,7 +3907,7 @@ void Mamizou::initialize()
 	SokuLib::TamperDword(0x467BC9, old_tex);
 	VirtualProtect((void *)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
 
-	for (auto action : meleeActions) {
+	for (auto action : basicMeleeActions) {
 		SokuLib::v2::CharacterSequenceData *sequence = (*this->gameData.patternMap)[action];
 
 		this->_originalMelees[action] = sequence;
@@ -3947,6 +4135,8 @@ void Mamizou::_preTransformCall()
 	this->_transformPlayer->discardMultiplier = this->discardMultiplier;
 	this->_transformPlayer->reflectDamageMultiplier = this->reflectDamageMultiplier;
 	this->_transformPlayer->unknown55C = this->unknown55C;
+	this->_transformPlayer->counterHitDmgMultiplier = this->counterHitDmgMultiplier;
+	this->_transformPlayer->forcedCounterHits = this->forcedCounterHits;
 
 	this->_transformPlayer->grazeTimer = this->grazeTimer;
 	this->_transformPlayer->meleeInvulTimer = this->meleeInvulTimer;
@@ -3973,6 +4163,7 @@ void Mamizou::_preTransformCall()
 	this->_transformPlayer->confusionDebuffTimer = this->confusionDebuffTimer;
 	this->_transformPlayer->SORDebuffTimer = this->SORDebuffTimer;
 	this->_transformPlayer->healCharmTimer = this->healCharmTimer;
+	this->_transformPlayer->blockDisabled = this->blockDisabled;
 
 	this->_transformPlayer->hp = this->hp;
 	this->_transformPlayer->redHP = this->redHP;
@@ -4024,6 +4215,8 @@ void Mamizou::_postTransformCall()
 	this->collisionLimit = this->_transformPlayer->collisionLimit;
 	this->riverMistAdditionalSpeed += this->_transformPlayer->riverMistAdditionalSpeed;
 	this->unknown4AC = this->_transformPlayer->unknown4AC;
+	this->counterHitDmgMultiplier = this->_transformPlayer->counterHitDmgMultiplier;
+	this->forcedCounterHits = this->_transformPlayer->forcedCounterHits;
 
 	this->grazeTimer = this->_transformPlayer->grazeTimer;
 	this->meleeInvulTimer = this->_transformPlayer->meleeInvulTimer;
@@ -4042,9 +4235,6 @@ void Mamizou::_postTransformCall()
 	this->tenguFans = this->_transformPlayer->tenguFans;
 	this->sacrificialDolls = this->_transformPlayer->sacrificialDolls;
 	this->controlRod = this->_transformPlayer->controlRod;
-	this->magicPotionTimeLeft = this->_transformPlayer->magicPotionTimeLeft;
-	this->stopwatchTimeLeft = this->_transformPlayer->stopwatchTimeLeft;
-	this->dragonStarTimeLeft = this->_transformPlayer->dragonStarTimeLeft;
 	this->drops = this->_transformPlayer->drops;
 	this->dropInvulTimeLeft = this->_transformPlayer->dropInvulTimeLeft;
 	this->confusionDebuffTimer = this->_transformPlayer->confusionDebuffTimer;
@@ -4074,6 +4264,7 @@ void Mamizou::_postTransformCall()
 			this->handInfo.cardCount = 0;
 		}
 	} else if (this->_transformPlayer->frameState.actionId != this->frameState.actionId) {
+		printf("%i != %i\n", this->_transformPlayer->frameState.actionId, this->frameState.actionId);
 		this->_unTransform();
 		if (
 			this->_transformPlayer->frameState.actionId < SokuLib::ACTION_5A &&
@@ -4094,16 +4285,138 @@ void Mamizou::_postTransformCall()
 	this->discardMultiplier = this->_transformPlayer->discardMultiplier;
 	this->reflectDamageMultiplier = this->_transformPlayer->reflectDamageMultiplier;
 	this->unknown55C = this->_transformPlayer->unknown55C;
+	this->blockDisabled = this->_transformPlayer->blockDisabled;
 }
+
+/*
+static void __fastcall __dummy_setActionSequence(void *This, int, short action, short sequence) {}
+static bool __fastcall __dummy_setAction(void *This, int, short action) { return false; }
+static void __fastcall __dummy_setSequence(void *This, int, short sequence) {}
+static void __fastcall __dummy_resetSequence(void *This, int) {}
+static bool __fastcall __dummy_nextSequence(void *This, int) { return false; }
+static void __fastcall __dummy_prevSequence(void *This, int) {}
+static void __fastcall __dummy_setPose(void *This, int, short pose) {}
+static bool __fastcall __dummy_nextPose(void *This, int) { return false; }
+static void __fastcall __dummy_prevPose(void *This, int) {}
+static SokuLib::v2::GameObject *__fastcall __dummy_createObject(void *This, int, short actionId, float x, float y, char dir, char layer, float* customData, unsigned int customDataSize) { return nullptr; }
+static SokuLib::v2::GameObject *__fastcall __dummy_createChild(void *This, int, short actionId, float x, float y, char dir, char layer, float* customData, unsigned int customDataSize) { return nullptr; }
+static void *oldVtableData[50];
+*/
 
 void Mamizou::_preUntransformCall()
 {
+	// DWORD o;
+	// auto playerVtable = *reinterpret_cast<void ***>(this->_transformPlayer);
+
+	// VirtualProtect(playerVtable, 4096, PAGE_EXECUTE_READWRITE, &o);
+	// oldVtableData[0] = SokuLib::TamperDword(&playerVtable[1], __dummy_setActionSequence);
+	// oldVtableData[1] = SokuLib::TamperDword(&playerVtable[2], __dummy_setAction);
+	// oldVtableData[2] = SokuLib::TamperDword(&playerVtable[3], __dummy_setSequence);
+	// oldVtableData[3] = SokuLib::TamperDword(&playerVtable[4], __dummy_resetSequence);
+	// oldVtableData[4] = SokuLib::TamperDword(&playerVtable[5], __dummy_nextSequence);
+	// oldVtableData[5] = SokuLib::TamperDword(&playerVtable[6], __dummy_prevSequence);
+	// oldVtableData[6] = SokuLib::TamperDword(&playerVtable[7], __dummy_setPose);
+	// oldVtableData[7] = SokuLib::TamperDword(&playerVtable[8], __dummy_nextPose);
+	// oldVtableData[8] = SokuLib::TamperDword(&playerVtable[9], __dummy_prevPose);
+	// oldVtableData[9] = SokuLib::TamperDword(&playerVtable[18], __dummy_createObject);
+	// oldVtableData[10]= SokuLib::TamperDword(&playerVtable[19], __dummy_createChild);
+	// VirtualProtect(playerVtable, 4096, o, &o);
+	// 0x438c60
+
+	this->_savedFrameData = this->_transformPlayer->gameData.frameData;
+	//this->_savedSequenceData = this->_transformPlayer->gameData.sequenceData;
+	*this->_frameStateBuffer = this->_transformPlayer->frameState;
+	this->_transformPlayer->collisionType = this->collisionType;
+	this->_transformPlayer->collisionLimit = this->collisionLimit;
+	this->_transformPlayer->gameData.frameData = this->gameData.frameData;
+	//this->_transformPlayer->gameData.sequenceData = this->gameData.sequenceData;
+	this->_transformPlayer->inputData.keyInput = this->inputData.keyInput;
+	this->_transformPlayer->frameState.actionId = this->frameState.actionId;
+	this->_transformPlayer->frameState.sequenceId = 0;
+	this->_transformPlayer->frameState.poseId = 0;
+	this->_transformPlayer->frameState.poseFrame = 3;
+	this->_transformPlayer->frameState.currentFrame = 3;
+	this->_transformPlayer->frameState.sequenceSize = this->frameState.sequenceSize;
+	this->_transformPlayer->frameState.poseDuration = this->frameState.poseDuration + 50;
+	this->_transformPlayer->superArmorDamageTaken = this->superArmorDamageTaken;
+	this->_transformPlayer->hp = this->hp;
+	this->_transformPlayer->currentSpirit = this->currentSpirit;
+	this->_transformPlayer->maxSpirit = this->maxSpirit;
 	this->_transformPlayer->riverMistAdditionalSpeed = 0;
+	this->_transformPlayer->poiseDmgMultiplier = 1;
+	this->_transformPlayer->attackPower = 1;
+	this->_transformPlayer->defensePower = 1;
+	this->_transformPlayer->speedPower = 1;
+	this->_transformPlayer->bonusProration = 0;
+	this->_transformPlayer->spellDmgMultiplier = 1;
+	this->_transformPlayer->specialDmgMultiplier = 1;
+	this->_transformPlayer->meterGainMultiplier = 1;
+	this->_transformPlayer->lifeStealMultiplier = 0;
+	this->_transformPlayer->discardMultiplier = 1;
+	this->_transformPlayer->reflectDamageMultiplier = 1;
+	this->_transformPlayer->unknown55C = 1;
+	this->_transformPlayer->counterHitDmgMultiplier = 1;
+	this->_transformPlayer->forcedCounterHits = this->forcedCounterHits;
+	this->_transformPlayer->grabInvulTimer = this->grabInvulTimer;
+	this->_transformPlayer->meleeInvulTimer = this->meleeInvulTimer;
+	this->_transformPlayer->projectileInvulTimer = this->projectileInvulTimer;
+	this->_transformPlayer->position = this->position;
+	this->_transformPlayer->blockDisabled = this->blockDisabled;
+	this->_transformPlayer->timeStop = this->timeStop;
 }
 
 void Mamizou::_postUntransformCall()
 {
+	this->_transformPlayer->gameData.frameData = this->_savedFrameData;
+	//this->_transformPlayer->gameData.sequenceData = this->_savedSequenceData;
 	this->riverMistAdditionalSpeed += this->_transformPlayer->riverMistAdditionalSpeed;
+	this->poiseDmgMultiplier *= this->_transformPlayer->poiseDmgMultiplier;
+	this->attackPower *= this->_transformPlayer->attackPower;
+	this->defensePower *= this->_transformPlayer->defensePower;
+	this->speedPower *= this->_transformPlayer->speedPower;
+	this->bonusProration += this->_transformPlayer->bonusProration;
+	this->spellDmgMultiplier *= this->_transformPlayer->spellDmgMultiplier;
+	this->specialDmgMultiplier *= this->_transformPlayer->specialDmgMultiplier;
+	this->meterGainMultiplier *= this->_transformPlayer->meterGainMultiplier;
+	this->lifeStealMultiplier += this->_transformPlayer->lifeStealMultiplier;
+	this->discardMultiplier *= this->_transformPlayer->discardMultiplier;
+	this->reflectDamageMultiplier *= this->_transformPlayer->reflectDamageMultiplier;
+	this->unknown55C *= this->_transformPlayer->unknown55C;
+	this->counterHitDmgMultiplier *= this->_transformPlayer->counterHitDmgMultiplier;
+	if (this->grabInvulTimer < this->_transformPlayer->grabInvulTimer)
+		this->grabInvulTimer = this->_transformPlayer->grabInvulTimer;
+	if (this->meleeInvulTimer < this->_transformPlayer->meleeInvulTimer)
+		this->meleeInvulTimer = this->_transformPlayer->meleeInvulTimer;
+	if (this->projectileInvulTimer < this->_transformPlayer->projectileInvulTimer)
+		this->projectileInvulTimer = this->_transformPlayer->projectileInvulTimer;
+	this->forcedCounterHits = this->_transformPlayer->forcedCounterHits;
+	this->blockDisabled = this->_transformPlayer->blockDisabled;
+	this->hp = this->_transformPlayer->hp;
+	this->currentSpirit = this->_transformPlayer->currentSpirit;
+
+	this->_transformPlayer->grabInvulTimer = this->grabInvulTimer;
+	this->_transformPlayer->meleeInvulTimer = this->meleeInvulTimer;
+	this->_transformPlayer->projectileInvulTimer = this->projectileInvulTimer;
+	this->_transformPlayer->attackPower = this->attackPower;
+	this->_transformPlayer->defensePower = this->defensePower;
+	this->_transformPlayer->speedPower = this->speedPower;
+	this->superArmorDamageTaken = 0;
+
+	if (
+		this->_transformPlayer->frameState.actionId >= SokuLib::ACTION_USING_SC_ID_200 &&
+		this->_transformPlayer->frameState.actionId != this->frameState.actionId
+	) {
+		this->_transformKind = KIND_FULL_MOVE;
+		this->_transformTimer = TIMER_MAX;
+		this->_transformTimerDelay = 0;
+		this->_transform(false, false);
+		this->frameState.actionId = this->_transformPlayer->frameState.actionId;
+		this->_postTransformCall();
+	} else if (this->_transformPlayer->spellStopCounter) {
+		if (this->timeStop < this->_transformPlayer->spellStopCounter)
+			this->timeStop = this->_transformPlayer->spellStopCounter;
+		this->_transformPlayer->spellStopCounter = 0;
+	}
 }
 
 void Mamizou::_transform(bool spawnEffects, bool resetTransformee)

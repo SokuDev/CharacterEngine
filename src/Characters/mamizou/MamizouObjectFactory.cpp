@@ -25,6 +25,7 @@
 #include "objects/Gui/TimerSpellGui.hpp"
 #include "objects/Gui/CardSelect.hpp"
 #include "objects/DemonGate.hpp"
+#include "objects/YoumuClone.hpp"
 #include "objects/Gui/TimerDebuffGui.hpp"
 
 #ifndef _DEBUG
@@ -35,6 +36,8 @@ SokuLib::v2::GameObject *MamizouObjectFactory::construct(SokuLib::v2::Player *ow
 {
 	printf("MamizouObjectFactory::construct(%i)\n", action);
 
+	if (action < 800)
+		return new YoumuClone();
 	switch (action) {
 	case 800:
 		return new LeafSpawner();

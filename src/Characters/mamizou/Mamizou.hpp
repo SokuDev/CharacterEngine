@@ -71,6 +71,7 @@ private:
 	std::set<std::pair<unsigned short, unsigned short>> _restingActions;
 	unsigned char *_characterBuffer;
 	Player *_dummyCharacter;
+	FrameState *_frameStateBuffer;
 	size_t _bufferSize;
 	SokuLib::v2::CharacterSequenceData *_back;
 
@@ -160,10 +161,11 @@ private:
 	void _addStackGui();
 
 	void _fillHand();
+	bool _tryDoTransformedBOrCAttack(bool isBAttack);
+	bool _tryDoTransformedCard();
 
 	void _setupOpponentDebuff();
 	void _cleanupOpponentDebuff();
-
 	void _updateOpponentDebuffed();
 	void _transformCard(SokuLib::Card &card);
 
@@ -231,7 +233,9 @@ public:
 	bool isTransformed() const;
 	SokuLib::v2::Player *getTransformPlayer() const;
 
+	friend class YoumuClone;
 	friend class MamizouGameObjectList;
+	friend void __fastcall __fake_initializeAction(SokuLib::v2::Player *This);
 };
 
 

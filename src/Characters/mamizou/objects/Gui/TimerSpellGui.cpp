@@ -69,6 +69,7 @@ void TimerSpellGui::update()
 
 void TimerSpellGui::initializeAction()
 {
+	this->ignoreOwnerTimestop = 1;
 	this->isGui = true;
 	this->setSequence(this->customData[2]);
 }
