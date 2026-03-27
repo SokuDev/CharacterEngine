@@ -442,6 +442,20 @@ void Mamizou::update()
 		if (this->_transformTimer == 0 && this->frameState.actionId < SokuLib::ACTION_5A)
 			this->_cleanupOpponentDebuff();
 	}
+
+	auto &next = this->_data[this->_dataPointer];
+
+	next.transformed = this->isTransformed();
+	next.center = this->center;
+	next.resetHit = this->frameState.currentFrame == 0 && this->frameState.sequenceId == 0;
+	next.dir = this->direction;
+	next.hitCount = this->collisionLimit;
+	next.frameData = this->gameData.frameData;
+	next.pos = this->position;
+	next.infos = this->renderInfos;
+	this->_dataPointer++;
+	this->_dataPointer %= CLONE_BUFFERING_DELAY + 1;
+
 	if (this->_transformed) {
 		auto oldAction = this->frameState.actionId;
 
@@ -3060,13 +3074,13 @@ bool Mamizou::_useSpellCard(int id)
 	return true;
 }
 
-static Mamizou *m;
+static Mamizou *__mamizou;
 void *__old_initializeAction;
 
 void __fastcall __fake_initializeAction(SokuLib::v2::Player *This)
 {
-	if (m->_transformKind == Mamizou::KIND_SPELL_TIMER) {
-		if (!m->handInfo.hand.empty()) {
+	if (__mamizou->_transformKind == Mamizou::KIND_SPELL_TIMER) {
+		if (!__mamizou->handInfo.hand.empty()) {
 			This->handInfo.hand.resize(5);
 			This->handInfo.cardCount = 5;
 			for (auto &hand : This->handInfo.hand) {
@@ -3075,14 +3089,14 @@ void __fastcall __fake_initializeAction(SokuLib::v2::Player *This)
 			}
 		}
 		memset(&This->skilledSkillLevel, 0xFF, sizeof(This->skilledSkillLevel));
-		for (size_t i = 0; i < m->_selectedCards.size(); i++) {
-			This->skilledSkillLevel[i + m->_selectedCards.size() * m->_selectedCards[i]] = 4;
-			This->effectiveSkillLevel[i + m->_selectedCards.size() * m->_selectedCards[i]] = 4;
+		for (size_t i = 0; i < __mamizou->_selectedCards.size(); i++) {
+			This->skilledSkillLevel[i + __mamizou->_selectedCards.size() * __mamizou->_selectedCards[i]] = 4;
+			This->effectiveSkillLevel[i + __mamizou->_selectedCards.size() * __mamizou->_selectedCards[i]] = 4;
 		}
 	} else {
-		This->handInfo.hand.resize(m->handInfo.hand.size());
-		This->handInfo.cardCount = m->handInfo.cardCount;
-		for (size_t i = 0; i < m->handInfo.hand.size(); i++) {
+		This->handInfo.hand.resize(__mamizou->handInfo.hand.size());
+		This->handInfo.cardCount = __mamizou->handInfo.cardCount;
+		for (size_t i = 0; i < __mamizou->handInfo.hand.size(); i++) {
 			This->handInfo.hand[i].cost = 2;
 			This->handInfo.hand[i].id = 201;
 		}
@@ -3125,7 +3139,7 @@ bool Mamizou::_useTransformedCard(int id)
 	this->_transformPlayer->handInfo.hand[0].id = id;
 	this->_transformPlayer->handInfo.hand[0].cost = this->handInfo.hand[0].cost;
 
-	m = this;
+	__mamizou = this;
 
 	DWORD o;
 	auto playerVtable = *reinterpret_cast<void ***>(this->_transformPlayer);
@@ -3794,8 +3808,22 @@ void Mamizou::initialize()
 	this->_addDebuffGui();
 	this->_addTimerGui();
 	this->_addStackGui();
-	if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_YOUMU)
+	if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_YOUMU) {
 		this->createObject(0, this->position.x, this->position.y, this->direction, -1);
+		for (auto &dat : this->_data) {
+			dat.transformed = this->isTransformed();
+			dat.center = this->center;
+			dat.resetHit = this->frameState.currentFrame == 0 && this->frameState.sequenceId == 0;
+			dat.dir = this->direction;
+			dat.hitCount = this->collisionLimit;
+			dat.frameData = this->gameData.frameData;
+			dat.pos = this->position;
+			dat.infos = this->renderInfos;
+		}
+	} else if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_UDONGE) {
+		this->createObject(1, this->position.x, this->position.y, this->direction, -1);
+		this->createObject(2, this->position.x, this->position.y, this->direction, -1);
+	}
 
 	// TODO: Check if the opponent has extra GUI (like Sanae)
 	//       In that case, we should move ours; or theirs out of the way and also probably display it all the time?
@@ -4286,6 +4314,7 @@ void Mamizou::_postTransformCall()
 	this->reflectDamageMultiplier = this->_transformPlayer->reflectDamageMultiplier;
 	this->unknown55C = this->_transformPlayer->unknown55C;
 	this->blockDisabled = this->_transformPlayer->blockDisabled;
+	this->childrenA = this->_transformPlayer->childrenA;
 }
 
 /*
@@ -4324,12 +4353,11 @@ void Mamizou::_preUntransformCall()
 	// 0x438c60
 
 	this->_savedFrameData = this->_transformPlayer->gameData.frameData;
-	//this->_savedSequenceData = this->_transformPlayer->gameData.sequenceData;
 	*this->_frameStateBuffer = this->_transformPlayer->frameState;
 	this->_transformPlayer->collisionType = this->collisionType;
 	this->_transformPlayer->collisionLimit = this->collisionLimit;
-	this->_transformPlayer->gameData.frameData = this->gameData.frameData;
-	//this->_transformPlayer->gameData.sequenceData = this->gameData.sequenceData;
+	if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA)
+		this->_transformPlayer->gameData.frameData = this->gameData.frameData;
 	this->_transformPlayer->inputData.keyInput = this->inputData.keyInput;
 	this->_transformPlayer->frameState.actionId = this->frameState.actionId;
 	this->_transformPlayer->frameState.sequenceId = 0;
@@ -4368,7 +4396,6 @@ void Mamizou::_preUntransformCall()
 void Mamizou::_postUntransformCall()
 {
 	this->_transformPlayer->gameData.frameData = this->_savedFrameData;
-	//this->_transformPlayer->gameData.sequenceData = this->_savedSequenceData;
 	this->riverMistAdditionalSpeed += this->_transformPlayer->riverMistAdditionalSpeed;
 	this->poiseDmgMultiplier *= this->_transformPlayer->poiseDmgMultiplier;
 	this->attackPower *= this->_transformPlayer->attackPower;
@@ -4498,6 +4525,11 @@ bool Mamizou::isTransformed() const
 SokuLib::v2::Player *Mamizou::getTransformPlayer() const
 {
 	return this->_transformPlayer;
+}
+
+const Mamizou::State &Mamizou::getCurrentCloneFrame() const
+{
+	return this->_data[this->_dataPointer];
 }
 
 static void (__fastcall *og_FUN_0046a240)(SokuLib::v2::Player *);

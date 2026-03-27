@@ -67,6 +67,8 @@ add_library(
 	objects/DemonGate.hpp
 	objects/YoumuClone.cpp
 	objects/YoumuClone.hpp
+	objects/UdongeClone.cpp
+	objects/UdongeClone.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)

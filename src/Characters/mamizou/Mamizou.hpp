@@ -12,7 +12,22 @@
 #include <deque>
 #include "Memory.hpp"
 
+#define CLONE_BUFFERING_DELAY 12
+
+
 class Mamizou : public SokuLib::v2::Player {
+public:
+	struct State {
+		SokuLib::v2::CharacterFrameData *frameData;
+		SokuLib::Vector2f pos;
+		SokuLib::Vector2f center;
+		SokuLib::RenderInfo infos;
+		bool resetHit;
+		char dir;
+		unsigned char hitCount;
+		bool transformed;
+	};
+
 private:
 	static constexpr unsigned MAX_STACKS = 8;
 	static constexpr unsigned STACK_PER_LEVEL = 2;
@@ -74,6 +89,9 @@ private:
 	FrameState *_frameStateBuffer;
 	size_t _bufferSize;
 	SokuLib::v2::CharacterSequenceData *_back;
+
+	State _data[CLONE_BUFFERING_DELAY + 1];
+	unsigned _dataPointer = 0;
 
 	static constexpr float BACKDASH_DECEL = 2;
 	static constexpr float BACKDASH_IMPULSE = -10.0;
@@ -232,7 +250,9 @@ public:
 
 	bool isTransformed() const;
 	SokuLib::v2::Player *getTransformPlayer() const;
+	const State &getCurrentCloneFrame() const;
 
+	friend class UdongeClone;
 	friend class YoumuClone;
 	friend class MamizouGameObjectList;
 	friend void __fastcall __fake_initializeAction(SokuLib::v2::Player *This);
