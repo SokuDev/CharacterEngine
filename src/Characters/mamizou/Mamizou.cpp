@@ -3828,9 +3828,17 @@ void Mamizou::initialize()
 	this->_addStackGui();
 
 	switch (this->_transformPlayer->characterIndex) {
+	case SokuLib::CHARACTER_IKU:
+		this->_whiteListedActions.push_back(SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_RIGHTBLOCK_HIGH_MEDIUM_BLOCKSTUN);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_RIGHTBLOCK_HIGH_BIG_BLOCKSTUN);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_RIGHTBLOCK_HIGH_HUGE_BLOCKSTUN);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_RIGHTBLOCK_LOW_SMALL_BLOCKSTUN);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_RIGHTBLOCK_LOW_MEDIUM_BLOCKSTUN);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_RIGHTBLOCK_LOW_BIG_BLOCKSTUN);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_RIGHTBLOCK_LOW_HUGE_BLOCKSTUN);
 	case SokuLib::CHARACTER_UTSUHO:
 	case SokuLib::CHARACTER_YUUKA:
-	case SokuLib::CHARACTER_IKU:
 	case SokuLib::CHARACTER_MIMA:
 		this->_whiteListedActions.push_back(SokuLib::ACTION_FLY);
 		this->_whiteListedActions.push_back(SokuLib::ACTION_FORWARD_DASH);
@@ -4441,7 +4449,6 @@ void Mamizou::_preUntransformCall()
 	if (
 		(this->_transformPlayer->characterIndex == SokuLib::CHARACTER_YUUKA || this->_transformPlayer->characterIndex == SokuLib::CHARACTER_UTSUHO) &&
 		this->frameState.actionId >= SokuLib::ACTION_5A &&
-		this->frameState.actionId != ACTION_d623b &&
 		this->frameState.actionId != ACTION_d22b &&
 		this->frameState.actionId != ACTION_d22b_UNTRANSFORM &&
 		this->frameState.actionId != ACTION_FORCE_TIMER_UNTRANSFORM &&
@@ -4454,6 +4461,12 @@ void Mamizou::_preUntransformCall()
 		this->frameState.actionId != ACTION_ja2_22b
 	)
 		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_5A;
+	// Something similar for Mairsa and Reimu, so they know we are doing a move during Orreries and Fantasy Heaven
+	else if (
+		(this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA || this->_transformPlayer->characterIndex == SokuLib::CHARACTER_REIMU) &&
+		this->frameState.actionId >= SokuLib::ACTION_5A
+	)
+		this->_transformPlayer->frameState.actionId = this->frameState.actionId;
 	else if (std::ranges::find(this->_whiteListedActions, this->frameState.actionId) != this->_whiteListedActions.end())
 		this->_transformPlayer->frameState.actionId = this->frameState.actionId;
 	else
