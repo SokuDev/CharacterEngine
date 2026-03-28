@@ -75,6 +75,7 @@ private:
 	SokuLib::v2::Player &_other;
 	Mamizou &_me;
 	std::vector<SokuLib::v2::GameObject *> _tmpObjects;
+	std::deque<unsigned> _oldAlphas;
 
 public:
 	inline MamizouGameObjectList(Mamizou &player, SokuLib::v2::Player &other, const std::set<std::pair<unsigned short, unsigned short>> &restingActions) :
@@ -100,6 +101,12 @@ public:
 
 	void update() override
 	{
+		if (this->_other.characterIndex == SokuLib::CHARACTER_UDONGE)
+			for (auto obj : this->_other.objectList->getList())
+				if (obj->frameState.actionId == 847 && !this->_oldAlphas.empty()) {
+					obj->renderInfos.color.a = this->_oldAlphas.front();
+					this->_oldAlphas.pop_front();
+				}
 		GameObjectList::update();
 		for (auto obj : this->_other.objectList->getList())
 			if (obj->gameData.owner == this->_me._dummyCharacter)
@@ -123,6 +130,13 @@ public:
 			this->_player->comboTimer = this->_me._dummyCharacter->comboTimer;
 		for (auto obj : this->_other.objectList->getList())
 			obj->gameData.ally = this->_player;
+		if (this->_other.characterIndex == SokuLib::CHARACTER_UDONGE)
+			for (auto obj : this->_other.objectList->getList())
+				if (obj->frameState.actionId == 847) {
+					this->_oldAlphas.push_back(obj->renderInfos.color.a);
+					if (!this->_me.isTransformed())
+						obj->renderInfos.color.a = 0;
+				}
 	}
 
 	void render1(char layer) override
@@ -199,7 +213,7 @@ public:
 	void clearMyList()
 	{
 		for (auto obj : this->_list) {
-			if (obj->frameState.actionId < 900)
+			if (obj->frameState.actionId < 900 && obj->frameState.actionId >= 800)
 				obj->lifetime = 0;
 		}
 		this->_list.erase(std::remove_if(this->_list.begin(), this->_list.end(), [](SokuLib::v2::GameObject *a){
@@ -450,7 +464,10 @@ void Mamizou::update()
 	next.resetHit = this->frameState.currentFrame == 0 && this->frameState.sequenceId == 0;
 	next.dir = this->direction;
 	next.hitCount = this->collisionLimit;
-	next.frameData = this->gameData.frameData;
+	if (this->_transformed)
+		next.frameData = &this->patternData.front().frames.front();
+	else
+		next.frameData = this->gameData.frameData;
 	next.pos = this->position;
 	next.infos = this->renderInfos;
 	this->_dataPointer++;
@@ -2354,6 +2371,7 @@ void Mamizou::initializeAction()
 	}
 	if (this->_transformPlayer) {
 		if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_REIMU) {
+			// Reset the hit flag for fantasy heaven for melees
 			if (std::ranges::find(meleeActions, this->frameState.actionId) != std::end(meleeActions))
 				reinterpret_cast<SokuLib::v2::PlayerReimu *>(this->_transformPlayer)->fantasyHeavenAlreadyHit = 0;
 		}
@@ -3808,7 +3826,51 @@ void Mamizou::initialize()
 	this->_addDebuffGui();
 	this->_addTimerGui();
 	this->_addStackGui();
-	if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_YOUMU) {
+
+	switch (this->_transformPlayer->characterIndex) {
+	case SokuLib::CHARACTER_UTSUHO:
+	case SokuLib::CHARACTER_YUUKA:
+	case SokuLib::CHARACTER_IKU:
+	case SokuLib::CHARACTER_MIMA:
+		this->_whiteListedActions.push_back(SokuLib::ACTION_FLY);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_FORWARD_DASH);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_BACKDASH);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_BACKWARD_HIGH_JUMP);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_FORWARD_HIGH_JUMP);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_NEUTRAL_HIGH_JUMP);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_BE2);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_BE1);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_BE4);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_BE6);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_BACKWARD_AIRDASH);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_FORWARD_AIRDASH);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_jBE4);
+		this->_whiteListedActions.push_back(SokuLib::ACTION_jBE6);
+		break;
+	case SokuLib::CHARACTER_PATCHOULI:
+		this->_whiteListedActions.push_back(ACTION_d623b);
+		this->_whiteListedActions.push_back(ACTION_d22b);
+		this->_whiteListedActions.push_back(ACTION_d22b_UNTRANSFORM);
+		this->_whiteListedActions.push_back(ACTION_FORCE_TIMER_UNTRANSFORM);
+		this->_whiteListedActions.push_back(ACTION_FORCE_TIMER_UNTRANSFORM_AIR);
+		this->_whiteListedActions.push_back(ACTION_d214b);
+		this->_whiteListedActions.push_back(ACTION_d214c);
+		this->_whiteListedActions.push_back(ACTION_jd214b);
+		this->_whiteListedActions.push_back(ACTION_jd214c);
+		this->_whiteListedActions.push_back(ACTION_d236b);
+		this->_whiteListedActions.push_back(ACTION_d236c);
+		this->_whiteListedActions.push_back(ACTION_jd236b);
+		this->_whiteListedActions.push_back(ACTION_jd236c);
+		this->_whiteListedActions.push_back(ACTION_a1_22b);
+		this->_whiteListedActions.push_back(ACTION_a1_22b_UNTRANSFORM);
+		this->_whiteListedActions.push_back(ACTION_ja1_22b);
+		this->_whiteListedActions.push_back(ACTION_ja1_22b_UNTRANSFORM);
+		this->_whiteListedActions.push_back(ACTION_a2_22b);
+		this->_whiteListedActions.push_back(ACTION_a2_22c);
+		this->_whiteListedActions.push_back(ACTION_ja2_22b);
+		break;
+	case SokuLib::CHARACTER_YOUMU:
+		// Fake youmu clone
 		this->createObject(0, this->position.x, this->position.y, this->direction, -1);
 		for (auto &dat : this->_data) {
 			dat.transformed = this->isTransformed();
@@ -3820,9 +3882,14 @@ void Mamizou::initialize()
 			dat.pos = this->position;
 			dat.infos = this->renderInfos;
 		}
-	} else if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_UDONGE) {
-		this->createObject(1, this->position.x, this->position.y, this->direction, -1);
-		this->createObject(2, this->position.x, this->position.y, this->direction, -1);
+		break;
+	case SokuLib::CHARACTER_UDONGE:
+		// Fake reisen clone
+		this->createObject(1, this->position.x, this->position.y, this->direction, 1);
+		this->createObject(2, this->position.x, this->position.y, this->direction, 1);
+		break;
+	default:
+		break;
 	}
 
 	// TODO: Check if the opponent has extra GUI (like Sanae)
@@ -4314,7 +4381,15 @@ void Mamizou::_postTransformCall()
 	this->reflectDamageMultiplier = this->_transformPlayer->reflectDamageMultiplier;
 	this->unknown55C = this->_transformPlayer->unknown55C;
 	this->blockDisabled = this->_transformPlayer->blockDisabled;
-	this->childrenA = this->_transformPlayer->childrenA;
+	if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_UDONGE) {
+		auto it = this->childrenA.begin();
+		auto first = *it++;
+		auto second = *it;
+
+		this->childrenA = this->_transformPlayer->childrenA;
+		this->childrenA.push_front(second);
+		this->childrenA.push_front(first);
+	}
 }
 
 /*
@@ -4356,16 +4431,39 @@ void Mamizou::_preUntransformCall()
 	*this->_frameStateBuffer = this->_transformPlayer->frameState;
 	this->_transformPlayer->collisionType = this->collisionType;
 	this->_transformPlayer->collisionLimit = this->collisionLimit;
+	this->_transformPlayer->inputData.keyInput = this->inputData.keyInput;
+
+	// For Marisa we transfer our framedata so that we can bounce eco bomb
 	if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA)
 		this->_transformPlayer->gameData.frameData = this->gameData.frameData;
-	this->_transformPlayer->inputData.keyInput = this->inputData.keyInput;
-	this->_transformPlayer->frameState.actionId = this->frameState.actionId;
+
+	// For Okuu and Yuuka set action to 5A if we are doing a move (except transforming) so tokamak stops
+	if (
+		(this->_transformPlayer->characterIndex == SokuLib::CHARACTER_YUUKA || this->_transformPlayer->characterIndex == SokuLib::CHARACTER_UTSUHO) &&
+		this->frameState.actionId >= SokuLib::ACTION_5A &&
+		this->frameState.actionId != ACTION_d623b &&
+		this->frameState.actionId != ACTION_d22b &&
+		this->frameState.actionId != ACTION_d22b_UNTRANSFORM &&
+		this->frameState.actionId != ACTION_FORCE_TIMER_UNTRANSFORM &&
+		this->frameState.actionId != ACTION_FORCE_TIMER_UNTRANSFORM_AIR &&
+		this->frameState.actionId != ACTION_a1_22b &&
+		this->frameState.actionId != ACTION_a1_22b_UNTRANSFORM &&
+		this->frameState.actionId != ACTION_ja1_22b &&
+		this->frameState.actionId != ACTION_ja1_22b_UNTRANSFORM &&
+		this->frameState.actionId != ACTION_a2_22b &&
+		this->frameState.actionId != ACTION_ja2_22b
+	)
+		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_5A;
+	else if (std::ranges::find(this->_whiteListedActions, this->frameState.actionId) != this->_whiteListedActions.end())
+		this->_transformPlayer->frameState.actionId = this->frameState.actionId;
+	else
+		this->_transformPlayer->frameState.actionId = 0;
 	this->_transformPlayer->frameState.sequenceId = 0;
 	this->_transformPlayer->frameState.poseId = 0;
 	this->_transformPlayer->frameState.poseFrame = 3;
 	this->_transformPlayer->frameState.currentFrame = 3;
-	this->_transformPlayer->frameState.sequenceSize = this->frameState.sequenceSize;
-	this->_transformPlayer->frameState.poseDuration = this->frameState.poseDuration + 50;
+	this->_transformPlayer->frameState.sequenceSize = 90;
+	this->_transformPlayer->frameState.poseDuration = 90;
 	this->_transformPlayer->superArmorDamageTaken = this->superArmorDamageTaken;
 	this->_transformPlayer->hp = this->hp;
 	this->_transformPlayer->currentSpirit = this->currentSpirit;

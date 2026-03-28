@@ -89,6 +89,7 @@ private:
 	FrameState *_frameStateBuffer;
 	size_t _bufferSize;
 	SokuLib::v2::CharacterSequenceData *_back;
+	std::vector<unsigned> _whiteListedActions;
 
 	State _data[CLONE_BUFFERING_DELAY + 1];
 	unsigned _dataPointer = 0;
