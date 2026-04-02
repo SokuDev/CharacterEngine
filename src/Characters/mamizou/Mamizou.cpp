@@ -4463,9 +4463,11 @@ void Mamizou::_preUntransformCall()
 		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_5A;
 	// Something similar for Mairsa and Reimu, so they know we are doing a move during Orreries and Fantasy Heaven
 	else if (
-		(this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA || this->_transformPlayer->characterIndex == SokuLib::CHARACTER_REIMU) &&
+		this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA &&
 		this->frameState.actionId >= SokuLib::ACTION_5A
 	)
+		this->_transformPlayer->frameState.actionId = this->frameState.actionId;
+	else if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_REIMU)
 		this->_transformPlayer->frameState.actionId = this->frameState.actionId;
 	else if (std::ranges::find(this->_whiteListedActions, this->frameState.actionId) != this->_whiteListedActions.end())
 		this->_transformPlayer->frameState.actionId = this->frameState.actionId;
@@ -4547,7 +4549,7 @@ void Mamizou::_postUntransformCall()
 		this->_transformKind = KIND_FULL_MOVE;
 		this->_transformTimer = TIMER_MAX;
 		this->_transformTimerDelay = 0;
-		this->_transform(false, false);
+		this->_transform(true, false);
 		this->frameState.actionId = this->_transformPlayer->frameState.actionId;
 		this->_postTransformCall();
 	} else if (this->_transformPlayer->spellStopCounter) {

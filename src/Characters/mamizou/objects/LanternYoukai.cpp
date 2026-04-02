@@ -23,6 +23,10 @@ void LanternYoukai::update()
 	switch (this->frameState.sequenceId) {
 	case 0:
 	case 1:
+		if (this->checkTurnIntoCrystals(false, 1, 3)) {
+			this->lifetime = 0;
+			return;
+		}
 		if (this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
 			this->lifetime = 0;
 			return;
@@ -44,6 +48,10 @@ void LanternYoukai::update()
 		}
 		break;
 	case 2:
+		if (this->checkTurnIntoCrystals(false, 1, 3)) {
+			this->lifetime = 0;
+			return;
+		}
 		if (this->frameState.poseId == 0 && this->frameState.currentFrame == 0) {
 			this->lifetime = 0;
 			return;
