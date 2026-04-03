@@ -239,9 +239,9 @@ Mamizou::Mamizou(SokuLib::PlayerInfo &info) :
 		extra.effectiveDeck.clear();
 		this->_transformPlayer = abiPointer->createCharacter(extra.character, extra);
 		this->_bufferSize = abiPointer->getCharacterSize(extra.character);
-		this->_characterBuffer = new unsigned char[this->_bufferSize + sizeof(*this->_frameStateBuffer)];
-		this->_dummyCharacter = reinterpret_cast<Player *>(this->_characterBuffer);
-		this->_frameStateBuffer = reinterpret_cast<FrameState *>(this->_characterBuffer + this->_bufferSize);
+		this->_characterBuffer.resize(this->_bufferSize + sizeof(*this->_frameStateBuffer));
+		this->_dummyCharacter = reinterpret_cast<Player *>(this->_characterBuffer.data());
+		this->_frameStateBuffer = reinterpret_cast<FrameState *>(this->_characterBuffer.data() + this->_bufferSize);
 		for (auto obj : this->_transformPlayer->objectList->getList())
 			this->_restingActions.emplace(obj->frameState.actionId, obj->frameState.sequenceId);
 		this->objectList = new MamizouGameObjectList(*this, *this->_transformPlayer, this->_restingActions);
@@ -255,7 +255,6 @@ Mamizou::Mamizou(SokuLib::PlayerInfo &info) :
 
 Mamizou::~Mamizou()
 {
-	delete[] this->_characterBuffer;
 	abiPointer->destroyCharacter(this->_transformPlayer);
 	for (auto &card : this->_opponentSpellCards)
 		SokuLib::textureMgr.remove(card.second);
@@ -3297,7 +3296,7 @@ void Mamizou::_processInputsGrounded()
 
 void Mamizou::_fillCharacterBuffer()
 {
-	memcpy(this->_characterBuffer, this->_transformPlayer, this->_bufferSize);
+	memcpy(this->_characterBuffer.data(), this->_transformPlayer, this->_bufferSize);
 	this->_dummyCharacter->gameData.owner = this->_dummyCharacter;
 	this->_dummyCharacter->gameData.ally  = this->_dummyCharacter;
 	this->_dummyCharacter->attackPower    = this->attackPower;
@@ -3526,24 +3525,6 @@ bool Mamizou::VUnknown60(int a)
 
 void Mamizou::render()
 {
-//	SokuLib::DxVertex vertices[1280];
-
-//	for (int i = 0; i < 1280; i++) {
-//		vertices[i].color = 0xFFFFFFFF;
-//		vertices[i].x = (SokuLib::camera.translate.x + i) * SokuLib::camera.scale;
-//		vertices[i].y = (SokuLib::camera.translate.y - SokuLib::v2::groundHeight[i]) * SokuLib::camera.scale;
-//		vertices[i].z = 0;
-//		vertices[i].rhw = 1;
-//		vertices[i].u = 0;
-//		vertices[i].v = 0;
-//	}
-//	SokuLib::textureMgr.setTexture(0, 0);
-
-//	HRESULT r = SokuLib::pd3dDev->DrawPrimitiveUP(D3DPT_LINESTRIP, 1279, vertices, sizeof(*vertices));
-
-//	if (r != D3D_OK)
-//		printf("Error: %d\n", r);
-
 	if (!this->_transformed) {
 		auto old = this->renderInfos;
 
@@ -3551,8 +3532,11 @@ void Mamizou::render()
 			this->_transformPlayer &&
 			this->renderInfos.shaderType == 0 &&
 			this->renderInfos.color == SokuLib::Color::White
-		)
-			this->renderInfos = this->_transformPlayer->renderInfos;
+		) {
+			this->renderInfos.shaderType = this->_transformPlayer->renderInfos.shaderType;
+			this->renderInfos.shaderColor = this->_transformPlayer->renderInfos.shaderColor;
+			this->renderInfos.color = this->_transformPlayer->renderInfos.color;
+		}
 		SokuLib::v2::Player::render();
 		this->renderInfos = old;
 	} else
@@ -4400,41 +4384,8 @@ void Mamizou::_postTransformCall()
 	}
 }
 
-/*
-static void __fastcall __dummy_setActionSequence(void *This, int, short action, short sequence) {}
-static bool __fastcall __dummy_setAction(void *This, int, short action) { return false; }
-static void __fastcall __dummy_setSequence(void *This, int, short sequence) {}
-static void __fastcall __dummy_resetSequence(void *This, int) {}
-static bool __fastcall __dummy_nextSequence(void *This, int) { return false; }
-static void __fastcall __dummy_prevSequence(void *This, int) {}
-static void __fastcall __dummy_setPose(void *This, int, short pose) {}
-static bool __fastcall __dummy_nextPose(void *This, int) { return false; }
-static void __fastcall __dummy_prevPose(void *This, int) {}
-static SokuLib::v2::GameObject *__fastcall __dummy_createObject(void *This, int, short actionId, float x, float y, char dir, char layer, float* customData, unsigned int customDataSize) { return nullptr; }
-static SokuLib::v2::GameObject *__fastcall __dummy_createChild(void *This, int, short actionId, float x, float y, char dir, char layer, float* customData, unsigned int customDataSize) { return nullptr; }
-static void *oldVtableData[50];
-*/
-
 void Mamizou::_preUntransformCall()
 {
-	// DWORD o;
-	// auto playerVtable = *reinterpret_cast<void ***>(this->_transformPlayer);
-
-	// VirtualProtect(playerVtable, 4096, PAGE_EXECUTE_READWRITE, &o);
-	// oldVtableData[0] = SokuLib::TamperDword(&playerVtable[1], __dummy_setActionSequence);
-	// oldVtableData[1] = SokuLib::TamperDword(&playerVtable[2], __dummy_setAction);
-	// oldVtableData[2] = SokuLib::TamperDword(&playerVtable[3], __dummy_setSequence);
-	// oldVtableData[3] = SokuLib::TamperDword(&playerVtable[4], __dummy_resetSequence);
-	// oldVtableData[4] = SokuLib::TamperDword(&playerVtable[5], __dummy_nextSequence);
-	// oldVtableData[5] = SokuLib::TamperDword(&playerVtable[6], __dummy_prevSequence);
-	// oldVtableData[6] = SokuLib::TamperDword(&playerVtable[7], __dummy_setPose);
-	// oldVtableData[7] = SokuLib::TamperDword(&playerVtable[8], __dummy_nextPose);
-	// oldVtableData[8] = SokuLib::TamperDword(&playerVtable[9], __dummy_prevPose);
-	// oldVtableData[9] = SokuLib::TamperDword(&playerVtable[18], __dummy_createObject);
-	// oldVtableData[10]= SokuLib::TamperDword(&playerVtable[19], __dummy_createChild);
-	// VirtualProtect(playerVtable, 4096, o, &o);
-	// 0x438c60
-
 	this->_savedFrameData = this->_transformPlayer->gameData.frameData;
 	*this->_frameStateBuffer = this->_transformPlayer->frameState;
 	this->_transformPlayer->collisionType = this->collisionType;
@@ -4445,8 +4396,15 @@ void Mamizou::_preUntransformCall()
 	if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA)
 		this->_transformPlayer->gameData.frameData = this->gameData.frameData;
 
+	// No matter what, send the air and ground hit so bullets disappear
+	if (this->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN && this->frameState.actionId <= SokuLib::ACTION_CROUCH_GROUND_HIT_BIG_HITSTUN)
+		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_STAND_GROUND_HIT_MEDIUM_HITSTUN;
+	else if (this->frameState.actionId == SokuLib::ACTION_AIR_HIT_SMALL_HITSTUN)
+		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_AIR_HIT_SMALL_HITSTUN;
+	else if (this->frameState.actionId >= SokuLib::ACTION_AIR_HIT_MEDIUM_HITSTUN && this->frameState.actionId <= SokuLib::ACTION_AIR_HIT_GROUND_SLAMMED)
+		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_AIR_HIT_MEDIUM_HITSTUN;
 	// For Okuu and Yuuka set action to 5A if we are doing a move (except transforming) so tokamak stops
-	if (
+	else if (
 		(this->_transformPlayer->characterIndex == SokuLib::CHARACTER_YUUKA || this->_transformPlayer->characterIndex == SokuLib::CHARACTER_UTSUHO) &&
 		this->frameState.actionId >= SokuLib::ACTION_5A &&
 		this->frameState.actionId != ACTION_d22b &&

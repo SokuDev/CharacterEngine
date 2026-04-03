@@ -84,7 +84,7 @@ private:
 	SokuLib::Map<int, SokuLib::v2::CharacterSequenceData *> _spellMelees;
 	std::deque<SokuLib::v2::CharacterSequenceData> _spellMeleesStorage;
 	std::set<std::pair<unsigned short, unsigned short>> _restingActions;
-	unsigned char *_characterBuffer;
+	std::vector<unsigned char> _characterBuffer;
 	Player *_dummyCharacter;
 	FrameState *_frameStateBuffer;
 	size_t _bufferSize;
