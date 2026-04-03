@@ -2,8 +2,8 @@
 // Created by PinkySmile on 08/05/24.
 //
 
-#ifndef CHARACTERENGINE_TEWI_HPP
-#define CHARACTERENGINE_TEWI_HPP
+#ifndef CHARACTERENGINE_MAMIZOU_HPP
+#define CHARACTERENGINE_MAMIZOU_HPP
 
 
 #include <SokuLib.hpp>
@@ -260,4 +260,4 @@ public:
 };
 
 
-#endif //CHARACTERENGINE_TEWI_HPP
+#endif //CHARACTERENGINE_MAMIZOU_HPP
