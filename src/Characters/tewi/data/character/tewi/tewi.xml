@@ -44766,7 +44766,7 @@
 				<box left="-30" up="-130" right="14" down="-1"/>
 				<box left="-57" up="-130" right="-18" down="-37"/>
 			</hit>
-			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="8" yposition="-176" unknown02="0" xspeed="0" yspeed="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="21" yposition="-34" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 	</move>
 	<move id="697" index="2" loop="0" movelock="150" actionlock="150">
@@ -45220,7 +45220,7 @@
 			<hit>
 				<box left="-42" up="-147" right="36" down="-1"/>
 			</hit>
-			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="8" yposition="-176" unknown02="0" xspeed="0" yspeed="0"/>
+			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="42" yposition="-90" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 	</move>
 	<move id="700" index="2" loop="0" movelock="150" actionlock="150">
