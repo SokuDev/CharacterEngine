@@ -1,4 +1,4 @@
-// Version 1.4
+// Version 0.8
 
 #include "SokuLib.hpp"
 #include "Mima.hpp"
