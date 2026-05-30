@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout version="4">
+	<mutable id="100" xposition="61" yposition="145"/>
+	<mutable id="101" xposition="261" yposition="145"/>
+	<mutable id="102" xposition="461" yposition="145"/>
+	<mutable id="103" xposition="61" yposition="170"/>
+	<mutable id="104" xposition="261" yposition="170"/>
+	<mutable id="105" xposition="461" yposition="170"/>
+	<mutable id="106" xposition="61" yposition="195"/>
+	<mutable id="107" xposition="261" yposition="195"/>
+	<mutable id="108" xposition="461" yposition="195"/>
+	<mutable id="109" xposition="61" yposition="220"/>
+	<mutable id="110" xposition="261" yposition="220"/>
+	<mutable id="111" xposition="461" yposition="220"/>
+	<mutable id="112" xposition="61" yposition="245"/>
+	<mutable id="113" xposition="261" yposition="245"/>
+	<mutable id="114" xposition="461" yposition="245"/>
+	<mutable id="115" xposition="61" yposition="270"/>
+	<mutable id="116" xposition="261" yposition="270"/>
+	<mutable id="117" xposition="461" yposition="270"/>
+	<mutable id="118" xposition="61" yposition="295"/>
+	<mutable id="119" xposition="261" yposition="295"/>
+	<mutable id="121" xposition="461" yposition="295"/>
+	<mutable id="122" xposition="61" yposition="320"/>
+	<mutable id="123" xposition="261" yposition="320"/>
+	<mutable id="124" xposition="461" yposition="320"/>
+	<mutable id="125" xposition="61" yposition="345"/>
+	<mutable id="126" xposition="261" yposition="345"/>
+	<mutable id="127" xposition="461" yposition="345"/>
+	<mutable id="128" xposition="61" yposition="370"/>
+	<mutable id="129" xposition="261" yposition="370"/>
+	<mutable id="130" xposition="461" yposition="370"/>
+	<mutable id="131" xposition="61" yposition="395"/>
+	<mutable id="132" xposition="261" yposition="395"/>
+	<mutable id="133" xposition="461" yposition="395"/>
+	<static id="120" xposition="61" yposition="430" mirror="0">
+		<image name="99_exit.bmp" xposition="2" yposition="7" width="28" height="14"/>
+	</static>
+	<static id="0" xposition="0" yposition="0" mirror="0">
+		<image name="98_title.bmp" xposition="22" yposition="13" width="309" height="55"/>
+	</static>
+</layout>

@@ -109,3 +109,4 @@ target_link_libraries(
 	d3dx9
 	CharacterEngineLibrary
 )
+target_character_assets("${PROJECT_NAME}")

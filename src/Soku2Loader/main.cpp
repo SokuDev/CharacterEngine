@@ -54,6 +54,28 @@ extern "C" __declspec(dllexport) bool CheckVersion(const BYTE hash[16])
 	return memcmp(hash, SokuLib::targetHash, sizeof(SokuLib::targetHash)) == 0;
 }
 
+void copy(const std::filesystem::path &src, const std::filesystem::path &dest)
+{
+	FILE *i;
+	FILE *o;
+	size_t bytes;
+	char buffer[4096];
+
+	i = _wfopen(src.native().c_str(), L"r");
+	if (!i)
+		throw std::runtime_error("Cannot open " + src.string() + " for reading");
+
+	o = _wfopen(dest.native().c_str(), L"w");
+	if (!o) {
+		fclose(i);
+		throw std::runtime_error("Cannot open " + dest.string() + " for reading");
+	}
+
+	while ((bytes = fread(buffer, sizeof(*buffer), std::size(buffer), i)) > 0)
+		if (fwrite(buffer, sizeof(*buffer), bytes, o) != bytes)
+			throw std::runtime_error("Failed to write");
+}
+
 void restoreSoku2Files(const std::filesystem::path &folder)
 {
 	auto luaPathTemplate = folder / "config" / "SOKU2_base.lua";
@@ -68,12 +90,8 @@ void restoreSoku2Files(const std::filesystem::path &folder)
 	std::filesystem::remove(luaPath, e);
 	std::filesystem::remove(chrInfoPath, e);
 	try {
-		std::filesystem::copy(luaPathTemplate, luaPath);
-	} catch (std::exception &e) {
-		MessageBoxA(nullptr, e.what(), "Soku2 file copy failed", MB_ICONWARNING);
-	}
-	try {
-		std::filesystem::copy(chrInfoPathTemplate, chrInfoPath);
+		/*std::filesystem*/::copy(luaPathTemplate, luaPath);         // At some point std::filesystem::copy uses CreateFile2
+		/*std::filesystem*/::copy(chrInfoPathTemplate, chrInfoPath); // which isn't implemented in wine.
 	} catch (std::exception &e) {
 		MessageBoxA(nullptr, e.what(), "Soku2 file copy failed", MB_ICONWARNING);
 	}
