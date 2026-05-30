@@ -2479,7 +2479,7 @@ void Mamizou::initializeAction()
 	case SokuLib::ACTION_66A:
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
-		this->speed = {15, 0};
+		this->speed = {13, 0};
 		break;
 	case SokuLib::ACTION_f5A:
 	case SokuLib::ACTION_5AAA:
