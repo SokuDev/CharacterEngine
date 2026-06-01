@@ -16,9 +16,9 @@
 #include "../tewi/Tewi.hpp"
 #undef private
 
-// #ifndef _DEBUG
-// #define printf(...)
-// #endif
+#ifndef _DEBUG
+#define printf(...)
+#endif
 
 #define dashTimer gpShort[0]
 #define flightTargetAngle gpShort[1]
@@ -124,6 +124,7 @@ public:
 			this->_me._postTransformCall();
 		} else {
 			this->_me._preUntransformCall();
+			this->_other.objectList->updatePhysics();
 			this->_other.objectList->update();
 			this->_me._postUntransformCall();
 		}
@@ -250,10 +251,8 @@ Mamizou::Mamizou(SokuLib::PlayerInfo &info) :
 		for (auto obj : this->_transformPlayer->objectList->getList())
 			this->_restingActions.emplace(obj->frameState.actionId, obj->frameState.sequenceId);
 		this->objectList = new MamizouGameObjectList(*this, *this->_transformPlayer, this->_restingActions);
-	} else {
+	} else
 		this->objectList = new GameObjectList<MamizouObjectFactory>(this);
-		this->_init = true;
-	}
 	if (info.isRight == 0)
 		__practiceEffect = -1;
 }
@@ -436,10 +435,12 @@ void Mamizou::update()
 {
 	float params[3];
 
-	if (!this->_init) {
-		this->_init = true;
-		this->_transformPlayer->gameData.opponent = this->gameData.opponent;
-	}
+	printf(
+		"[Enter Mamizou::update] %u %u %u (%u %u %u %u %u, %u %u %u %u %u)\n",
+		SokuLib::getBattleMgr().frameCount, *(unsigned *)0x896B20, reinterpret_cast<unsigned *>(0x89B660)[*(unsigned *)0x896B20],
+		this->frameState.actionId, this->frameState.sequenceId, this->frameState.poseId, this->frameState.poseId, this->frameState.currentFrame,
+		this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
+	);
 	if (this->_transformPlayer) {
 		this->handInfo.cardGauge += this->_transformPlayer->handInfo.cardGauge;
 		if (this->gameData.opponent->frameState.actionId >= 2000)
@@ -563,14 +564,39 @@ void Mamizou::update()
 		}
 		goto resetTransformPlayer;
 	} else if (this->_transformPlayer) {
+		printf(
+			"[1] %u %u %u %u %u\n",
+			this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId,
+			this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
+		);
 		this->_transformPlayer->position = this->position;
 		this->_transformPlayer->speed = {0, 0};
 		this->_fillCharacterBuffer();
+		printf(
+			"[2] %u %u %u %u %u\n",
+			this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId,
+			this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
+		);
 		this->_preUntransformCall();
 		this->_transformPlayer->gameData.ally = this;
+		printf(
+			"[3] %u %u %u %u %u\n",
+			this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId,
+			this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
+		);
 		this->_transformPlayer->update();
+		printf(
+			"[4] %u %u %u %u %u\n",
+			this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId,
+			this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
+		);
 		this->_transformPlayer->gameData.ally = this->_transformPlayer;
 		this->_postUntransformCall();
+		printf(
+			"[5] %u %u %u %u %u\n",
+			this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId,
+			this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
+		);
 		if (this->_transformed)
 			goto resetTransformPlayer;
 		if (this->_neverTransformed)
@@ -2297,17 +2323,18 @@ void Mamizou::update()
 resetTransformPlayer:
 	if (this->_transformPlayer)
 		this->_transformPlayer->handInfo.cardGauge = 0;
+	printf(
+		"[Leave Mamizou::update] %u %u %u (%u %u %u %u %u, %u %u %u %u %u)\n",
+		SokuLib::getBattleMgr().frameCount, *(unsigned *)0x896B20, reinterpret_cast<unsigned *>(0x89B660)[*(unsigned *)0x896B20],
+		this->frameState.actionId, this->frameState.sequenceId, this->frameState.poseId, this->frameState.poseId, this->frameState.currentFrame,
+		this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
+	);
 }
 
 bool Mamizou::setAction(short action)
 {
 	printf("Mamizou::setAction(%i)\n", action);
 	if (this->_transformed && action >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN && action < SokuLib::ACTION_FORWARD_AIRTECH) {
-		// TODO: For blocking, though something is still wrong here.
-		//       We get pushed normally on block, but for some reason,
-		//       the opponent doesn't when we are in the corner.
-		//       Normally, the opponent takes the push back we would have
-		//       took if we are in the corner, but that doesn't happen here.
 		if (
 			this->_transformKind == KIND_SPELL_TIMER ||
 			action >= SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN || (
@@ -3835,7 +3862,8 @@ void __declspec(naked) mamizouRevivePreventDeath()
 	__asm {
 		// if (
 		//     defender->gameData.ally == defender &&
-		//     defender->characterIndex == SokuLib::CHARACTER_MAMIZOU)
+		//     defender->characterIndex == SokuLib::CHARACTER_MAMIZOU
+		//     // No need to check if the extra player is Tewi because the hook is placed only when she is
 		// ) {
 		//     if (
 		//         defender->hp <= 0 &&
@@ -3981,6 +4009,7 @@ void Mamizou::initialize()
 	if (!this->_transformPlayer)
 		return;
 	this->_back = (*this->gameData.patternMap)[5];
+	this->_transformPlayer->gameData.opponent = this->gameData.opponent;
 	this->_transformPlayer->initialize();
 	this->_transformPlayer->setAction(SokuLib::ACTION_IDLE);
 	this->_addRainbowGui();
@@ -4587,6 +4616,8 @@ void Mamizou::_preUntransformCall()
 {
 	this->_savedFrameData = this->_transformPlayer->gameData.frameData;
 	*this->_frameStateBuffer = this->_transformPlayer->frameState;
+	this->_transformPlayer->weatherId = this->weatherId;
+	this->_transformPlayer->SORDebuffTimer = this->SORDebuffTimer;
 	this->_transformPlayer->collisionType = this->collisionType;
 	this->_transformPlayer->collisionLimit = this->collisionLimit;
 	this->_transformPlayer->inputData.keyInput = this->inputData.keyInput;
@@ -4637,12 +4668,15 @@ void Mamizou::_preUntransformCall()
 		this->_transformPlayer->gameData.frameData = this->gameData.frameData;
 
 	// No matter what, send the air and ground hit so bullets disappear
-	if (this->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN && this->frameState.actionId <= SokuLib::ACTION_CROUCH_GROUND_HIT_BIG_HITSTUN)
-		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_STAND_GROUND_HIT_MEDIUM_HITSTUN;
+	if (
+		(this->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN && this->frameState.actionId <= SokuLib::ACTION_CROUCH_GROUND_HIT_BIG_HITSTUN) ||
+		(this->frameState.actionId >= SokuLib::ACTION_AIR_HIT_MEDIUM_HITSTUN && this->frameState.actionId <= SokuLib::ACTION_AIR_HIT_GROUND_SLAMMED)
+	)
+		this->_transformPlayer->frameState.actionId = this->isGrounded() ? SokuLib::ACTION_STAND_GROUND_HIT_MEDIUM_HITSTUN : SokuLib::ACTION_AIR_HIT_MEDIUM_HITSTUN;
 	else if (this->frameState.actionId == SokuLib::ACTION_AIR_HIT_SMALL_HITSTUN)
 		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_AIR_HIT_SMALL_HITSTUN;
-	else if (this->frameState.actionId >= SokuLib::ACTION_AIR_HIT_MEDIUM_HITSTUN && this->frameState.actionId <= SokuLib::ACTION_AIR_HIT_GROUND_SLAMMED)
-		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_AIR_HIT_MEDIUM_HITSTUN;
+	else if (this->frameState.actionId == SokuLib::ACTION_KNOCKED_DOWN)
+		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_KNOCKED_DOWN_STATIC;
 	// For Okuu and Yuuka set action to 5A if we are doing a move (except transforming) so tokamak stops
 	else if (
 		(this->_transformPlayer->characterIndex == SokuLib::CHARACTER_YUUKA || this->_transformPlayer->characterIndex == SokuLib::CHARACTER_UTSUHO) &&
@@ -4671,7 +4705,7 @@ void Mamizou::_preUntransformCall()
 		this->_transformPlayer->frameState.actionId = this->frameState.actionId;
 	else if (this->isOnGround())
 		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_IDLE;
-	else if (this->isOnGround())
+	else
 		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_FALLING;
 	this->_transformPlayer->frameState.sequenceId = 0;
 	this->_transformPlayer->frameState.poseId = 0;
@@ -4905,10 +4939,40 @@ void __declspec(naked) checkIdleAnims_JL()
 static unsigned char hook1_og[7];
 static unsigned char hook2_og[7];
 static unsigned char hook3_og[7];
+static int (SokuLib::BattleManager::*og_CBattleManager_OnProcess)();
+
+int __fastcall CBattleManager_OnProcess(SokuLib::BattleManager &This)
+{
+	int i = 0;
+	unsigned oldI = *(unsigned *)0x896B20;
+	unsigned oldV = reinterpret_cast<unsigned *>(0x89B660)[oldI];
+	unsigned f = This.frameCount;
+
+	i = (This.*og_CBattleManager_OnProcess)();
+
+	printf("[FRAME] %u %u %u -> %u %u %u\n", f, oldI, oldV, This.frameCount, *(unsigned *)0x896B20, reinterpret_cast<unsigned *>(0x89B660)[*(unsigned *)0x896B20]);
+	return i;
+}
 
 void Mamizou::hook()
 {
 	DWORD old;
+#ifdef _DEBUG
+	char buffer[128];
+	FILE *_;
+	time_t t;
+	struct tm *tm_info;
+
+	time(&t);
+	tm_info = localtime(&t);
+	strftime(buffer, sizeof(buffer), "0-Mamizou-%Y-%m-%d-%H-%M-%S.log", tm_info);
+	freopen_s(&_, buffer, "w", stdout);
+	freopen_s(&_, buffer, "w", stderr);
+
+	VirtualProtect((PVOID)RDATA_SECTION_OFFSET, RDATA_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+	og_CBattleManager_OnProcess = SokuLib::TamperDword(&SokuLib::VTable_BattleManager.maybeOnProgress, CBattleManager_OnProcess);
+	VirtualProtect((PVOID)RDATA_SECTION_OFFSET, RDATA_SECTION_SIZE, old, &old);
+#endif
 
 	// TODO: Replace with some smarter hook method in case another character wants to hook the same places
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
@@ -4926,7 +4990,6 @@ void Mamizou::hook()
 	memcpy(hook3_og, (void *)0x46E120, 7);
 	SokuLib::TamperNearCall(0x46E120, checkIdleAnims_JL);
 	*(unsigned short *)0x46E125 = 0x9090;
-
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
 }
 
@@ -4942,4 +5005,14 @@ void Mamizou::unhook()
 	memcpy((void *)0x46E16D, hook2_og, 7);
 	memcpy((void *)0x46E120, hook3_og, 7);
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
+#ifdef _DEBUG
+	FILE *_;
+
+	freopen_s(&_, "CONOUT$", "w", stdout);
+	freopen_s(&_, "CONOUT$", "w", stderr);
+
+	VirtualProtect((PVOID)RDATA_SECTION_OFFSET, RDATA_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
+	SokuLib::TamperDword(&SokuLib::VTable_BattleManager.maybeOnProgress, og_CBattleManager_OnProcess);
+	VirtualProtect((PVOID)RDATA_SECTION_OFFSET, RDATA_SECTION_SIZE, old, &old);
+#endif
 }

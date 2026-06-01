@@ -74,7 +74,6 @@ private:
 	unsigned char _currentAnimal = 0;
 	bool _transformedCooldown = false;
 	bool _transformed = false;
-	bool _init = false;
 	bool _neverTransformed = true;
 	bool _stayTransformed = true;
 	TransformKind _transformKind = KIND_TIMER;
