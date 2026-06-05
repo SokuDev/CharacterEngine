@@ -4936,14 +4936,4 @@ void Mamizou::unhook()
 	memcpy((void *)0x46E16D, hook2_og, 7);
 	memcpy((void *)0x46E120, hook3_og, 7);
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
-#ifdef _DEBUG
-	FILE *_;
-
-	freopen_s(&_, "CONOUT$", "w", stdout);
-	freopen_s(&_, "CONOUT$", "w", stderr);
-
-	VirtualProtect((PVOID)RDATA_SECTION_OFFSET, RDATA_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
-	SokuLib::TamperDword(&SokuLib::VTable_BattleManager.maybeOnProgress, og_CBattleManager_OnProcess);
-	VirtualProtect((PVOID)RDATA_SECTION_OFFSET, RDATA_SECTION_SIZE, old, &old);
-#endif
 }
