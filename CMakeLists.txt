@@ -202,6 +202,9 @@ target_include_directories(
 	CharacterEngineLibrary PUBLIC
 	src/Common
 )
+add_custom_target(Characters)
+add_custom_target(All)
+add_dependencies(All CharacterEngine Soku2Loader common_assets Characters)
 
 file(GLOB V_GLOB CONFIGURE_DEPENDS LIST_DIRECTORIES true "src/Characters/*")
 foreach(item ${V_GLOB})

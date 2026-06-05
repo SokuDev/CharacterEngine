@@ -110,3 +110,4 @@ target_link_libraries(
 	CharacterEngineLibrary
 )
 target_character_assets("${PROJECT_NAME}")
+add_dependencies(Characters "${PROJECT_NAME}")

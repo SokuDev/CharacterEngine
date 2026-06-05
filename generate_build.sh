@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -z $WINDIR ]; then
 	if ! type shady-cli; then
 		export PATH="$(dirname $0)/shady/:$PATH"
 	fi
 	type shady-cli || exit
-	OPTIONS=-j
+	OPTIONS="-j $(nproc)"
 else
 	if ! type shady-cli.exe; then
 		export PATH="$(realpath $(dirname $0))/shady/:$PATH"
@@ -36,25 +36,24 @@ generate_character() {
 	if [ $(cat "$IN/character.json" | jq .enabled) '==' false ]; then
 		echo "Disabled"
 	else
-		DLL="$(cat "$IN/character.json" | jq .character_dll | sed -r 's/^"(.*)"$/\1/g')"
-		DAT="$(cat "$IN/character.json" | jq .data | sed -r 's/^"(.*)"$/\1/g')"
-		echo "Building $DLL"
-		if cmake --build $OUTPUT --target $(echo $DLL | sed -r 's/^(.*)\..*$/\1/g') -- $OPTIONS; then
-			mkdir -p "$OUTPUT/Soku2_full/characters/$1" "$OUTPUT/standalone/characters/$1"
-			PDB="$(echo $DLL | rev | cut -d '.' -f 2- | rev).pdb"
-			cp "$OUTPUT/src/Characters/$1/$DLL" "$OUTPUT/src/Characters/$1/$PDB" "$OUTPUT/src/Characters/$1/$DAT" "$IN/character.json" "$OUTPUT/standalone/characters/$1"
-			cp "$OUTPUT/src/Characters/$1/$DLL" "$OUTPUT/src/Characters/$1/$PDB" "$OUTPUT/src/Characters/$1/$DAT" "$IN/character.json" "$OUTPUT/Soku2_full/characters/$1"
-			echo ";#" > "$OUTPUT/Soku2_full/characters/$1/dummy.asm"
-			echo "return function() end" > "$OUTPUT/Soku2_full/characters/$1/dummy.lua"
-			cat "$IN/data/csv/$1/deck.csv" "$IN/data/csv/$1/deck.csv" "$IN/data/csv/$1/deck.csv" "$IN/data/csv/$1/deck.csv" > "$OUTPUT/Soku2_full/characters/$1/deck.cfg"
+		DLL="$(cat "$IN/character.json" | jq -r .character_dll)"
+		DAT="$(cat "$IN/character.json" | jq -r .data)"
+		if [ -z $NO_BUILD ]; then
+			echo "Building $DLL"
+			cmake --build "$OUTPUT" --target $(echo $DLL | sed -r 's/^(.*)\..*$/\1/g') -- $OPTIONS || exit
 		fi
+		mkdir -p "$OUTPUT/Soku2_full/characters/$1" "$OUTPUT/standalone/characters/$1"
+		PDB="$(echo $DLL | rev | cut -d '.' -f 2- | rev).pdb"
+		cp "$OUTPUT/src/Characters/$1/$DLL" "$OUTPUT/src/Characters/$1/$PDB" "$OUTPUT/src/Characters/$1/$DAT" "$IN/character.json" "$OUTPUT/standalone/characters/$1"
+		cp "$OUTPUT/src/Characters/$1/$DLL" "$OUTPUT/src/Characters/$1/$PDB" "$OUTPUT/src/Characters/$1/$DAT" "$IN/character.json" "$OUTPUT/Soku2_full/characters/$1"
+		echo ";#" > "$OUTPUT/Soku2_full/characters/$1/dummy.asm"
+		echo "return function() end" > "$OUTPUT/Soku2_full/characters/$1/dummy.lua"
+		cat "$IN/data/csv/$1/deck.csv" "$IN/data/csv/$1/deck.csv" "$IN/data/csv/$1/deck.csv" "$IN/data/csv/$1/deck.csv" > "$OUTPUT/Soku2_full/characters/$1/deck.cfg"
 	fi
 }
 
 if [ $# -eq 1 ]; then
-	cmake --build "$OUTPUT" --target CharacterEngine -- $OPTIONS || exit
-	cmake --build "$OUTPUT" --target Soku2Loader -- $OPTIONS || exit
-	cmake --build "$OUTPUT" --target common_assets -- $OPTIONS || exit
+	cmake --build "$OUTPUT" --target All -- $OPTIONS || exit
 
 	rm -f "$OUTPUT/Soku2Full.zip" "$OUTPUT/CharacterEngine.zip"
 	rm -rf "$OUTPUT/Soku2_full" "$OUTPUT/standalone"
@@ -72,15 +71,18 @@ if [ $# -eq 1 ]; then
 	echo 'set_version("3.0")' > "$OUTPUT/standalone/config/SOKU2_base.lua"
 	echo > "$OUTPUT/standalone/config/info/characters_base.csv"
 
+	export NO_BUILD=1
 	for character in `ls src/Characters/`; do
 		generate_character "$character"
 	done
-	cd "$OUTPUT/Soku2_full"
-	echo "Generating Soku2Full.zip"
-	zip ../Soku2Full.zip -r .
-	cd "$OUTPUT/standalone"
-	echo "Generating CharacterEngine.zip"
-	zip ../CharacterEngine.zip -r .
+	if [ -z $NO_ZIP ]; then
+		cd "$OUTPUT/Soku2_full"
+		echo "Generating Soku2Full.zip"
+		zip ../Soku2Full.zip -r .
+		cd "$OUTPUT/standalone"
+		echo "Generating CharacterEngine.zip"
+		zip ../CharacterEngine.zip -r .
+	fi
 else
 	while [ $# -ge 2 ]; do
 		generate_character "$2"
