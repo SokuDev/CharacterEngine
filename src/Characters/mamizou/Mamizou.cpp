@@ -365,7 +365,6 @@ void Mamizou::_transformCard(SokuLib::Card &card)
 	card.id = id.first + 100;
 	card.cost = 2;
 	card.sprite.setTexture2(id.second, 0, 0, 41, 65);
-	card.sprite.rotation = 360;
 }
 
 void Mamizou::_updateOpponentDebuffed()
@@ -453,7 +452,7 @@ void Mamizou::update()
 					card.id = 201;
 		}
 		for (auto &card : this->handInfo.hand)
-			if (card.id == 201 || (card.id >= 300 && card.id < 400 && card.sprite.rotation != 360))
+			if (card.id == 201)
 				this->_transformCard(card);
 	}
 	if (this->_transformKind == KIND_DEBUFF_TIMER) {
@@ -3611,17 +3610,19 @@ void Mamizou::render()
 
 void Mamizou::updatePhysics()
 {
-	if (this->_transformed && this->_transformKind == KIND_SPELL_TIMER && this->weatherId == SokuLib::WEATHER_MOUNTAIN_VAPOR) {
-		if (!this->cardsShuffled) {
+	if (this->weatherId == SokuLib::WEATHER_MOUNTAIN_VAPOR && !this->cardsShuffled) {
+		if (this->_transformed && this->_transformKind == KIND_SPELL_TIMER) {
 			this->_currentCard = SokuLib::rand(this->_opponentSpellCards.size());
 			if (this->_currentCard >= this->_opponentSpellCards.size())
 				this->_currentCard = this->_opponentSpellCards.size() - 1;
 			this->_fillHand();
-		}
-		this->cardsShuffled = true;
-		this->_transformPlayer->cardsShuffled = true;
+			this->cardsShuffled = true;
+		} else for (auto &card : this->handInfo.hand)
+			if (card.id >= 300 && card.id < 400)
+				card.id = 201;
 	}
 	if (this->_transformed) {
+		this->_transformPlayer->cardsShuffled = true;
 		this->_preTransformCall();
 		this->_transformPlayer->updatePhysics();
 		this->_postTransformCall();
@@ -4693,15 +4694,12 @@ void Mamizou::_preUntransformCall()
 		this->frameState.actionId != ACTION_ja2_22b
 	)
 		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_5A;
-	// Something similar for Mairsa and Reimu, so they know we are doing a move during Orreries and Fantasy Heaven
+	// Something similar for Marisa and Reimu, so they know we are doing a move during Orreries and Fantasy Heaven
 	else if (
-		this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA &&
-		this->frameState.actionId >= SokuLib::ACTION_5A
+		(this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA && this->frameState.actionId >= SokuLib::ACTION_5A) ||
+		(this->_transformPlayer->characterIndex == SokuLib::CHARACTER_REIMU  && this->frameState.actionId < SokuLib::ACTION_5B) ||
+		std::ranges::find(this->_whiteListedActions, this->frameState.actionId) != this->_whiteListedActions.end()
 	)
-		this->_transformPlayer->frameState.actionId = this->frameState.actionId;
-	else if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_REIMU)
-		this->_transformPlayer->frameState.actionId = this->frameState.actionId;
-	else if (std::ranges::find(this->_whiteListedActions, this->frameState.actionId) != this->_whiteListedActions.end())
 		this->_transformPlayer->frameState.actionId = this->frameState.actionId;
 	else if (this->isOnGround())
 		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_IDLE;
