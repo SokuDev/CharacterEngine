@@ -40,12 +40,16 @@ generate_character() {
 		DAT="$(cat "$IN/character.json" | jq -r .data)"
 		if [ -z $NO_BUILD ]; then
 			echo "Building $DLL"
-			cmake --build "$OUTPUT" --target $(echo $DLL | sed -r 's/^(.*)\..*$/\1/g') -- $OPTIONS || exit
+			cmake --build "$OUTPUT" --target $(echo $DLL | sed -r 's/^(.*)\..*$/\1/g') -- $OPTIONS || return
 		fi
 		mkdir -p "$OUTPUT/Soku2_full/characters/$1" "$OUTPUT/standalone/characters/$1"
 		PDB="$(echo $DLL | rev | cut -d '.' -f 2- | rev).pdb"
-		cp "$OUTPUT/src/Characters/$1/$DLL" "$OUTPUT/src/Characters/$1/$PDB" "$OUTPUT/src/Characters/$1/$DAT" "$IN/character.json" "$OUTPUT/standalone/characters/$1"
-		cp "$OUTPUT/src/Characters/$1/$DLL" "$OUTPUT/src/Characters/$1/$PDB" "$OUTPUT/src/Characters/$1/$DAT" "$IN/character.json" "$OUTPUT/Soku2_full/characters/$1"
+		cp "$OUTPUT/src/Characters/$1/$DLL" "$OUTPUT/src/Characters/$1/$DAT" "$IN/character.json" "$OUTPUT/standalone/characters/$1" || return
+		cp "$OUTPUT/src/Characters/$1/$DLL" "$OUTPUT/src/Characters/$1/$DAT" "$IN/character.json" "$OUTPUT/Soku2_full/characters/$1" || return
+		if [ -f "$OUTPUT/src/Characters/$1/$PDB" ]; then
+			cp "$OUTPUT/src/Characters/$1/$PDB" "$OUTPUT/standalone/characters/$1" || return
+			cp "$OUTPUT/src/Characters/$1/$PDB" "$OUTPUT/Soku2_full/characters/$1" || return
+		fi
 		echo ";#" > "$OUTPUT/Soku2_full/characters/$1/dummy.asm"
 		echo "return function() end" > "$OUTPUT/Soku2_full/characters/$1/dummy.lua"
 		cat "$IN/data/csv/$1/deck.csv" "$IN/data/csv/$1/deck.csv" "$IN/data/csv/$1/deck.csv" "$IN/data/csv/$1/deck.csv" > "$OUTPUT/Soku2_full/characters/$1/deck.cfg"
