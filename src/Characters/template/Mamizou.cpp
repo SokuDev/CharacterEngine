@@ -842,7 +842,7 @@ void Mamizou::_processInputsAirborne()
 		!this->handInfo.hand.empty() &&
 		((this->inputData.keyInput.spellcard != 0 && this->inputData.keyInput.spellcard < 3) || this->inputData.bufferedKeyInput.spellcard != 0) &&
 		this->confusionDebuffTimer == 0 &&
-		this->unknown836 == 0 &&
+		this->lockCardUse == 0 &&
 		this->canActivateCard(0) &&
 		this->_canUseCard(this->handInfo.hand[0].id)
 	) {
@@ -1163,7 +1163,7 @@ void Mamizou::_processInputsGrounded()
 		!this->handInfo.hand.empty() &&
 		((this->inputData.keyInput.spellcard != 0 && this->inputData.keyInput.spellcard < 3) || this->inputData.bufferedKeyInput.spellcard != 0) &&
 		this->confusionDebuffTimer == 0 &&
-		this->unknown836 == 0 &&
+		this->lockCardUse == 0 &&
 		this->canActivateCard(0) &&
 		this->_canUseCard(this->handInfo.hand[0].id)
 	) {
