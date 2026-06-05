@@ -434,12 +434,6 @@ void Mamizou::update()
 {
 	float params[3];
 
-	printf(
-		"[Enter Mamizou::update] %u %u %u (%u %u %u %u %u, %u %u %u %u %u)\n",
-		SokuLib::getBattleMgr().frameCount, *(unsigned *)0x896B20, reinterpret_cast<unsigned *>(0x89B660)[*(unsigned *)0x896B20],
-		this->frameState.actionId, this->frameState.sequenceId, this->frameState.poseId, this->frameState.poseId, this->frameState.currentFrame,
-		this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
-	);
 	if (this->_transformPlayer) {
 		this->handInfo.cardGauge += this->_transformPlayer->handInfo.cardGauge;
 		if (this->gameData.opponent->frameState.actionId >= 2000)
@@ -563,39 +557,14 @@ void Mamizou::update()
 		}
 		goto resetTransformPlayer;
 	} else if (this->_transformPlayer) {
-		printf(
-			"[1] %u %u %u %u %u\n",
-			this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId,
-			this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
-		);
 		this->_transformPlayer->position = this->position;
 		this->_transformPlayer->speed = {0, 0};
 		this->_fillCharacterBuffer();
-		printf(
-			"[2] %u %u %u %u %u\n",
-			this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId,
-			this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
-		);
 		this->_preUntransformCall();
 		this->_transformPlayer->gameData.ally = this;
-		printf(
-			"[3] %u %u %u %u %u\n",
-			this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId,
-			this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
-		);
 		this->_transformPlayer->update();
-		printf(
-			"[4] %u %u %u %u %u\n",
-			this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId,
-			this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
-		);
 		this->_transformPlayer->gameData.ally = this->_transformPlayer;
 		this->_postUntransformCall();
-		printf(
-			"[5] %u %u %u %u %u\n",
-			this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId,
-			this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
-		);
 		if (this->_transformed)
 			goto resetTransformPlayer;
 		if (this->_neverTransformed)
@@ -2322,12 +2291,6 @@ void Mamizou::update()
 resetTransformPlayer:
 	if (this->_transformPlayer)
 		this->_transformPlayer->handInfo.cardGauge = 0;
-	printf(
-		"[Leave Mamizou::update] %u %u %u (%u %u %u %u %u, %u %u %u %u %u)\n",
-		SokuLib::getBattleMgr().frameCount, *(unsigned *)0x896B20, reinterpret_cast<unsigned *>(0x89B660)[*(unsigned *)0x896B20],
-		this->frameState.actionId, this->frameState.sequenceId, this->frameState.poseId, this->frameState.poseId, this->frameState.currentFrame,
-		this->_transformPlayer->frameState.actionId, this->_transformPlayer->frameState.sequenceId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.poseId, this->_transformPlayer->frameState.currentFrame
-	);
 }
 
 bool Mamizou::setAction(short action)
@@ -4937,40 +4900,10 @@ void __declspec(naked) checkIdleAnims_JL()
 static unsigned char hook1_og[7];
 static unsigned char hook2_og[7];
 static unsigned char hook3_og[7];
-static int (SokuLib::BattleManager::*og_CBattleManager_OnProcess)();
-
-int __fastcall CBattleManager_OnProcess(SokuLib::BattleManager &This)
-{
-	int i = 0;
-	unsigned oldI = *(unsigned *)0x896B20;
-	unsigned oldV = reinterpret_cast<unsigned *>(0x89B660)[oldI];
-	unsigned f = This.frameCount;
-
-	i = (This.*og_CBattleManager_OnProcess)();
-
-	printf("[FRAME] %u %u %u -> %u %u %u\n", f, oldI, oldV, This.frameCount, *(unsigned *)0x896B20, reinterpret_cast<unsigned *>(0x89B660)[*(unsigned *)0x896B20]);
-	return i;
-}
 
 void Mamizou::hook()
 {
 	DWORD old;
-#ifdef _DEBUG
-	char buffer[128];
-	FILE *_;
-	time_t t;
-	struct tm *tm_info;
-
-	time(&t);
-	tm_info = localtime(&t);
-	strftime(buffer, sizeof(buffer), "0-Mamizou-%Y-%m-%d-%H-%M-%S.log", tm_info);
-	freopen_s(&_, buffer, "w", stdout);
-	freopen_s(&_, buffer, "w", stderr);
-
-	VirtualProtect((PVOID)RDATA_SECTION_OFFSET, RDATA_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
-	og_CBattleManager_OnProcess = SokuLib::TamperDword(&SokuLib::VTable_BattleManager.maybeOnProgress, CBattleManager_OnProcess);
-	VirtualProtect((PVOID)RDATA_SECTION_OFFSET, RDATA_SECTION_SIZE, old, &old);
-#endif
 
 	// TODO: Replace with some smarter hook method in case another character wants to hook the same places
 	VirtualProtect((PVOID)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
