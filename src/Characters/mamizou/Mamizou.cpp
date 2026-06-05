@@ -452,7 +452,10 @@ void Mamizou::update()
 	if (this->_transformKind == KIND_DEBUFF_TIMER) {
 		if (this->_transformTimer != 0)
 			this->_transformTimer--;
-		if (this->_transformTimer == 0 && this->frameState.actionId < SokuLib::ACTION_5A)
+		if (
+			(this->_transformTimer == 0 && this->frameState.actionId < SokuLib::ACTION_5A) ||
+			this->gameData.opponent->hp == 0
+		)
 			this->_cleanupOpponentDebuff();
 	}
 
@@ -3758,7 +3761,9 @@ void Mamizou::_cleanupOpponentDebuff()
 	for (auto &[id, seq] : this->_originalMelees)
 		(*this->gameData.patternMap)[id] = seq;
 	this->_transformTimer = TIMER_MAX;
-	if (this->gameData.opponent->isOnGround())
+	if (this->gameData.opponent->hp == 0)
+		this->gameData.opponent->setAction(SokuLib::ACTION_AIR_HIT_MEDIUM_HITSTUN);
+	else if (this->gameData.opponent->isOnGround())
 		this->gameData.opponent->setAction(SokuLib::ACTION_IDLE);
 	else
 		this->gameData.opponent->setAction(SokuLib::ACTION_FALLING);
