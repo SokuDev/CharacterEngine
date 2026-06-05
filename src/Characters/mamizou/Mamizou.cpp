@@ -496,6 +496,9 @@ void Mamizou::update()
 			this->handInfo.cardGauge = 0;
 			if (this->_transformTimer != 0)
 				this->_transformTimer--;
+			// TODO: Hook the discard function instead.
+			//       This won't work in 2v2 or Tag.
+			this->gameData.opponent->discardMultiplier = 0;
 		} else if (this->_transformKind == KIND_TIMER) {
 			this->_transformTimer--;
 			if (this->_transformTimer == 0) {
