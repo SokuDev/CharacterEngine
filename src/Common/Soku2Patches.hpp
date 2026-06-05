@@ -1,8 +1,13 @@
-#ifndef CHARACTERENGINE_{{CLASS_NAME}}_CODE_PATCHES_HPP
-#define CHARACTERENGINE_{{CLASS_NAME}}_CODE_PATCHES_HPP
+//
+// Created by PinkySmile on 05/06/2026.
+//
+
+#ifndef CHARACTERENGINE_SOKU2PATCHES_HPP
+#define CHARACTERENGINE_SOKU2PATCHES_HPP
 
 
-#include <vector>
+#include <cstdint>
+#include <stdexcept>
 
 struct JumpTarget {
 	size_t patchOffset;
@@ -25,7 +30,11 @@ struct PatchSkeleton {
 template<size_t arenaSize>
 class StackedMemory {
 private:
+#ifdef _DEBUG
+	unsigned char _buffer[arenaSize + 80];
+#else
 	unsigned char _buffer[arenaSize];
+#endif
 	unsigned char *_nextPtr = this->_buffer;
 
 public:
@@ -33,7 +42,7 @@ public:
 	{
 		if (this->_nextPtr + size > std::end(this->_buffer)) {
 			puts("Out of memory!");
-			printf("Trying to allocate %zu bytes but only %zu are remaining.\n", size, arenaSize - this->getIndex());
+			printf("Trying to allocate %zu bytes but only %zu are remaining.\n", size, sizeof(this->_buffer) - this->getIndex());
 			throw std::bad_alloc();
 		}
 
@@ -70,18 +79,23 @@ public:
 
 	size_t size()
 	{
-		return arenaSize;
+		return sizeof(this->_buffer);
 	}
 };
 
 template<typename T, size_t arenaSize>
 class StackedAllocator {
-private:
+public:
 	std::reference_wrapper<StackedMemory<arenaSize>> _memory;
 
-public:
 	StackedAllocator(StackedMemory<arenaSize> &memory) :
 		_memory(memory)
+	{
+	}
+
+	template<typename U>
+	StackedAllocator(const StackedAllocator<U, arenaSize> &other) noexcept :
+		_memory(other._memory)
 	{
 	}
 
@@ -134,23 +148,5 @@ public:
 static_assert(sizeof(AppliedPatch) == 8);
 static_assert(sizeof(Patch) == 12);
 
-typedef StackedAllocator<AppliedPatch, {{APPLY_ALLOC_SIZE}}> Allocator;
-typedef StackedAllocator<Patch, {{INTERNAL_ALLOC_SIZE}}> TrampolineAllocator;
-typedef StackedAllocator<Patch *, {{INTERNAL_ALLOC_SIZE}}> PatchListAllocator;
-extern Allocator applyAllocator;
-extern std::vector<Patch, TrampolineAllocator> compiledPatches;
-extern std::vector<Patch *, PatchListAllocator> objectUpdate_patches;
-extern std::vector<Patch *, PatchListAllocator> objectInitializeAction_patches;
-extern std::vector<Patch *, PatchListAllocator> update_patches;
-extern std::vector<Patch *, PatchListAllocator> initializeAction_patches;
-extern std::vector<Patch *, PatchListAllocator> initialize_patches;
-extern std::vector<Patch *, PatchListAllocator> handleInputs_patches;
-extern std::vector<Patch *, PatchListAllocator> VUnknown58_patches;
-extern std::vector<Patch *, PatchListAllocator> VUnknown5C_patches;
-extern std::vector<Patch *, PatchListAllocator> VUnknown60_patches;
 
-void initPatches();
-void clearPatches();
-
-
-#endif //CHARACTERENGINE_{{CLASS_NAME}}_CODE_PATCHES_HPP
+#endif //CHARACTERENGINE_SOKU2PATCHES_HPP

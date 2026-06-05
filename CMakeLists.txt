@@ -190,6 +190,8 @@ add_library(
 	src/Common/CharacterEngine.hpp
 	src/Common/CharacterEngineABI.cpp
 	src/Common/CharacterEngineABI.hpp
+	src/Common/Soku2Patches.inl
+	src/Common/Soku2Patches.hpp
 	src/Common/StackTrace.hpp
 )
 target_link_libraries(

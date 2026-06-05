@@ -4,12 +4,8 @@
 #include "{{ClassName}}.hpp"
 
 
-#ifndef _DEBUG
 #define puts(...)
 #define printf(...)
-#endif
-
-static_assert(sizeof(AppliedPatch) == 8);
 
 GameObjectList_{{ClassName}}::GameObjectList_{{ClassName}}(SokuLib::v2::Player *player) :
 	SokuLib::v2::GameObjectList_{{BaseName}}(player)

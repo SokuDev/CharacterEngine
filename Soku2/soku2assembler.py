@@ -1081,21 +1081,21 @@ def main():
 	if has_error:
 		exit(1)
 
-	with open("class_template.hpp", "r") as fd:
+	with open("template/class.hpp", "r") as fd:
 		header_template = fd.read()
-	with open("class_template.cpp", "r") as fd:
+	with open("template/class.cpp", "r") as fd:
 		source_template = fd.read()
-	with open("entry_point_template.cpp", "r") as fd:
+	with open("template/entry_point.cpp", "r") as fd:
 		entry_point_template = fd.read()
-	with open("CMakeLists_template.txt", "r") as fd:
+	with open("template/CMakeLists.txt", "r") as fd:
 		cmake_template = fd.read()
-	with open("version_template.rc", "r") as fd:
+	with open("template/version.rc", "r") as fd:
 		version_template = fd.read()
-	with open("character_template.json", "r") as fd:
+	with open("template/character.json", "r") as fd:
 		character_template = fd.read()
-	with open("code_patches_template.hpp", "r") as fd:
+	with open("template/code_patches.hpp", "r") as fd:
 		patches_header_template = fd.read()
-	with open("code_patches_template.cpp", "r") as fd:
+	with open("template/code_patches.cpp", "r") as fd:
 		patches_source_template = fd.read()
 
 	CLASS_NAME = args.class_name.upper()

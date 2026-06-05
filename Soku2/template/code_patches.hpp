@@ -1,13 +1,13 @@
-#ifndef CHARACTERENGINE_ORIN_CODE_PATCHES_HPP
-#define CHARACTERENGINE_ORIN_CODE_PATCHES_HPP
+#ifndef CHARACTERENGINE_{{CLASS_NAME}}_CODE_PATCHES_HPP
+#define CHARACTERENGINE_{{CLASS_NAME}}_CODE_PATCHES_HPP
 
 
 #include <vector>
 #include "Soku2Patches.hpp"
 
-typedef StackedAllocator<AppliedPatch, 14632> Allocator;
-typedef StackedAllocator<Patch, 5532> TrampolineAllocator;
-typedef StackedAllocator<Patch *, 5532> PatchListAllocator;
+typedef StackedAllocator<AppliedPatch, {{APPLY_ALLOC_SIZE}}> Allocator;
+typedef StackedAllocator<Patch, {{INTERNAL_ALLOC_SIZE}}> TrampolineAllocator;
+typedef StackedAllocator<Patch *, {{INTERNAL_ALLOC_SIZE}}> PatchListAllocator;
 extern Allocator applyAllocator;
 extern std::vector<Patch, TrampolineAllocator> compiledPatches;
 extern std::vector<Patch *, PatchListAllocator> objectUpdate_patches;
@@ -24,4 +24,4 @@ void initPatches();
 void clearPatches();
 
 
-#endif //CHARACTERENGINE_ORIN_CODE_PATCHES_HPP
+#endif //CHARACTERENGINE_{{CLASS_NAME}}_CODE_PATCHES_HPP
