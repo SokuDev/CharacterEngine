@@ -128,10 +128,10 @@ public:
 			this->_other.objectList->update();
 			this->_me._postUntransformCall();
 		}
-		this->_player->comboCount += this->_me._dummyCharacter->comboCount;
+		this->_player->comboCount  += this->_me._dummyCharacter->comboCount;
 		this->_player->comboDamage += this->_me._dummyCharacter->comboDamage;
-		this->_player->comboLimit += this->_me._dummyCharacter->comboLimit;
-		this->_player->comboRate *= this->_me._dummyCharacter->comboRate;
+		this->_player->comboLimit  += this->_me._dummyCharacter->comboLimit;
+		this->_player->comboRate   *= this->_me._dummyCharacter->comboRate;
 		if (this->_player->comboTimer < this->_me._dummyCharacter->comboTimer)
 			this->_player->comboTimer = this->_me._dummyCharacter->comboTimer;
 		for (auto obj : this->_other.objectList->getList())
@@ -3308,7 +3308,7 @@ void Mamizou::_fillCharacterBuffer()
 	memcpy(this->_characterBuffer.data(), this->_transformPlayer, this->_bufferSize);
 	this->_dummyCharacter->gameData.owner = this->_dummyCharacter;
 	this->_dummyCharacter->gameData.ally  = this->_dummyCharacter;
-	this->_dummyCharacter->attackPower    = this->attackPower;
+	this->_dummyCharacter->attackPower    = this->attackPower * this->_extraAttackPower;
 }
 
 bool Mamizou::_tryDoUntransformedMove(bool cardsOnly, bool spellsOnly)
@@ -3602,23 +3602,24 @@ void Mamizou::updatePhysics()
 		if (this->_transformPlayer->frameState.actionId >= SokuLib::ACTION_USING_SC_ID_200 && this->_transformPlayer->frameState.actionId < SokuLib::ACTION_SKILL_CARD) {
 			switch (this->_spellCost) {
 			case 1:
-				this->attackPower *= ATK_1COST_BOOST;
+				this->_extraAttackPower = ATK_1COST_BOOST;
 				break;
 			case 2:
-				this->attackPower *= ATK_2COST_BOOST;
+				this->_extraAttackPower = ATK_2COST_BOOST;
 				break;
 			case 3:
-				this->attackPower *= ATK_3COST_BOOST;
+				this->_extraAttackPower = ATK_3COST_BOOST;
 				break;
 			case 4:
-				this->attackPower *= ATK_4COST_BOOST;
+				this->_extraAttackPower = ATK_4COST_BOOST;
 				break;
 			case 5:
-				this->attackPower *= ATK_5COST_BOOST;
+				this->_extraAttackPower = ATK_5COST_BOOST;
 				break;
 			}
 		} else
-			this->attackPower *= ATK_5SC_BOOST;
+			this->_extraAttackPower = ATK_5SC_BOOST;
+		this->attackPower *= this->_extraAttackPower;
 	}
 }
 

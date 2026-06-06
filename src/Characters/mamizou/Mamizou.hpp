@@ -68,6 +68,7 @@ private:
 	unsigned _transformTimer = TIMER_MAX;
 	unsigned _transformStacks = 0;
 	unsigned _transformStackCharge = 0;
+	float _extraAttackPower = 1;
 	unsigned char _spellCost = 0;
 	unsigned char _currentCard = 0;
 	unsigned char _currentSelection = 0;
