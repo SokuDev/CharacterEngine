@@ -41,9 +41,11 @@ cp -r "$CMAKE_OUT/Soku2_full" "$SOKU2_OUT" || exit
 CONFIG="[Options]
 autoUpdate=0
 useLoadLock=0
-enableLua=0
+enableLua=1
 [Packages]"
 for character in `ls src/Characters/`; do
 	setup_dev_character "$character"
 done
+rm "$SOKU2_OUT"/CharacterEngine.dat
+ln -s "$CMAKE_OUT"/CharacterEngine.dll "$SOKU2_OUT"/CharacterEngine.dat
 printf "%s\n" "$CONFIG" > "$SHADY_OUT/shady-loader.ini"

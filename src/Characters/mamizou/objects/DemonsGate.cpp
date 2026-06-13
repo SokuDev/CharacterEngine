@@ -2,76 +2,66 @@
 // Created by PinkySmile on 18/10/2025.
 //
 
-#include "DemonGate.hpp"
-#include "../Mamizou.hpp"
+#include "DemonsGate.hpp"
 
 #define disappearing gpShort[0]
 #define appearTimer gpShort[1]
-#define spawnCount gpShort[2]
 
-static const std::vector<unsigned char> sequences[4] = {
-	{5, 9, 17},
-	{4, 6, 15, 16},
-	{1, 2, 3, 7, 10, 11, 18},
-	{8, 12, 13, 14}
-};
-
-void DemonGate::update()
+void DemonsGate::update()
 {
 	float params[3] = {0, 0, 0};
 
-	if (this->checkTurnIntoCrystals(true, 2, 5)) {
-		this->lifetime = 0;
-		return;
-	}
 	switch (this->frameState.sequenceId) {
 	case 0:
-		if (this->frameState.currentFrame == 0) {
-			if (this->parentPlayerB->frameState.actionId == Mamizou::ACTION_a1_214b)
-				this->appearTimer = 45;
-			else if (this->parentPlayerB->frameState.actionId == Mamizou::ACTION_a1_214c)
-				this->appearTimer = 105;
-		}
+		this->ignoreOwnerTimestop = 1;
 		this->advanceFrame();
+		this->position.x = this->parentPlayerB->position.x;
 		if (this->disappearing == 0) {
-			if (
-				this->parentPlayerB->frameState.actionId == Mamizou::ACTION_a1_214b ||
-				this->parentPlayerB->frameState.actionId == Mamizou::ACTION_a1_214c
-			)
-				this->spawnCount = this->parentPlayerB->gpShort[5];
+			if (this->parentPlayerB->frameState.actionId != SokuLib::ACTION_USING_SC_ID_202) {
+				this->disappearing = 1;
+				return;
+			}
 			if (this->renderInfos.scale.x < 1) {
-				this->renderInfos.scale.x += 0.05;
-				this->renderInfos.scale.y += 0.05;
+				this->renderInfos.scale.x += 0.035;
+				this->renderInfos.scale.y += 0.035;
+				this->parentPlayerB->position.y = this->position.y + 425 * this->renderInfos.scale.y;
 				if (this->frameState.currentFrame % 4 == 0)
 					this->createObject(810, this->position.x + 75 - SokuLib::rand(150), this->position.y, this->direction, 1, params);
-			} else if (this->appearTimer != 0)
-				this->appearTimer--;
-			else
-				this->disappearing = 1;
-		} else if (this->disappearing == 1) {
-			if (this->appearTimer == 0) {
-				if (this->spawnCount == 0) {
-					this->disappearing = 2;
-					break;
-				}
-				auto &arr = sequences[max(1, min(this->parentPlayerB->effectiveSkillLevel[6], 4)) - 1];
-				auto r = SokuLib::rand(arr.size());
-
-				if (r >= arr.size()) r = arr.size() - 1;
-				params[0] = arr[r];
+			} else if (this->parentPlayerB->frameState.sequenceId == 1) {
+				this->parentPlayerB->nextSequence();
+				this->renderInfos.scale.x = 1;
+				this->renderInfos.scale.y = 1;
+			} else if (this->parentPlayerB->frameState.sequenceId >= 3) {
+				this->appearTimer++;
+			}
+			if (this->appearTimer % 9 == 3) {
+				params[0] = SokuLib::rand(17) + 1;
+				if (params[0] >= 19)
+					params[0] = 18;
 				this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, 1, params);
-				this->appearTimer = 30;
-				this->spawnCount--;
-			} else
-				this->appearTimer--;
+			}
+			if (this->appearTimer == 180) {
+				this->parentPlayerB->nextSequence();
+				this->disappearing = 1;
+			}
 		} else {
-			this->renderInfos.scale.x -= 0.1;
-			this->renderInfos.scale.y -= 0.1;
+			this->renderInfos.scale.x -= 0.05;
+			this->renderInfos.scale.y -= 0.05;
 			if (this->frameState.currentFrame % 4 == 0)
 				this->createObject(810, this->position.x + 75 - SokuLib::rand(150), this->position.y, this->direction, 1, params);
 			if (this->renderInfos.scale.x <= 0)
 				this->lifetime = 0;
 		}
+		break;
+	case 19:
+		this->ignoreOwnerTimestop = 1;
+		this->advanceFrame();
+		this->position.x = this->parentPlayerB->position.x;
+		if (!this->parentObject || this->parentObject->disappearing) {
+			this->lifetime = 0;
+			return;
+		}
+		this->renderInfos.scale = this->parentObject->renderInfos.scale;
 		break;
 	default:
 		this->advanceFrame();
@@ -88,30 +78,31 @@ void DemonGate::update()
 			this->collisionLimit = 1;
 		}
 		if (this->renderInfos.scale.x < 1) {
-			this->renderInfos.scale.x += 0.05;
-			this->renderInfos.scale.y += 0.05;
+			this->renderInfos.scale.x += 0.025;
+			this->renderInfos.scale.y += 0.025;
 		} else {
 			this->renderInfos.scale.x = 1;
 			this->renderInfos.scale.y = 1;
 		}
-		this->position.x += 10 * this->direction;
-		if (this->frameState.currentFrame % 12 == 0)
+		this->position.x += 20 * this->direction;
+		if (this->frameState.currentFrame % 4 == 0)
 			this->createObject(810, this->position.x + 50 - SokuLib::rand(100), this->position.y, this->direction, 1, params);
 		break;
 	}
 }
 
-void DemonGate::initializeAction()
+void DemonsGate::initializeAction()
 {
-	if (this->customData)
-		this->setSequence(this->customData[0]);
-	this->skillIndex = 6;
+	float params[1] = { 19 };
+
+	this->setSequence(this->customData[0]);
 	switch (this->frameState.sequenceId) {
 	case 0:
 		this->disappearing = 0;
 		this->appearTimer = 0;
 		this->renderInfos.scale.x = 0;
 		this->renderInfos.scale.y = 0;
+		this->createChild(this->frameState.actionId, this->position.x, this->position.y, this->direction, 1, params);
 		break;
 	case 19:
 		break;

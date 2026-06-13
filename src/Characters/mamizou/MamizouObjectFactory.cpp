@@ -25,9 +25,11 @@
 #include "objects/Gui/TimerSpellGui.hpp"
 #include "objects/Gui/CardSelect.hpp"
 #include "objects/DemonGate.hpp"
+#include "objects/DemonsGate.hpp"
 #include "objects/UdongeClone.hpp"
 #include "objects/YoumuClone.hpp"
 #include "objects/Gui/TimerDebuffGui.hpp"
+#include "objects/WallYoukai.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -67,12 +69,16 @@ SokuLib::v2::GameObject *MamizouObjectFactory::construct(SokuLib::v2::Player *ow
 		return new RegularSmoke();
 	case 820:
 		return new CrabYoukai();
+	case 821:
+		return new DemonGate();
 	case 825:
 		return new LanternYoukai();
+	case 826:
+		return new WallYoukai();
 	case 850:
 		return new HotPot();
 	case 852:
-		return new DemonGate();
+		return new DemonsGate();
 	case 993:
 		return new TimerDebuffGui();
 	case 994:

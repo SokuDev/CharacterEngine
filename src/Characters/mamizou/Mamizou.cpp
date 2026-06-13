@@ -1921,6 +1921,58 @@ void Mamizou::update()
 		}
 		break;
 
+	case ACTION_a1_623b:
+	case ACTION_a1_623c: {
+		const float distMul    = this->frameState.actionId == ACTION_a1_623b ? 50   : 0;
+		const float distBase   = this->frameState.actionId == ACTION_a1_623b ? 300  : 450;
+		const float speedMul   = this->frameState.actionId == ACTION_a1_623b ? 2    : 1;
+		const float speedBase  = this->frameState.actionId == ACTION_a1_623b ? 10   : 8;
+		const float speedInc   = this->frameState.actionId == ACTION_a1_623b ? 3    : 1;
+		const float speedXMul  = this->frameState.actionId == ACTION_a1_623b ? 0    : 10;
+		const float speedXBase = this->frameState.actionId == ACTION_a1_623b ? 10   : 2;
+		const float speedY     = this->frameState.actionId == ACTION_a1_623b ? 5    : 10;
+		const float gravity    = this->frameState.actionId == ACTION_a1_623b ? 0.25 : 0.5;
+
+		this->skillIndex = 4;
+		if (this->frameState.sequenceId != 3)
+			this->applyGroundMechanics();
+		else if (this->applyAirMechanics()) {
+			this->nextSequence();
+			this->resetForces();
+		}
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			break;
+		}
+		if (this->frameState.sequenceId < 2) {
+			if (this->frameState.currentFrame == 0) {
+				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+				this->addCardMeter(70);
+			}
+			if (this->speed.x < speedBase + speedMul * this->effectiveSkillLevel[4])
+				this->speed.x += speedInc;
+			if ((this->gameData.opponent->position.x - this->position.x) * this->direction < distBase + distMul * this->effectiveSkillLevel[4]) {
+				if (this->frameState.sequenceId == 0) {
+					this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+					this->addCardMeter(70);
+				}
+				this->nextSequence();
+			}
+		} else if (this->frameState.sequenceId == 3) {
+			if (this->speed.y < 0)
+				this->speed.y -= this->gravity.y;
+			this->speed.y -= this->gravity.y;
+			if (this->frameState.poseId == 0 && this->frameState.poseFrame == 0) {
+				this->speed.x = speedXBase + speedXMul * this->effectiveSkillLevel[4];
+				this->speed.y = speedY;
+				this->gravity.y = gravity;
+			} else if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0) {
+				this->speed.x = -6;
+				SokuLib::playSEWaveBuffer(SokuLib::SFX_HEAVY_ATTACK);
+			}
+		}
+		break;
+	}
 	case ACTION_a1_22b:
 		this->applyGroundMechanics();
 		if (this->advanceFrame())
@@ -1971,6 +2023,77 @@ void Mamizou::update()
 		}
 		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 30)
 			this->nextSequence();
+		break;
+
+	case ACTION_a1_214b:
+	case ACTION_a1_214c:
+		this->applyGroundMechanics();
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			break;
+		}
+		if (this->frameState.sequenceId == 1) {
+			if (this->frameState.currentFrame == 0) {
+				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+				this->addCardMeter(70);
+				this->createObject(821, this->position.x - 30 * this->direction, this->position.y, this->direction, -1);
+				this->gpShort[5] = 1;
+				this->collisionType = COLLISION_TYPE_HIT;
+			}
+			if (this->frameState.currentFrame == 20) {
+				auto state = this->frameState;
+
+				this->nextSequence();
+				this->setPose(state.poseId);
+				this->frameState.poseFrame = state.poseFrame;
+			}
+		} else if (this->frameState.sequenceId == 2) {
+			if (this->frameState.currentFrame == 40)
+				this->nextSequence();
+		}
+		break;
+
+	case ACTION_a1_236b:
+		this->applyGroundMechanics();
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			break;
+		}
+		if (this->frameState.sequenceId == 0) {
+			if (this->frameState.poseId == 1 && this->frameState.poseFrame == 0)
+				this->createObject(826, this->position.x - 40 * this->direction, this->position.y + 180, this->direction, -1);
+		} else if (this->frameState.sequenceId == 1) {
+			if (this->frameState.currentFrame == 0) {
+				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+				this->addCardMeter(70);
+				this->collisionType = COLLISION_TYPE_HIT;
+			}
+			if (!this->inputData.keyInput.b || this->frameState.currentFrame >= 60)
+				this->nextSequence();
+		}
+		break;
+
+	case ACTION_a1_236c:
+		this->applyGroundMechanics();
+		if (this->advanceFrame()) {
+			this->setAction(SokuLib::ACTION_IDLE);
+			break;
+		}
+		if (this->frameState.sequenceId == 0) {
+			if (this->frameState.poseId == 1 && this->frameState.poseFrame == 0)
+				this->createObject(826, this->position.x - 40 * this->direction, this->position.y - 180, this->direction, -1);
+		} else if (this->frameState.sequenceId == 1) {
+			if (this->frameState.currentFrame == 0) {
+				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
+				this->addCardMeter(70);
+				this->collisionType = COLLISION_TYPE_HIT;
+			}
+			if (
+				(this->frameState.currentFrame >= 20 && this->inputData.keyInput.c) ||
+				this->frameState.currentFrame < 120
+				)
+				this->nextSequence();
+		}
 		break;
 
 	case ACTION_a2_22b:
@@ -2483,6 +2606,10 @@ void Mamizou::initializeAction()
 		this->speed = {12, 0};
 		break;
 	case ACTION_d623b:
+	case ACTION_a1_623b:
+	case ACTION_a1_623c:
+	case ACTION_d236b:
+	case ACTION_d236c:
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		this->speed = {0, 0};
@@ -2491,9 +2618,16 @@ void Mamizou::initializeAction()
 		this->_transformKind = KIND_TIMER;
 		this->speed = {0, 0};
 		break;
-	case ACTION_d236b:
-	case ACTION_d236c:
-		this->gravity.y = 0.6;
+	case ACTION_a1_214b:
+	case ACTION_a1_214c:
+		this->skillIndex = 6;
+		this->collisionType = COLLISION_TYPE_NONE;
+		this->collisionLimit = 1;
+		this->speed = {0, 0};
+		break;
+	case ACTION_a1_236b:
+	case ACTION_a1_236c:
+		this->skillIndex = 7;
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		this->speed = {0, 0};
@@ -2502,7 +2636,7 @@ void Mamizou::initializeAction()
 	case ACTION_d214c:
 	case ACTION_jd214b:
 	case ACTION_jd214c:
-		this->skillIndex = 3;
+		this->skillIndex = 2;
 		this->gravity.y = 1;
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
@@ -2984,13 +3118,25 @@ bool Mamizou::_processSkillsGrounded()
 			return true;
 		if (this->_useSkill(this->inputData.commandCombination._623c, 0, ACTION_d623b))
 			return true;
+		if (this->_useSkill(this->inputData.commandCombination._623b, 4, ACTION_a1_623b))
+			return true;
+		if (this->_useSkill(this->inputData.commandCombination._623c, 4, ACTION_a1_623c))
+			return true;
 		if (this->_useSkill(this->inputData.commandCombination._214b, 2, ACTION_d214b))
 			return true;
 		if (this->_useSkill(this->inputData.commandCombination._214c, 2, ACTION_d214c))
 			return true;
+		if (this->_useSkill(this->inputData.commandCombination._214b, 6, ACTION_a1_214b))
+			return true;
+		if (this->_useSkill(this->inputData.commandCombination._214c, 6, ACTION_a1_214c))
+			return true;
 		if (this->_useSkill(this->inputData.commandCombination._236b, 3, ACTION_d236b))
 			return true;
 		if (this->_useSkill(this->inputData.commandCombination._236c, 3, ACTION_d236c))
+			return true;
+		if (this->_useSkill(this->inputData.commandCombination._236b, 7, ACTION_a1_236b))
+			return true;
+		if (this->_useSkill(this->inputData.commandCombination._236c, 7, ACTION_a1_236c))
 			return true;
 	}
 
@@ -3024,6 +3170,9 @@ bool Mamizou::_canUseCard(int id)
 	case 100:
 	case 101:
 	case 103:
+	case 104:
+	case 106:
+	case 107:
 	case 200:
 	case 202:
 	case 203:
@@ -4034,12 +4183,14 @@ void Mamizou::initialize()
 		this->_whiteListedActions.push_back(ACTION_jd214c);
 		this->_whiteListedActions.push_back(ACTION_d236b);
 		this->_whiteListedActions.push_back(ACTION_d236c);
-		this->_whiteListedActions.push_back(ACTION_jd236b);
-		this->_whiteListedActions.push_back(ACTION_jd236c);
+		this->_whiteListedActions.push_back(ACTION_a1_623b);
+		this->_whiteListedActions.push_back(ACTION_a1_623c);
 		this->_whiteListedActions.push_back(ACTION_a1_22b);
 		this->_whiteListedActions.push_back(ACTION_a1_22b_UNTRANSFORM);
 		this->_whiteListedActions.push_back(ACTION_ja1_22b);
 		this->_whiteListedActions.push_back(ACTION_ja1_22b_UNTRANSFORM);
+		this->_whiteListedActions.push_back(ACTION_a1_214b);
+		this->_whiteListedActions.push_back(ACTION_a1_214c);
 		this->_whiteListedActions.push_back(ACTION_a2_22b);
 		this->_whiteListedActions.push_back(ACTION_a2_22c);
 		this->_whiteListedActions.push_back(ACTION_ja2_22b);

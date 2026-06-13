@@ -46,6 +46,7 @@ void LanternYoukai::update()
 			}
 			this->spawnTimer++;
 		}
+		this->position = this->parentPlayerB->position;
 		break;
 	case 2:
 		if (this->checkTurnIntoCrystals(false, 1, 3)) {
