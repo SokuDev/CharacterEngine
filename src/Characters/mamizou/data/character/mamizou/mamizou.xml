@@ -15924,7 +15924,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 	</move>
-	<move id="505" index="0" loop="0" movelock="50" actionlock="100">
+	<move id="505" index="0" loop="0" movelock="50" actionlock="50">
 		<frame image="dashFront000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="96" xoffset="70" yoffset="192" duration="2" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<standing/>
@@ -15968,6 +15968,7 @@
 		<frame image="specialBa000.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="56" texheight="90" xoffset="20" yoffset="178" duration="4" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<standing/>
+				<cancellable/>
 				<takecounterhit/>
 			</traits>
 			<collision>
@@ -15980,10 +15981,11 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 	</move>
-	<move id="505" index="1" loop="1" movelock="50" actionlock="100">
+	<move id="505" index="1" loop="1" movelock="50" actionlock="50">
 		<frame image="specialBa001.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="64" texheight="84" xoffset="30" yoffset="170" duration="2" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<standing/>
+				<cancellable/>
 				<takecounterhit/>
 			</traits>
 			<collision>
@@ -16167,7 +16169,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 	</move>
-	<move id="506" index="0" loop="0" movelock="50" actionlock="100">
+	<move id="506" index="0" loop="0" movelock="50" actionlock="50">
 		<frame image="dashFront000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="96" xoffset="70" yoffset="192" duration="2" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<standing/>
@@ -16211,6 +16213,7 @@
 		<frame image="specialBa000.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="56" texheight="90" xoffset="20" yoffset="178" duration="4" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<standing/>
+				<cancellable/>
 				<takecounterhit/>
 			</traits>
 			<collision>
@@ -16223,10 +16226,11 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 	</move>
-	<move id="506" index="1" loop="1" movelock="50" actionlock="100">
+	<move id="506" index="1" loop="1" movelock="50" actionlock="50">
 		<frame image="specialBa001.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="64" texheight="84" xoffset="30" yoffset="170" duration="2" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<standing/>
+				<cancellable/>
 				<takecounterhit/>
 			</traits>
 			<collision>
@@ -16314,10 +16318,12 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="specialBa007.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="149" texheight="96" xoffset="100" yoffset="192" duration="2" rendergroup="0">
-			<traits damage="1500" proration="750" chipdamage="350" spiritdamage="2000" untech="60" power="100" limit="40" onhitplayerstun="15" onhitenemystun="15" onblockplayerstun="10" onblockenemystun="20" onhitcardgain="160" onblockcardgain="120" onairhitsetsequence="74" ongroundhitsetsequence="74" xspeed="3000" yspeed="1000" onhitsfx="4" onhiteffect="3" attacklevel="2">
+			<traits damage="1200" proration="750" chipdamage="350" spiritdamage="200" untech="60" power="100" limit="40" onhitplayerstun="15" onhitenemystun="15" onblockplayerstun="10" onblockenemystun="10" onhitcardgain="160" onblockcardgain="120" onairhitsetsequence="74" ongroundhitsetsequence="74" xspeed="3000" yspeed="1000" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<smashmodifier/>
+				<highrightblock/>
 				<airborne/>
 				<airblockable/>
+				<cancellable/>
 				<takecounterhit/>
 				<inducecounterhit/>
 				<skillattacktype/>
@@ -33926,7 +33932,7 @@
 	</move>
 	<move id="821" index="1" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBb000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="259" texheight="199" xoffset="129" yoffset="199" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -33942,7 +33948,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBb001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="273" texheight="254" xoffset="136" yoffset="254" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -33960,7 +33966,7 @@
 	</move>
 	<move id="821" index="2" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBc000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="154" texheight="203" xoffset="77" yoffset="203" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -33976,7 +33982,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBc001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="172" texheight="252" xoffset="111" yoffset="252" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -33994,7 +34000,7 @@
 	</move>
 	<move id="821" index="3" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBd000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="139" texheight="227" xoffset="77" yoffset="227" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34010,7 +34016,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBd001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="190" texheight="184" xoffset="95" yoffset="184" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34028,7 +34034,7 @@
 	</move>
 	<move id="821" index="4" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBe000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="252" texheight="196" xoffset="101" yoffset="196" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34044,7 +34050,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBe001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="277" texheight="184" xoffset="101" yoffset="184" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34062,7 +34068,7 @@
 	</move>
 	<move id="821" index="5" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBf000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="142" texheight="117" xoffset="96" yoffset="117" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34078,7 +34084,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBf001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="152" texheight="115" xoffset="96" yoffset="115" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34096,7 +34102,7 @@
 	</move>
 	<move id="821" index="6" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBg000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="179" texheight="199" xoffset="119" yoffset="184" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34112,7 +34118,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBg001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="176" texheight="210" xoffset="119" yoffset="199" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34130,7 +34136,7 @@
 	</move>
 	<move id="821" index="7" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBh000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="248" texheight="235" xoffset="139" yoffset="235" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34146,7 +34152,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBh001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="232" texheight="226" xoffset="129" yoffset="226" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34164,7 +34170,7 @@
 	</move>
 	<move id="821" index="8" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBi000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="258" texheight="337" xoffset="139" yoffset="337" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34180,7 +34186,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBi001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="332" texheight="259" xoffset="139" yoffset="259" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34198,7 +34204,7 @@
 	</move>
 	<move id="821" index="9" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBj000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="138" texheight="63" xoffset="69" yoffset="63" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34214,7 +34220,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBj001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="123" texheight="81" xoffset="56" yoffset="81" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34232,7 +34238,7 @@
 	</move>
 	<move id="821" index="10" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBk000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="350" texheight="350" xoffset="175" yoffset="275" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34248,7 +34254,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBk001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="350" texheight="350" xoffset="175" yoffset="267" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34266,7 +34272,7 @@
 	</move>
 	<move id="821" index="11" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBl000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="350" texheight="350" xoffset="185" yoffset="275" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34282,7 +34288,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBl001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="350" texheight="350" xoffset="165" yoffset="265" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34300,7 +34306,7 @@
 	</move>
 	<move id="821" index="12" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBm000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="350" texheight="350" xoffset="150" yoffset="300" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34316,7 +34322,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBm001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="350" texheight="350" xoffset="162" yoffset="300" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34334,7 +34340,7 @@
 	</move>
 	<move id="821" index="13" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBn000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="400" texheight="400" xoffset="275" yoffset="350" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34351,7 +34357,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBn001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="400" texheight="400" xoffset="250" yoffset="350" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34370,7 +34376,7 @@
 	</move>
 	<move id="821" index="14" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBo000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="500" texheight="400" xoffset="300" yoffset="325" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34386,7 +34392,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBo001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="500" texheight="400" xoffset="300" yoffset="325" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34404,7 +34410,7 @@
 	</move>
 	<move id="821" index="15" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBp000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="500" texheight="400" xoffset="225" yoffset="287" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34420,7 +34426,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBp001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="500" texheight="400" xoffset="225" yoffset="287" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34438,7 +34444,7 @@
 	</move>
 	<move id="821" index="16" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBq000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="137" texheight="145" xoffset="68" yoffset="140" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34454,7 +34460,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBq001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="135" texheight="138" xoffset="68" yoffset="140" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34472,7 +34478,7 @@
 	</move>
 	<move id="821" index="17" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBr000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="124" texheight="98" xoffset="82" yoffset="99" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34488,7 +34494,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBr001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="137" texheight="87" xoffset="87" yoffset="87" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34506,7 +34512,7 @@
 	</move>
 	<move id="821" index="18" loop="1" movelock="40" actionlock="0">
 		<frame image="spellBulletBs000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="250" texheight="250" xoffset="125" yoffset="212" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -34522,7 +34528,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 		<frame image="spellBulletBs001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="250" texheight="250" xoffset="125" yoffset="212" duration="8" rendergroup="1">
-			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="700" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="900" proration="940" chipdamage="100" spiritdamage="200" untech="60" power="100" limit="20" onhitplayerstun="0" onhitenemystun="3" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="120" onblockcardgain="160" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="500" yspeed="1700" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -35289,21 +35295,22 @@
 	<move id="826" index="0" loop="1" movelock="20" actionlock="0">
 		<frame image="objectGa000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="323" texheight="235" xoffset="160" yoffset="160" duration="3" rendergroup="2">
 			<blend mode="0" color="ffffffff" xscale="100" yscale="100" vertflip="0" horzflip="0" angle="0"/>
-			<traits damage="850" proration="920" chipdamage="400" spiritdamage="200" untech="60" power="100" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="80" onblockcardgain="120" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="500" yspeed="800" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="850" proration="920" chipdamage="400" spiritdamage="100" untech="60" power="100" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="80" onblockcardgain="120" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="500" yspeed="800" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
 				<airblockable/>
 				<takecounterhit/>
+				<inducecounterhit/>
 				<skillattacktype/>
 				<objectattacktype/>
 				<aflag18UNREFLECTABLE/>
-				<friendlyfire/>
-				<fflag25ATTACK_OBJECT/>
+				<isbullet/>
+				<ungrazeble/>
 			</traits>
 			<attack>
 				<box left="-118" up="-92" right="138" down="-32"/>
-				<box left="-37" up="-130" right="96" down="-92"/>
+				<box left="-47" up="-138" right="104" down="-92"/>
 			</attack>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
@@ -35311,7 +35318,7 @@
 	<move id="826" index="1" loop="1" movelock="20" actionlock="0">
 		<frame image="objectGa001.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="341" texheight="228" xoffset="160" yoffset="200" duration="3" rendergroup="2">
 			<blend mode="0" color="ffffffff" xscale="100" yscale="100" vertflip="0" horzflip="0" angle="0"/>
-			<traits damage="850" proration="920" chipdamage="400" spiritdamage="200" untech="60" power="100" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="80" onblockcardgain="120" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="500" yspeed="800" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="850" proration="920" chipdamage="400" spiritdamage="100" untech="60" power="100" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="80" onblockcardgain="120" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="500" yspeed="800" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -35322,11 +35329,10 @@
 				<objectattacktype/>
 				<isbullet/>
 				<ungrazeble/>
-				<fflag25ATTACK_OBJECT/>
 			</traits>
 			<attack>
-				<box left="-100" up="-110" right="115" down="-48"/>
-				<box left="-52" up="-70" right="178" down="-15"/>
+				<box left="-90" up="-110" right="115" down="-48"/>
+				<box left="-52" up="-70" right="159" down="-9"/>
 			</attack>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
@@ -35334,7 +35340,7 @@
 	<move id="826" index="2" loop="1" movelock="10" actionlock="0">
 		<frame image="objectGa001.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="341" texheight="228" xoffset="160" yoffset="200" duration="3" rendergroup="2">
 			<blend mode="0" color="ffffffff" xscale="100" yscale="100" vertflip="0" horzflip="0" angle="0"/>
-			<traits damage="850" proration="920" chipdamage="400" spiritdamage="200" untech="60" power="100" limit="40" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="80" onblockcardgain="120" onairhitsetsequence="88" ongroundhitsetsequence="88" xspeed="200" yspeed="-3000" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="850" proration="920" chipdamage="400" spiritdamage="100" untech="60" power="100" limit="40" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="80" onblockcardgain="120" onairhitsetsequence="88" ongroundhitsetsequence="88" xspeed="200" yspeed="-3000" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -35345,11 +35351,10 @@
 				<objectattacktype/>
 				<isbullet/>
 				<ungrazeble/>
-				<fflag25ATTACK_OBJECT/>
 			</traits>
 			<attack>
-				<box left="-100" up="-110" right="115" down="-48"/>
-				<box left="-52" up="-70" right="178" down="-15"/>
+				<box left="-90" up="-110" right="115" down="-48"/>
+				<box left="-52" up="-70" right="159" down="-9"/>
 			</attack>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
@@ -35357,7 +35362,7 @@
 	<move id="826" index="3" loop="1" movelock="10" actionlock="0">
 		<frame image="objectGa001.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="341" texheight="228" xoffset="160" yoffset="200" duration="3" rendergroup="2">
 			<blend mode="0" color="ffffffff" xscale="100" yscale="100" vertflip="0" horzflip="0" angle="0"/>
-			<traits damage="850" proration="920" chipdamage="400" spiritdamage="200" untech="60" power="100" limit="40" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="80" onblockcardgain="120" onairhitsetsequence="88" ongroundhitsetsequence="88" xspeed="200" yspeed="-3000" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="850" proration="920" chipdamage="400" spiritdamage="100" untech="60" power="100" limit="40" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="80" onblockcardgain="120" onairhitsetsequence="88" ongroundhitsetsequence="88" xspeed="200" yspeed="-3000" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<highrightblock/>
 				<lowrightblock/>
@@ -35366,14 +35371,12 @@
 				<inducecounterhit/>
 				<skillattacktype/>
 				<objectattacktype/>
-				<friendlyfire/>
 				<isbullet/>
 				<ungrazeble/>
-				<fflag25ATTACK_OBJECT/>
 			</traits>
 			<attack>
-				<box left="-100" up="-110" right="115" down="-48"/>
-				<box left="-52" up="-70" right="178" down="-15"/>
+				<box left="-90" up="-110" right="115" down="-48"/>
+				<box left="-52" up="-70" right="159" down="-9"/>
 			</attack>
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
@@ -35388,7 +35391,7 @@
 	<move id="826" index="5" loop="0" movelock="10" actionlock="0">
 		<frame image="alpha000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="0" texheight="0" xoffset="160" yoffset="90" duration="3" rendergroup="2">
 			<blend mode="0" color="ffffffff" xscale="100" yscale="100" vertflip="0" horzflip="0" angle="0"/>
-			<traits damage="800" proration="850" chipdamage="300" spiritdamage="200" untech="60" power="100" limit="40" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="100" onblockcardgain="100" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="0" yspeed="1750" onhitsfx="3" onhiteffect="3" attacklevel="2">
+			<traits damage="800" proration="850" chipdamage="300" spiritdamage="100" untech="60" power="100" limit="40" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="100" onblockcardgain="100" onairhitsetsequence="72" ongroundhitsetsequence="72" xspeed="0" yspeed="1750" onhitsfx="3" onhiteffect="3" attacklevel="2">
 				<liftmodifier/>
 				<lowrightblock/>
 				<inducecounterhit/>

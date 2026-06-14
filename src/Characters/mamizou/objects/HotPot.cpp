@@ -224,6 +224,9 @@ void HotPot::update()
 			if (
 				this->gameData.opponent->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN &&
 				this->gameData.opponent->frameState.actionId < SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN &&
+				this->gameData.opponent->frameState.actionId != SokuLib::ACTION_KNOCKED_DOWN &&
+				this->gameData.opponent->frameState.actionId != SokuLib::ACTION_KNOCKED_DOWN_STATIC &&
+				this->gameData.opponent->realLimit < 100 &&
 				!this->gameData.opponent->hitStop &&
 				!this->parentPlayerB->timeStop
 			) {

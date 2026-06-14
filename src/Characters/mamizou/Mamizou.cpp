@@ -1928,8 +1928,8 @@ void Mamizou::update()
 		const float speedMul   = this->frameState.actionId == ACTION_a1_623b ? 2    : 1;
 		const float speedBase  = this->frameState.actionId == ACTION_a1_623b ? 10   : 8;
 		const float speedInc   = this->frameState.actionId == ACTION_a1_623b ? 3    : 1;
-		const float speedXMul  = this->frameState.actionId == ACTION_a1_623b ? 0    : 10;
-		const float speedXBase = this->frameState.actionId == ACTION_a1_623b ? 10   : 2;
+		const float speedXMul  = this->frameState.actionId == ACTION_a1_623b ? 3    : 1;
+		const float speedXBase = this->frameState.actionId == ACTION_a1_623b ? 10   : 7.5;
 		const float speedY     = this->frameState.actionId == ACTION_a1_623b ? 5    : 10;
 		const float gravity    = this->frameState.actionId == ACTION_a1_623b ? 0.25 : 0.5;
 
@@ -1945,6 +1945,7 @@ void Mamizou::update()
 			break;
 		}
 		if (this->frameState.sequenceId < 2) {
+			this->collisionType = COLLISION_TYPE_HIT;
 			if (this->frameState.currentFrame == 0) {
 				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 				this->addCardMeter(70);
@@ -1957,6 +1958,7 @@ void Mamizou::update()
 					this->addCardMeter(70);
 				}
 				this->nextSequence();
+				this->collisionType = COLLISION_TYPE_NONE;
 			}
 		} else if (this->frameState.sequenceId == 3) {
 			if (this->speed.y < 0)
@@ -2037,7 +2039,10 @@ void Mamizou::update()
 				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 				this->addCardMeter(70);
 				this->createObject(821, this->position.x - 30 * this->direction, this->position.y, this->direction, -1);
-				this->gpShort[5] = 1;
+				if (this->frameState.actionId == ACTION_a1_214c)
+					this->gpShort[5] = this->effectiveSkillLevel[6];
+				else
+					this->gpShort[5] = 1;
 				this->collisionType = COLLISION_TYPE_HIT;
 			}
 			if (this->frameState.currentFrame == 20) {
@@ -2068,7 +2073,10 @@ void Mamizou::update()
 				this->addCardMeter(70);
 				this->collisionType = COLLISION_TYPE_HIT;
 			}
-			if (!this->inputData.keyInput.b || this->frameState.currentFrame >= 60)
+			if (
+				(this->frameState.currentFrame >= 5 && !this->inputData.keyInput.b) ||
+				this->frameState.currentFrame >= 60
+			)
 				this->nextSequence();
 		}
 		break;
@@ -2089,9 +2097,9 @@ void Mamizou::update()
 				this->collisionType = COLLISION_TYPE_HIT;
 			}
 			if (
-				(this->frameState.currentFrame >= 20 && this->inputData.keyInput.c) ||
-				this->frameState.currentFrame < 120
-				)
+				(this->frameState.currentFrame >= 5 && this->inputData.keyInput.c) ||
+				this->frameState.currentFrame < 60
+			)
 				this->nextSequence();
 		}
 		break;

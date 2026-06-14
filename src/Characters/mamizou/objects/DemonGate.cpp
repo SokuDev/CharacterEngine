@@ -54,6 +54,7 @@ void DemonGate::update()
 					this->disappearing = 2;
 					break;
 				}
+
 				auto &arr = sequences[max(1, min(this->parentPlayerB->effectiveSkillLevel[6], 4)) - 1];
 				auto r = SokuLib::rand(arr.size());
 

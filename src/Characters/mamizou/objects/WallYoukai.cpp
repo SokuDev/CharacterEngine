@@ -3,6 +3,9 @@
 //
 
 #include "WallYoukai.hpp"
+#include "../Mamizou.hpp"
+
+#define version gpShort[0]
 
 void WallYoukai::update()
 {
@@ -10,6 +13,12 @@ void WallYoukai::update()
 
 	switch (this->frameState.sequenceId) {
 	case 0:
+		if (this->frameState.currentFrame == 0) {
+			if (this->parentPlayerB->frameState.actionId == Mamizou::ACTION_a1_236b)
+				this->version = 0;
+			else if (this->parentPlayerB->frameState.actionId == Mamizou::ACTION_a1_236c)
+				this->version = 1;
+		}
 		this->position.x = this->parentPlayerB->position.x - 40 * this->parentPlayerB->direction;
 		this->position.y = this->parentPlayerB->position.y + 180;
 		if (this->renderInfos.scale.x < 1) {
@@ -19,8 +28,8 @@ void WallYoukai::update()
 				this->parentPlayer->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN &&
 				this->parentPlayer->frameState.actionId < SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN
 			) {
-				this->lifetime = 0;
-				return;
+				this->renderInfos.scale.x = 1;
+				this->renderInfos.scale.y = 1;
 			}
 			if (this->renderInfos.scale.x >= 1) {
 				this->collisionType = COLLISION_TYPE_NONE;
@@ -31,6 +40,7 @@ void WallYoukai::update()
 			this->parentPlayer->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN &&
 			this->parentPlayer->frameState.actionId < SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN
 		) {
+			std::swap(this->gameData.ally, this->gameData.opponent);
 			this->setSequence(3);
 			this->collisionType = COLLISION_TYPE_NONE;
 			this->collisionLimit = 1;
@@ -38,12 +48,22 @@ void WallYoukai::update()
 			this->parentPlayerB->frameState.sequenceId == 2 &&
 			this->parentPlayerB->frameState.poseId == 1
 		) {
-			this->speed.x = 8;
-			this->speed.y = 12;
+			if (this->version) {
+				this->speed.x = 0;
+				this->speed.y = 15;
+			} else {
+				this->speed.x = 8;
+				this->speed.y = 12;
+			}
 			this->nextSequence();
+			this->layer = 1;
 		}
 		break;
 	case 1:
+		if (this->checkTurnIntoCrystals(false, 1, 5)) {
+			this->lifetime = 0;
+			return;
+		}
 		this->speed.y -= this->gravity.y;
 		if (this->speed.y <= 0)
 			this->nextSequence();
@@ -51,6 +71,10 @@ void WallYoukai::update()
 			this->gpShort[0] = 1;
 		break;
 	case 2:
+		if (this->checkTurnIntoCrystals(false, 1, 5)) {
+			this->lifetime = 0;
+			return;
+		}
 	case 3:
 		this->speed.y -= this->gravity.y;
 		if (this->speed.y + this->gravity.y >= -5 && this->speed.y < -5 && this->gpShort[0] == 1) {
@@ -59,10 +83,10 @@ void WallYoukai::update()
 		}
 		if (this->isOnGround()) {
 			this->position.y = this->getGroundHeight();
-			if (this->parentPlayerB->effectiveSkillLevel[7] >= 3) {
+			if (this->parentPlayerB->effectiveSkillLevel[7] >= 4) {
 				this->createObject(this->frameState.actionId, 0, this->position.y, SokuLib::RIGHT, 1, params);
 				SokuLib::playSEWaveBuffer(SokuLib::SFX_CATFISH_LAND);
-				SokuLib::camera.shake = this->parentPlayerB->effectiveSkillLevel[7] * 5;
+				SokuLib::camera.shake = 15;
 			} else
 				this->parentPlayerB->playSFX(2);
 			this->setSequence(4);
@@ -82,12 +106,12 @@ void WallYoukai::update()
 			this->lifetime = 0;
 		break;
 	case 6:
-		if (!this->parentObject || this->parentObject->frameState.sequenceId != 0) {
+		if (!this->parentB || this->parentB->frameState.sequenceId != 0) {
 			this->lifetime = 0;
 			return;
 		}
-		this->position = this->parentObject->position;
-		this->renderInfos.scale = this->parentObject->renderInfos.scale;
+		this->position = this->parentB->position;
+		this->renderInfos.scale = this->parentB->renderInfos.scale;
 	}
 	this->position.x += this->speed.x * this->direction;
 	this->position.y += this->speed.y;

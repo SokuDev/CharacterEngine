@@ -82,7 +82,7 @@ void LanternYoukai::update()
 				if (this->turnaround > MAX_TURNAROUND)
 					this->turnaround = MAX_TURNAROUND;
 			} else
-				this->turnaround = 2;
+				this->turnaround = 1;
 			if (this->frameState.currentFrame % 4 == 0) {
 				this->updateSpeedAngled(this->renderInfos.zRotation, 1);
 
