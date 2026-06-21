@@ -4825,10 +4825,9 @@ void Mamizou::_preUntransformCall()
 		this->frameState.actionId != ACTION_ja2_22b
 	)
 		this->_transformPlayer->frameState.actionId = SokuLib::ACTION_5A;
-	// Something similar for Marisa and Reimu, so they know we are doing a move during Orreries and Fantasy Heaven
+	// Something similar for Reimu, so they know we are doing a move during Fantasy Heaven
 	else if (
-		(this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA && this->frameState.actionId >= SokuLib::ACTION_5A) ||
-		(this->_transformPlayer->characterIndex == SokuLib::CHARACTER_REIMU  && this->frameState.actionId < SokuLib::ACTION_5B) ||
+		(this->_transformPlayer->characterIndex == SokuLib::CHARACTER_REIMU && this->frameState.actionId < SokuLib::ACTION_5B) ||
 		std::ranges::find(this->_whiteListedActions, this->frameState.actionId) != this->_whiteListedActions.end()
 	)
 		this->_transformPlayer->frameState.actionId = this->frameState.actionId;
