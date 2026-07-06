@@ -46,5 +46,5 @@ void UdongeClone::initializeAction()
 	this->allowEntity = false;
 	this->renderInfos.color = SokuLib::Color{0xFF, 0xFF, 0xFF, 0x80};
 	this->renderInfos.shaderType = 1;
-	this->setParent(this->parentPlayerB);
+	this->setParentA(this->parentPlayerB);
 }

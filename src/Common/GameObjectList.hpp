@@ -49,7 +49,7 @@ public:
 		obj->textures = this->_player->textures;
 		obj->gameData.patternMap = this->_player->gameData.patternMap;
 		if (parentObj)
-			reinterpret_cast<void (__thiscall *)(void *, void *)>(0x74C890)(obj, parentObj);
+			obj->setParentB(parentObj);
 		obj->position.x = x;
 		obj->position.y = y;
 		obj->direction = dir;

@@ -1923,17 +1923,19 @@ void Mamizou::update()
 
 	case ACTION_a1_623b:
 	case ACTION_a1_623c: {
-		const float distMul    = this->frameState.actionId == ACTION_a1_623b ? 50   : 0;
+		const float distMul    = this->frameState.actionId == ACTION_a1_623b ? 30   : 0;
 		const float distBase   = this->frameState.actionId == ACTION_a1_623b ? 300  : 450;
-		const float speedMul   = this->frameState.actionId == ACTION_a1_623b ? 2    : 1;
+		const float speedMul   = this->frameState.actionId == ACTION_a1_623b ? 1.5  : 1;
 		const float speedBase  = this->frameState.actionId == ACTION_a1_623b ? 10   : 8;
 		const float speedInc   = this->frameState.actionId == ACTION_a1_623b ? 3    : 1;
-		const float speedXMul  = this->frameState.actionId == ACTION_a1_623b ? 3    : 1;
+		const float speedXMul  = this->frameState.actionId == ACTION_a1_623b ? 2    : 1;
 		const float speedXBase = this->frameState.actionId == ACTION_a1_623b ? 10   : 7.5;
 		const float speedY     = this->frameState.actionId == ACTION_a1_623b ? 5    : 10;
 		const float gravity    = this->frameState.actionId == ACTION_a1_623b ? 0.25 : 0.5;
 
 		this->skillIndex = 4;
+		if (this->frameState.sequenceId == 0)
+			this->lockCardUse = true;
 		if (this->frameState.sequenceId != 3)
 			this->applyGroundMechanics();
 		else if (this->applyAirMechanics()) {
@@ -1950,8 +1952,10 @@ void Mamizou::update()
 				this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 				this->addCardMeter(70);
 			}
-			if (this->speed.x < speedBase + speedMul * this->effectiveSkillLevel[4])
+			if (this->speed.x + speedInc < speedBase + speedMul * this->effectiveSkillLevel[4])
 				this->speed.x += speedInc;
+			else
+				this->speed.x = speedBase + speedMul * this->effectiveSkillLevel[4];
 			if ((this->gameData.opponent->position.x - this->position.x) * this->direction < distBase + distMul * this->effectiveSkillLevel[4]) {
 				if (this->frameState.sequenceId == 0) {
 					this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
@@ -4795,7 +4799,7 @@ void Mamizou::_preUntransformCall()
 		}
 	}
 
-	// For Marisa we transfer our framedata so that we can bounce eco bomb
+	// For Marisa, we transfer our framedata so that we can bounce eco bomb
 	if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MARISA)
 		this->_transformPlayer->gameData.frameData = this->gameData.frameData;
 

@@ -61,7 +61,7 @@ void DemonGate::update()
 				if (r >= arr.size()) r = arr.size() - 1;
 				params[0] = arr[r];
 				this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, 1, params);
-				this->appearTimer = 30;
+				this->appearTimer = 45;
 				this->spawnCount--;
 			} else
 				this->appearTimer--;
