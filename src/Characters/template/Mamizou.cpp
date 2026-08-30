@@ -1209,7 +1209,7 @@ void Mamizou::handleInputs()
 		// For story mode
 		if (699 < uVar10 && uVar10 < 800) {
 			this->setAction(uVar10);
-			return this->FUN_0046d950();
+			return this->refreshInputCombination();
 		}
 
 		if (this->unknown4C4 == 0 && this->isOnGround()) {

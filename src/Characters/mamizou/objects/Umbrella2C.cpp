@@ -28,19 +28,22 @@ void Umbrella2C::update()
 	}
 	if (this->frameState.poseId == 0 && !this->isOnGround())
 		this->nextPose();
-	if (this->frameState.poseId == 3 && this->frameState.poseFrame == 0)
-		this->createChild(this->frameState.actionId, this->position.x, this->position.y, this->direction, this->layer);
-	if (this->frameState.poseId == 3 && this->frameState.poseFrame > 40 || (
-		this->collisionLimit == 0 && (
-			this->collisionType == COLLISION_TYPE_BULLET_COLLIDE_SAME_DENSITY ||
-			this->collisionType == COLLISION_TYPE_BULLET_COLLIDE_HIGH_DENSITY
-		)
-	)) {
-		if (this->renderInfos.color.a <= 15) {
-			this->lifetime = 0;
-			return;
+	if (this->frameState.poseId >= 3) {
+		if (this->frameState.poseFrame == 0)
+			this->createChild(this->frameState.actionId, this->position.x, this->position.y, this->direction, this->layer);
+		this->gpShort[0]++;
+		if (this->gpShort[0] > 40 || (
+			this->collisionLimit == 0 && (
+				this->collisionType == COLLISION_TYPE_BULLET_COLLIDE_SAME_DENSITY ||
+				this->collisionType == COLLISION_TYPE_BULLET_COLLIDE_HIGH_DENSITY
+			)
+		)) {
+			if (this->renderInfos.color.a <= 15) {
+				this->lifetime = 0;
+				return;
+			}
+			this->renderInfos.color.a -= 15;
 		}
-		this->renderInfos.color.a -= 15;
 	}
 	if (this->checkTurnIntoCrystals(false, 2, 5)) {
 		this->lifetime = 0;
@@ -59,6 +62,7 @@ void Umbrella2C::update()
 
 void Umbrella2C::initializeAction()
 {
+	this->gpShort[0] = 0;
 	if (this->parentObject) {
 		this->setSequence(1);
 		this->renderInfos.color.a = 0;

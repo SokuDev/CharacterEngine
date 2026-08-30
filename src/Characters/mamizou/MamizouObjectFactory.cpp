@@ -30,6 +30,7 @@
 #include "objects/YoumuClone.hpp"
 #include "objects/Gui/TimerDebuffGui.hpp"
 #include "objects/WallYoukai.hpp"
+#include "objects/Gui/Timer1SCGui.hpp"
 
 #ifndef _DEBUG
 #define printf(...)
@@ -79,6 +80,8 @@ SokuLib::v2::GameObject *MamizouObjectFactory::construct(SokuLib::v2::Player *ow
 		return new HotPot();
 	case 852:
 		return new DemonsGate();
+	case 992:
+		return new Timer1SCGui();
 	case 993:
 		return new TimerDebuffGui();
 	case 994:

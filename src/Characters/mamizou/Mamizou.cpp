@@ -13,6 +13,10 @@
 
 // Hack to see privates from Tewi
 #define private public
+#include <algorithm>
+#include <functional>
+#include <optional>
+
 #include "../tewi/Tewi.hpp"
 #undef private
 
@@ -216,9 +220,13 @@ public:
 		return this->_mergedList;
 	}
 
-	void clearMyList()
+	void deleteObjects()
 	{
 		for (auto obj : this->_list) {
+			if (obj->frameState.actionId < 900 && obj->frameState.actionId >= 800)
+				obj->lifetime = 0;
+		}
+		for (auto obj : this->_other.objectList->getList()) {
 			if (obj->frameState.actionId < 900 && obj->frameState.actionId >= 800)
 				obj->lifetime = 0;
 		}
@@ -367,6 +375,46 @@ void Mamizou::_transformCard(SokuLib::Card &card)
 	card.sprite.setTexture2(id.second, 0, 0, 41, 65);
 }
 
+void Mamizou::_transformSkillCard(SokuLib::Card &card)
+{
+	unsigned cmd = (card.id - 120) / 3;
+	unsigned alt = (card.id - 120) % 3;
+	std::optional<std::tuple<unsigned char, unsigned char, int>> id;
+	auto it  = this->_opponentSkillCardsByInput.find(cmd);
+
+	if (it != this->_opponentSkillCardsByInput.end()) {
+		auto &arr = this->_opponentSkillCards[it->second];
+
+		if (arr.second[alt])
+			id = {cmd, alt, arr.second[alt]};
+	}
+	if (!id) {
+		std::vector<std::tuple<unsigned char, unsigned char, int>> array;
+
+		for (auto s : this->_opponentSkillCards) {
+			if (s.second[0])
+				array.emplace_back(s.first, 0, s.second[0]);
+			if (s.second[1])
+				array.emplace_back(s.first, 1, s.second[1]);
+			if (s.second[2])
+				array.emplace_back(s.first, 2, s.second[2]);
+		}
+
+		unsigned s = SokuLib::rand(array.size());
+
+		if (s == array.size()) s--;
+		id = array[s];
+	}
+
+	auto off = this->_opponentSkillsOffset[std::get<0>(*id)];
+	unsigned cid = off + std::get<1>(*id) * this->_opponentSkillCardsByInput.size() + 400;
+
+	printf("Transform skill card from %i (%i,%i) to %i (%i,%i): this->_opponentSkillsOffset[] = %i\n", card.id, cmd, alt, cid, std::get<0>(*id), std::get<1>(*id), off);
+	card.id = cid;
+	card.cost = 1;
+	card.sprite.setTexture2(std::get<2>(*id), 0, 0, 41, 65);
+}
+
 void Mamizou::_updateOpponentDebuffed()
 {
 	auto op = this->gameData.opponent;
@@ -442,12 +490,15 @@ void Mamizou::update()
 			SokuLib::playSEWaveBuffer(SokuLib::SFX_MENU_CONFIRM);
 			__practiceEffect = (__practiceEffect + 2) % (this->_opponentSpellCards.size() + 1) - 1;
 			for (auto &card : this->handInfo.hand)
-				if (card.id >= 300 && card.id < 400)
+				if (card.id >= 300 && card.id < 500)
 					card.id = 201;
 		}
-		for (auto &card : this->handInfo.hand)
+		for (auto &card : this->handInfo.hand) {
 			if (card.id == 201)
 				this->_transformCard(card);
+			if (card.id >= 120 && card.id <= 134)
+				this->_transformSkillCard(card);
+		}
 	}
 	if (this->_transformKind == KIND_DEBUFF_TIMER) {
 		if (this->_transformTimer != 0)
@@ -457,6 +508,19 @@ void Mamizou::update()
 			this->gameData.opponent->hp == 0
 		)
 			this->_cleanupOpponentDebuff();
+	}
+	if (this->_transformKind == KIND_SMALL_SPELL_TIMER) {
+		if (this->_transformTimer != 0)
+			this->_transformTimer--;
+		if (this->_transformTimer == 0) {
+			if (this->skilledSkillLevel[1] >= 0)
+				this->_transformKind = KIND_TIMER;
+			if (this->skilledSkillLevel[5] >= 0)
+				this->_transformKind = KIND_SINGLE_HIT;
+			if (this->skilledSkillLevel[9] >= 0)
+				this->_transformKind = KIND_STACK;
+			this->_transformTimer = TIMER_MAX;
+		}
 	}
 
 	auto &next = this->_data[this->_dataPointer];
@@ -549,6 +613,50 @@ void Mamizou::update()
 				(*it)->gameData.owner = this->_dummyCharacter;
 			}
 			goto resetTransformPlayer;
+		} else if (this->_transformKind == KIND_SPELL_LEVEL_UP) {
+			auto o = this->gpShort[0];
+			auto p = this->gpShort[1];
+			#define INTERVAL 8
+			#define DELAY 15
+
+			this->_fillCharacterBuffer();
+			this->_preTransformCall();
+			this->_transformPlayer->gameData.ally = this;
+			this->_transformPlayer->update();
+			this->_transformPlayer->gameData.ally = this->_transformPlayer;
+			this->_postTransformCall();
+			if (this->_transformPlayer->frameState.actionId == SokuLib::ACTION_SKILL_CARD) {
+				this->grabInvulTimer = 2;
+				this->meleeInvulTimer = 2;
+				this->projectileInvulTimer = 2;
+				this->gpShort[0] = o + 1;
+				if (o == 0) {
+					for (int i = 0; i < std::size(this->gameData.opponent->skilledSkillLevel); i++) {
+						if (this->gameData.opponent->skilledSkillLevel[i] >= 0) {
+							this->opSkilledSkillLevel[i]++;
+							if (this->opSkilledSkillLevel[i] >= 4)
+								this->opSkilledSkillLevel[i] = 4;
+						} else
+							this->opSkilledSkillLevel[i] = -1;
+					}
+				}
+				if (o >= DELAY && (o - DELAY) % INTERVAL == 0 && (o - DELAY) / INTERVAL < this->_opponentSkillCardsByInput.size()) {
+					do {
+						if (this->opSkilledSkillLevel[p] >= 0) {
+							this->createEffect(71, this->position.x, this->position.y + 100.0,this->direction, 1);
+							this->createEffect(this->opSkilledSkillLevel[p] + 130, this->position.x, this->position.y, 1, 1);
+							break;
+						}
+						p++;
+					} while (p < std::size(this->opSkilledSkillLevel));
+					this->gpShort[1] = p + 1;
+				}
+			} else {
+				this->_unTransform();
+				this->setAction(SokuLib::ACTION_IDLE);
+			}
+			#undef INTERVAL
+			#undef DELAY
 		} else {
 			this->_fillCharacterBuffer();
 			this->_preTransformCall();
@@ -595,7 +703,7 @@ void Mamizou::update()
 	this->spinRotationCenter.x = 0;
 	this->spinRotationCenter.y = 115;
 
-	if (this->_transformKind != KIND_DEBUFF_TIMER) {
+	if (this->_transformKind != KIND_DEBUFF_TIMER && this->_transformKind != KIND_SMALL_SPELL_TIMER) {
 		if (this->_transformedCooldown) {
 			this->_transformTimer--;
 			if (this->_transformTimer == 0) {
@@ -766,7 +874,7 @@ void Mamizou::update()
 				break;
 			}
 
-			int minTimer = this->frameState.actionId == SokuLib::ACTION_FORWARD_DASH ? 5 : 25;
+			int minTimer = this->frameState.actionId == SokuLib::ACTION_FORWARD_DASH ? 5 : 15;
 
 			this->dashTimer++;
 			if ((this->direction * this->inputData.keyInput.horizontalAxis < 1 && this->dashTimer > minTimer) || this->dashTimer > MAX_DASH_HOLD) {
@@ -2241,7 +2349,8 @@ void Mamizou::update()
 			this->consumeCard();
 			this->eventSpellUse();
 			this->eventWeatherCycle();
-			this->createObject(850, this->position.x + this->direction * 300, this->position.y, this->direction, 1);
+			// Handle case for mirror and using as transformed
+			this->gameData.ally->createObject(850, this->position.x + this->direction * 300, this->position.y, this->direction, 1);
 		}
 		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 40)
 			this->nextSequence();
@@ -2287,8 +2396,12 @@ void Mamizou::update()
 			this->eventSpellUse();
 			this->eventWeatherCycle();
 		}
-		if (this->frameState.poseId == 4 && this->frameState.poseFrame == this->frameState.poseDuration - 1)
-			reinterpret_cast<MamizouGameObjectList *>(this->objectList)->clearMyList();
+		if (this->frameState.poseId == 4 && this->frameState.poseFrame == this->frameState.poseDuration - 1) {
+			if (!this->_transformPlayer)
+				reinterpret_cast<MamizouGameObjectList *>(this->gameData.ally->objectList)->deleteObjects();
+			else
+				reinterpret_cast<MamizouGameObjectList *>(this->objectList)->deleteObjects();
+		}
 		if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0) {
 			float params[9] = {
 				0, 5,
@@ -2397,6 +2510,101 @@ void Mamizou::update()
 				this->createEffect(134, this->position.x, this->position.y, 1, 1);
 				this->createEffect(71, this->position.x, this->position.y + 100, 1, 1);
 			}
+		}
+		break;
+
+	case SokuLib::ACTION_USING_SC_ID_205:
+		this->applyGroundMechanics();
+	case SokuLib::ACTION_SC_ID_205_ALT_EFFECT:
+		this->advanceFrame();
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 0) {
+			this->spellStopCounter = 40;
+			this->playSpellBackground(0, 120);
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_SPELL_ACTIVATE);
+			this->createEffect(115, this->position.x - this->direction * 34.f, this->position.y + 114.f, this->direction, 1);
+			this->eventSpellUse();
+			this->eventWeatherCycle();
+			this->consumeCard();
+		}
+		if (this->frameState.currentFrame % 8 == 0)
+			this->playSFX(0);
+		for (int i = 0; i < 2; i++) {
+			float params9[9];
+			float x = this->position.x + SokuLib::rand(150) - 75;
+			float y = this->position.y + SokuLib::rand(200);
+
+			params9[0] = std::atan2(this->position.y + 100 - y, this->position.x - x) + M_PI;
+			params9[1] = SokuLib::rand(200) / 100.f + 0.5;
+			params9[2] = SokuLib::rand(4);
+			params9[3] = SokuLib::rand(10) + 10;
+			params9[4] = SokuLib::rand(40) - 20;
+			params9[5] = 1;
+			params9[6] = 1;
+			params9[7] = 0.1;
+			params9[8] = 0.1;
+			this->createObject(802, x, y, SokuLib::rand(100) < 50 ? -1 : 1, 1, params9);
+		}
+		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 45) {
+			this->_transform();
+			this->_transformKind = KIND_SMALL_SPELL_TIMER;
+			this->_transformTimer = SMALL_SPELL_TIMER_MAX;
+		}
+		break;
+
+	case SokuLib::ACTION_USING_SC_ID_206:
+		if (this->advanceFrame())
+			this->setAction(SokuLib::ACTION_IDLE);
+		if (this->frameState.poseId == 4 && this->frameState.poseFrame == 0) {
+			this->spellStopCounter = 40;
+			this->playSpellBackground(6, 80);
+			SokuLib::playSEWaveBuffer(SokuLib::SFX_SPELL_ACTIVATE);
+			this->createEffect(115, this->position.x - this->direction * 34.f, this->position.y + 114.f, this->direction, 1);
+			this->consumeCard();
+			this->eventSpellUse();
+			this->eventWeatherCycle();
+		}
+		if (this->frameState.poseId == 4 && this->frameState.poseFrame == this->frameState.poseDuration - 1) {
+			if (!this->_transformPlayer)
+				reinterpret_cast<MamizouGameObjectList *>(this->gameData.ally->objectList)->deleteObjects();
+			else
+				reinterpret_cast<MamizouGameObjectList *>(this->objectList)->deleteObjects();
+		}
+		if (this->frameState.poseId == 5 && this->frameState.poseFrame == 0) {
+			float params[9] = {
+				0, 5,
+				0, 11, 3,
+				1, 1, 0, 0
+			};
+			auto x = this->position.x + 125 * this->direction;
+			auto y = this->position.y + 100;
+
+			this->createObject(802, x, y, 1, 1, params);
+			params[0] = M_PI_4;
+			this->createObject(802, x, y, 1, 1, params);
+			params[0] = M_PI_4 + M_PI_2;
+			params[2] = 1;
+			this->createObject(802, x, y, 1, 1, params);
+			params[0] = M_PI_2;
+			this->createObject(802, x, y, 1, 1, params);
+			params[0] = -M_PI_4;
+			params[2] = 2;
+			this->createObject(802, x, y, -1, 1, params);
+			params[0] = -M_PI_2;
+			this->createObject(802, x, y, -1, 1, params);
+			params[0] = -M_PI_4 - M_PI_2;
+			params[2] = 3;
+			this->createObject(802, x, y, -1, 1, params);
+			params[0] = M_PI;
+			this->createObject(802, x, y, -1, 1, params);
+			this->playSFX(0);
+		}
+		if (this->collisionType == COLLISION_TYPE_HIT || this->collisionType == COLLISION_TYPE_ARMORED) {
+			this->_transform();
+			this->_transformKind = KIND_SPELL_LEVEL_UP;
+			this->gpShort[0] = 0;
+			this->gpShort[1] = 0;
+			this->_transformPlayer->frameState.actionId = SokuLib::ACTION_SKILL_CARD;
+			this->_transformPlayer->resetSequence();
 		}
 		break;
 
@@ -2671,12 +2879,21 @@ void Mamizou::initializeAction()
 	case SokuLib::ACTION_USING_SC_ID_202:
 	case SokuLib::ACTION_USING_SC_ID_203:
 	case SokuLib::ACTION_USING_SC_ID_204:
+	case SokuLib::ACTION_USING_SC_ID_205:
+	case SokuLib::ACTION_USING_SC_ID_206:
 	case SokuLib::ACTION_SC_ID_204_ALT_EFFECT:
+	case SokuLib::ACTION_SC_ID_205_ALT_EFFECT:
 		this->collisionType = COLLISION_TYPE_NONE;
 		this->collisionLimit = 1;
 		this->speed = {0, 0};
 		this->gravity.y = FALLING_GRAVITY;
 		break;
+	case SokuLib::ACTION_SKILL_CARD:
+		if (this->gpShort[6] == 1) {
+			this->resetForces();
+			break;
+		}
+		[[fallthrough]];
 	default:
 		Player::initializeAction();
 		break;
@@ -2827,16 +3044,86 @@ bool Mamizou::_useSkill(bool input, unsigned char id, unsigned short action)
 		return false;
 	if (this->skilledSkillLevel[id] < 0)
 		return false;
-	if (this->gameData.sequenceData->actionLock >= 150)
+	if (id != 11) {
+		if (this->gameData.sequenceData->actionLock >= 150)
+			return false;
+		if (this->gameData.sequenceData->actionLock > this->getMoveLock(action) && this->skillCancelsUsed[id % 4])
+			return false;
+		this->skillCancelCount++;
+		this->skillCancelsUsed[id % 4] = true;
+		this->renderInfos.zRotation = 0.0;
+		this->eventSkillUse();
+		this->useSkill(action, this->gameData.sequenceData->moveLock);
+		this->skillIndex = id;
+		return true;
+	}
+
+	auto old = this->_transformPlayer->frameState.actionId;
+
+	this->_preTransformCall();
+	memset(&this->_transformPlayer->inputData.keyInput, 0, sizeof(this->_transformPlayer->inputData.keyInput));
+	memset(&this->_transformPlayer->inputData.bufferedKeyInput, 0, sizeof(this->_transformPlayer->inputData.bufferedKeyInput));
+	this->_transformPlayer->inputData.keyInput.spellcard = 0;
+	this->_transformPlayer->inputData.keyUpA = 0;
+	this->_transformPlayer->inputData.keyUpB = 0;
+	this->_transformPlayer->inputData.keyUpC = 0;
+	this->_transformPlayer->inputData.keyUpD = 0;
+	this->_transformPlayer->inputData.keyUpE = 0;
+	this->_transformPlayer->inputData.keyUpF = 0;
+	this->_transformPlayer->inputData.bufferTimer = 0;
+	this->_transformPlayer->inputData.unknown7AD[0] = 0;
+	this->_transformPlayer->inputData.unknown7AD[1] = 0;
+	this->_transformPlayer->inputData.unknown7AD[2] = 0;
+	this->_transformPlayer->inputData.commandInputBuffer.clear();
+	this->_transformPlayer->inputData.movementCombination.value = 0;
+	this->_transformPlayer->inputData.commandCombination.value = 0;
+	switch (this->_learnedCommand << 1 | action) {
+	case (0 << 1) | 0:
+		this->_transformPlayer->inputData.commandCombination._236b = true;
+		break;
+	case (0 << 1) | 1:
+		this->_transformPlayer->inputData.commandCombination._236c = true;
+		break;
+	case (1 << 1) | 0:
+		this->_transformPlayer->inputData.commandCombination._214b = true;
+		break;
+	case (1 << 1) | 1:
+		this->_transformPlayer->inputData.commandCombination._214c = true;
+		break;
+	case (2 << 1) | 0:
+		this->_transformPlayer->inputData.commandCombination._623b = true;
+		break;
+	case (2 << 1) | 1:
+		this->_transformPlayer->inputData.commandCombination._623c = true;
+		break;
+	case (3 << 1) | 0:
+		this->_transformPlayer->inputData.commandCombination._421b = true;
+		break;
+	case (3 << 1) | 1:
+		this->_transformPlayer->inputData.commandCombination._421c = true;
+		break;
+	case (4 << 1) | 0:
+		this->_transformPlayer->inputData.commandCombination._22b = true;
+		break;
+	case (4 << 1) | 1:
+		this->_transformPlayer->inputData.commandCombination._22c = true;
+		break;
+	}
+
+	if (!this->_transformed) {
+		this->_transformPlayer->gameData.sequenceData = this->gameData.sequenceData;
+		this->_transformPlayer->gameData.frameData = this->gameData.frameData;
+	}
+	this->_transformPlayer->handleInputs();
+	if (this->_transformPlayer->frameState.actionId == old)
 		return false;
-	if (this->gameData.sequenceData->actionLock > this->getMoveLock(action) && this->skillCancelsUsed[id % 4])
-		return false;
-	this->skillCancelCount++;
-	this->skillCancelsUsed[id % 4] = true;
-	this->renderInfos.zRotation = 0.0;
-	this->eventSkillUse();
-	this->useSkill(action, this->gameData.sequenceData->moveLock);
-	this->skillIndex = id;
+	memcpy(this->opSkilledSkillLevel, this->_transformPlayer->skilledSkillLevel, sizeof(this->opSkilledSkillLevel));
+	if (!this->_transformed) {
+		this->_transform(true, false);
+		this->_transformKind = KIND_FULL_MOVE;
+	}
+	this->frameState.actionId = this->_transformPlayer->frameState.actionId;
+	this->_postTransformCall();
 	return true;
 }
 
@@ -2858,6 +3145,10 @@ bool Mamizou::_processSkillsAirborne()
 		return true;
 	if (this->_useSkill(this->inputData.commandCombination._214c, 2, ACTION_jd214c))
 		return true;
+	if (this->_useSkill(this->inputData.commandCombination._236b, 11, 0))
+		return true;
+	if (this->_useSkill(this->inputData.commandCombination._236c, 11, 1))
+		return true;
 
 	bool used22 = this->inputData.commandCombination._22b || this->inputData.commandCombination._22c;
 
@@ -2870,7 +3161,7 @@ bool Mamizou::_processSkillsAirborne()
 	return false;
 }
 
-void Mamizou::_processInputsAirborne()
+bool Mamizou::_processInputsAirborne()
 {
 	if (
 		this->_transformKind != KIND_DEBUFF_TIMER &&
@@ -2883,32 +3174,35 @@ void Mamizou::_processInputsAirborne()
 		auto &card = this->handInfo.hand[0];
 
 		if (100 <= card.id && card.id < 200 && this->_useSkillCard(card.id))
-			return;
+			return true;
 		if (200 <= card.id && card.id < 300 && this->_useSpellCard(card.id))
-			return;
-		if (300 <= card.id && card.id < 400 && this->_useTransformedCard(card.id - 100))
-			return;
+			return true;
+		if (300 <= card.id && card.id < 400 && this->_useTransformedSpellCard(card.id - 100))
+			return true;
+		if (500 <= card.id && card.id < 600 && this->_useTransformedSkillCard(card.id - 400))
+			return true;
 	}
 
 	if (!this->confusionDebuffTimer && this->_processSkillsAirborne())
-		return;
+		return true;
 	if (
 		this->_transformKind != KIND_DEBUFF_TIMER &&
 		((this->inputData.keyUpC != 0 && this->inputData.keyUpC <= 2) || this->inputData.keyInput.c == 2 || this->inputData.bufferedKeyInput.c != 0) &&
 		this->_processCAirborne()
 	)
-		return;
+		return true;
 	if (
 		this->_transformKind != KIND_DEBUFF_TIMER &&
 		((this->inputData.keyUpB != 0 && this->inputData.keyUpB <= 2) || this->inputData.keyInput.b == 2 || this->inputData.bufferedKeyInput.b != 0) &&
 		this->_processBAirborne()
 	)
-		return;
+		return true;
 	if (
 		((this->inputData.keyUpA != 0 && this->inputData.keyUpA <= 2) || this->inputData.keyInput.a == 2 || this->inputData.bufferedKeyInput.a != 0) &&
 		this->_processAAirborne()
 	)
-		return;
+		return true;
+	return false;
 }
 
 bool Mamizou::_processAGrounded()
@@ -3150,6 +3444,10 @@ bool Mamizou::_processSkillsGrounded()
 			return true;
 		if (this->_useSkill(this->inputData.commandCombination._236c, 7, ACTION_a1_236c))
 			return true;
+		if (this->_useSkill(this->inputData.commandCombination._236b, 11, 0))
+			return true;
+		if (this->_useSkill(this->inputData.commandCombination._236c, 11, 1))
+			return true;
 	}
 
 	if (!this->_transformPlayer)
@@ -3188,11 +3486,13 @@ bool Mamizou::_canUseCard(int id)
 	case 200:
 	case 202:
 	case 203:
+	case 206:
 		return this->isGrounded();
 	case 102:
 	case 105:
 	case 109:
 	case 204:
+	case 205:
 		return true;
 	default:
 		return false;
@@ -3213,9 +3513,7 @@ bool Mamizou::_useSkillCard(int id)
 	int slot = index % 4;
 	int action = SokuLib::ACTION_DEFAULT_SKILL1_B + slot * 20 + (index / 4) * 5;
 
-	if (this->inputData.keyInput.verticalAxis || this->inputData.keyInput.horizontalAxis) {
-		if (!this->isGrounded())
-			return false;
+	if ((this->inputData.keyInput.verticalAxis || this->inputData.keyInput.horizontalAxis) && !this->isGrounded()) {
 		this->_onSkillUpgrade(index, this->skilledSkillLevel[index]);
 		this->setAction(SokuLib::ACTION_SKILL_CARD);
 		return true;
@@ -3257,12 +3555,23 @@ bool Mamizou::_useSpellCard(int id)
 	if (!this->isGrounded())
 		id += 50;
 	this->renderInfos.shaderType = 0;
+	if (this->_transformKind == KIND_SMALL_SPELL_TIMER) {
+		if (this->skilledSkillLevel[1] >= 0)
+			this->_transformKind = KIND_TIMER;
+		if (this->skilledSkillLevel[5] >= 0)
+			this->_transformKind = KIND_SINGLE_HIT;
+		if (this->skilledSkillLevel[9] >= 0)
+			this->_transformKind = KIND_STACK;
+		this->_transformTimer = TIMER_MAX;
+	}
 	this->useSpellCard(id, this->gameData.sequenceData->moveLock);
 	return true;
 }
 
 static Mamizou *__mamizou;
 void *__old_initializeAction;
+unsigned __cardId = 0;
+unsigned __cardCost = 0;
 
 void __fastcall __fake_initializeAction(SokuLib::v2::Player *This)
 {
@@ -3284,14 +3593,14 @@ void __fastcall __fake_initializeAction(SokuLib::v2::Player *This)
 		This->handInfo.hand.resize(__mamizou->handInfo.hand.size());
 		This->handInfo.cardCount = __mamizou->handInfo.cardCount;
 		for (size_t i = 0; i < __mamizou->handInfo.hand.size(); i++) {
-			This->handInfo.hand[i].cost = 2;
-			This->handInfo.hand[i].id = 201;
+			This->handInfo.hand[i].cost = __cardCost;
+			This->handInfo.hand[i].id = __cardId;
 		}
 	}
 	reinterpret_cast<void(__fastcall *)(SokuLib::v2::Player *This)>(__old_initializeAction)(This);
 }
 
-bool Mamizou::_useTransformedCard(int id)
+bool Mamizou::_useTransformedSpellCard(int id)
 {
 	if (this->gameData.sequenceData->actionLock > 100)
 		return false;
@@ -3327,24 +3636,131 @@ bool Mamizou::_useTransformedCard(int id)
 	this->_transformPlayer->handInfo.hand[0].cost = this->handInfo.hand[0].cost;
 
 	__mamizou = this;
+	__cardId = 201;
+	__cardCost = this->handInfo.hand[0].cost;
 
 	DWORD o;
 	auto playerVtable = *reinterpret_cast<void ***>(this->_transformPlayer);
 
 	VirtualProtect(playerVtable, 4096, PAGE_EXECUTE_READWRITE, &o);
 	__old_initializeAction = SokuLib::TamperDword(&playerVtable[15], __fake_initializeAction);
+	if (!this->_transformed) {
+		this->_transformPlayer->gameData.sequenceData = this->gameData.sequenceData;
+		this->_transformPlayer->gameData.frameData = this->gameData.frameData;
+	}
 	this->_transformPlayer->handleInputs();
 	SokuLib::TamperDword(&playerVtable[15], __old_initializeAction);
 	VirtualProtect(playerVtable, 4096, o, &o);
 	if (this->_transformPlayer->frameState.actionId == old)
 		return false;
-	if (!this->_transformed)
+	if (!this->_transformed) {
 		this->_transform(true, false);
-	this->_transformKind = KIND_FULL_MOVE;
+		this->_transformKind = KIND_FULL_MOVE;
+	} else if (this->_transformKind != KIND_STACK)
+		this->_transformKind = KIND_FULL_MOVE;
 	this->frameState.actionId = this->_transformPlayer->frameState.actionId;
 	this->_postTransformCall();
 	this->_transformTimer = TIMER_MAX;
 	this->_transformTimerDelay = 0;
+	return true;
+}
+
+void __fastcall modifyCardId(SokuLib::v2::Player *player)
+{
+	__asm push ecx
+	player->handInfo.hand[0].id += 400;
+	__asm pop ecx
+}
+
+static void execSkillPayload(const std::function<void ()> &f)
+{
+	DWORD o;
+	char oldData[7];
+	auto target = reinterpret_cast<void *>(0x469C77);
+
+	VirtualProtect(target, 7, PAGE_EXECUTE_READWRITE, &o);
+	memcpy(oldData, target, 7);
+	memset(target, 0x90, 7);
+	SokuLib::TamperNearCall(0x469C77, modifyCardId);
+	VirtualProtect(target, 4096, o, &o);
+	f();
+	VirtualProtect(target, 7, PAGE_EXECUTE_READWRITE, &o);
+	memcpy(target, oldData, 7);
+	VirtualProtect(target, 4096, o, &o);
+}
+
+bool Mamizou::_useTransformedSkillCard(int id)
+{
+	if (this->gameData.sequenceData->actionLock > 50)
+		return false;
+	if (
+		this->frameState.actionId >= SokuLib::ACTION_5A &&
+		(this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL)
+	)
+		return false;
+
+	if ((this->inputData.keyInput.verticalAxis || this->inputData.keyInput.horizontalAxis) && this->isGrounded()) {
+		this->_preTransformCall();
+		this->_transformPlayer->handInfo.hand[0].cost = this->handInfo.hand[0].cost;
+		execSkillPayload([this]{ this->_transformPlayer->setAction(SokuLib::ACTION_SKILL_CARD); });
+		memcpy(this->opSkilledSkillLevel, this->_transformPlayer->skilledSkillLevel, sizeof(this->opSkilledSkillLevel));
+		this->handInfo.hand[0].id = id + 400;
+		this->gpShort[6] = 1;
+		this->setAction(SokuLib::ACTION_SKILL_CARD);
+		this->consumeCard();
+		this->gpShort[6] = 0;
+		goto registerCommandLearned;
+	}
+
+	{
+		auto old = this->_transformPlayer->frameState.actionId;
+
+		this->_preTransformCall();
+		memset(&this->_transformPlayer->inputData.keyInput, 0, sizeof(this->_transformPlayer->inputData.keyInput));
+		memset(&this->_transformPlayer->inputData.bufferedKeyInput, 0, sizeof(this->_transformPlayer->inputData.bufferedKeyInput));
+		this->_transformPlayer->inputData.keyInput.spellcard = 1;
+		this->_transformPlayer->inputData.keyUpA = 0;
+		this->_transformPlayer->inputData.keyUpB = 0;
+		this->_transformPlayer->inputData.keyUpC = 0;
+		this->_transformPlayer->inputData.keyUpD = 0;
+		this->_transformPlayer->inputData.keyUpE = 0;
+		this->_transformPlayer->inputData.keyUpF = 0;
+		this->_transformPlayer->inputData.bufferTimer = 0;
+		this->_transformPlayer->inputData.unknown7AD[0] = 0;
+		this->_transformPlayer->inputData.unknown7AD[1] = 0;
+		this->_transformPlayer->inputData.unknown7AD[2] = 0;
+		this->_transformPlayer->inputData.commandInputBuffer.clear();
+		this->_transformPlayer->inputData.movementCombination.value = 0;
+		this->_transformPlayer->inputData.commandCombination.value = 0;
+		this->_transformPlayer->handInfo.hand[0].id = id;
+		this->_transformPlayer->handInfo.hand[0].cost = this->handInfo.hand[0].cost;
+
+		this->handInfo.hand[0].id = id;
+		if (!this->_transformed) {
+			this->_transformPlayer->gameData.sequenceData = this->gameData.sequenceData;
+			this->_transformPlayer->gameData.frameData = this->gameData.frameData;
+		}
+		execSkillPayload([this]{ this->_transformPlayer->handleInputs(); });
+		this->handInfo.hand[0].id = id + 400;
+		if (this->_transformPlayer->frameState.actionId == old)
+			return false;
+		memcpy(this->opSkilledSkillLevel, this->_transformPlayer->skilledSkillLevel, sizeof(this->opSkilledSkillLevel));
+		if (!this->_transformed) {
+			this->_transform(true, false);
+			this->_transformKind = KIND_FULL_MOVE;
+		}
+		this->frameState.actionId = this->_transformPlayer->frameState.actionId;
+		this->_postTransformCall();
+	}
+
+registerCommandLearned:
+	do {
+		this->_learnedCommand = std::ranges::find(this->_opponentSkillsOffset, id) - this->_opponentSkillsOffset.begin();
+		id -= this->_opponentSkillCardsByInput.size();
+	} while (this->_learnedCommand == 5 && id >= 100);
+	this->skilledSkillLevel[3] = -1;
+	this->skilledSkillLevel[7] = -1;
+	this->skilledSkillLevel[11] = 1;
 	return true;
 }
 
@@ -3371,6 +3787,10 @@ bool Mamizou::_tryDoTransformedBOrCAttack(bool isBAttack)
 	this->_transformPlayer->inputData.movementCombination.value = 0;
 	this->_transformPlayer->inputData.commandCombination.value = 0;
 
+	if (!this->_transformed) {
+		this->_transformPlayer->gameData.sequenceData = this->gameData.sequenceData;
+		this->_transformPlayer->gameData.frameData = this->gameData.frameData;
+	}
 	this->_transformPlayer->handleInputs();
 	if (this->_transformPlayer->frameState.actionId == old)
 		return false;
@@ -3410,9 +3830,22 @@ bool Mamizou::_tryDoTransformedCard()
 	this->_transformPlayer->inputData.movementCombination.value = 0;
 	this->_transformPlayer->inputData.commandCombination.value = 0;
 
+	if (!this->_transformed) {
+		this->_transformPlayer->gameData.sequenceData = this->gameData.sequenceData;
+		this->_transformPlayer->gameData.frameData = this->gameData.frameData;
+	}
 	this->_transformPlayer->handleInputs();
 	if (this->_transformPlayer->frameState.actionId == old)
 		return false;
+	if (this->_transformKind == KIND_SMALL_SPELL_TIMER) {
+		if (this->skilledSkillLevel[1] >= 0)
+			this->_transformKind = KIND_TIMER;
+		if (this->skilledSkillLevel[5] >= 0)
+			this->_transformKind = KIND_SINGLE_HIT;
+		if (this->skilledSkillLevel[9] >= 0)
+			this->_transformKind = KIND_STACK;
+		this->_transformTimer = TIMER_MAX;
+	}
 	if (!this->_transformed)
 		this->_transform(true, false);
 	this->_transformKind = KIND_FULL_MOVE;
@@ -3421,7 +3854,7 @@ bool Mamizou::_tryDoTransformedCard()
 	return true;
 }
 
-void Mamizou::_processInputsGrounded()
+bool Mamizou::_processInputsGrounded()
 {
 	if (
 		this->_transformKind != KIND_DEBUFF_TIMER &&
@@ -3434,34 +3867,37 @@ void Mamizou::_processInputsGrounded()
 		auto &card = this->handInfo.hand[0];
 
 		if (0   <= card.id && card.id < 100 && this->useSystemCard(this->gameData.sequenceData->actionLock))
-			return;
+			return true;
 		if (100 <= card.id && card.id < 200 && this->_useSkillCard(card.id))
-			return;
+			return true;
 		if (200 <= card.id && card.id < 300 && this->_useSpellCard(card.id))
-			return;
-		if (300 <= card.id && card.id < 400 && this->_useTransformedCard(card.id - 100))
-			return;
+			return true;
+		if (300 <= card.id && card.id < 400 && this->_useTransformedSpellCard(card.id - 100))
+			return true;
+		if (500 <= card.id && card.id < 600 && this->_useTransformedSkillCard(card.id - 400))
+			return true;
 	}
 	if (!this->confusionDebuffTimer && this->_processSkillsGrounded())
-		return;
+		return true;
 
 	if (
 		this->_transformKind != KIND_DEBUFF_TIMER &&
 		((this->inputData.keyUpC != 0 && this->inputData.keyUpC <= 2) || this->inputData.keyInput.c == 2 || this->inputData.bufferedKeyInput.c != 0) &&
 		this->_processCGrounded()
 	)
-		return;
+		return true;
 	if (
 		this->_transformKind != KIND_DEBUFF_TIMER &&
 		((this->inputData.keyUpB != 0 && this->inputData.keyUpB <= 2) || this->inputData.keyInput.b == 2 || this->inputData.bufferedKeyInput.b != 0) &&
 		this->_processBGrounded()
 	)
-		return;
+		return true;
 	if (
 		((this->inputData.keyUpA != 0 && this->inputData.keyUpA <= 2) || this->inputData.keyInput.a == 2 || this->inputData.bufferedKeyInput.a != 0) &&
 		this->_processAGrounded()
 	)
-		return;
+		return true;
+	return false;
 }
 
 void Mamizou::_fillCharacterBuffer()
@@ -3470,6 +3906,40 @@ void Mamizou::_fillCharacterBuffer()
 	this->_dummyCharacter->gameData.owner = this->_dummyCharacter;
 	this->_dummyCharacter->gameData.ally  = this->_dummyCharacter;
 	this->_dummyCharacter->attackPower    = this->attackPower * this->_extraAttackPower;
+}
+
+bool Mamizou::_tryDoTransformedMove()
+{
+	auto old = this->_transformPlayer->frameState.actionId;
+
+	this->_preTransformCall();
+	memcpy(&this->_transformPlayer->inputData.keyInput, &this->inputData.keyInput, sizeof(this->_transformPlayer->inputData.keyInput));
+	memcpy(&this->_transformPlayer->inputData.bufferedKeyInput, &this->inputData.bufferedKeyInput, sizeof(this->_transformPlayer->inputData.bufferedKeyInput));
+	this->_transformPlayer->inputData.keyInput.spellcard = this->inputData.keyInput.spellcard;
+	this->_transformPlayer->inputData.keyInput.changeCard = 0;
+	this->_transformPlayer->inputData.keyUpA = this->inputData.keyUpA;
+	this->_transformPlayer->inputData.keyUpB = this->inputData.keyUpB;
+	this->_transformPlayer->inputData.keyUpC = this->inputData.keyUpC;
+	this->_transformPlayer->inputData.keyUpD = this->inputData.keyUpD;
+	this->_transformPlayer->inputData.keyUpE = this->inputData.keyUpE;
+	this->_transformPlayer->inputData.keyUpF = this->inputData.keyUpF;
+	this->_transformPlayer->inputData.bufferTimer = this->inputData.bufferTimer;
+	this->_transformPlayer->inputData.unknown7AD[0] = this->inputData.unknown7AD[0];
+	this->_transformPlayer->inputData.unknown7AD[1] = this->inputData.unknown7AD[1];
+	this->_transformPlayer->inputData.unknown7AD[2] = this->inputData.unknown7AD[2];
+	this->_transformPlayer->inputData.commandInputBuffer = this->inputData.commandInputBuffer;
+	this->_transformPlayer->inputData.movementCombination.value = this->inputData.movementCombination.value;
+	this->_transformPlayer->inputData.commandCombination.value = this->inputData.commandCombination.value;
+	this->_transformPlayer->gameData.sequenceData = this->gameData.sequenceData;
+	this->_transformPlayer->gameData.frameData = this->gameData.frameData;
+	this->_transformPlayer->handleInputs();
+	if (this->_transformPlayer->frameState.actionId == old)
+		return false;
+	if (!this->_transformed)
+		this->_transform(true, false);
+	this->frameState.actionId = this->_transformPlayer->frameState.actionId;
+	this->_postTransformCall();
+	return true;
 }
 
 bool Mamizou::_tryDoUntransformedMove(bool cardsOnly, bool spellsOnly)
@@ -3501,7 +3971,9 @@ bool Mamizou::_tryDoUntransformedMove(bool cardsOnly, bool spellsOnly)
 			goto succeeded;
 		if (200 <= card.id && card.id < 300 && this->_useSpellCard(card.id))
 			goto succeeded;
-		if (300 <= card.id && card.id < 400 && this->isGrounded() && this->_useTransformedCard(card.id - 100))
+		if (300 <= card.id && card.id < 400 && this->_useTransformedSpellCard(card.id - 100))
+			goto succeeded;
+		if (!spellsOnly && 500 <= card.id && card.id < 600 && this->_useTransformedSkillCard(card.id - 400))
 			goto succeeded;
 	}
 	if (spellsOnly || cardsOnly)
@@ -3550,7 +4022,50 @@ void Mamizou::handleInputs()
 			return;
 	}
 
-	if (this->_transformed) {
+	if (this->_transformKind == KIND_SMALL_SPELL_TIMER) {
+		if (this->_transformed && this->_tryDoUntransformedMove(true, false))
+			return;
+		if (this->inputData.keyInput.changeCard) {
+			bool result = false;
+
+			this->_stayTransformed = false;
+			if (this->_transformed) {
+				if (frameFlags.cancellable || frameFlags.highJumpCancellable) {
+					if (this->unknown4C4 == 0 && this->isOnGround()) {
+						result =
+							(
+								this->collisionType != COLLISION_TYPE_NONE &&
+								frameFlags.highJumpCancellable &&
+								this->gameData.sequenceData->actionLock > 9 &&
+								this->handleHJ()
+							) ||
+							this->handleGroundBE() ||
+							this->handleHJInput(this->gameData.sequenceData->actionLock, frameFlags.highJumpCancellable) ||
+							this->handleGroundDash(this->gameData.sequenceData->actionLock, frameFlags.highJumpCancellable);
+					} else {
+						auto allowedAirMoves = (this->weatherId == SokuLib::WEATHER_TEMPEST) + 2;
+
+						result =
+							this->handleAirBE() ||
+							this->handleFwdAirDash(this->gameData.sequenceData->actionLock, frameFlags.highJumpCancellable, allowedAirMoves, 2) ||
+							this->handleBackAirDash(this->gameData.sequenceData->actionLock, frameFlags.highJumpCancellable, allowedAirMoves, 2) ||
+							this->handleNormalFlight(this->gameData.sequenceData->actionLock, frameFlags.highJumpCancellable, allowedAirMoves);
+					}
+				}
+
+				if (result)
+					;
+				else if (this->isGrounded())
+					result = this->_processInputsGrounded();
+				else
+					result = this->_processInputsAirborne();
+			} else
+				result = this->_tryDoTransformedMove();
+			this->_stayTransformed = true;
+			if (result)
+				return;
+		}
+	} else if (this->_transformed) {
 		if (this->_transformKind == KIND_SPELL_TIMER) {
 			if (this->_tryDoUntransformedMove(false, true))
 				return;
@@ -3639,7 +4154,7 @@ void Mamizou::handleInputs()
 		// For story mode
 		if (699 < uVar10 && uVar10 < 800) {
 			this->setAction(uVar10);
-			return this->FUN_0046d950();
+			return this->refreshInputCombination();
 		}
 
 		if (this->unknown4C4 == 0 && this->isOnGround()) {
@@ -3724,7 +4239,7 @@ void Mamizou::render()
 		this->renderInfos = old;
 	} else
 		this->_transformPlayer->render();
-	if (this->teamId == 0 && __practiceEffect != -1) {
+	if (this->teamId == 0 && __practiceEffect != -1 && this->_transformPlayer) {
 		SokuLib::DrawUtils::Sprite sprite;
 
 		sprite.texture.setHandle(this->_opponentSpellCards[__practiceEffect].second, {41, 65});
@@ -3747,9 +4262,12 @@ void Mamizou::updatePhysics()
 				this->_currentCard = this->_opponentSpellCards.size() - 1;
 			this->_fillHand();
 			this->cardsShuffled = true;
-		} else for (auto &card : this->handInfo.hand)
+		} else for (auto &card : this->handInfo.hand) {
 			if (card.id >= 300 && card.id < 400)
 				card.id = 201;
+			if (card.id >= 500 && card.id < 600)
+				card.id -= 500 - 120;
+		}
 	}
 	if (this->_transformed) {
 		this->_transformPlayer->cardsShuffled = true;
@@ -3876,6 +4394,10 @@ void Mamizou::applyTransform()
 
 void Mamizou::_setupOpponentDebuff()
 {
+	if (!this->_transformPlayer) {
+		reinterpret_cast<Mamizou *>(this->gameData.ally)->_setupOpponentDebuff();
+		return;
+	}
 	this->_currentAnimal = SokuLib::rand(NB_ANIMALS);
 	if (this->_currentAnimal == NB_ANIMALS) this->_currentAnimal = NB_ANIMALS - 1;
 	this->gameData.opponent->setAction(2000 + this->_currentAnimal * 2 + 1);
@@ -4148,8 +4670,11 @@ void Mamizou::initialize()
 	this->_transformPlayer->setAction(SokuLib::ACTION_IDLE);
 	this->_addRainbowGui();
 	this->_addDebuffGui();
+	this->_add1SCGui();
 	this->_addTimerGui();
 	this->_addStackGui();
+	this->gpShort[6] = 0;
+	memcpy(this->opSkilledSkillLevel, this->_transformPlayer->skilledSkillLevel, sizeof(this->opSkilledSkillLevel));
 
 	switch (this->_transformPlayer->characterIndex) {
 	case SokuLib::CHARACTER_TEWI:
@@ -4244,7 +4769,6 @@ void Mamizou::initialize()
 
 	auto texture2 = card2CostTexture.getDXTexture();
 	auto texture5 = card5CostTexture.getDXTexture();
-	std::map<unsigned, int> map;
 
 	do {
 		auto id = parser.getNextValue();
@@ -4259,7 +4783,7 @@ void Mamizou::initialize()
 		sprintf(buffer, "data/card/%s/card%li.bmp", SokuLib::getCharName(this->_transformPlayer->characterIndex), id);
 		if (type == 2) {
 			if (this->_transformPlayer->characterIndex == SokuLib::CHARACTER_MAMIZOU && (
-				id == 201 || id == 204
+				id == 201 || id == 204 || (id >= 120 && id < 200)
 			))
 				continue;
 			if (cost <= 3) {
@@ -4302,47 +4826,50 @@ void Mamizou::initialize()
 			parser.getNextCell();
 			parser.getNextCell();
 
-			auto it = map.find(cost);
+			auto it = this->_opponentSkillCardsByInput.find(cost);
 			auto sort = parser.getNextValue();
 
 			if (sort % 10 > 2)
 				continue;
-			if (it == map.end()) {
-				map.emplace(cost, this->_opponentSkillCards.size());
-				this->_opponentSkillCards.emplace_back(cost, std::array<int, 3>{0, 0, 0});
-				it = map.find(cost);
+			if (it == this->_opponentSkillCardsByInput.end()) {
+				this->_opponentSkillCardsByInput.emplace(cost, this->_opponentSkillCards.size());
+				this->_opponentSkillCards.emplace_back(cost, std::array{0, 0, 0});
+				it = this->_opponentSkillCardsByInput.find(cost);
 			}
+			if (id < this->_opponentSkillsOffset[cost] || this->_opponentSkillsOffset[cost] == 0)
+				this->_opponentSkillsOffset[cost] = id;
 			if (SokuLib::textureMgr.loadTexture(&ret, buffer, nullptr, nullptr))
 				this->_opponentSkillCards[it->second].second[sort % 10] = ret;
+
+			SokuLib::CardInfo &cinfo = this->deckInfo.cardById[id + 400];
+			int ret;
+
+			cinfo.name = name;
+			cinfo.type = 1;
+			cinfo.costOrSlot = cost;
+			SokuLib::textureMgr.createTextTexture(&ret, cinfo.name, SokuLib::SWRFont::baseFont, 0x400, 0x100, nullptr, nullptr);
+			cinfo.texIdA = ret;
+			this->deckInfo.addTexture(&ret);
 		}
 	} while (parser.goToNextLine());
+	std::ranges::sort(this->_opponentSkillCards, [](const std::pair<unsigned, std::array<int, 3>> &a, const std::pair<unsigned, std::array<int, 3>> &b) {
+		return a.first < b.first;
+	});
+	for (size_t i = 0; i < this->_opponentSkillCards.size(); i++)
+		this->_opponentSkillCardsByInput[this->_opponentSkillCards[i].first] = i;
 
-	DWORD old;
-	const char *old_pat;
-	const char *old_pal;
-	const char *old_tex;
-	char name[] = "animal10";
-
-	VirtualProtect((void *)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, PAGE_EXECUTE_WRITECOPY, &old);
-	old_pat = SokuLib::TamperDword(0x467A5F, "data/character/mamizou/%s/%s.pat");
-	old_pal = SokuLib::TamperDword(0x467AEC, "data/character/mamizou/%s/palette%03d.bmp");
-	old_tex = SokuLib::TamperDword(0x467BC9, "data/character/mamizou/%s/%s");
+	char name[] = "mamizou_animal00";
 
 	for (size_t i = 0; i < NB_ANIMALS; i++) {
 		SokuLib::Map<int, SokuLib::v2::CharacterSequenceData*> data;
 
-		sprintf(name, "animal%02i", i + 1);
+		sprintf(name, "mamizou_animal%02i", i + 1);
 		SokuLib::readPattern(name, 0, &data, &this->gameData.opponent->patternData, this->gameData.opponent->textures);
 		if (data.find(0) == data.end() || data.find(70) == data.end())
 			printf("Failed to load animal %i\n", i + 1);
 		(*this->gameData.opponent->gameData.patternMap)[2000 + i * 2] = data[0];
 		(*this->gameData.opponent->gameData.patternMap)[2001 + i * 2] = data[70];
 	}
-
-	SokuLib::TamperDword(0x467A5F, old_pat);
-	SokuLib::TamperDword(0x467AEC, old_pal);
-	SokuLib::TamperDword(0x467BC9, old_tex);
-	VirtualProtect((void *)TEXT_SECTION_OFFSET, TEXT_SECTION_SIZE, old, &old);
 
 	for (auto action : basicMeleeActions) {
 		SokuLib::v2::CharacterSequenceData *sequence = (*this->gameData.patternMap)[action];
@@ -4389,6 +4916,8 @@ void Mamizou::_onSkillUpgrade(int id, int oldLevel)
 			this->_transformStackCharge = 0;
 		}
 	}
+	if (id == 3 || id == 7)
+		this->_learnedCommand = UINT8_MAX;
 }
 
 void Mamizou::_addStackGui()
@@ -4434,6 +4963,21 @@ void Mamizou::_addRainbowGui()
 		this->createObject(995, 479, 422, SokuLib::LEFT, 3, params);
 		params[2] = 3;
 		this->createObject(995, 479, 422, SokuLib::LEFT, 3, params);
+	}
+}
+
+void Mamizou::_add1SCGui()
+{
+	float params[3] = {0, 0, 0};
+
+	if (this->teamId == 0) {
+		this->createObject(992, 56,  376, SokuLib::RIGHT, 3, params);
+		params[2] = 1;
+		this->createObject(992, 161, 422, SokuLib::RIGHT, 3, params);
+	} else {
+		this->createObject(992, 584, 376, SokuLib::LEFT, 3, params);
+		params[2] = 1;
+		this->createObject(992, 479, 422, SokuLib::LEFT, 3, params);
 	}
 }
 
@@ -4498,8 +5042,7 @@ void Mamizou::_preTransformCall()
 {
 	memcpy(&this->_transformPlayer->inputData.keyInput, &this->inputData.keyInput, sizeof(this->inputData.keyInput));
 	memcpy(&this->_transformPlayer->inputData.bufferedKeyInput, &this->inputData.bufferedKeyInput, sizeof(this->inputData.bufferedKeyInput));
-	memset(&this->_transformPlayer->skilledSkillLevel, 0, sizeof(this->_transformPlayer->skilledSkillLevel));
-	memset(&this->_transformPlayer->effectiveSkillLevel, 0, sizeof(this->_transformPlayer->effectiveSkillLevel));
+	memcpy(&this->_transformPlayer->skilledSkillLevel, this->opSkilledSkillLevel, sizeof(this->_transformPlayer->skilledSkillLevel));
 	this->_transformPlayer->inputData.keyUpA = this->inputData.keyUpA;
 	this->_transformPlayer->inputData.keyUpB = this->inputData.keyUpB;
 	this->_transformPlayer->inputData.keyUpC = this->inputData.keyUpC;
@@ -4552,9 +5095,19 @@ void Mamizou::_preTransformCall()
 			}
 		} else {
 			for (size_t i = 0; i < this->handInfo.hand.size(); i++) {
-				this->_transformPlayer->handInfo.hand[i].cost = 100;
-				this->_transformPlayer->handInfo.hand[i].id = 201;
+				if (this->handInfo.hand[i].id >= 500 && this->_transformPlayer->handInfo.hand[i].id < 600)
+					this->_transformPlayer->handInfo.hand[i].id = this->handInfo.hand[i].id - 400;
+				else
+					this->_transformPlayer->handInfo.hand[i].id = 201;
 			}
+		}
+		for (size_t i = 0; i < std::size(this->_transformPlayer->effectiveSkillLevel); i++) {
+			if (this->_transformPlayer->skilledSkillLevel[i] <= 0)
+				this->_transformPlayer->effectiveSkillLevel[i] = 0;
+			else if (this->skillsMax)
+				this->_transformPlayer->effectiveSkillLevel[i] = 4;
+			else
+				this->_transformPlayer->effectiveSkillLevel[i] = this->_transformPlayer->skilledSkillLevel[i];
 		}
 	}
 	this->_transformPlayer->handInfo.cardGauge = 0;
@@ -4709,19 +5262,21 @@ void Mamizou::_postTransformCall()
 			this->handInfo.hand.clear();
 			this->handInfo.cardCount = 0;
 		}
-	} else if (
+	} else if (this->_transformKind == KIND_DEBUFF_TIMER || (
 		this->_transformPlayer->frameState.actionId != this->frameState.actionId &&
 		(this->_transformPlayer->frameState.actionId < SokuLib::ACTION_USING_SC_ID_200 || (
 			this->_transformPlayer->frameState.actionId + 50 != this->frameState.actionId &&
 			this->_transformPlayer->frameState.actionId != this->frameState.actionId + 50
 		))
-	) {
+	)) {
+		auto act = this->_transformPlayer->frameState.actionId;
+
 		this->_unTransform();
 		if (
-			this->_transformPlayer->frameState.actionId < SokuLib::ACTION_5A &&
-			this->gameData.patternMap->find(this->_transformPlayer->frameState.actionId) != this->gameData.patternMap->end()
+			act < SokuLib::ACTION_5A &&
+			this->gameData.patternMap->find(act) != this->gameData.patternMap->end()
 		)
-			this->setAction(this->_transformPlayer->frameState.actionId);
+			this->setAction(act);
 	}
 
 	this->attackPower = this->_transformPlayer->attackPower;
@@ -4758,6 +5313,8 @@ void Mamizou::_preUntransformCall()
 	this->_transformPlayer->collisionLimit = this->collisionLimit;
 	this->_transformPlayer->inputData.keyInput = this->inputData.keyInput;
 
+	if (this->weatherId == SokuLib::WEATHER_DIAMOND_DUST)
+		this->_transformPlayer->weatherId = SokuLib::WEATHER_CLEAR;
 	if (this->_transformKind == KIND_SPELL_TIMER) {
 		auto &card = this->_allOpponentSpellCards[this->_currentCard];
 
@@ -4931,8 +5488,8 @@ void Mamizou::_transform(bool spawnEffects, bool resetTransformee)
 	this->_neverTransformed = false;
 	this->_savedFrameData = this->gameData.frameData;
 	this->_savedSequenceData = this->gameData.sequenceData;
-	this->_transformPlayer->collisionType = COLLISION_TYPE_NONE;
 	if (resetTransformee) {
+		this->_transformPlayer->collisionType = COLLISION_TYPE_NONE;
 		if (this->isGrounded())
 			this->_transformPlayer->setAction(SokuLib::ACTION_IDLE);
 		else
@@ -4964,12 +5521,14 @@ void Mamizou::_unTransform()
 	if (this->_transformKind == KIND_TIMER)
 		this->_transformTimerDelay = TIMER_DELAY;
 
-	if (this->skilledSkillLevel[1] >= 0)
-		this->_transformKind = KIND_TIMER;
-	if (this->skilledSkillLevel[5] >= 0)
-		this->_transformKind = KIND_SINGLE_HIT;
-	if (this->skilledSkillLevel[9] >= 0)
-		this->_transformKind = KIND_STACK;
+	if (this->_transformKind != KIND_SMALL_SPELL_TIMER || this->_transformTimer == 0) {
+		if (this->skilledSkillLevel[1] >= 0)
+			this->_transformKind = KIND_TIMER;
+		if (this->skilledSkillLevel[5] >= 0)
+			this->_transformKind = KIND_SINGLE_HIT;
+		if (this->skilledSkillLevel[9] >= 0)
+			this->_transformKind = KIND_STACK;
+	}
 
 	this->_transformed = false;
 	this->gameData.frameData = this->_savedFrameData;

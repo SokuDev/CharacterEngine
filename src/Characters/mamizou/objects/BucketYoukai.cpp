@@ -17,7 +17,10 @@ void BucketYoukai::update()
 	else
 		this->angularVelocity -= this->angularAcceleration;
 	this->checkGrazed(0);
-	this->checkProjectileHit(2);
+	if (this->checkProjectileHit(2)) {
+		this->lifetime = 0;
+		return;
+	}
 	if (this->renderInfos.zRotation < -180) {
 		this->lifetime = 0;
 		return;

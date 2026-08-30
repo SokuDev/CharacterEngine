@@ -33,6 +33,8 @@ add_library(
 	objects/YoukaiShadow2.hpp
 	objects/FrogShadow.cpp
 	objects/FrogShadow.hpp
+	objects/Gui/Timer1SCGui.cpp
+	objects/Gui/Timer1SCGui.hpp
 	objects/Gui/TimerDebuffGui.cpp
 	objects/Gui/TimerDebuffGui.hpp
 	objects/Gui/TimerSpellGui.cpp

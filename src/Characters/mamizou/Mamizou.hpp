@@ -37,9 +37,11 @@ private:
 	static constexpr unsigned TIMER_DELAY = 150;
 	static constexpr unsigned SPELL_TIMER_MAX = 900;
 	static constexpr unsigned DEBUFF_TIMER_MAX = 450;
+	static constexpr unsigned SMALL_SPELL_TIMER_MAX = 1800;
 
 	friend class TimerDebuffGui;
 	friend class TimerSpellGui;
+	friend class Timer1SCGui;
 	friend class TimerGui;
 	friend class StackGui;
 	friend class CardSelect;
@@ -50,7 +52,9 @@ private:
 		KIND_STACK,
 		KIND_FULL_MOVE,
 		KIND_SPELL_TIMER,
-		KIND_DEBUFF_TIMER
+		KIND_DEBUFF_TIMER,
+		KIND_SPELL_LEVEL_UP,
+		KIND_SMALL_SPELL_TIMER,
 	};
 
 	struct SpellCard {
@@ -64,15 +68,19 @@ private:
 	std::vector<unsigned char> _selectedCards;
 	std::vector<SpellCard> _allOpponentSpellCards;
 	std::vector<std::pair<unsigned, int>> _opponentSpellCards;
+	std::map<unsigned, int> _opponentSkillCardsByInput;
+	std::array<unsigned, 5> _opponentSkillsOffset;
 	unsigned _transformTimerDelay = TIMER_DELAY;
 	unsigned _transformTimer = TIMER_MAX;
 	unsigned _transformStacks = 0;
 	unsigned _transformStackCharge = 0;
 	float _extraAttackPower = 1;
+	char opSkilledSkillLevel[32];
 	unsigned char _spellCost = 0;
 	unsigned char _currentCard = 0;
 	unsigned char _currentSelection = 0;
 	unsigned char _currentAnimal = 0;
+	unsigned char _learnedCommand = UINT8_MAX;
 	bool _transformedCooldown = false;
 	bool _transformed = false;
 	bool _neverTransformed = true;
@@ -125,7 +133,7 @@ private:
 	static constexpr float INITIAL_DASH_SPEED = 12;
 	static constexpr float TOP_DASH_SPEED = 9;
 	static constexpr float INITIAL_BE6_SPEED = 9;
-	static constexpr float TOP_BE6_SPEED = 6;
+	static constexpr float TOP_BE6_SPEED = 5;
 	static constexpr float DASH_RECOVERY_DECEL = 0.5;
 
 	static constexpr float FLIGHT_TURN = 3.5;
@@ -142,24 +150,26 @@ private:
 
 	void _fillCharacterBuffer();
 
+	bool _tryDoTransformedMove();
 	bool _tryDoUntransformedMove(bool cardsOnly, bool spellsOnly);
 
 	bool _processAGrounded();
 	bool _processBGrounded();
 	bool _processCGrounded();
 	bool _processSkillsGrounded();
-	void _processInputsGrounded();
+	bool _processInputsGrounded();
 
 	bool _processAAirborne();
 	bool _processBAirborne();
 	bool _processCAirborne();
 	bool _processSkillsAirborne();
-	void _processInputsAirborne();
+	bool _processInputsAirborne();
 
 	virtual bool _canUseCard(int id);
 	bool _useSkillCard(int id);
 	bool _useSpellCard(int id);
-	bool _useTransformedCard(int id);
+	bool _useTransformedSkillCard(int id);
+	bool _useTransformedSpellCard(int id);
 
 	void _onSkillUpgrade(int id, int oldLevel);
 	bool _useSkill(bool input, unsigned char id, unsigned short action);
@@ -178,6 +188,7 @@ private:
 	void _addDebuffGui();
 	void _addTimerGui();
 	void _addStackGui();
+	void _add1SCGui();
 
 	void _fillHand();
 	bool _tryDoTransformedBOrCAttack(bool isBAttack);
@@ -187,6 +198,7 @@ private:
 	void _cleanupOpponentDebuff();
 	void _updateOpponentDebuffed();
 	void _transformCard(SokuLib::Card &card);
+	void _transformSkillCard(SokuLib::Card &card);
 
 public:
 	enum Moves {
