@@ -331,6 +331,7 @@ void Tewi::update()
 			this->renderInfos.yRotation = 0;
 			this->renderInfos.zRotation = 0;
 			this->setActionSequence(this->_hammer == nullptr ? ACTION_USING_SC_ID_206_HAMMER : SokuLib::ACTION_USING_SC_ID_206, 1);
+			this->_hammerPickTimer = 100;
 			this->_rabbitAnimation = false;
 			this->speed = {0, 0};
 			this->gravity.y = 0;
@@ -587,7 +588,7 @@ void Tewi::update()
 				return;
 			}
 
-			int minTimer = this->frameState.actionId == SokuLib::ACTION_FORWARD_DASH ? 5 : 25;
+			int minTimer = this->frameState.actionId == SokuLib::ACTION_FORWARD_DASH ? 5 : 22;
 
 			this->dashTimer++;
 			if ((this->direction * this->inputData.keyInput.horizontalAxis < 1 && this->dashTimer > minTimer) || this->dashTimer > MAX_DASH_HOLD) {
@@ -4685,9 +4686,7 @@ bool Tewi::_useSkillCard(int id)
 		(this->collisionType == COLLISION_TYPE_NONE || this->collisionType == COLLISION_TYPE_INVUL)
 	)
 		return false;
-	if (this->inputData.keyInput.verticalAxis || this->inputData.keyInput.horizontalAxis) {
-		if (!this->isGrounded())
-			return false;
+	if ((this->inputData.keyInput.verticalAxis || this->inputData.keyInput.horizontalAxis) && this->isGrounded()) {
 		this->setAction(SokuLib::ACTION_SKILL_CARD);
 		return true;
 	}
@@ -4792,7 +4791,7 @@ void Tewi::handleInputs()
 		// For story mode
 		if (699 < uVar10 && uVar10 < 800) {
 			this->setAction(uVar10);
-			return this->FUN_0046d950();
+			return this->refreshInputCombination();
 		}
 
 		if (this->unknown4C4 == 0 && this->isOnGround()) {

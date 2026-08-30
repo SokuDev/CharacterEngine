@@ -3452,7 +3452,7 @@
 		</frame>
 	</move>
 	<move id="98" index="0" loop="0" movelock="0" actionlock="0">
-		<frame image="down005.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="84" texheight="33" xoffset="95" yoffset="43" duration="2" rendergroup="0">
+		<frame image="down005.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="84" texheight="33" xoffset="95" yoffset="43" duration="10" rendergroup="0">
 			<traits damage="0" proration="0" chipdamage="0" spiritdamage="0" untech="0" power="0" limit="0" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="0" ongroundhitsetsequence="0" xspeed="0" yspeed="0" onhitsfx="0" onhiteffect="0" attacklevel="0">
 				<down/>
 				<grabinvul/>
