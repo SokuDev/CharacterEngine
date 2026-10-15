@@ -3267,6 +3267,59 @@ void Tewi::update()
 
 	case ACTION_USING_SC_ID_210_HAMMER:
 	case SokuLib::ACTION_USING_SC_ID_210: {
+		unsigned effects[] = {
+			SokuLib::CHARACTER_REIMU,
+			SokuLib::CHARACTER_REIMU,
+			SokuLib::CHARACTER_REIMU,
+			SokuLib::CHARACTER_MARISA,
+			SokuLib::CHARACTER_MARISA,
+			SokuLib::CHARACTER_MARISA,
+			SokuLib::CHARACTER_SAKUYA,
+			SokuLib::CHARACTER_SAKUYA,
+			SokuLib::CHARACTER_ALICE,
+			SokuLib::CHARACTER_ALICE,
+			SokuLib::CHARACTER_PATCHOULI,
+			SokuLib::CHARACTER_PATCHOULI,
+			SokuLib::CHARACTER_PATCHOULI,
+			SokuLib::CHARACTER_YOUMU,
+			SokuLib::CHARACTER_YOUMU,
+			SokuLib::CHARACTER_REMILIA,
+			SokuLib::CHARACTER_REMILIA,
+			SokuLib::CHARACTER_YUYUKO,
+			SokuLib::CHARACTER_YUYUKO,
+			SokuLib::CHARACTER_YUKARI,
+			SokuLib::CHARACTER_YUKARI,
+			SokuLib::CHARACTER_SUIKA,
+			SokuLib::CHARACTER_SUIKA,
+			SokuLib::CHARACTER_REISEN,
+			SokuLib::CHARACTER_REISEN,
+			SokuLib::CHARACTER_REISEN,
+			SokuLib::CHARACTER_REISEN,
+			SokuLib::CHARACTER_REISEN,
+			SokuLib::CHARACTER_REISEN,
+			SokuLib::CHARACTER_AYA,
+			SokuLib::CHARACTER_AYA,
+			SokuLib::CHARACTER_KOMACHI,
+			SokuLib::CHARACTER_KOMACHI,
+			SokuLib::CHARACTER_IKU,
+			SokuLib::CHARACTER_IKU,
+			SokuLib::CHARACTER_TENSHI,
+			SokuLib::CHARACTER_TENSHI,
+			SokuLib::CHARACTER_SANAE,
+			SokuLib::CHARACTER_SANAE,
+			SokuLib::CHARACTER_SANAE,
+			SokuLib::CHARACTER_CIRNO,
+			SokuLib::CHARACTER_CIRNO,
+			SokuLib::CHARACTER_MEILING,
+			SokuLib::CHARACTER_MEILING,
+			SokuLib::CHARACTER_UTSUHO,
+			SokuLib::CHARACTER_UTSUHO,
+			SokuLib::CHARACTER_UTSUHO,
+			SokuLib::CHARACTER_SUWAKO,
+			SokuLib::CHARACTER_SUWAKO,
+			SokuLib::CHARACTER_NAMAZU,
+		};
+
 		if (this->_checkDashSlide())
 			this->setAction(SokuLib::ACTION_IDLE);
 		if (this->frameState.sequenceId == 0 && this->frameState.poseId == 5 && this->frameState.poseFrame == 0) {
@@ -3280,12 +3333,14 @@ void Tewi::update()
 		}
 		if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 0) {
 			unsigned total = 0;
-			int character = 0;
+			unsigned character = 0;
 
 			if (__practiceEffect == -1) {
 				this->collisionType = COLLISION_TYPE_HIT;
-				total = SokuLib::rand(525);
-				character = min(total / 25, 20);
+				total = SokuLib::rand(std::size(effects));
+				character = effects[min(total, std::size(effects))];
+				if (character >= SokuLib::CHARACTER_NAMAZU)
+					character--;
 			} else
 				character = __practiceEffect;
 			this->createObject(810 + character, 0, 0, SokuLib::RIGHT, 1);
