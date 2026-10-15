@@ -1,0 +1,41 @@
+#ƒXƒyƒJƒiƒ“ƒo[,ƒXƒyƒJ–¼,"ƒ^ƒCƒv
+2 ƒXƒyƒ‹ƒJ[ƒh
+1 ƒXƒLƒ‹ƒJ[ƒh
+0 ƒVƒXƒeƒ€ƒJ[ƒh",Á”ï,"ƒJ[ƒhà–¾ƒeƒLƒXƒg
+ƒfƒbƒL\’z‰æ–Ê‚ÅƒJ[ƒh‚ğ‘I‘ğ‚·‚é‚Æo‚éà–¾•¶","oŒ»ƒXƒe[ƒW
+”š‚ÌƒXƒe[ƒWˆÈ~‚©‚çoŒ»‚·‚é
+0‚Í‰ŠúŠ
+1`6@EASY
+11`16@NORMAL
+21`26@HARD
+31`36@LUNA","ƒŒƒAƒŠƒeƒB
+0@ƒRƒ‚ƒ“
+1@ƒAƒ“ƒRƒ‚ƒ“
+2@ƒŒƒA
+æ“¾’Š‘I‚Å
+ƒRƒ‚ƒ“60“
+ƒAƒ“ƒR30“
+ƒŒƒA10“",,,,,,,,sort
+100,"Volcanic Geyser",1,0,"Creates a tiny geyser. It reaches quite high and is fast\, so it can catch opponents off guard.",0,1,104,1,108,1,0,0,11,100
+101,"Explosive Kick",1,1,"An extremely powerful kick. This move harms the user as well\, however for a very brief moment Mokou assumes guarding stance to avoid taking major damage.",0,1,105,1,109,1,212,3,11,120
+102,"Blazing Bamboo Tubes",1,4,"Launches away exploding bamboo tubes. It's a move that can be done to dodge attacks as well.",0,1,106,1,110,1,0,0,11,140
+103,"Call of the Fire Birds",1,3,"Calls upon a horde of fire bird. It's not really a coordinated attack\, so the power is low.",0,1,107,1,111,1,208,2,11,130
+104,"Phoenix Tail",1,0,"Scatters a few fire birds over an area. The birds are harmless\, but it keeps leaving fiery trail.",1,1,205,2,0,0,0,0,11,101
+105,"Self-Harming Fire Talons",1,1,"Creates a fiery wave by slashing consecutively. It's an attack with multiple parts that can be progressed by pressing the button again\, however each use harms the user so caution is required.",1,1,0,0,0,0,0,0,11,121
+106,"Resurrection",1,4,"Turns into an egg. She is invincible during it\, and will hop out of it after healing for a certain amount of time. Usable in air only.",1,1,203,3,0,0,0,0,11,141
+107,"Summon Fire Bird",1,3,"Summons a fire bird. The bird can be somewhat controlled with movements\, however it disappears when moving between ground and air",1,1,211,2,0,0,0,0,11,131
+108,"Phoenix Feather Shot",1,0,"Shoots phoenix feathers forward. It's not really aimed\, but it covers a big area.",0,1,200,3,0,0,0,0,11,102
+109,"Phoenix Punch",1,1,"Leaps forward and punches the opponent. It's a fast and powerful attack\, although the impact is a bit harmful to oneself.",1,1,206,5,0,0,0,0,11,122
+110,"Falcon Leap",1,4,"Leaps and stomps the opponent's head. The arc can be controlled slightly\, and she has her own arsenal of move if the stomp landed.",1,1,207,3,0,0,0,0,11,142
+111,"Volcanic Eruption",1,3,"Sends a surge of volcanic fires to the ground\, which she can trigger anytime later.",0,1,202,4,0,0,0,0,11,132
+200,"Flame Sign \"Burnt Asteroid\"",2,3,"Calls forth an asteroid. It takes time for it to reach the ground\, but it's a powerful attack that should be evaded. Of course\, it's not really an asteroid.",0,3,201,4,0,0,0,0,11,220
+201,"Blaze Sign \"Selfdestruct Flame Whirlwind\"",2,4,"Spins rapidly while emitting a fiery whirlwind. She's burning herself\, however she's taking her opponent with her.",0,4,0,0,0,0,0,0,11,231
+202,"Flame Sign \"Scenery of Volcanic Eruption\"",2,3,"Calls upon a volcanic storm. Strong wind pushes the opponent to the corner for a short duration.",1,4,0,0,0,0,0,0,11,221
+203,"\"Phoenix Rebirth\"",2,5,"A card that can only be used in the air. She turns into an egg to resurrect herself\, however she also does this by creating a fire tornado on her wake.",1,3,0,0,0,0,0,0,11,242
+205,"Flame Sign \"Fist of the Phoenix\"",2,2,"Hurls a powerful flaming fist on the opponent\, which then leaves a fire projectile attack.",0,2,0,0,0,0,0,0,11,210
+206,"\"Possessed by Phoenix\"",2,4,"The spirit of a Phoenix possesses the target\, which attacks the possessed target repeatedly over time.",1,5,0,0,0,0,0,0,11,232
+207,"Blaze Sign \"Phoenix Flight\"",2,2,"Grows a pair of wings for a short period of time. This allows her to move very fast\, while granting protection to projectiles.",1,3,0,0,0,0,0,0,11,211
+208,"\"South Wind Clear Sky -Fujiyama Volcano-\"",2,5,"Executes a diving punch which causes a volcanic eruption upon impact with the ground. It is said to be as beautiful and deadly as natural volcanic eruption.",1,2,0,0,0,0,0,0,11,240
+211,"Immortal \"Fire Bird -Flying Phoenix-\"",2,1,"Summons a Phoenix projectile which she can control indirectly with her own movements. It's a Phoenix\, so it's indestructible.",1,2,0,0,0,0,0,0,11,200
+212,"Blaze Sign \"Phoenix Kick\"",2,3,"An extremely powerful kick. However due to how powerful this move is\, it's a double-edged sword that does massive damage to the user as well.",1,3,0,0,0,0,0,0,11,222
+™

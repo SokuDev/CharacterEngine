@@ -1,0 +1,359 @@
+## =======================================================================
+#Ÿ—˜‘äŒ
+## =======================================================================
+#VS—éå
+#‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X\
+## ‘äŒA==================
+#Label:ƒLƒƒƒ‰–¼+”š‚ÌŒ`‚Å“o˜^@˜A”Ô‚Å‘±‚¢‚Ä‚¢‚éŒÀ‚è‚ÌÅŒã‚Ü‚Å‚ª“o˜^‚³‚êAƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ‚³‚ê‚Ü‚·
+#‰ï˜b‘®‚ÍƒVƒiƒŠƒI‚ÅŒ¾‚¤ƒLƒƒƒ‰–¼‚ÌêŠ‚Éwin(Ÿ—˜ƒLƒƒƒ‰)lose(”s–kƒLƒƒƒ‰)‚Ì”­Œ¾‚É‚È‚è‚Ü‚·
+# Hi-lock: (("\\#.*$"            (0 '((t (:foreground "dark slate gray"))) t))) 
+# Hi-lock: (("^[ \t]*Label.*$"              (0 '((t (:foreground "royal blue"))) t))) 
+# Hi-lock: (("^[ \t]*Face.*$"              (0 '((t (:foreground "cornflower blue"))) t))) 
+# Hi-lock: (("^[ \t]*End.*$"            (0 '((t (:foreground "royal blue"))) t))) 
+# reimuR0  rare
+# reimuU0  usual
+# reimu0   •p”É
+
+Label:reimuU0
+Face:lose,•‰
+Face:win,•
+Out of the humans I metA you certainly are a more mature one.
+Everyone wants immortality but nobody saw the bad side of it.\
+End:
+
+Label:reimuU1
+Face:lose,•‰
+Face:win,•
+Your attacks barely stingsA but I cannot hit you.
+This is a different kind of fight...\
+End:
+
+
+Label:marisaU0
+Face:lose,•‰
+Face:win,Š¾
+You are underestimating the meaning of eternity.\
+End:
+
+
+Label:sakuyaU0
+Face:lose,•‰
+Face:win,•
+I envy the life you haveA you live to serve your mistress until
+your body can no longer move and eventually you sleep forever.\
+
+Face:win,Šğ
+I miss that need to find meaning in life.\
+End:
+
+
+Label:aliceU0
+Face:lose,•‰
+Face:win,Š¾
+Regardless of your intentionsA there's nothing left of the elixir.
+If you want itA you should bug the people of Eientei instead.\
+End:
+
+
+Label:aliceU1
+Face:lose,•‰
+Face:win,Š¾
+French DollsA Dutch DollsA Russian Dolls...
+Are you from the Outside World too?\
+End:
+
+
+Label:youmuU0
+Face:lose,•‰
+Face:win,Šğ
+I find it funny that a ghost can
+actually be scared of a human.\
+End:
+
+
+Label:youmuU1
+Face:lose,•‰
+Face:win,Šğ
+A samurai. That's quite nostalgic.\
+End:
+
+
+Label:remiliaU0
+Face:lose,•‰
+Face:win,˜f
+Vampires' mortality is similar to the early stages
+of the Hourai Elixir. You might want stop at that though.\
+End:
+
+
+Label:remiliaU1
+Face:lose,•‰
+Face:win,˜f
+We don't have vampires in Japan.
+Where are you from?\
+End:
+
+
+Label:yuyukoU0
+Face:lose,•‰
+Face:win,˜f
+Immortality asideA not being able
+to feel pain doesn't sound half bad.\
+End:
+
+
+Label:yukariU0
+Face:lose,•‰
+Face:win,Š¾
+Whenever you show upA trouble often follows.
+Leave me out of itA will you?\
+End:
+
+
+Label:suikaU0
+Face:lose,•‰
+Face:win,‹Á
+Do onis fear soybeans? thats very curious.
+PersonallyA I find Manju more scary.\
+End:
+
+
+Label:suikaU1
+Face:lose,•‰
+Face:win,Šğ
+Be it a fight or a drinkA I'll take you on!\
+End:
+
+
+Label:udongeU0
+Face:lose,•‰
+Face:win,“{
+Why do you guys keep coming after me? If Kaguya
+has something to sayA tell her to do it herself!\
+End:
+
+
+Label:udongeU1
+Face:lose,•‰
+Face:win,Š¾
+I do feel a bit bad that sometimes you people
+have to be the mediator.\
+End:
+
+
+Label:udongeU2
+Face:lose,•‰
+Face:win,“{
+I think you're alright. But I'd respect you a lot
+more if you acted on your own more.\
+End:
+
+
+Label:ayaU0
+Face:lose,•‰
+Face:win,‹Á
+I'm surprised you have the nerve
+to visit the bamboo forest.\
+
+Face:win,Šğ
+WellA for oneA I sell yakitori.\
+End:
+
+
+Label:komachiU0
+Face:lose,•‰
+Face:win,•
+Your boss giving you a hard time again?\
+End:
+
+
+Label:komachiU1
+Face:lose,•‰
+Face:win,•
+I don't think you're lazy. Some souls
+just take more time to accept death.\
+End:
+
+
+Label:ikuU0
+Face:lose,•‰
+Face:win,Šğ
+You like to watchA maybe you could help the
+people that gets lost in the bamboo forest with me.\
+End:
+
+
+Label:ikuU1
+Face:lose,•‰
+Face:win,Šğ
+Let's go another round! If I win you're taking me
+to the Dragon Palace!\
+End:
+
+
+Label:sanaeU0
+Face:lose,•‰
+Face:win,Šğ
+It's been thousands of yearsA
+how is the Outside World nowadays?\
+End:
+
+
+Label:chirnoU0
+Face:lose,•‰
+Face:win,•
+I'm not sure if I want to join your games.
+Aren't I a bad match-up for you anyway?\
+End:
+
+
+Label:utsuhoU0
+Face:lose,•‰
+Face:win,—]
+Amazing! You created a sun with a snap of finger!
+Unfortunately for youA it's not enough to burn me.\
+End:
+
+
+Label:suwakoU0
+Face:lose,•‰
+Face:win,Šğ
+So you're a Frog god right?\
+End:
+
+
+Label:clownpieceU0
+Face:lose,•‰
+Face:win,—]
+UnfortunatelyA I can't go to Hell.\
+End:
+
+
+Label:clownpieceU1
+Face:lose,•‰
+Face:win,‹Á
+You're the one the Lunarians are terrified of!\
+End:
+
+
+Label:flandreU0
+Face:lose,•‰
+Face:win,Š¾
+You don't have to hold backA you know.\
+
+Face:win,Œˆ
+The night is still long.
+Let's have more fun.\
+End:
+
+
+Label:flandreU1
+Face:lose,•‰
+Face:win,—]
+If you ever need someone to play withA
+I can visit from time to time.\
+End:
+
+
+Label:orinU0
+Face:lose,•‰
+Face:win,—]
+My body has become accustomed to high temperatures.
+I don't think this would've went the way you expected.\
+End:
+
+
+Label:orinU1
+Face:lose,•‰
+Face:win,—]
+... You're going to what with my corpse?\
+End:
+
+
+Label:yuukaU0
+Face:lose,•‰
+Face:win,Š¾
+RelaxA I'm not burning any flowers!\
+End:
+
+
+Label:kaguyaU0
+Face:lose,•‰
+Face:win,Œˆ
+I'm not really keeping countA
+but I'm pretty sure I've won more.\
+End:
+
+
+Label:kaguyaU1
+Face:lose,•‰
+Face:win,Œˆ
+Get up. You can do better.\
+End:
+
+
+Label:mokouU0
+Face:lose,•‰
+Face:win,•
+Well it was scary the first timeA but
+it's getting old.\
+End:
+
+
+Label:shouU0
+Face:lose,•‰
+Face:win,•
+Make sure you don't lose your belongings in
+the bamboo forest. You might never get them back.\
+End:
+
+
+Label:shouU1
+Face:lose,•‰
+Face:win,•
+Maybe I should start using weapons too...\
+End:
+
+
+Label:murasaU0
+Face:lose,•‰
+Face:win,Šğ
+WellA I'm something of a vengeful spirit
+myself.\
+End:
+
+
+Label:murasaU1
+Face:lose,•‰
+Face:win,—]
+I guess being a ghost is some form of
+immortality as well.\
+End:
+
+
+Label:sekibankiU0
+Face:lose,•‰
+Face:win,Šğ
+I can also detach my headA wanna see?\
+End:
+
+
+Label:satoriU0
+Face:lose,•‰
+Face:win,Šğ
+No I'm not going to be your pet.
+I'm not a bird. I'm not an animal.\
+End:
+
+
+Label:common0
+Face:win,˜f
+When will something exciting happen...\
+End:
+
+Label:common1
+Face:win,Šğ
+I know a very good doctor if you need one.\
+End:
+
+c

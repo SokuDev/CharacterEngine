@@ -1,0 +1,191 @@
+## =======================================================================
+#Ÿ—˜‘äŒ
+## =======================================================================
+#VS—éå
+#‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X\
+## ‘äŒA==================
+#Label:ƒLƒƒƒ‰–¼+”š‚ÌŒ`‚Å“o˜^@˜A”Ô‚Å‘±‚¢‚Ä‚¢‚éŒÀ‚è‚ÌÅŒã‚Ü‚Å‚ª“o˜^‚³‚êAƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ‚³‚ê‚Ü‚·
+#‰ï˜b‘®‚ÍƒVƒiƒŠƒI‚ÅŒ¾‚¤ƒLƒƒƒ‰–¼‚ÌêŠ‚Éwin(Ÿ—˜ƒLƒƒƒ‰)lose(”s–kƒLƒƒƒ‰)‚Ì”­Œ¾‚É‚È‚è‚Ü‚·
+# Hi-lock: (("\\#.*$"            (0 '((t (:foreground "dark slate gray"))) t))) 
+# Hi-lock: (("^[ \t]*Label.*$"              (0 '((t (:foreground "royal blue"))) t))) 
+# Hi-lock: (("^[ \t]*Face.*$"              (0 '((t (:foreground "cornflower blue"))) t))) 
+# Hi-lock: (("^[ \t]*End.*$"            (0 '((t (:foreground "royal blue"))) t))) 
+# reimuR0  rare
+# reimuU0  usual
+# reimu0   •p”É
+
+Label:reimuU0
+Face:lose,•‰
+Face:win,—]
+Maybe we should get a new shrine maiden
+to protect Gensokyo.\
+End:
+
+
+Label:marisaU0
+Face:lose,•‰
+Face:win,Šğ
+You come and go through the mountain as you please.
+Chasing you arround is starting to irritate me.\
+End:
+
+
+Label:youmuU0
+Face:lose,•‰
+Face:win,—]
+Don't you think you should start taking some
+real training?\
+
+Face:win,˜f
+Maybe your master would then return.\
+End:
+
+
+Label:suikaU0
+Face:lose,•‰
+Face:win,Šğ
+Sometimes I admire the honesty of the onis.\
+
+Face:win,Š¾
+You wouldn't believe how two-faced the crow tengus can be.\
+End:
+
+
+Label:ayaU0
+Face:lose,•‰
+Face:win,Œˆ
+When I get a higher rankA my first decree
+shall be a punishment for every nosy crow tengu!\
+End:
+
+Label:ayaU1
+Face:lose,•‰
+Face:win,“{
+I can see for a very long distanceA
+yet the only thing I see now is a defeated tengu.\
+End:
+
+
+Label:tenshiU0
+Face:lose,•‰
+Face:win,Šğ
+You made quite a ruckus some time ago.
+Consider this a payback.\
+End:
+
+
+Label:sanaeU0
+Face:lose,•‰
+Face:win,“{
+You claim to be a goddess?
+that was dissapointing!\
+End:
+
+
+Label:utsuhoU0
+Face:lose,•‰
+Face:win,“{
+Just because you're working for the Shrine doesn't
+mean you can just wander off wherever you please.\
+End:
+
+
+Label:suwakoU0
+Face:lose,•‰
+Face:win,Šğ
+You should join us in for some Dai Shogi matchesA
+you can bring the refreshments and food!\
+End:
+
+
+Label:MomijiU0
+Face:lose,•‰
+Face:win,Š¾
+Why do I have to take my free time training the
+other Tengu warriors?\
+End:
+
+
+Label:clownpieceU0
+Face:lose,•‰
+Face:win,˜f
+You have a very strong foreign smell...\
+End:
+
+
+Label:orinU0
+Face:lose,•‰
+Face:win,Š¾
+My natural instincts just told me to be wary
+of you. No hard feelings.\
+End:
+
+
+Label:yuukaU0
+Face:lose,•‰
+Face:win,Š¾
+I pay attention to my surroundings too.
+I won't ruin your flowers for no reason.\
+End:
+
+
+Label:mokouU0
+Face:lose,•‰
+Face:win,˜f
+So in a wayA you're basically a guardian
+of the bamboo forestA right?\
+
+Face:win,Šğ
+Maybe we could get along.\
+End:
+
+
+Label:shouU0
+Face:lose,•‰
+Face:win,“{
+Tell your leader that not every tengu is
+interested in the path of enlightenment!\
+End:
+
+
+Label:murasaU0
+Face:lose,•‰
+Face:win,—]
+YesA canine can swim.\
+End:
+
+
+Label:sekibankiU0
+Face:lose,•‰
+Face:win,Œˆ
+Even if you disable my eyesA I still can smell you.\
+End:
+
+
+Label:satoriU0
+Face:lose,•‰
+Face:win,Šğ
+I'm not your pet! Leave me alone!\
+End:
+
+
+Label:shinkiU0
+Face:lose,•‰
+Face:win,˜f
+There seems to be various kinds of demonic canines.
+I don't underestand whyA we're generally docile.\
+End:
+
+
+Label:common0
+Face:win,‹Á
+Didn't expect to find anyone wandering around here.\
+End:
+
+Label:common1
+Face:win,Œˆ
+I'm not that much of a fan of physical confrontations,
+How about a match of shogi instead?\
+End:
+
+W

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animpattern version="5">
+	<animation id="0" index="0" loop="1">
+		<frame image="ran000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="8" rendergroup="1"/>
+		<frame image="ran001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="8" rendergroup="1"/>
+		<frame image="ran002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="8" rendergroup="1"/>
+		<frame image="ran003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="16" rendergroup="1"/>
+		<frame image="ran004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="8" rendergroup="1"/>
+		<frame image="ran005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="8" rendergroup="1"/>
+		<frame image="ran006.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="8" rendergroup="1"/>
+	</animation>
+	<animation id="1" index="0" loop="0">
+		<frame image="ranB000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="5" rendergroup="1"/>
+		<frame image="ranB001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="5" rendergroup="1"/>
+	</animation>
+	<animation id="2" index="0" loop="1">
+		<frame image="ranB002.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="5" rendergroup="1"/>
+		<frame image="ranB003.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="5" rendergroup="1"/>
+		<frame image="ranB004.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="5" rendergroup="1"/>
+		<frame image="ranB005.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="5" rendergroup="1"/>
+		<frame image="ranB006.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="320" texheight="320" xoffset="141" yoffset="165" duration="5" rendergroup="1"/>
+	</animation>
+</animpattern>

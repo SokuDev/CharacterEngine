@@ -1,0 +1,225 @@
+## =======================================================================
+#Ÿ—˜‘äŒ
+## =======================================================================
+#VS—éå
+#‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X\
+## ‘äŒA==================
+#Label:ƒLƒƒƒ‰–¼+”š‚ÌŒ`‚Å“o˜^@˜A”Ô‚Å‘±‚¢‚Ä‚¢‚éŒÀ‚è‚ÌÅŒã‚Ü‚Å‚ª“o˜^‚³‚êAƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ‚³‚ê‚Ü‚·
+#‰ï˜b‘®‚ÍƒVƒiƒŠƒI‚ÅŒ¾‚¤ƒLƒƒƒ‰–¼‚ÌêŠ‚Éwin(Ÿ—˜ƒLƒƒƒ‰)lose(”s–kƒLƒƒƒ‰)‚Ì”­Œ¾‚É‚È‚è‚Ü‚·
+# Hi-lock: (("\\#.*$"            (0 '((t (:foreground "dark slate gray"))) t))) 
+# Hi-lock: (("^[ \t]*Label.*$"              (0 '((t (:foreground "royal blue"))) t))) 
+# Hi-lock: (("^[ \t]*Face.*$"              (0 '((t (:foreground "cornflower blue"))) t))) 
+# Hi-lock: (("^[ \t]*End.*$"            (0 '((t (:foreground "royal blue"))) t))) 
+# reimuR0  rare
+# reimuU0  usual
+# reimu0   •p”É
+
+Label:reimuU0
+Face:lose,•‰
+Face:win,Œˆ
+Aren't you a human too?
+That means I could test my fire on you!\
+End:
+
+Label:marisaU0
+Face:lose,•‰
+Face:win,‹Á
+Did you really scare the life out of that
+ice fairy with a simple lantern!?\
+End:
+
+Label:sakuyaU0
+Face:lose,•‰
+Face:win,˜f
+There's really something strange about youA
+are you one of the moon's people by any chance?\
+End:
+
+Label:remiliaU0
+Face:lose,•‰
+Face:win,˜f
+Vampires are really fascinated with the moonA huh?\
+
+Face:win,Œˆ
+But you have to be careful! You can become mad
+if you stare at the red moon too much.\
+End:
+
+Label:yukariU0
+Face:lose,•‰
+Face:win,Œˆ
+I heard your invasion of the moon went really poorly.
+You might wanna get tips from Master on how to do it.\
+End:
+
+
+Label:suikaU0
+Face:lose,•‰
+Face:win,Š¾
+W-what is your obsession with competing so hard with
+the moon people that you want to make a broken moon!?\
+End:
+
+Label:udongeU0
+Face:lose,•‰
+Face:win,Šğ
+You might think you're safe because of Earth's impuritiesA
+but my powers are still no joke!\
+End:
+
+Label:ayaU0
+Face:lose,•‰
+Face:win,˜f
+Are you not going to publish the interview with my master?\
+End:
+
+Label:komachiU0
+Face:lose,•‰
+Face:win,Šğ
+Are you gonna take all those souls?
+I can take care of them too!\
+End:
+
+Label:ikuU0
+Face:lose,•‰
+Face:win,Šğ
+Are you interested in being a messenger of hell as well?\
+End:
+
+Label:tenshiU0
+Face:lose,•‰
+Face:win,‹Á
+So celestials aren't weak to impurity?
+That is very surprising.\
+End:
+
+Label:sanaeU0
+Face:lose,•‰
+Face:win,“{
+Even 3 funny faires gave me more fun time
+than an aspiring goddessA you're boring!\
+End:
+
+Label:chirnoU0
+Face:lose,•‰
+Face:win,Šğ
+And that settles it!
+But I'm always down for a rematch if you want!\
+End:
+
+Label:chirnoU1
+Face:lose,•‰
+Face:win,Šğ
+Oh? Are you feeling jealous?
+Is the poor ice fairy going to melt?\
+End:
+
+Label:utsuhoU0
+Face:lose,•‰
+Face:win,Š¾
+MissA please relax! You will make another hell
+at this rate!\
+End:
+
+Label:momijiU0
+Face:lose,•‰
+Face:win,Œˆ
+I'm not scaredA we have a way bigger dog than you
+in hell.\
+End:
+
+Label:clownpieceU0
+Face:lose,•‰
+Face:win,‹Á
+I might be going a bit overboard with the madness stuff.\
+End:
+
+Label:flandreU0
+Face:lose,•‰
+Face:win,Š¾
+SeriouslyA affecting you with madness was a 
+horrible idea.\
+End:
+
+Label:orinU0
+Face:lose,•‰
+Face:win,—]
+I wonder how close to home the Former Hell would feel.
+QuickA take me there!\
+End:
+
+Label:yuukaU0
+Face:lose,•‰
+Face:win,Š¾
+M-missA I can help make flowers grow too!
+Perhaps I can be of some use!\
+End:
+
+Label:kaguyaU0
+Face:lose,•‰
+Face:win,‹Á
+You decided to go impure by your own will?
+Perhaps you were aware of honorable friend's plan?\
+End:
+
+Label:mokouU0
+Face:lose,•‰
+Face:win,‹Á
+So immortality does help against madness.
+Or perhaps your bright pure light played a role too.\
+End:
+
+Label:mimaU0
+Face:lose,•‰
+Face:win,Š¾
+I understand why you're unaffected by madnessA
+you're already mad!\
+End:
+
+Label:shouU0
+Face:lose,•‰
+Face:win,Œˆ
+Your shrine is very livelyA
+maybe fairies should visit more often.\
+End:
+
+Label:murasaU0
+Face:lose,•‰
+Face:win,Œˆ
+You think water can dim out the lights of hell fire?
+Not even the murkiest of water will dim my light.\
+End:
+
+Label:sekibankiU0
+Face:lose,•‰
+Face:win,Œˆ
+You're not scary when I'm holding my torch like this.\
+End:
+
+Label:satoriU0
+Face:lose,•‰
+Face:win,˜f
+I wonderA how will someone affected by my light look
+in your eyes?\
+End:
+
+Label:shinkiU0
+Face:lose,•‰
+Face:win,˜f
+Makai is the realm for demonsA right?
+So basically it's also hellA right?\
+End:
+
+Label:common0
+Face:win,•
+Hmm... I don't think that's how the prank was supposed
+to go, but it was fun regardless!\
+End:
+
+Label:common1
+Face:win,Š¾
+MasterA don't your want some fruit juice or something?
+Sake tastes horrible and is not sweet!\
+End:
+
++

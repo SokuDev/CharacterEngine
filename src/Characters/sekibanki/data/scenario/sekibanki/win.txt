@@ -1,0 +1,180 @@
+## =======================================================================
+#Ÿ—˜‘äŒ
+## =======================================================================
+#VS—éå
+#‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X\
+## ‘äŒA==================
+#Label:ƒLƒƒƒ‰–¼+”š‚ÌŒ`‚Å“o˜^@˜A”Ô‚Å‘±‚¢‚Ä‚¢‚éŒÀ‚è‚ÌÅŒã‚Ü‚Å‚ª“o˜^‚³‚êAƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ‚³‚ê‚Ü‚·
+#‰ï˜b‘®‚ÍƒVƒiƒŠƒI‚ÅŒ¾‚¤ƒLƒƒƒ‰–¼‚ÌêŠ‚Éwin(Ÿ—˜ƒLƒƒƒ‰)lose(”s–kƒLƒƒƒ‰)‚Ì”­Œ¾‚É‚È‚è‚Ü‚·
+# Hi-lock: (("\\#.*$"            (0 '((t (:foreground "dark slate gray"))) t))) 
+# Hi-lock: (("^[ \t]*Label.*$"              (0 '((t (:foreground "royal blue"))) t))) 
+# Hi-lock: (("^[ \t]*Face.*$"              (0 '((t (:foreground "cornflower blue"))) t))) 
+# Hi-lock: (("^[ \t]*End.*$"            (0 '((t (:foreground "royal blue"))) t))) 
+# reimuR0  rare
+# reimuU0  usual
+# reimu0   •p”É
+
+Label:reimuU0
+Face:lose,•‰
+Face:win,Šğ
+And that's my cue to head off!\
+End:
+
+
+Label:marisaU0
+Face:lose,•‰
+Face:win,Šğ
+Leave me be! I'm just giving the children a little fright.
+No harm in thatA right?\
+End:
+
+
+Label:sakuyaU0
+Face:lose,•‰
+Face:win,Š¾
+You are well trainedA but there's no point in aiming for my neck.\
+End:
+
+
+Label:aliceU0
+Face:lose,•‰
+Face:win,•
+PersonallyA I don't see the need to have a companion.\
+End:
+
+
+Label:remiliaU0
+Face:lose,•‰
+Face:win,•
+Vampires are old news! How can I be scared of you
+if you're limited to your home half the day?\
+End:
+
+
+Label:yuyukoU0
+Face:lose,•‰
+Face:win,‹Á
+WaitA ghosts can be scared too?
+ThenA are ghosts also afraid of death?\
+End:
+
+
+Label:yukariU0
+Face:lose,•‰
+Face:win,‹Á
+There's something unnerving about you...
+YetA I managed to beat youA so I guess that's fine?\
+End:
+
+
+Label:udongeU0
+Face:lose,•‰
+Face:win,Œˆ
+Kinda hard to use your abilities when you
+don't even know which head is the real oneA huh?\
+End:
+
+
+Label:chirnoU0
+Face:lose,•‰
+Face:win,—]
+You showed up and got involved on more incidents than me.
+But stillA I can do better pranks than you!\
+End:
+
+
+Label:utsuhoU0
+Face:lose,•‰
+Face:win,“{
+We have enough heat in the summerA
+one sun is enough!\
+End:
+
+
+Label:MomijiU0
+Face:lose,•‰
+Face:win,Š¾
+I just can't surprise you can I.\
+End:
+
+
+Label:clownpieceU0
+Face:lose,•‰
+Face:win,˜f
+There are a lot of other beings with
+multiple heads in Hell? Now I'm interested!\
+End:
+
+
+Label:flandreU0
+Face:lose,•‰
+Face:win,Š¾
+You just blew up my head?!\
+End:
+
+
+Label:orinU0
+Face:lose,•‰
+Face:win,“{
+NoA my head is not a toy. Leave it alone.\
+End:
+
+
+Label:yuukaU0
+Face:lose,•‰
+Face:win,Š¾
+How can a flower lady be this scary?\
+End:
+
+
+Label:kaguyaU0
+Face:lose,•‰
+Face:win,Šğ
+Eternity also means you have an infinite amount
+of time to fail again.\
+End:
+
+
+Label:mokouU0
+Face:lose,•‰
+Face:win,Œˆ
+Your help to humans is not very meaningful. Humans
+don't come home even if you help themA because I am around!\
+End:
+
+
+Label:mimaU0
+Face:lose,•‰
+Face:win,˜f
+You're too obsessed with that shrine maidenA
+are you sure hate her?\
+End:
+
+
+Label:shouU0
+Face:lose,•‰
+Face:win,Œˆ
+I have no interest in joining your group of friendsA
+let me go already!\
+End:
+
+
+Label:sekibankiU0
+Face:lose,•‰
+Face:win,Š¾
+I never expected one of my heads to rebel against me.\
+End:
+
+
+Label:common0
+Face:win,•
+Please be so kind as to leave me alone.\
+End:
+
+Label:common1
+Face:win,Š¾
+Why is everyone so impatient?
+A quality prank needs time to prepare!\
+End:
+
+B

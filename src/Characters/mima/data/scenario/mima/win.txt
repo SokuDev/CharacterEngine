@@ -1,0 +1,183 @@
+## =======================================================================
+#Ÿ—˜‘äŒ
+## =======================================================================
+#VS—éå
+#‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X\
+## ‘äŒA==================
+#Label:ƒLƒƒƒ‰–¼+”š‚ÌŒ`‚Å“o˜^@˜A”Ô‚Å‘±‚¢‚Ä‚¢‚éŒÀ‚è‚ÌÅŒã‚Ü‚Å‚ª“o˜^‚³‚êAƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ‚³‚ê‚Ü‚·
+#‰ï˜b‘®‚ÍƒVƒiƒŠƒI‚ÅŒ¾‚¤ƒLƒƒƒ‰–¼‚ÌêŠ‚Éwin(Ÿ—˜ƒLƒƒƒ‰)lose(”s–kƒLƒƒƒ‰)‚Ì”­Œ¾‚É‚È‚è‚Ü‚·
+# Hi-lock: (("\\#.*$"            (0 '((t (:foreground "dark slate gray"))) t))) 
+# Hi-lock: (("^[ \t]*Label.*$"              (0 '((t (:foreground "royal blue"))) t))) 
+# Hi-lock: (("^[ \t]*Face.*$"              (0 '((t (:foreground "cornflower blue"))) t))) 
+# Hi-lock: (("^[ \t]*End.*$"            (0 '((t (:foreground "royal blue"))) t))) 
+# reimuR0  rare
+# reimuU0  usual
+# reimu0   •p”É
+
+Label:reimuU0
+Face:lose,•‰
+Face:win,Œˆ
+Did the Hakurei shrine maiden really
+became this weak?\
+End:
+
+
+Label:marisaU0
+Face:lose,•‰
+Face:win,“{
+Is this the extent of your abilities after all this
+time? Disappointing...\
+End:
+
+
+Label:aliceU0
+Face:lose,•‰
+Face:win,˜f
+...Your face seems familiar.\
+End:
+
+
+Label:patchouliU0
+Face:lose,•‰
+Face:win,‹Á
+A hundred years old and you're still throwing
+elemental attacks?\
+End:
+
+
+Label:udongeU0
+Face:lose,•‰
+Face:win,Š¾
+Stop trying to look at me in the eyes.
+It just makes it awkward.\
+End:
+
+
+Label:ayaU0
+Face:lose,•‰
+Face:win,•
+Don't bother meA tengu.
+I have no time for your questions.\
+End:
+
+Label:ayaU1
+Face:lose,•‰
+Face:win,Œˆ
+You weren't serious you said?
+That's not the first time I heard that.\
+End:
+
+
+Label:komachiU0
+Face:lose,•‰
+Face:win,—]
+I think you made a mistake.
+I feel very much alive.\
+End:
+
+
+Label:sanaeU0
+Face:lose,•‰
+Face:win,“{
+Another shrine maiden? Lame.\
+End:
+
+
+Label:utsuhoU0
+Face:lose,•‰
+Face:win,Šğ
+In a wayA you can say our attacks are similar.
+But you don't seem to be the brightest bulb around.\
+End:
+
+
+Label:clownpieceU0
+Face:lose,•‰
+Face:win,Šğ
+You're not from around here. How's Hell
+around there?\
+End:
+
+
+Label:flandreU0
+Face:lose,•‰
+Face:win,—]
+I seeA so you are the god of destruction.
+Those are some interesting moves.\
+End:
+
+
+Label:orinU0
+Face:lose,•‰
+Face:win,—]
+So how often do you see a vengeful spiritA cat?\
+End:
+
+
+Label:yuukaU0
+Face:lose,•‰
+Face:win,Œˆ
+I don't think I've ever met youA
+yet somehow there's something familiar about you.\
+End:
+
+
+Label:kaguyaU0
+Face:lose,•‰
+Face:win,Šğ
+You should start calling those attacks as easy tasks.\
+End:
+
+
+Label:mokouU0
+Face:lose,•‰
+Face:win,Šğ
+It gets kinda tiring if you won't dieA
+can you just leave already?\
+End:
+
+
+Label:mimaU0
+Face:lose,•‰
+Face:win,•
+That imitation was so bad I almost feel insulted.\
+End:
+
+
+Label:shouU0
+Face:lose,•‰
+Face:win,Œˆ
+If it was that easy to purify meA I wouldn't
+have became a vengeful spirit in the first place.\
+End:
+
+
+Label:satoriU0
+Face:lose,•‰
+Face:win,˜f
+Your kind are hated by everyoneA yet you don't
+seem to be turning into a vengeful spirit anytime soon.\
+
+Face:win,•
+Perhaps you still find love in this shelter of yours.\
+End:
+
+
+Label:shinkiU0
+Face:lose,•‰
+Face:win,Š¾
+Not you again. I meanA long time no see.\
+End:
+
+
+Label:common0
+Face:win,•
+WellA on to the next one.\
+End:
+
+Label:common1
+Face:win,•
+I wonder if there's someone stronger around here.\
+End:
+
+@

@@ -2648,6 +2648,7 @@ bool Mamizou::setAction(short action)
 	if (this->_transformed && action >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN && action < SokuLib::ACTION_FORWARD_AIRTECH) {
 		if (
 			this->_transformKind == KIND_SPELL_TIMER ||
+			this->_transformKind == KIND_SMALL_SPELL_TIMER ||
 			action >= SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN || (
 				this->_transformKind == KIND_STACK && (this->_transformStacks || (
 					this->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN &&
@@ -2709,8 +2710,6 @@ bool Mamizou::setAction(short action)
 
 void Mamizou::initializeAction()
 {
-	float params[3];
-
 	printf("Mamizou::initializeAction(%i)\n", this->frameState.actionId);
 	if (this->_transformed) {
 		if (this->frameState.actionId >= 50 && this->frameState.actionId < 150)
@@ -3513,7 +3512,7 @@ bool Mamizou::_useSkillCard(int id)
 	int slot = index % 4;
 	int action = SokuLib::ACTION_DEFAULT_SKILL1_B + slot * 20 + (index / 4) * 5;
 
-	if ((this->inputData.keyInput.verticalAxis || this->inputData.keyInput.horizontalAxis) && !this->isGrounded()) {
+	if ((this->inputData.keyInput.verticalAxis || this->inputData.keyInput.horizontalAxis) && this->isGrounded()) {
 		this->_onSkillUpgrade(index, this->skilledSkillLevel[index]);
 		this->setAction(SokuLib::ACTION_SKILL_CARD);
 		return true;
@@ -3665,11 +3664,24 @@ bool Mamizou::_useTransformedSpellCard(int id)
 	return true;
 }
 
-void __fastcall modifyCardId(SokuLib::v2::Player *player)
+constexpr unsigned handOffset = offsetof(SokuLib::v2::Player, handInfo) + offsetof(SokuLib::v2::Player::HandInfo, hand);
+SokuLib::Card &(SokuLib::Deque<SokuLib::Card>::*operatorBracket)(size_t) = &SokuLib::Deque<SokuLib::Card>::operator[];
+
+void __declspec(naked) modifyCardId()
 {
-	__asm push ecx
-	player->handInfo.hand[0].id += 400;
-	__asm pop ecx
+	__asm {
+		PUSH ECX
+		ADD ECX, [handOffset]
+		PUSH 0
+		MOV EAX, [operatorBracket]
+		CALL EAX
+		MOV CX, [EAX]
+		ADD CX, 400
+		MOV [EAX], CX
+		POP ECX
+		CMP byte ptr [EBX + 0x5E6], 0x0
+		RET
+	}
 }
 
 static void execSkillPayload(const std::function<void ()> &f)

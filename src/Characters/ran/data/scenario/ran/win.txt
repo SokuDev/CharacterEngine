@@ -1,0 +1,185 @@
+## =======================================================================
+#Ÿ—˜‘äŒ
+## =======================================================================
+#VS—éå
+#‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X\
+## ‘äŒA==================
+#Label:ƒLƒƒƒ‰–¼+”š‚ÌŒ`‚Å“o˜^@˜A”Ô‚Å‘±‚¢‚Ä‚¢‚éŒÀ‚è‚ÌÅŒã‚Ü‚Å‚ª“o˜^‚³‚êAƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ‚³‚ê‚Ü‚·
+#‰ï˜b‘®‚ÍƒVƒiƒŠƒI‚ÅŒ¾‚¤ƒLƒƒƒ‰–¼‚ÌêŠ‚Éwin(Ÿ—˜ƒLƒƒƒ‰)lose(”s–kƒLƒƒƒ‰)‚Ì”­Œ¾‚É‚È‚è‚Ü‚·
+# Hi-lock: (("\\#.*$"            (0 '((t (:foreground "dark slate gray"))) t))) 
+# Hi-lock: (("^[ \t]*Label.*$"              (0 '((t (:foreground "royal blue"))) t))) 
+# Hi-lock: (("^[ \t]*Face.*$"              (0 '((t (:foreground "cornflower blue"))) t))) 
+# Hi-lock: (("^[ \t]*End.*$"            (0 '((t (:foreground "royal blue"))) t))) 
+# reimuR0  rare
+# reimuU0  usual
+# reimu0   •p”É
+
+Label:reimuU0
+Face:lose,•‰
+Face:win,“{
+Your respect toward Lady Yukari is severely lacking.\
+End:
+
+
+Label:marisaU0
+Face:lose,•‰
+Face:win,Š¾
+How is it possible that you of all people is a part of
+Gensokyo's main incident resolver?\
+End:
+
+
+Label:sakuyaU0
+Face:lose,•‰
+Face:win,˜f
+I'm also technically a head maidA I suppose.\
+End:
+
+
+Label:youmuU0
+Face:lose,•‰
+Face:win,—]
+It was a nice match. Thank you for the
+training session.\
+End:
+
+
+Label:yuyukoU0
+Face:lose,•‰
+Face:win,Šğ
+Lady Yukari is not with me right now. However if Lady
+Yuyuko are fine with itA I can accompany you for a moment.\
+End:
+
+
+Label:yukariU0
+Face:lose,•‰
+Face:win,Š¾
+W-why is Lady Yukari here? You are...
+Lady YukariA right?\
+End:
+
+
+Label:udongeU0
+Face:lose,•‰
+Face:win,—]
+Tricks and illusions are like our natural weapons.
+I admire your courage in trying to fight me with it.\
+End:
+
+
+Label:ayaU0
+Face:lose,•‰
+Face:win,Š¾
+Honestly I don't know what you expected from
+interviewing Lady Yukari.\
+End:
+
+
+Label:ikuU0
+Face:lose,•‰
+Face:win,‹Á
+You have it rough tooA I see.\
+End:
+
+
+Label:clownpieceU0
+Face:lose,•‰
+Face:win,Š¾
+Our hats most definitely are not similar. What are
+you talking about?\
+End:
+
+
+Label:flandreU0
+Face:lose,•‰
+Face:win,Šğ
+I see you're not just about brute force. But you
+might need to be more cunning to take down a fox.\
+End:
+
+
+Label:orinU0
+Face:lose,•‰
+Face:win,Šğ
+Chen is clearly superior to you.
+In more ways than one.\
+End:
+
+
+Label:yuukaU0
+Face:lose,•‰
+Face:win,Šğ
+Such beautiful flowers! Perhaps I should
+recommend visiting your garden to Lady Yukari.\
+
+Face:win,Š¾
+What? Don't bring Lady Yukari?
+O-okay then.\
+End:
+
+
+Label:kaguyaU0
+Face:lose,•‰
+Face:win,˜f
+PerhapsA given an eternity we could trace back
+all the information to the beginning of everything.\
+
+Face:win,Š¾
+HoweverA witnessing the end of everything sounds
+rather lonely.\
+End:
+
+
+Label:mokouU0
+Face:lose,•‰
+Face:win,•
+Yakitori stand... Do you perhaps sell
+Tofu too?\
+End:
+
+
+Label:shouU0
+Face:lose,•‰
+Face:win,•
+I'm quite knowledgeable about Buddhist
+Martial Arts you see.\
+End:
+
+
+Label:murasaU0
+Face:lose,•‰
+Face:win,‹Á
+Aren't the term Buddhist Vengeful Spirit
+rather contradictive?\
+End:
+
+
+Label:sekibankiU0
+Face:lose,•‰
+Face:win,˜f
+Are you perhaps capable of doing separate
+calculations on each of your heads?\
+End:
+
+
+Label:satoriU0
+Face:lose,•‰
+Face:win,•
+Perhaps on another time lineA we might
+have been a resident of the Earth Palace.\
+End:
+
+
+Label:common0
+Face:win,•
+I'm sorry about that. But I am just 
+executing Lady Yukari's orders.\
+End:
+
+Label:common1
+Face:win,Š¾
+Having free time always feels weird.\
+End:
+
+%

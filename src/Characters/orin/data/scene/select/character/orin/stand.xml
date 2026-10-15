@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animpattern version="5">
+	<animation id="0" index="0" loop="1">
+		<frame image="chirno000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="38" yoffset="97" duration="6" rendergroup="1"/>
+		<frame image="chirno001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="35" yoffset="97" duration="6" rendergroup="1"/>
+		<frame image="chirno002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="36" yoffset="97" duration="6" rendergroup="1"/>
+		<frame image="chirno003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="36" yoffset="97" duration="6" rendergroup="1"/>
+		<frame image="chirno004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="34" yoffset="97" duration="6" rendergroup="1"/>
+		<frame image="chirno005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="35" yoffset="97" duration="6" rendergroup="1"/>
+	</animation>
+	<animation id="1" index="0" loop="0">
+		<frame image="chirno000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="38" yoffset="97" duration="4" rendergroup="1"/>
+		<frame image="chirnoB000.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="35" yoffset="97" duration="4" rendergroup="1"/>
+		<frame image="chirnoB001.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="35" yoffset="97" duration="4" rendergroup="1"/>
+		<frame image="chirnoB002.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="32" yoffset="97" duration="4" rendergroup="1"/>
+	</animation>
+	<animation id="2" index="0" loop="1">
+		<frame image="chirnoB003.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="33" yoffset="109" duration="5" rendergroup="1"/>
+		<frame image="chirnoB004.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="33" yoffset="109" duration="5" rendergroup="1"/>
+	</animation>
+</animpattern>

@@ -1,0 +1,42 @@
+#スペカナンバー,スペカ名,"タイプ
+255 敵カード
+2 スペルカード
+1 スキルカード
+0 システムカード",消費,"カード説明テキスト
+デッキ構築画面でカードを選択すると出る説明文","出現ステージ
+数字のステージ以降から出現する
+0は初期所持
+1～6　EASY
+11～16　NORMAL
+21～26　HARD
+31～36　LUNA","レアリティ
+0　コモン
+1　アンコモン
+2　レア
+取得抽選で
+コモン60％
+アンコ30％
+レア10％",,,,,,,,sort
+100,"Demon Lord Leap",1,0,"Uses her vampiric physical to make a quick leap forward. She is free to move during it\, so it's a flexible move.",0,1,104,1,108,1,0,0,6,100
+101,"Scarlet Beams",1,1,"Uses magic circles to fire multiple beams. It's a standard powerful magic attack.",0,1,105,1,109,1,0,0,6,120
+102,"Laevatein Slash",1,2,"Spins forward while attacking with her weapon. It's an attack with high destructive power.",0,1,106,1,110,1,202,2,6,110
+103,"Cerberus Whip",1,4,"Uses her weapon to do a fiery slash attack. It can be executed twice by pressing the button again.",0,1,107,1,111,1,0,0,6,140
+104,"Bat Form",1,0,"Transforms into bats and charges in. It's basically impossible to hit her in this state.",1,1,0,0,0,0,0,0,6,101
+105,"Chains of 495",1,1,"Shoots chains that will latch on to the floor or wall. When it does\, she can pull herself into it. It's a quick tool for mobility.",1,1,207,3,0,0,0,0,6,121
+106,"Unholy Cross",1,2,"Covers self in a red aura that forms like a cross. She can't make it as good as her sister\, so this is not a spell card.",1,1,200,2,0,0,0,0,6,111
+107,"Ground Fear",1,4,"Dives down into the floor\, creating shockwaves.",1,1,206,4,0,0,0,0,6,141
+108,"Inferno Slicer",1,0,"Makes a full rotation slash while sliding at high speed. It's a move that can be used for dancing as well\, but being too close is not recommended.",0,1,209,4,0,0,0,0,6,102
+109,"Trickster Bats",1,1,"Calls upon a pack of bats to bite from the opponent's back. Charging the attack will increase the number of bats summoned.",1,1,201,2,0,0,0,0,6,122
+110,"Vampire Bite",1,2,"Grabs the opponent and sucks their   blood. Because she has to approach  from the front\, there's quite a gap.The move can not be blocked and     recovers life\, so this move can     definitely exert pressure.",0,1,208,4,0,0,0,0,6,112
+111,"Counter Clock",1,4,"Gathers magic and forms a cross\,    then throws it at the enemy in a    jumping attack. The projectile is big and stays for some time.",0,1,0,0,0,0,0,0,6,142
+200,"Forbidden Barrage \"Rainbow Break\"",2,3,"Fires bullets forming a rainbow. It's a weaker\, less violent version of Starbow Break. It looks beautiful but don't touch it.",0,2,203,5,0,0,0,0,6,220
+201,"Demon Sign \"Death Stare\"",2,2,"She stares down and tries to destroy her opponent from a distance. This move is not avoidable if the opponent is in a bad spot.",0,2,204,4,0,0,0,0,6,210
+202,"Midnight Sign \"Demon King Cradle\"",2,2,"Directly attack by activating       vampiric energies. She's not        invincible\, but she can move in the air afterwards\, so it's a card with great latitudes of freedom.",1,2,205,4,0,0,0,0,6,211
+203,"Forbidden Barrage \"Starbow Break\"<a> ",2,5,"Fires bullets forming a starbow. Luck is said to be found at the end of the rainbow.",0,5,0,0,0,0,0,0,6,240
+204,"\"Broken Doll\"",2,4,"A more powerful version of Death Stare. She is using her ability to destroy things\, but she's still trying to not make it too overpowered.",1,4,0,0,0,0,0,0,6,230
+205,"Taboo \"Laevatein\"",2,5,"Erupts a massive magical sword which are then swung across the area. It's a very large scale attack. Caution is required.",1,4,0,0,0,0,0,0,6,241
+206,"Taboo \"Cerberus Clipper\"",2,3,"A spinning attack done on the air. If you swing it hard enough\, a weapon can have way bigger effect area than it physically looks.",1,4,0,0,0,0,0,0,6,221
+207,"Taboo \"Four of a Kind\"",2,3,"Spawns four clones of herself to chase down the opponent. They are good at chasing\, so it's very hard to evade.",1,3,0,0,0,0,0,0,6,222
+208,"\"Millenium Vampire\"",2,4,"Creates a magical aura that drains  life from the opponent on hit. It's very strong\, but while its active\,  her defense is lowered\, so it's a   double-edged sword.",1,4,0,0,0,0,0,0,6,231
+209,"Taboo \"Ragnarok Slicer\"",2,4,"Executes a powerful rotating slash after a short charge time. It's a little slow\, but it's an extremely lethal move.",1,4,0,0,0,0,0,0,6,232
+

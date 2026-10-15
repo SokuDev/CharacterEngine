@@ -1,0 +1,164 @@
+## =======================================================================
+#Stage:3
+#Title:「人の眼をした魔物」
+#Place:夢の中の時計台２
+
+Character:meirin,160,0,0,8888FF
+Character:marisa,160,0,1,FF8888
+
+#背景　夢の中の時計台２
+Stage:36,0
+
+#自分初期配置
+Action:meirin,20　#1P定位置待機
+Action:meirin,402　#美鈴考え事ポーズ
+
+#敵初期配置
+Action:marisa,100　#画面外で待機
+
+#カメラ中央固定
+Action:meirin,2
+
+#画面表示前処理終了============================
+
+Label:Start
+
+#画面黒からフェードイン
+Action:meirin,161
+
+PlayBgm:data/bgm/ta05.ogg
+Sleep:60;
+
+
+#ステージタイトル表示
+Object:data/scenario/meirin/effect/StageTitle003.bmp,0,256,-32
+Sleep:30;
+Object:data/scenario/effect/Stage3.bmp,1,256,352
+Sleep:300;
+
+# 普、嬉、余、汗、驚、怒、決、惑、負
+
+#0１２３４５６７８９０１２３４５６７８９０１２３
+
+# 美鈴が待っている
+
+Action:marisa,101# 魔理沙が入ってくる
+Action:marisa,102
+
+Balloon:marisa,1,0,-200
+さーて、今日も図書館通いだー。
+文学少女だぜー\
+
+# 美鈴
+Balloon:meirin,1,0,-200
+……\
+
+Action:marisa,401# 魔理沙　驚き
+Balloon:marisa,1,0,-200
+お！？　止めないんだな。
+行っちゃうぜ？　行っちゃうよ？\
+
+Action:meirin,405# 美鈴　決めポーズ
+Balloon:meirin,1,0,-200
+お前も偽物だ！
+私には全て判っている！\
+
+Action:marisa,203# 魔理沙　通常
+Balloon:marisa,1,0,-200
+偽物だと？\
+
+# 美鈴　通常
+Balloon:meirin,1,0,-200
+いつもなら堂々と正面玄関から入るお前が、
+空からやってくるとは滑稽だ\
+
+# 魔理沙　通常
+Balloon:marisa,1,0,-200
+ふふ。
+流石だな。流石は紅魔館の防波堤、美鈴だ\
+
+# 美鈴　通常
+Balloon:meirin,1,0,-200
+そんな変装、誰でも判るわ\
+
+Action:marisa,403# 魔理沙　決めポーズ
+Balloon:marisa,1,0,-200
+だが、正体を見抜いたところで
+私には勝てまい！\
+#戦闘開始処理
+
+PlayBgm:data/bgm/st41.ogg
+Action:meirin,203#　ニュートラル状態へ
+Action:marisa,203#　ニュートラル状態へ
+Action:meirin,167#　フラッシュ
+Action:meirin,3
+
+End:
+
+# --------------------------------
+# 戦闘終了　負け
+Label:Lose
+
+End:
+
+# --------------------------------
+# 戦闘終了　コンテニュー処理
+Label:Continue
+
+End:
+
+# --------------------------------
+# 戦闘終了　勝ち
+Label:Win
+
+#やられキャラ完全ダウン検知
+Action:marisa,200
+#攻撃側ニュートラル移行検知
+Action:meirin,202
+
+Action:meirin,164
+Sleep:15
+
+Action:meirin,204
+Action:marisa,205
+
+#カメラ中央固定
+Action:meirin,2　
+
+Sleep:30
+Action:meirin,165
+
+Sleep:30
+
+# 魔理沙、倒れた状態
+# 美鈴　決めポーズ
+Balloon:meirin,1,0,-200
+ふん。強さは元の人間と大差ないな\
+
+# 魔理沙　倒れた状態
+Balloon:marisa,1,0,-200
+……\
+
+# 美鈴　驚き
+Balloon:meirin,1,0,-200
+こんなに凶悪な妖怪。太歳星君\
+
+# 美鈴　決めポーズ
+Balloon:meirin,1,0,-200
+私が居なかったら、
+今頃紅魔館を乗っ取られていたわ……\
+
+
+Balloon:null,1,0,-200
+
+Result:
+FadeBgm:2000,0
+Action:meirin,160　#画面黒にフェードアウト
+
+#次ステージ準備処理====================
+
+Sleep:120;
+
+End:
+
+## =======================================================================

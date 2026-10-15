@@ -1,0 +1,251 @@
+## =======================================================================
+#Ÿ—˜‘äŒ
+## =======================================================================
+#VS—éå
+#‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X\
+## ‘äŒA==================
+#Label:ƒLƒƒƒ‰–¼+”š‚ÌŒ`‚Å“o˜^@˜A”Ô‚Å‘±‚¢‚Ä‚¢‚éŒÀ‚è‚ÌÅŒã‚Ü‚Å‚ª“o˜^‚³‚êAƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ‚³‚ê‚Ü‚·
+#‰ï˜b‘®‚ÍƒVƒiƒŠƒI‚ÅŒ¾‚¤ƒLƒƒƒ‰–¼‚ÌêŠ‚Éwin(Ÿ—˜ƒLƒƒƒ‰)lose(”s–kƒLƒƒƒ‰)‚Ì”­Œ¾‚É‚È‚è‚Ü‚·
+# Hi-lock: (("\\#.*$"            (0 '((t (:foreground "dark slate gray"))) t))) 
+# Hi-lock: (("^[ \t]*Label.*$"              (0 '((t (:foreground "royal blue"))) t))) 
+# Hi-lock: (("^[ \t]*Face.*$"              (0 '((t (:foreground "cornflower blue"))) t))) 
+# Hi-lock: (("^[ \t]*End.*$"            (0 '((t (:foreground "royal blue"))) t))) 
+# reimuR0  rare
+# reimuU0  usual
+# reimu0   •p”É
+
+Label:reimuU0
+Face:lose,•‰
+Face:win,—]
+I don't remember asking Eirin about a fight with a shrine maiden.
+But I guess I don't mind wasting my time here.\
+End:
+
+
+Label:marisaU0
+Face:lose,•‰
+Face:win,Šğ
+My skills and abilities aren't something that you can copyA
+unless you want to condemn the rest of your existence.\
+End:
+
+
+Label:sakuyaU0
+Face:lose,•‰
+Face:win,˜f
+Are you really sure that you belong here?\
+End:
+
+
+Label:aliceU0
+Face:lose,•‰
+Face:win,˜f
+You'll have to pay twice the price of your pills now that you lost.
+Oh, and a doll as compensation tooA thank you!\
+End:
+
+
+Label:youmuU0
+Face:lose,•‰
+Face:win,˜f
+It is certainly the first time I encountered a being whose
+existence is only half tainted with impurity.\
+End:
+
+
+Label:remiliaU0
+Face:lose,•‰
+Face:win,Šğ
+A vampire's mental strength can be so strong sometimes.
+Is that why vampires were abandoned by gods?\
+End:
+
+
+Label:yuyukoU0
+Face:lose,•‰
+Face:win,“{
+You can stuff ten moons inside your head and it would
+still be empty.\
+End:
+
+
+Label:yukariU0
+Face:lose,•‰
+Face:win,Œˆ
+The Earthlings really respect you a lot.
+But once again you are easily defeated.\
+End:
+
+
+Label:udongeU0
+Face:lose,•‰
+Face:win,Šğ
+You're fired.\
+End:
+
+
+Label:tenshiU0
+Face:lose,•‰
+Face:win,˜f
+How did someone with earthly desires manage
+to ascend to the Heavens?\
+End:
+
+
+Label:tenshiU1
+Face:lose,•‰
+Face:win,˜f
+So you came from the Heavens.\
+
+Face:win,Šğ
+Perhaps you are capable of relaying Eirin's
+messages to the moon emissaries?\
+End:
+
+
+Label:tenshiU2
+Face:lose,•‰
+Face:win,Š¾
+I can understand the aspects of boredom
+when faced with an eternal tedious routine.\
+End:
+
+
+Label:UtsuhoU0
+Face:lose,•‰
+Face:win,‹Á
+How did a simpleton like you obtained a power
+so similar to Lord Tsukuyomi's sister?\
+End:
+
+
+Label:MomijiU0
+Face:lose,•‰
+Face:win,˜f
+WellA I don't get to see tengu often.
+It does relieve some boredom.\
+End:
+
+
+Label:clownpieceU0
+Face:lose,•‰
+Face:win,—]
+I can see why you represented such a problem for the moon's people.
+It is quite a shame for you that I've been tainted long since.\
+End:
+
+
+Label:flandreU0
+Face:lose,•‰
+Face:win,“{
+I can't dieA but that doesn't mean it doesn't hurt!\
+End:
+
+
+Label:orinU0
+Face:lose,•‰
+Face:win,—]
+SurprisinglyA your Hell looks somewhat beautiful.
+It is brimming with life and is rather refreshing.\
+End:
+
+
+Label:yuukaU0
+Face:lose,•‰
+Face:win,Œˆ
+For a bruteA you do like beautiful things.
+I don't hate it.\
+End:
+
+
+Label:kaguyaU0
+Face:lose,•‰
+Face:win,Šğ
+Pretty cute of you to play the princess game with me.
+Now go back to your original form so I can punish you.\
+End:
+
+
+Label:mokouU0
+Face:lose,•‰
+Face:win,Œˆ
+Our little contest sure makes up for an eternity
+of dullness.\
+End:
+
+
+Label:mokouU0
+Face:lose,•‰
+Face:win,—]
+Just like your fatherA you proved to be so simple.
+Now I see that it runs in the family.\
+End:
+
+
+Label:mimaU0
+Face:lose,•‰
+Face:win,‹Á
+You seemed awfully confidentA
+for someone with borrowed powers.\
+End:
+
+
+Label:shouU0
+Face:lose,•‰
+Face:win,˜f
+Would ending the cycle of reincarnation
+be considered a sin?\
+End:
+
+
+Label:murasaU0
+Face:lose,•‰
+Face:win,Š¾
+Being immortal doesn't make drowning any less horrible.\
+End:
+
+
+Label:murasaU1
+Face:lose,•‰
+Face:win,Š¾
+The Palanquin ship...
+Perhaps your boat qualify as a divine artifact.\
+End:
+
+
+Label:sekibankiU0
+Face:lose,•‰
+Face:win,Š¾
+Were you expecting a cute scream or something?\
+End:
+
+
+Label:satoriU0
+Face:lose,•‰
+Face:win,Šğ
+Don't you use your impure power to read my mindA
+I already had enough impurities for an eternity!\
+End:
+
+
+Label:shinkiU0
+Face:lose,•‰
+Face:win,Š¾
+With that much power I guess you would have no need
+for conquest to begin with.\
+End:
+
+
+Label:common0
+Face:win,—]
+How do you plan to accomplish my impossible requests?\
+End:
+
+
+Label:common1
+Face:win,•
+I would like to say I have no time for youA
+but I guess the truth is that I do have a lot of time.\
+End:
+
+k

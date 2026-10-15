@@ -1,0 +1,214 @@
+## =======================================================================
+#Ÿ—˜‘äŒ
+## =======================================================================
+#VS—éå
+#‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X\
+## ‘äŒA==================
+#Label:ƒLƒƒƒ‰–¼+”š‚ÌŒ`‚Å“o˜^@˜A”Ô‚Å‘±‚¢‚Ä‚¢‚éŒÀ‚è‚ÌÅŒã‚Ü‚Å‚ª“o˜^‚³‚êAƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ‚³‚ê‚Ü‚·
+#‰ï˜b‘®‚ÍƒVƒiƒŠƒI‚ÅŒ¾‚¤ƒLƒƒƒ‰–¼‚ÌêŠ‚Éwin(Ÿ—˜ƒLƒƒƒ‰)lose(”s–kƒLƒƒƒ‰)‚Ì”­Œ¾‚É‚È‚è‚Ü‚·
+# Hi-lock: (("\\#.*$"            (0 '((t (:foreground "dark slate gray"))) t))) 
+# Hi-lock: (("^[ \t]*Label.*$"              (0 '((t (:foreground "royal blue"))) t))) 
+# Hi-lock: (("^[ \t]*Face.*$"              (0 '((t (:foreground "cornflower blue"))) t))) 
+# Hi-lock: (("^[ \t]*End.*$"            (0 '((t (:foreground "royal blue"))) t))) 
+# reimuR0  rare
+# reimuU0  usual
+# reimu0   •p”É
+
+Label:reimuU0
+Face:lose,•‰
+Face:win,Œˆ
+I do wonder if your own deity is bringing
+you misfortune.\
+End:
+
+
+Label:marisaU0
+Face:lose,•‰
+Face:win,Šğ
+It amazes me that you somewhat manages to
+always stay alive.\
+End:
+
+
+Label:aliceU0
+Face:lose,•‰
+Face:win,˜f
+AhA that's a face I've not seen in a while.\
+End:
+
+
+Label:youmuU0
+Face:lose,•‰
+Face:win,—]
+Being half-dead is like being a flower
+without petals. Not something I would admire.\
+End:
+
+
+Label:remiliaU0
+Face:lose,•‰
+Face:win,—]
+AhA a strong opponent. It's quite a shame
+you can't come to the garden with me.\
+End:
+
+
+Label:yuyukoU0
+Face:lose,•‰
+Face:win,—]
+A flower that whitered long agoA yet somehow
+still tries so hard to cling to life.\
+
+Face:win,Šğ
+It is a rather amusing story.\
+End:
+
+
+Label:yukariU0
+Face:lose,•‰
+Face:win,Œˆ
+It is not dead that which can eternally lie,
+and with strange aeons even death may die.\
+End:
+
+
+Label:udongeU0
+Face:lose,•‰
+Face:win,—]
+AhA it seems we are already in rabbit season.\
+End:
+
+
+Label:ayaU0
+Face:lose,•‰
+Face:win,•
+You seem to be looking for one responsible for the
+new incident. I wonder who could that be.\
+End:
+
+Label:komachiU0
+Face:lose,•‰
+Face:win,•
+I do hope you learn to take your job seriouslyA
+Wouldn't want for me to interfere againA don't you?\
+End:
+
+
+Label:chirnoU0
+Face:lose,•‰
+Face:win,•
+May I pick some of your wings to water the flowers?
+Don't worryA I'm sure they will grow back.\
+End:
+
+
+Label:utsuhoU0
+Face:lose,•‰
+Face:win,Š¾
+I believe my garden will do quite alright
+with just the natural sunlight.\
+End:
+
+
+Label:MomijiU0
+Face:lose,•‰
+Face:win,—]
+I see. So you're quick on your feet
+and can sense danger from far away.\
+End:
+
+
+Label:clownpieceU0
+Face:lose,•‰
+Face:win,Šğ
+Take care of the flowers in Hell for me.\
+End:
+
+
+Label:flandreU0
+Face:lose,•‰
+Face:win,Šğ
+Such brute strength! If only you could go outside.\
+End:
+
+
+Label:orinU0
+Face:lose,•‰
+Face:win,Œˆ
+Be careful not to run over flowers.
+Not even nine lives will save you.\
+End:
+
+
+Label:yuukaU0
+Face:lose,•‰
+Face:win,Œˆ
+Mimicry is an interesting way to liveA
+however it is rather unelegant.\
+End:
+
+
+Label:kaguyaU0
+Face:lose,•‰
+Face:win,—]
+The beauty of life lies in being transient.
+How can one's bloom be truly appreciated if not?\
+End:
+
+
+Label:mokouU0
+Face:lose,•‰
+Face:win,•
+Elixir that locks you into a state of eternal blooming.
+But at that point is it really called blooming?\
+End:
+
+
+Label:mimaU0
+Face:lose,•‰
+Face:win,Œˆ
+I've got a funny feeling about youA
+yet your power is nothing to write home about.\
+End:
+
+
+Label:murasaU0
+Face:lose,•‰
+Face:win,—]
+Waterborne flowers also existsA you see.\
+End:
+
+
+Label:sekibankiU0
+Face:lose,•‰
+Face:win,Œˆ
+The little youkai was lost in the garden.
+She had nowhere to run as she was found by the warden.\
+End:
+
+
+Label:satoriU0
+Face:lose,•‰
+Face:win,˜f
+How do you grow roses underground?\
+End:
+
+
+Label:shinkiU0
+Face:lose,•‰
+Face:win,˜f
+Anything fun happening in Makai lately?\
+End:
+
+
+Label:common0
+Face:win,•
+WellA that was not worth the tease.\
+End:
+
+Label:common1
+Face:win,Œˆ
+As long as the sun shinesA I will have the time to play.\
+End:
+
+<

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animpattern version="5">
+	<animation id="0" index="0" loop="1">
+		<frame image="utsuho000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho000.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho001.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho002.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho003.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho004.bmp" index="8" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho005.bmp" index="9" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho006.bmp" index="10" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho007.bmp" index="11" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho008.bmp" index="12" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho009.bmp" index="13" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuho010.bmp" index="14" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+	</animation>
+	<animation id="1" index="0" loop="0">
+		<frame image="utsuhoB000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuhoB001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuhoB002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuhoB003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+	</animation>
+	<animation id="2" index="0" loop="1">
+		<frame image="utsuhoB004.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuhoB005.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuhoB006.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="utsuhoB007.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="128" xoffset="56" yoffset="128" duration="6" rendergroup="1"/>
+	</animation>
+</animpattern>

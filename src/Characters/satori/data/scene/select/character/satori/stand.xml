@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animpattern version="5">
+	<animation id="0" index="0" loop="1">
+		<frame image="satori000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="6" rendergroup="1"/>
+		<frame image="satori001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="6" rendergroup="1"/>
+		<frame image="satori002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="6" rendergroup="1"/>
+		<frame image="satori003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="6" rendergroup="1"/>
+		<frame image="satori004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="6" rendergroup="1"/>
+		<frame image="satori005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="6" rendergroup="1"/>
+	</animation>
+	<animation id="1" index="0" loop="0">
+		<frame image="satoriB000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="4" rendergroup="1"/>
+		<frame image="satoriB001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="4" rendergroup="1"/>
+		<frame image="satoriB002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="4" rendergroup="1"/>
+		<frame image="satoriB003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="4" rendergroup="1"/>
+		<frame image="satoriB004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="4" rendergroup="1"/>
+		<frame image="satoriB005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="4" rendergroup="1"/>
+		<frame image="satoriB006.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="4" rendergroup="1"/>
+		<frame image="satoriB007.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="4" rendergroup="1"/>
+		<frame image="satoriB008.bmp" index="8" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="4" rendergroup="1"/>
+	</animation>
+	<animation id="2" index="0" loop="1">
+		<frame image="satoriB009.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="4" rendergroup="1"/>
+		<frame image="satoriB010.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="4" rendergroup="1"/>
+		<frame image="satoriB011.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="185" texheight="205" xoffset="83" yoffset="157" duration="4" rendergroup="1"/>
+	</animation>
+</animpattern>

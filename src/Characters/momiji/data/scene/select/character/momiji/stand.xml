@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animpattern version="5">
+	<animation id="0" index="0" loop="1">
+		<frame image="reimu000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="62" texheight="95" xoffset="32" yoffset="94" duration="6" rendergroup="1"/>
+		<frame image="reimu001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="58" texheight="95" xoffset="28" yoffset="94" duration="6" rendergroup="1"/>
+		<frame image="reimu002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="61" texheight="97" xoffset="29" yoffset="95" duration="6" rendergroup="1"/>
+		<frame image="reimu003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="61" texheight="98" xoffset="28" yoffset="95" duration="6" rendergroup="1"/>
+		<frame image="reimu004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="64" texheight="97" xoffset="29" yoffset="95" duration="6" rendergroup="1"/>
+		<frame image="reimu005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="66" texheight="95" xoffset="33" yoffset="94" duration="6" rendergroup="1"/>
+		<frame image="reimu006.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="67" texheight="96" xoffset="36" yoffset="95" duration="6" rendergroup="1"/>
+		<frame image="reimu007.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="64" texheight="95" xoffset="33" yoffset="94" duration="6" rendergroup="1"/>
+	</animation>
+	<animation id="1" index="0" loop="0">
+		<frame image="reimuB000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="74" texheight="110" xoffset="31" yoffset="107" duration="4" rendergroup="1"/>
+		<frame image="reimuB001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="60" texheight="106" xoffset="31" yoffset="103" duration="4" rendergroup="1"/>
+		<frame image="reimuB002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="94" texheight="111" xoffset="65" yoffset="108" duration="4" rendergroup="1"/>
+		<frame image="reimuB003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="61" texheight="105" xoffset="31" yoffset="100" duration="4" rendergroup="1"/>
+	</animation>
+	<animation id="2" index="0" loop="1">
+		<frame image="reimuB004.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="60" texheight="104" xoffset="31" yoffset="99" duration="4" rendergroup="1"/>
+		<frame image="reimuB005.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="60" texheight="105" xoffset="31" yoffset="100" duration="4" rendergroup="1"/>
+	</animation>
+</animpattern>
