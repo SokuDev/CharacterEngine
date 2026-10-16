@@ -953,7 +953,7 @@ void Flandre::_processInputsAirborne()
 		!this->handInfo.hand.empty() &&
 		((this->inputData.keyInput.spellcard != 0 && this->inputData.keyInput.spellcard < 3) || this->inputData.bufferedKeyInput.spellcard != 0) &&
 		this->confusionDebuffTimer == 0 &&
-		this->unknown836 == 0 &&
+		this->lockCardUse == 0 &&
 		this->canActivateCard(0) &&
 		this->_canUseCard(this->handInfo.hand[0].id)
 	) {
@@ -1227,7 +1227,7 @@ void Flandre::_processInputsGrounded()
 		!this->handInfo.hand.empty() &&
 		((this->inputData.keyInput.spellcard != 0 && this->inputData.keyInput.spellcard < 3) || this->inputData.bufferedKeyInput.spellcard != 0) &&
 		this->confusionDebuffTimer == 0 &&
-		this->unknown836 == 0 &&
+		this->lockCardUse == 0 &&
 		this->canActivateCard(0) &&
 		this->_canUseCard(this->handInfo.hand[0].id)
 	) {
@@ -1273,7 +1273,7 @@ void Flandre::handleInputs()
 		// For story mode
 		if (699 < uVar10 && uVar10 < 800) {
 			this->setAction(uVar10);
-			return this->FUN_0046d950();
+			return this->refreshInputCombination();
 		}
 
 		if (this->unknown4C4 == 0 && this->isOnGround()) {
