@@ -48,3 +48,5 @@ src/Characters/*/pack
 *.cv2
 *.cv3
 *.cv4
+__pycache__
+*.asm

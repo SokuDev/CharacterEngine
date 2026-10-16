@@ -3,7 +3,7 @@
 #include "code_patches.hpp"
 
 StackedMemory<41480> applyMemory;
-StackedMemory<17826> internalMemory;
+StackedMemory<16322> internalMemory;
 Allocator applyAllocator{applyMemory};
 PatchListAllocator patchListAllocator{internalMemory};
 TrampolineAllocator trampolineAllocator{internalMemory};
@@ -58,9 +58,9 @@ static JumpTarget clownpiece4_jumpData[] = {
 static PatchByteCode clownpiece4_patchByteCode = { clownpiece4_byteCode, 15, clownpiece4_jumpData, 1 };
 // clownpiece5 declared in clownpiece.asm line 53
 static unsigned char clownpiece5_byteCode[] = {
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x0F, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x0F ; line 54
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x0F, // CMP DWORD PTR [ESI+0x144],0x0F ; line 54
 };
-static PatchByteCode clownpiece5_patchByteCode = { clownpiece5_byteCode, 10, nullptr, 0 };
+static PatchByteCode clownpiece5_patchByteCode = { clownpiece5_byteCode, 7, nullptr, 0 };
 // clownpiece6_FLD15 declared in clownpiece.asm line 59
 static unsigned char clownpiece6_FLD15_byteCode[] = {
 	0xD9, 0x05, 0xB0, 0xB3, 0x85, 0x00, // FLD DWORD PTR [0x85B3B0] ; line 60
@@ -83,32 +83,32 @@ static unsigned char clownpiece8_byteCode[] = {
 static PatchByteCode clownpiece8_patchByteCode = { clownpiece8_byteCode, 6, nullptr, 0 };
 // clownpiece9 declared in clownpiece.asm line 82
 static unsigned char clownpiece9_byteCode[] = {
-	0x81, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x0 ; line 83
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                               // JMP 0x621176 ; line 84
+	0x83, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x0 ; line 83
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,             // JMP 0x621176 ; line 84
 };
 static JumpTarget clownpiece9_jumpData[] = {
-	{ 0x00B, 0x621176 },
+	{ 0x008, 0x621176 },
 };
-static PatchByteCode clownpiece9_patchByteCode = { clownpiece9_byteCode, 15, clownpiece9_jumpData, 1 };
+static PatchByteCode clownpiece9_patchByteCode = { clownpiece9_byteCode, 12, clownpiece9_jumpData, 1 };
 // clownpiece10 declared in clownpiece.asm line 89
 static unsigned char clownpiece10_byteCode[] = {
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x0E, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x0E ; line 90
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x0E, // CMP DWORD PTR [ESI+0x144],0x0E ; line 90
 };
-static PatchByteCode clownpiece10_patchByteCode = { clownpiece10_byteCode, 10, nullptr, 0 };
+static PatchByteCode clownpiece10_patchByteCode = { clownpiece10_byteCode, 7, nullptr, 0 };
 // clownpiece10A declared in clownpiece.asm line 98
 static unsigned char clownpiece10A_byteCode[] = {
-	0x81, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x0 ; line 99
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                               // JMP 0x6211F2 ; line 100
+	0x83, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x0 ; line 99
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,             // JMP 0x6211F2 ; line 100
 };
 static JumpTarget clownpiece10A_jumpData[] = {
-	{ 0x00B, 0x6211F2 },
+	{ 0x008, 0x6211F2 },
 };
-static PatchByteCode clownpiece10A_patchByteCode = { clownpiece10A_byteCode, 15, clownpiece10A_jumpData, 1 };
+static PatchByteCode clownpiece10A_patchByteCode = { clownpiece10A_byteCode, 12, clownpiece10A_jumpData, 1 };
 // clownpiece11 declared in clownpiece.asm line 105
 static unsigned char clownpiece11_byteCode[] = {
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x0C, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x0C ; line 106
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x0C, // CMP DWORD PTR [ESI+0x144],0x0C ; line 106
 };
-static PatchByteCode clownpiece11_patchByteCode = { clownpiece11_byteCode, 10, nullptr, 0 };
+static PatchByteCode clownpiece11_patchByteCode = { clownpiece11_byteCode, 7, nullptr, 0 };
 // clownpiece12 declared in clownpiece.asm line 111
 static unsigned char clownpiece12_byteCode[] = {
 	0xDC, 0x25, 0xB8, 0x81, 0x85, 0x00, // FSUB QWORD PTR [0x8581B8] ; line 112
@@ -149,13 +149,13 @@ static unsigned char clownpiece18_byteCode[] = {
 static PatchByteCode clownpiece18_patchByteCode = { clownpiece18_byteCode, 9, nullptr, 0 };
 // clownpiece18A declared in clownpiece.asm line 155
 static unsigned char clownpiece18A_byteCode[] = {
-	0x81, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x0 ; line 156
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                               // JMP 0x6281E7 ; line 157
+	0x83, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x0 ; line 156
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,             // JMP 0x6281E7 ; line 157
 };
 static JumpTarget clownpiece18A_jumpData[] = {
-	{ 0x00B, 0x6281E7 },
+	{ 0x008, 0x6281E7 },
 };
-static PatchByteCode clownpiece18A_patchByteCode = { clownpiece18A_byteCode, 15, clownpiece18A_jumpData, 1 };
+static PatchByteCode clownpiece18A_patchByteCode = { clownpiece18A_byteCode, 12, clownpiece18A_jumpData, 1 };
 // clownpiece19_NOP declared in clownpiece.asm line 162
 static unsigned char clownpiece19_NOP_byteCode[] = {
 	0x90, // NOP ; line 163
@@ -168,9 +168,9 @@ static unsigned char clownpiece19_MULZERO_byteCode[] = {
 static PatchByteCode clownpiece19_MULZERO_patchByteCode = { clownpiece19_MULZERO_byteCode, 6, nullptr, 0 };
 // clownpiece20 declared in clownpiece.asm line 171
 static unsigned char clownpiece20_byteCode[] = {
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x78, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x78 ; line 172
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x78, // CMP DWORD PTR [ESI+0x144],0x78 ; line 172
 };
-static PatchByteCode clownpiece20_patchByteCode = { clownpiece20_byteCode, 10, nullptr, 0 };
+static PatchByteCode clownpiece20_patchByteCode = { clownpiece20_byteCode, 7, nullptr, 0 };
 // clownpiece21_Cspd declared in clownpiece.asm line 182
 static unsigned char clownpiece21_Cspd_byteCode[] = {
 	0xD9, 0x05, 0x38, 0x15, 0x87, 0x00, // FLD DWORD PTR [0x871538] ; line 183
@@ -205,58 +205,58 @@ static unsigned char clownpiece5B_NEW1B_byteCode[] = {
 static PatchByteCode clownpiece5B_NEW1B_patchByteCode = { clownpiece5B_NEW1B_byteCode, 13, nullptr, 0 };
 // clownpiece5B_RNG0 declared in clownpiece.asm line 234
 static unsigned char clownpiece5B_RNG0_byteCode[] = {
-	0x6A, 0x11,                                           // PUSH 0x11 ; line 235
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x4099F0 ; line 236
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 238
-	0x0F, 0x84, 0x23, 0x00, 0x00, 0x00,                   // JE SHORT LABEL1 ; line 239
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x01, 0x00, // CMP WORD PTR [ESI+0x7D2],0x01 ; line 240
-	0x0F, 0x84, 0x1E, 0x00, 0x00, 0x00,                   // JE SHORT LABEL2 ; line 241
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x02, 0x00, // CMP WORD PTR [ESI+0x7D2],0x02 ; line 242
-	0x0F, 0x84, 0x19, 0x00, 0x00, 0x00,                   // JE SHORT LABEL3 ; line 243
-	0xE9, 0x1E, 0x00, 0x00, 0x00,                         // JMP LABEL4 ; line 244
-	0xB8, 0x01, 0x00, 0x00, 0x00,                         // MOV EAX,0x00000001 ; line 246
-	0xE9, 0x19, 0x00, 0x00, 0x00,                         // JMP SHORT LABEL5 ; line 247
-	0xB8, 0x02, 0x00, 0x00, 0x00,                         // MOV EAX,0x00000002 ; line 249
-	0xE9, 0x0F, 0x00, 0x00, 0x00,                         // JMP SHORT LABEL5 ; line 250
-	0xB8, 0x03, 0x00, 0x00, 0x00,                         // MOV EAX,0x00000003 ; line 252
-	0xE9, 0x05, 0x00, 0x00, 0x00,                         // JMP SHORT LABEL5 ; line 253
-	0xB8, 0x04, 0x00, 0x00, 0x00,                         // MOV EAX,0x00000004 ; line 255
-	0xBA, 0x04, 0x00, 0x00, 0x00,                         // MOV EDX,0x00000004 ; line 257
-	0xF7, 0xEA,                                           // IMUL EDX ; line 258
-	0x89, 0xC2,                                           // MOV EDX,EAX ; line 259
+	0x6A, 0x11,                                     // PUSH 0x11 ; line 235
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x4099F0 ; line 236
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 238
+	0x74, 0x19,                                     // JE SHORT LABEL1 ; line 239
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x01, // CMP WORD PTR [ESI+0x7D2],0x01 ; line 240
+	0x74, 0x16,                                     // JE SHORT LABEL2 ; line 241
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x02, // CMP WORD PTR [ESI+0x7D2],0x02 ; line 242
+	0x74, 0x13,                                     // JE SHORT LABEL3 ; line 243
+	0xE9, 0x15, 0x00, 0x00, 0x00,                   // JMP LABEL4 ; line 244
+	0xB8, 0x01, 0x00, 0x00, 0x00,                   // MOV EAX,0x00000001 ; line 246
+	0xEB, 0x13,                                     // JMP SHORT LABEL5 ; line 247
+	0xB8, 0x02, 0x00, 0x00, 0x00,                   // MOV EAX,0x00000002 ; line 249
+	0xEB, 0x0C,                                     // JMP SHORT LABEL5 ; line 250
+	0xB8, 0x03, 0x00, 0x00, 0x00,                   // MOV EAX,0x00000003 ; line 252
+	0xEB, 0x05,                                     // JMP SHORT LABEL5 ; line 253
+	0xB8, 0x04, 0x00, 0x00, 0x00,                   // MOV EAX,0x00000004 ; line 255
+	0xBA, 0x04, 0x00, 0x00, 0x00,                   // MOV EDX,0x00000004 ; line 257
+	0xF7, 0xEA,                                     // IMUL EDX ; line 258
+	0x89, 0xC2,                                     // MOV EDX,EAX ; line 259
 };
 static JumpTarget clownpiece5B_RNG0_jumpData[] = {
 	{ 0x003, 0x4099F0 },
 };
-static PatchByteCode clownpiece5B_RNG0_patchByteCode = { clownpiece5B_RNG0_byteCode, 101, clownpiece5B_RNG0_jumpData, 1 };
+static PatchByteCode clownpiece5B_RNG0_patchByteCode = { clownpiece5B_RNG0_byteCode, 77, clownpiece5B_RNG0_jumpData, 1 };
 // clownpiece5B_2B declared in clownpiece.asm line 262
 static unsigned char clownpiece5B_2B_byteCode[] = {
-	0x6A, 0x11,                                           // PUSH 0x11 ; line 263
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x4099F0 ; line 264
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 266
-	0x0F, 0x84, 0x23, 0x00, 0x00, 0x00,                   // JE SHORT LABEL1 ; line 267
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x01, 0x00, // CMP WORD PTR [ESI+0x7D2],0x01 ; line 268
-	0x0F, 0x84, 0x1E, 0x00, 0x00, 0x00,                   // JE SHORT LABEL2 ; line 269
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x02, 0x00, // CMP WORD PTR [ESI+0x7D2],0x02 ; line 270
-	0x0F, 0x84, 0x19, 0x00, 0x00, 0x00,                   // JE SHORT LABEL3 ; line 271
-	0xE9, 0x1E, 0x00, 0x00, 0x00,                         // JMP LABEL4 ; line 272
-	0xB8, 0x01, 0x00, 0x00, 0x00,                         // MOV EAX,0x00000001 ; line 274
-	0xE9, 0x19, 0x00, 0x00, 0x00,                         // JMP SHORT LABEL5 ; line 275
-	0xB8, 0x02, 0x00, 0x00, 0x00,                         // MOV EAX,0x00000002 ; line 277
-	0xE9, 0x0F, 0x00, 0x00, 0x00,                         // JMP SHORT LABEL5 ; line 278
-	0xB8, 0x03, 0x00, 0x00, 0x00,                         // MOV EAX,0x00000003 ; line 280
-	0xE9, 0x05, 0x00, 0x00, 0x00,                         // JMP SHORT LABEL5 ; line 281
-	0xB8, 0x04, 0x00, 0x00, 0x00,                         // MOV EAX,0x00000004 ; line 283
-	0xBA, 0x04, 0x00, 0x00, 0x00,                         // MOV EDX,0x00000004 ; line 285
-	0xF7, 0xEA,                                           // IMUL EDX ; line 286
-	0x89, 0xC2,                                           // MOV EDX,EAX ; line 287
-	0x81, 0xC4, 0x04, 0x00, 0x00, 0x00,                   // ADD ESP,0x04 ; line 290
-	0x85, 0xC0,                                           // TEST EAX,EAX ; line 291
+	0x6A, 0x11,                                     // PUSH 0x11 ; line 263
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x4099F0 ; line 264
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 266
+	0x74, 0x19,                                     // JE SHORT LABEL1 ; line 267
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x01, // CMP WORD PTR [ESI+0x7D2],0x01 ; line 268
+	0x74, 0x16,                                     // JE SHORT LABEL2 ; line 269
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x02, // CMP WORD PTR [ESI+0x7D2],0x02 ; line 270
+	0x74, 0x13,                                     // JE SHORT LABEL3 ; line 271
+	0xE9, 0x15, 0x00, 0x00, 0x00,                   // JMP LABEL4 ; line 272
+	0xB8, 0x01, 0x00, 0x00, 0x00,                   // MOV EAX,0x00000001 ; line 274
+	0xEB, 0x13,                                     // JMP SHORT LABEL5 ; line 275
+	0xB8, 0x02, 0x00, 0x00, 0x00,                   // MOV EAX,0x00000002 ; line 277
+	0xEB, 0x0C,                                     // JMP SHORT LABEL5 ; line 278
+	0xB8, 0x03, 0x00, 0x00, 0x00,                   // MOV EAX,0x00000003 ; line 280
+	0xEB, 0x05,                                     // JMP SHORT LABEL5 ; line 281
+	0xB8, 0x04, 0x00, 0x00, 0x00,                   // MOV EAX,0x00000004 ; line 283
+	0xBA, 0x04, 0x00, 0x00, 0x00,                   // MOV EDX,0x00000004 ; line 285
+	0xF7, 0xEA,                                     // IMUL EDX ; line 286
+	0x89, 0xC2,                                     // MOV EDX,EAX ; line 287
+	0x83, 0xC4, 0x04,                               // ADD ESP,0x04 ; line 290
+	0x85, 0xC0,                                     // TEST EAX,EAX ; line 291
 };
 static JumpTarget clownpiece5B_2B_jumpData[] = {
 	{ 0x003, 0x4099F0 },
 };
-static PatchByteCode clownpiece5B_2B_patchByteCode = { clownpiece5B_2B_byteCode, 109, clownpiece5B_2B_jumpData, 1 };
+static PatchByteCode clownpiece5B_2B_patchByteCode = { clownpiece5B_2B_byteCode, 82, clownpiece5B_2B_jumpData, 1 };
 // clownpiece5B_RNG1 declared in clownpiece.asm line 294
 static unsigned char clownpiece5B_RNG1_byteCode[] = {
 	0xD8, 0x25, 0x2C, 0x78, 0x86, 0x00, // FSUB DWORD PTR [0x86782C] ; line 295
@@ -280,244 +280,244 @@ static JumpTarget clownpieceC5B_3B_jumpData[] = {
 static PatchByteCode clownpieceC5B_3B_patchByteCode = { clownpieceC5B_3B_byteCode, 5, clownpieceC5B_3B_jumpData, 1 };
 // clownpiece5B_NEW2_A declared in clownpiece.asm line 307
 static unsigned char clownpiece5B_NEW2_A_byteCode[] = {
-	0x68, 0x20, 0x03, 0x00, 0x00,                         // PUSH 0x00000320 ; line 308
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x46EB30 ; line 309
-	0x66, 0x9C,                                           // PUSHF ; line 310
-	0x60,                                                 // PUSHAD ; line 311
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 312
-	0x0F, 0x8F, 0x08, 0x00, 0x00, 0x00,                   // JG SHORT LABEL1 ; line 313
-	0x61,                                                 // POPAD ; line 314
-	0x66, 0x9D,                                           // POPF ; line 315
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x622383 ; line 316
-	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV AX,[ESI+0x7D2] ; line 318
-	0x66, 0x81, 0xE8, 0x01, 0x00,                         // SUB AX,0x01 ; line 319
-	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV [ESI+0x7D2],AX ; line 320
-	0x61,                                                 // POPAD ; line 321
-	0x66, 0x9D,                                           // POPF ; line 322
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x6221E2 ; line 323
+	0x68, 0x20, 0x03, 0x00, 0x00,                   // PUSH 0x00000320 ; line 308
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x46EB30 ; line 309
+	0x66, 0x9C,                                     // PUSHF ; line 310
+	0x60,                                           // PUSHAD ; line 311
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 312
+	0x7F, 0x08,                                     // JG SHORT LABEL1 ; line 313
+	0x61,                                           // POPAD ; line 314
+	0x66, 0x9D,                                     // POPF ; line 315
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x622383 ; line 316
+	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV AX,[ESI+0x7D2] ; line 318
+	0x66, 0x83, 0xE8, 0x01,                         // SUB AX,0x01 ; line 319
+	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV [ESI+0x7D2],AX ; line 320
+	0x61,                                           // POPAD ; line 321
+	0x66, 0x9D,                                     // POPF ; line 322
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x6221E2 ; line 323
 };
 static JumpTarget clownpiece5B_NEW2_A_jumpData[] = {
 	{ 0x006, 0x46EB30 },
-	{ 0x020, 0x622383 },
-	{ 0x03B, 0x6221E2 },
+	{ 0x01B, 0x622383 },
+	{ 0x035, 0x6221E2 },
 };
-static PatchByteCode clownpiece5B_NEW2_A_patchByteCode = { clownpiece5B_NEW2_A_byteCode, 63, clownpiece5B_NEW2_A_jumpData, 3 };
+static PatchByteCode clownpiece5B_NEW2_A_patchByteCode = { clownpiece5B_NEW2_A_byteCode, 57, clownpiece5B_NEW2_A_jumpData, 3 };
 // clownpiece5B_NEW2_B declared in clownpiece.asm line 326
 static unsigned char clownpiece5B_NEW2_B_byteCode[] = {
-	0x68, 0x20, 0x03, 0x00, 0x00,                         // PUSH 0x00000320 ; line 327
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x46EB30 ; line 328
-	0x66, 0x9C,                                           // PUSHF ; line 329
-	0x60,                                                 // PUSHAD ; line 330
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 331
-	0x0F, 0x8F, 0x08, 0x00, 0x00, 0x00,                   // JG SHORT LABEL1 ; line 332
-	0x61,                                                 // POPAD ; line 333
-	0x66, 0x9D,                                           // POPF ; line 334
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x62272A ; line 335
-	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV AX,[ESI+0x7D2] ; line 337
-	0x66, 0x81, 0xE8, 0x01, 0x00,                         // SUB AX,0x01 ; line 338
-	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV [ESI+0x7D2],AX ; line 339
-	0x61,                                                 // POPAD ; line 340
-	0x66, 0x9D,                                           // POPF ; line 341
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x6225F7 ; line 342
+	0x68, 0x20, 0x03, 0x00, 0x00,                   // PUSH 0x00000320 ; line 327
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x46EB30 ; line 328
+	0x66, 0x9C,                                     // PUSHF ; line 329
+	0x60,                                           // PUSHAD ; line 330
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 331
+	0x7F, 0x08,                                     // JG SHORT LABEL1 ; line 332
+	0x61,                                           // POPAD ; line 333
+	0x66, 0x9D,                                     // POPF ; line 334
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x62272A ; line 335
+	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV AX,[ESI+0x7D2] ; line 337
+	0x66, 0x83, 0xE8, 0x01,                         // SUB AX,0x01 ; line 338
+	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV [ESI+0x7D2],AX ; line 339
+	0x61,                                           // POPAD ; line 340
+	0x66, 0x9D,                                     // POPF ; line 341
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x6225F7 ; line 342
 };
 static JumpTarget clownpiece5B_NEW2_B_jumpData[] = {
 	{ 0x006, 0x46EB30 },
-	{ 0x020, 0x62272A },
-	{ 0x03B, 0x6225F7 },
+	{ 0x01B, 0x62272A },
+	{ 0x035, 0x6225F7 },
 };
-static PatchByteCode clownpiece5B_NEW2_B_patchByteCode = { clownpiece5B_NEW2_B_byteCode, 63, clownpiece5B_NEW2_B_jumpData, 3 };
+static PatchByteCode clownpiece5B_NEW2_B_patchByteCode = { clownpiece5B_NEW2_B_byteCode, 57, clownpiece5B_NEW2_B_jumpData, 3 };
 // clownpiece5B_NEW2_C declared in clownpiece.asm line 345
 static unsigned char clownpiece5B_NEW2_C_byteCode[] = {
-	0x68, 0x20, 0x03, 0x00, 0x00,                         // PUSH 0x00000320 ; line 346
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x46EB30 ; line 347
-	0x66, 0x9C,                                           // PUSHF ; line 348
-	0x60,                                                 // PUSHAD ; line 349
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 350
-	0x0F, 0x8F, 0x08, 0x00, 0x00, 0x00,                   // JG SHORT LABEL1 ; line 351
-	0x61,                                                 // POPAD ; line 352
-	0x66, 0x9D,                                           // POPF ; line 353
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x622BE9 ; line 354
-	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV AX,[ESI+0x7D2] ; line 356
-	0x66, 0x81, 0xE8, 0x01, 0x00,                         // SUB AX,0x01 ; line 357
-	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV [ESI+0x7D2],AX ; line 358
-	0x61,                                                 // POPAD ; line 359
-	0x66, 0x9D,                                           // POPF ; line 360
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x622AAC ; line 361
+	0x68, 0x20, 0x03, 0x00, 0x00,                   // PUSH 0x00000320 ; line 346
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x46EB30 ; line 347
+	0x66, 0x9C,                                     // PUSHF ; line 348
+	0x60,                                           // PUSHAD ; line 349
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 350
+	0x7F, 0x08,                                     // JG SHORT LABEL1 ; line 351
+	0x61,                                           // POPAD ; line 352
+	0x66, 0x9D,                                     // POPF ; line 353
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x622BE9 ; line 354
+	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV AX,[ESI+0x7D2] ; line 356
+	0x66, 0x83, 0xE8, 0x01,                         // SUB AX,0x01 ; line 357
+	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV [ESI+0x7D2],AX ; line 358
+	0x61,                                           // POPAD ; line 359
+	0x66, 0x9D,                                     // POPF ; line 360
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x622AAC ; line 361
 };
 static JumpTarget clownpiece5B_NEW2_C_jumpData[] = {
 	{ 0x006, 0x46EB30 },
-	{ 0x020, 0x622BE9 },
-	{ 0x03B, 0x622AAC },
+	{ 0x01B, 0x622BE9 },
+	{ 0x035, 0x622AAC },
 };
-static PatchByteCode clownpiece5B_NEW2_C_patchByteCode = { clownpiece5B_NEW2_C_byteCode, 63, clownpiece5B_NEW2_C_jumpData, 3 };
+static PatchByteCode clownpiece5B_NEW2_C_patchByteCode = { clownpiece5B_NEW2_C_byteCode, 57, clownpiece5B_NEW2_C_jumpData, 3 };
 // clownpiece5B_NEW2_D declared in clownpiece.asm line 364
 static unsigned char clownpiece5B_NEW2_D_byteCode[] = {
-	0x68, 0x20, 0x03, 0x00, 0x00,                         // PUSH 0x00000320 ; line 365
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x46EB30 ; line 366
-	0x66, 0x9C,                                           // PUSHF ; line 367
-	0x60,                                                 // PUSHAD ; line 368
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 369
-	0x0F, 0x8F, 0x08, 0x00, 0x00, 0x00,                   // JG SHORT LABEL1 ; line 370
-	0x61,                                                 // POPAD ; line 371
-	0x66, 0x9D,                                           // POPF ; line 372
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x622FF0 ; line 373
-	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV AX,[ESI+0x7D2] ; line 375
-	0x66, 0x81, 0xE8, 0x01, 0x00,                         // SUB AX,0x01 ; line 376
-	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV [ESI+0x7D2],AX ; line 377
-	0x61,                                                 // POPAD ; line 378
-	0x66, 0x9D,                                           // POPF ; line 379
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x622EBF ; line 380
+	0x68, 0x20, 0x03, 0x00, 0x00,                   // PUSH 0x00000320 ; line 365
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x46EB30 ; line 366
+	0x66, 0x9C,                                     // PUSHF ; line 367
+	0x60,                                           // PUSHAD ; line 368
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 369
+	0x7F, 0x08,                                     // JG SHORT LABEL1 ; line 370
+	0x61,                                           // POPAD ; line 371
+	0x66, 0x9D,                                     // POPF ; line 372
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x622FF0 ; line 373
+	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV AX,[ESI+0x7D2] ; line 375
+	0x66, 0x83, 0xE8, 0x01,                         // SUB AX,0x01 ; line 376
+	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV [ESI+0x7D2],AX ; line 377
+	0x61,                                           // POPAD ; line 378
+	0x66, 0x9D,                                     // POPF ; line 379
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x622EBF ; line 380
 };
 static JumpTarget clownpiece5B_NEW2_D_jumpData[] = {
 	{ 0x006, 0x46EB30 },
-	{ 0x020, 0x622FF0 },
-	{ 0x03B, 0x622EBF },
+	{ 0x01B, 0x622FF0 },
+	{ 0x035, 0x622EBF },
 };
-static PatchByteCode clownpiece5B_NEW2_D_patchByteCode = { clownpiece5B_NEW2_D_byteCode, 63, clownpiece5B_NEW2_D_jumpData, 3 };
+static PatchByteCode clownpiece5B_NEW2_D_patchByteCode = { clownpiece5B_NEW2_D_byteCode, 57, clownpiece5B_NEW2_D_jumpData, 3 };
 // clownpiece5B_NEW2_E declared in clownpiece.asm line 383
 static unsigned char clownpiece5B_NEW2_E_byteCode[] = {
-	0x68, 0x20, 0x03, 0x00, 0x00,                         // PUSH 0x00000320 ; line 384
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x46EB30 ; line 385
-	0x66, 0x9C,                                           // PUSHF ; line 386
-	0x60,                                                 // PUSHAD ; line 387
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 388
-	0x0F, 0x8F, 0x08, 0x00, 0x00, 0x00,                   // JG SHORT LABEL1 ; line 389
-	0x61,                                                 // POPAD ; line 390
-	0x66, 0x9D,                                           // POPF ; line 391
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x623413 ; line 392
-	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV AX,[ESI+0x7D2] ; line 394
-	0x66, 0x81, 0xE8, 0x01, 0x00,                         // SUB AX,0x01 ; line 395
-	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV [ESI+0x7D2],AX ; line 396
-	0x61,                                                 // POPAD ; line 397
-	0x66, 0x9D,                                           // POPF ; line 398
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x623374 ; line 399
+	0x68, 0x20, 0x03, 0x00, 0x00,                   // PUSH 0x00000320 ; line 384
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x46EB30 ; line 385
+	0x66, 0x9C,                                     // PUSHF ; line 386
+	0x60,                                           // PUSHAD ; line 387
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 388
+	0x7F, 0x08,                                     // JG SHORT LABEL1 ; line 389
+	0x61,                                           // POPAD ; line 390
+	0x66, 0x9D,                                     // POPF ; line 391
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x623413 ; line 392
+	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV AX,[ESI+0x7D2] ; line 394
+	0x66, 0x83, 0xE8, 0x01,                         // SUB AX,0x01 ; line 395
+	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV [ESI+0x7D2],AX ; line 396
+	0x61,                                           // POPAD ; line 397
+	0x66, 0x9D,                                     // POPF ; line 398
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x623374 ; line 399
 };
 static JumpTarget clownpiece5B_NEW2_E_jumpData[] = {
 	{ 0x006, 0x46EB30 },
-	{ 0x020, 0x623413 },
-	{ 0x03B, 0x623374 },
+	{ 0x01B, 0x623413 },
+	{ 0x035, 0x623374 },
 };
-static PatchByteCode clownpiece5B_NEW2_E_patchByteCode = { clownpiece5B_NEW2_E_byteCode, 63, clownpiece5B_NEW2_E_jumpData, 3 };
+static PatchByteCode clownpiece5B_NEW2_E_patchByteCode = { clownpiece5B_NEW2_E_byteCode, 57, clownpiece5B_NEW2_E_jumpData, 3 };
 // clownpiece5B_NEW2_F declared in clownpiece.asm line 402
 static unsigned char clownpiece5B_NEW2_F_byteCode[] = {
-	0x68, 0x20, 0x03, 0x00, 0x00,                         // PUSH 0x00000320 ; line 403
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x46EB30 ; line 404
-	0x66, 0x9C,                                           // PUSHF ; line 405
-	0x60,                                                 // PUSHAD ; line 406
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 407
-	0x0F, 0x8F, 0x08, 0x00, 0x00, 0x00,                   // JG SHORT LABEL1 ; line 408
-	0x61,                                                 // POPAD ; line 409
-	0x66, 0x9D,                                           // POPF ; line 410
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x623780 ; line 411
-	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV AX,[ESI+0x7D2] ; line 413
-	0x66, 0x81, 0xE8, 0x01, 0x00,                         // SUB AX,0x01 ; line 414
-	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV [ESI+0x7D2],AX ; line 415
-	0x61,                                                 // POPAD ; line 416
-	0x66, 0x9D,                                           // POPF ; line 417
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x6236EA ; line 418
+	0x68, 0x20, 0x03, 0x00, 0x00,                   // PUSH 0x00000320 ; line 403
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x46EB30 ; line 404
+	0x66, 0x9C,                                     // PUSHF ; line 405
+	0x60,                                           // PUSHAD ; line 406
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 407
+	0x7F, 0x08,                                     // JG SHORT LABEL1 ; line 408
+	0x61,                                           // POPAD ; line 409
+	0x66, 0x9D,                                     // POPF ; line 410
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x623780 ; line 411
+	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV AX,[ESI+0x7D2] ; line 413
+	0x66, 0x83, 0xE8, 0x01,                         // SUB AX,0x01 ; line 414
+	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV [ESI+0x7D2],AX ; line 415
+	0x61,                                           // POPAD ; line 416
+	0x66, 0x9D,                                     // POPF ; line 417
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x6236EA ; line 418
 };
 static JumpTarget clownpiece5B_NEW2_F_jumpData[] = {
 	{ 0x006, 0x46EB30 },
-	{ 0x020, 0x623780 },
-	{ 0x03B, 0x6236EA },
+	{ 0x01B, 0x623780 },
+	{ 0x035, 0x6236EA },
 };
-static PatchByteCode clownpiece5B_NEW2_F_patchByteCode = { clownpiece5B_NEW2_F_byteCode, 63, clownpiece5B_NEW2_F_jumpData, 3 };
+static PatchByteCode clownpiece5B_NEW2_F_patchByteCode = { clownpiece5B_NEW2_F_byteCode, 57, clownpiece5B_NEW2_F_jumpData, 3 };
 // clownpiece5B_NEW2_G declared in clownpiece.asm line 421
 static unsigned char clownpiece5B_NEW2_G_byteCode[] = {
-	0x68, 0x20, 0x03, 0x00, 0x00,                         // PUSH 0x00000320 ; line 422
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x46EB30 ; line 423
-	0x66, 0x9C,                                           // PUSHF ; line 424
-	0x60,                                                 // PUSHAD ; line 425
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 426
-	0x0F, 0x8F, 0x08, 0x00, 0x00, 0x00,                   // JG SHORT LABEL1 ; line 427
-	0x61,                                                 // POPAD ; line 428
-	0x66, 0x9D,                                           // POPF ; line 429
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x623CD1 ; line 430
-	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV AX,[ESI+0x7D2] ; line 432
-	0x66, 0x81, 0xE8, 0x01, 0x00,                         // SUB AX,0x01 ; line 433
-	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV [ESI+0x7D2],AX ; line 434
-	0x61,                                                 // POPAD ; line 435
-	0x66, 0x9D,                                           // POPF ; line 436
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x623B92 ; line 437
+	0x68, 0x20, 0x03, 0x00, 0x00,                   // PUSH 0x00000320 ; line 422
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x46EB30 ; line 423
+	0x66, 0x9C,                                     // PUSHF ; line 424
+	0x60,                                           // PUSHAD ; line 425
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 426
+	0x7F, 0x08,                                     // JG SHORT LABEL1 ; line 427
+	0x61,                                           // POPAD ; line 428
+	0x66, 0x9D,                                     // POPF ; line 429
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x623CD1 ; line 430
+	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV AX,[ESI+0x7D2] ; line 432
+	0x66, 0x83, 0xE8, 0x01,                         // SUB AX,0x01 ; line 433
+	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV [ESI+0x7D2],AX ; line 434
+	0x61,                                           // POPAD ; line 435
+	0x66, 0x9D,                                     // POPF ; line 436
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x623B92 ; line 437
 };
 static JumpTarget clownpiece5B_NEW2_G_jumpData[] = {
 	{ 0x006, 0x46EB30 },
-	{ 0x020, 0x623CD1 },
-	{ 0x03B, 0x623B92 },
+	{ 0x01B, 0x623CD1 },
+	{ 0x035, 0x623B92 },
 };
-static PatchByteCode clownpiece5B_NEW2_G_patchByteCode = { clownpiece5B_NEW2_G_byteCode, 63, clownpiece5B_NEW2_G_jumpData, 3 };
+static PatchByteCode clownpiece5B_NEW2_G_patchByteCode = { clownpiece5B_NEW2_G_byteCode, 57, clownpiece5B_NEW2_G_jumpData, 3 };
 // clownpiece5B_NEW2_H declared in clownpiece.asm line 440
 static unsigned char clownpiece5B_NEW2_H_byteCode[] = {
-	0x68, 0x20, 0x03, 0x00, 0x00,                         // PUSH 0x00000320 ; line 441
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x46EB30 ; line 442
-	0x66, 0x9C,                                           // PUSHF ; line 443
-	0x60,                                                 // PUSHAD ; line 444
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 445
-	0x0F, 0x8F, 0x08, 0x00, 0x00, 0x00,                   // JG SHORT LABEL1 ; line 446
-	0x61,                                                 // POPAD ; line 447
-	0x66, 0x9D,                                           // POPF ; line 448
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x624105 ; line 449
-	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV AX,[ESI+0x7D2] ; line 451
-	0x66, 0x81, 0xE8, 0x01, 0x00,                         // SUB AX,0x01 ; line 452
-	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV [ESI+0x7D2],AX ; line 453
-	0x61,                                                 // POPAD ; line 454
-	0x66, 0x9D,                                           // POPF ; line 455
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x623FC6 ; line 456
+	0x68, 0x20, 0x03, 0x00, 0x00,                   // PUSH 0x00000320 ; line 441
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x46EB30 ; line 442
+	0x66, 0x9C,                                     // PUSHF ; line 443
+	0x60,                                           // PUSHAD ; line 444
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 445
+	0x7F, 0x08,                                     // JG SHORT LABEL1 ; line 446
+	0x61,                                           // POPAD ; line 447
+	0x66, 0x9D,                                     // POPF ; line 448
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x624105 ; line 449
+	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV AX,[ESI+0x7D2] ; line 451
+	0x66, 0x83, 0xE8, 0x01,                         // SUB AX,0x01 ; line 452
+	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV [ESI+0x7D2],AX ; line 453
+	0x61,                                           // POPAD ; line 454
+	0x66, 0x9D,                                     // POPF ; line 455
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x623FC6 ; line 456
 };
 static JumpTarget clownpiece5B_NEW2_H_jumpData[] = {
 	{ 0x006, 0x46EB30 },
-	{ 0x020, 0x624105 },
-	{ 0x03B, 0x623FC6 },
+	{ 0x01B, 0x624105 },
+	{ 0x035, 0x623FC6 },
 };
-static PatchByteCode clownpiece5B_NEW2_H_patchByteCode = { clownpiece5B_NEW2_H_byteCode, 63, clownpiece5B_NEW2_H_jumpData, 3 };
+static PatchByteCode clownpiece5B_NEW2_H_patchByteCode = { clownpiece5B_NEW2_H_byteCode, 57, clownpiece5B_NEW2_H_jumpData, 3 };
 // clownpiece5B_NEW2_I declared in clownpiece.asm line 459
 static unsigned char clownpiece5B_NEW2_I_byteCode[] = {
-	0x68, 0x20, 0x03, 0x00, 0x00,                         // PUSH 0x00000320 ; line 460
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x46EB30 ; line 461
-	0x66, 0x9C,                                           // PUSHF ; line 462
-	0x60,                                                 // PUSHAD ; line 463
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 464
-	0x0F, 0x8F, 0x08, 0x00, 0x00, 0x00,                   // JG SHORT LABEL1 ; line 465
-	0x61,                                                 // POPAD ; line 466
-	0x66, 0x9D,                                           // POPF ; line 467
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x62469C ; line 468
-	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV AX,[ESI+0x7D2] ; line 470
-	0x66, 0x81, 0xE8, 0x01, 0x00,                         // SUB AX,0x01 ; line 471
-	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV [ESI+0x7D2],AX ; line 472
-	0x61,                                                 // POPAD ; line 473
-	0x66, 0x9D,                                           // POPF ; line 474
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x62454F ; line 475
+	0x68, 0x20, 0x03, 0x00, 0x00,                   // PUSH 0x00000320 ; line 460
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x46EB30 ; line 461
+	0x66, 0x9C,                                     // PUSHF ; line 462
+	0x60,                                           // PUSHAD ; line 463
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 464
+	0x7F, 0x08,                                     // JG SHORT LABEL1 ; line 465
+	0x61,                                           // POPAD ; line 466
+	0x66, 0x9D,                                     // POPF ; line 467
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x62469C ; line 468
+	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV AX,[ESI+0x7D2] ; line 470
+	0x66, 0x83, 0xE8, 0x01,                         // SUB AX,0x01 ; line 471
+	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV [ESI+0x7D2],AX ; line 472
+	0x61,                                           // POPAD ; line 473
+	0x66, 0x9D,                                     // POPF ; line 474
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x62454F ; line 475
 };
 static JumpTarget clownpiece5B_NEW2_I_jumpData[] = {
 	{ 0x006, 0x46EB30 },
-	{ 0x020, 0x62469C },
-	{ 0x03B, 0x62454F },
+	{ 0x01B, 0x62469C },
+	{ 0x035, 0x62454F },
 };
-static PatchByteCode clownpiece5B_NEW2_I_patchByteCode = { clownpiece5B_NEW2_I_byteCode, 63, clownpiece5B_NEW2_I_jumpData, 3 };
+static PatchByteCode clownpiece5B_NEW2_I_patchByteCode = { clownpiece5B_NEW2_I_byteCode, 57, clownpiece5B_NEW2_I_jumpData, 3 };
 // clownpiece5B_NEW2_J declared in clownpiece.asm line 478
 static unsigned char clownpiece5B_NEW2_J_byteCode[] = {
-	0x68, 0x20, 0x03, 0x00, 0x00,                         // PUSH 0x00000320 ; line 479
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x46EB30 ; line 480
-	0x66, 0x9C,                                           // PUSHF ; line 481
-	0x60,                                                 // PUSHAD ; line 482
-	0x66, 0x81, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 483
-	0x0F, 0x8F, 0x08, 0x00, 0x00, 0x00,                   // JG SHORT LABEL1 ; line 484
-	0x61,                                                 // POPAD ; line 485
-	0x66, 0x9D,                                           // POPF ; line 486
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x624AEA ; line 487
-	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV AX,[ESI+0x7D2] ; line 489
-	0x66, 0x81, 0xE8, 0x01, 0x00,                         // SUB AX,0x01 ; line 490
-	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,             // MOV [ESI+0x7D2],AX ; line 491
-	0x61,                                                 // POPAD ; line 492
-	0x66, 0x9D,                                           // POPF ; line 493
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x62499D ; line 494
+	0x68, 0x20, 0x03, 0x00, 0x00,                   // PUSH 0x00000320 ; line 479
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x46EB30 ; line 480
+	0x66, 0x9C,                                     // PUSHF ; line 481
+	0x60,                                           // PUSHAD ; line 482
+	0x66, 0x83, 0xBE, 0xD2, 0x07, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x7D2],0x00 ; line 483
+	0x7F, 0x08,                                     // JG SHORT LABEL1 ; line 484
+	0x61,                                           // POPAD ; line 485
+	0x66, 0x9D,                                     // POPF ; line 486
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x624AEA ; line 487
+	0x66, 0x8B, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV AX,[ESI+0x7D2] ; line 489
+	0x66, 0x83, 0xE8, 0x01,                         // SUB AX,0x01 ; line 490
+	0x66, 0x89, 0x86, 0xD2, 0x07, 0x00, 0x00,       // MOV [ESI+0x7D2],AX ; line 491
+	0x61,                                           // POPAD ; line 492
+	0x66, 0x9D,                                     // POPF ; line 493
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x62499D ; line 494
 };
 static JumpTarget clownpiece5B_NEW2_J_jumpData[] = {
 	{ 0x006, 0x46EB30 },
-	{ 0x020, 0x624AEA },
-	{ 0x03B, 0x62499D },
+	{ 0x01B, 0x624AEA },
+	{ 0x035, 0x62499D },
 };
-static PatchByteCode clownpiece5B_NEW2_J_patchByteCode = { clownpiece5B_NEW2_J_byteCode, 63, clownpiece5B_NEW2_J_jumpData, 3 };
+static PatchByteCode clownpiece5B_NEW2_J_patchByteCode = { clownpiece5B_NEW2_J_byteCode, 57, clownpiece5B_NEW2_J_jumpData, 3 };
 // clownpiece5B_GRAZERES declared in clownpiece.asm line 564
 static unsigned char clownpiece5B_GRAZERES_byteCode[] = {
 	0x6A, 0x01,                   // PUSH 0x01 ; line 565
@@ -530,46 +530,46 @@ static JumpTarget clownpiece5B_GRAZERES_jumpData[] = {
 static PatchByteCode clownpiece5B_GRAZERES_patchByteCode = { clownpiece5B_GRAZERES_byteCode, 9, clownpiece5B_GRAZERES_jumpData, 1 };
 // clownpiece24A declared in clownpiece.asm line 571
 static unsigned char clownpiece24A_byteCode[] = {
-	0x66, 0x81, 0xF8, 0xF7, 0x00,       // CMP AX,0x00F7 ; line 572
+	0x66, 0x3D, 0xF7, 0x00,             // CMP AX,0x00F7 ; line 572
 	0x0F, 0x85, 0xDE, 0xAD, 0xBE, 0xEF, // JNE 0x622596 ; line 573
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,       // JMP 0x6221C2 ; line 574
 };
 static JumpTarget clownpiece24A_jumpData[] = {
-	{ 0x007, 0x622596 },
-	{ 0x00C, 0x6221C2 },
+	{ 0x006, 0x622596 },
+	{ 0x00B, 0x6221C2 },
 };
-static PatchByteCode clownpiece24A_patchByteCode = { clownpiece24A_byteCode, 16, clownpiece24A_jumpData, 2 };
+static PatchByteCode clownpiece24A_patchByteCode = { clownpiece24A_byteCode, 15, clownpiece24A_jumpData, 2 };
 // clownpiece24B declared in clownpiece.asm line 576
 static unsigned char clownpiece24B_byteCode[] = {
-	0x66, 0x81, 0xF8, 0xF7, 0x00,       // CMP AX,0x00F7 ; line 577
+	0x66, 0x3D, 0xF7, 0x00,             // CMP AX,0x00F7 ; line 577
 	0x0F, 0x85, 0xDE, 0xAD, 0xBE, 0xEF, // JNE 0x622E5E ; line 578
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,       // JMP 0x622A8C ; line 579
 };
 static JumpTarget clownpiece24B_jumpData[] = {
-	{ 0x007, 0x622E5E },
-	{ 0x00C, 0x622A8C },
+	{ 0x006, 0x622E5E },
+	{ 0x00B, 0x622A8C },
 };
-static PatchByteCode clownpiece24B_patchByteCode = { clownpiece24B_byteCode, 16, clownpiece24B_jumpData, 2 };
+static PatchByteCode clownpiece24B_patchByteCode = { clownpiece24B_byteCode, 15, clownpiece24B_jumpData, 2 };
 // clownpiece24C declared in clownpiece.asm line 581
 static unsigned char clownpiece24C_byteCode[] = {
-	0x66, 0x81, 0xF8, 0xF7, 0x00,       // CMP AX,0x00F7 ; line 582
+	0x66, 0x3D, 0xF7, 0x00,             // CMP AX,0x00F7 ; line 582
 	0x0F, 0x85, 0xDE, 0xAD, 0xBE, 0xEF, // JNE 0x623688 ; line 583
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,       // JMP 0x623353 ; line 584
 };
 static JumpTarget clownpiece24C_jumpData[] = {
-	{ 0x007, 0x623688 },
-	{ 0x00C, 0x623353 },
+	{ 0x006, 0x623688 },
+	{ 0x00B, 0x623353 },
 };
-static PatchByteCode clownpiece24C_patchByteCode = { clownpiece24C_byteCode, 16, clownpiece24C_jumpData, 2 };
+static PatchByteCode clownpiece24C_patchByteCode = { clownpiece24C_byteCode, 15, clownpiece24C_jumpData, 2 };
 // clownpiece24D declared in clownpiece.asm line 586
 static unsigned char clownpiece24D_byteCode[] = {
-	0x66, 0x81, 0xF8, 0xF7, 0x00,       // CMP AX,0x00F7 ; line 587
+	0x66, 0x3D, 0xF7, 0x00,             // CMP AX,0x00F7 ; line 587
 	0x0F, 0x85, 0xDE, 0xAD, 0xBE, 0xEF, // JNE 0x623F45 ; line 588
 };
 static JumpTarget clownpiece24D_jumpData[] = {
-	{ 0x007, 0x623F45 },
+	{ 0x006, 0x623F45 },
 };
-static PatchByteCode clownpiece24D_patchByteCode = { clownpiece24D_byteCode, 11, clownpiece24D_jumpData, 1 };
+static PatchByteCode clownpiece24D_patchByteCode = { clownpiece24D_byteCode, 10, clownpiece24D_jumpData, 1 };
 // clownpiece25 declared in clownpiece.asm line 590
 static unsigned char clownpiece25_byteCode[] = {
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF, // JMP 0x62491C ; line 591
@@ -580,14 +580,14 @@ static JumpTarget clownpiece25_jumpData[] = {
 static PatchByteCode clownpiece25_patchByteCode = { clownpiece25_byteCode, 5, clownpiece25_jumpData, 1 };
 // clownpiece26_Bframe declared in clownpiece.asm line 607
 static unsigned char clownpiece26_Bframe_byteCode[] = {
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x02, 0x00, // CMP WORD PTR [ESI+0x140],0x02 ; line 608
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x02, // CMP WORD PTR [ESI+0x140],0x02 ; line 608
 };
-static PatchByteCode clownpiece26_Bframe_patchByteCode = { clownpiece26_Bframe_byteCode, 9, nullptr, 0 };
+static PatchByteCode clownpiece26_Bframe_patchByteCode = { clownpiece26_Bframe_byteCode, 8, nullptr, 0 };
 // clownpiece26_Bframe1 declared in clownpiece.asm line 610
 static unsigned char clownpiece26_Bframe1_byteCode[] = {
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x03, 0x00, // CMP WORD PTR [ESI+0x140],0x03 ; line 611
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x03, // CMP WORD PTR [ESI+0x140],0x03 ; line 611
 };
-static PatchByteCode clownpiece26_Bframe1_patchByteCode = { clownpiece26_Bframe1_byteCode, 9, nullptr, 0 };
+static PatchByteCode clownpiece26_Bframe1_patchByteCode = { clownpiece26_Bframe1_byteCode, 8, nullptr, 0 };
 // clownpiece27 declared in clownpiece.asm line 632
 static unsigned char clownpiece27_byteCode[] = {
 	0xD9, 0x05, 0xB8, 0xBA, 0x85, 0x00, // FLD DWORD PTR [0x85BAB8] ; line 633
@@ -595,9 +595,9 @@ static unsigned char clownpiece27_byteCode[] = {
 static PatchByteCode clownpiece27_patchByteCode = { clownpiece27_byteCode, 6, nullptr, 0 };
 // clownpiece28 declared in clownpiece.asm line 638
 static unsigned char clownpiece28_byteCode[] = {
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x78, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x78 ; line 639
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x78, // CMP DWORD PTR [ESI+0x144],0x78 ; line 639
 };
-static PatchByteCode clownpiece28_patchByteCode = { clownpiece28_byteCode, 10, nullptr, 0 };
+static PatchByteCode clownpiece28_patchByteCode = { clownpiece28_byteCode, 7, nullptr, 0 };
 // clownpiece29 declared in clownpiece.asm line 644
 static unsigned char clownpiece29_byteCode[] = {
 	0xDC, 0x25, 0x90, 0x79, 0x85, 0x00, // FSUB QWORD PTR [0x857990] ; line 645
@@ -645,22 +645,22 @@ static PatchByteCode clownpieceD236_SKIP_patchByteCode = { clownpieceD236_SKIP_b
 static unsigned char clownpieceD623_0_byteCode[] = {
 	0x66, 0x9C,                                                 // PUSHF ; line 701
 	0x60,                                                       // PUSHAD ; line 702
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x00000000 ; line 703
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ESI+0x144],0x00000000 ; line 703
 	0x90,                                                       // NOP ; line 704
-	0x0F, 0x85, 0x12, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL1 ; line 705
+	0x75, 0x12,                                                 // JNE SHORT LABEL1 ; line 705
 	0xC7, 0x86, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x190],0x00000000 ; line 706
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x01,                   // MOV BYTE PTR [ESI+0x194],0x01 ; line 707
 	0x90,                                                       // NOP ; line 708
 	0x8B, 0x86, 0x98, 0x03, 0x00, 0x00,                         // MOV EAX,[ESI+0x398] ; line 712
 	0x0F, 0xB7, 0x80, 0x3C, 0x01, 0x00, 0x00,                   // MOVZX EAX, WORD PTR [EAX+0x13C] ; line 713
-	0x66, 0x81, 0xF8, 0x31, 0x00,                               // CMP AX,0x0031 ; line 714
-	0x0F, 0x8E, 0x0B, 0x00, 0x00, 0x00,                         // JLE SHORT LABEL2 ; line 715
-	0x66, 0x81, 0xF8, 0x96, 0x00,                               // CMP AX,0x0096 ; line 716
-	0x0F, 0x8C, 0x1D, 0x00, 0x00, 0x00,                         // JL SHORT LABEL3 ; line 717
+	0x66, 0x83, 0xF8, 0x31,                                     // CMP AX,0x0031 ; line 714
+	0x7E, 0x06,                                                 // JLE SHORT LABEL2 ; line 715
+	0x66, 0x3D, 0x96, 0x00,                                     // CMP AX,0x0096 ; line 716
+	0x7C, 0x12,                                                 // JL SHORT LABEL3 ; line 717
 	0x80, 0xBE, 0x94, 0x01, 0x00, 0x00, 0x00,                   // CMP BYTE PTR [ESI+0x194],0x00 ; line 720
-	0x0F, 0x85, 0x22, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL4 ; line 721
-	0x81, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x08 ; line 722
-	0x0F, 0x85, 0x00, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL3 ; line 723
+	0x75, 0x1B,                                                 // JNE SHORT LABEL4 ; line 721
+	0x83, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x08,                   // CMP DWORD PTR [ESI+0x190],0x08 ; line 722
+	0x75, 0x00,                                                 // JNE SHORT LABEL3 ; line 723
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x00,                   // MOV BYTE PTR [ESI+0x194],0x00 ; line 725
 	0x90,                                                       // NOP ; line 726
 	0xC7, 0x86, 0x10, 0x01, 0x00, 0x00, 0x55, 0x55, 0x55, 0x55, // MOV DWORD PTR [ESI+0x110],0x55555555 ; line 727
@@ -669,7 +669,7 @@ static unsigned char clownpieceD623_0_byteCode[] = {
 	0x61,                                                       // POPAD ; line 731
 	0x66, 0x9D,                                                 // POPF ; line 732
 };
-static PatchByteCode clownpieceD623_0_patchByteCode = { clownpieceD623_0_byteCode, 139, nullptr, 0 };
+static PatchByteCode clownpieceD623_0_patchByteCode = { clownpieceD623_0_byteCode, 111, nullptr, 0 };
 // clownpieceD623_1 declared in clownpiece.asm line 742
 static unsigned char clownpieceD623_1_byteCode[] = {
 	0xB9, 0x10, 0x00, 0x00, 0x00, // MOV ECX,0x00000010 ; line 743
@@ -691,38 +691,38 @@ static unsigned char clownpieceD623_STACK_byteCode[] = {
 	0x66, 0x9C,                                                 // PUSHF ; line 763
 	0x60,                                                       // PUSHAD ; line 764
 	0x81, 0xBE, 0x3C, 0x01, 0x00, 0x00, 0x34, 0x03, 0x01, 0x00, // CMP DWORD PTR [ESI+0x13C],0x00010334 ; line 765
-	0x0F, 0x84, 0x05, 0x00, 0x00, 0x00,                         // JE SHORT LABEL1 ; line 766
-	0xE9, 0x47, 0x00, 0x00, 0x00,                               // JMP SHORT LABEL2 ; line 768
+	0x74, 0x02,                                                 // JE SHORT LABEL1 ; line 766
+	0xEB, 0x35,                                                 // JMP SHORT LABEL2 ; line 768
 	0x8B, 0x86, 0x98, 0x03, 0x00, 0x00,                         // MOV EAX,[ESI+0x398] ; line 770
 	0x81, 0xB8, 0x3C, 0x01, 0x00, 0x00, 0x1C, 0x02, 0x00, 0x00, // CMP DWORD PTR [EAX+0x13C],0x0000021C ; line 771
-	0x0F, 0x84, 0x10, 0x00, 0x00, 0x00,                         // JE SHORT LABEL3 ; line 772
+	0x74, 0x0C,                                                 // JE SHORT LABEL3 ; line 772
 	0x81, 0xB8, 0x3C, 0x01, 0x00, 0x00, 0x1D, 0x02, 0x00, 0x00, // CMP DWORD PTR [EAX+0x13C],0x0000021D ; line 773
-	0x0F, 0x85, 0xD5, 0xFF, 0xFF, 0xFF,                         // JNE SHORT LABEL4 ; line 774
-	0x81, 0xB8, 0x42, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [EAX+0x142],0x00000000 ; line 776
+	0x75, 0xE0,                                                 // JNE SHORT LABEL4 ; line 774
+	0x83, 0xB8, 0x42, 0x01, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [EAX+0x142],0x00000000 ; line 776
 	0x90,                                                       // NOP ; line 777
-	0x0F, 0x85, 0xC4, 0xFF, 0xFF, 0xFF,                         // JNE SHORT LABEL4 ; line 778
+	0x75, 0xD6,                                                 // JNE SHORT LABEL4 ; line 778
 	0xC7, 0x86, 0x44, 0x01, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x144],0x000000FF ; line 779
-	0xE9, 0xB5, 0xFF, 0xFF, 0xFF,                               // JMP SHORT LABEL4 ; line 780
+	0xEB, 0xCA,                                                 // JMP SHORT LABEL4 ; line 780
 	0x90,                                                       // NOP ; line 781
 	0x61,                                                       // POPAD ; line 783
 	0x66, 0x9D,                                                 // POPF ; line 784
 	0xBB, 0x03, 0x00, 0x00, 0x00,                               // MOV EBX,0x00000003 ; line 785
 };
-static PatchByteCode clownpieceD623_STACK_patchByteCode = { clownpieceD623_STACK_byteCode, 103, nullptr, 0 };
+static PatchByteCode clownpieceD623_STACK_patchByteCode = { clownpieceD623_STACK_byteCode, 78, nullptr, 0 };
 // clownpieceMECH declared in clownpiece.asm line 792
 static unsigned char clownpieceMECH_byteCode[] = {
 	0x66, 0x9C,                                                 // PUSHF ; line 793
 	0x60,                                                       // PUSHAD ; line 794
 	0x8B, 0x86, 0x98, 0x03, 0x00, 0x00,                         // MOV EAX,[ESI+0x398] ; line 795
 	0x85, 0xC0,                                                 // TEST EAX,EAX ; line 796
-	0x0F, 0x84, 0x3D, 0x00, 0x00, 0x00,                         // JE SHORT LABELA ; line 797
+	0x74, 0x2F,                                                 // JE SHORT LABELA ; line 797
 	0x8B, 0x90, 0x70, 0x01, 0x00, 0x00,                         // MOV EDX,[EAX+0x170] ; line 798
 	0x85, 0xD2,                                                 // TEST EDX,EDX ; line 799
-	0x0F, 0x84, 0x2F, 0x00, 0x00, 0x00,                         // JE SHORT LABELA ; line 800
-	0x66, 0x81, 0xB8, 0x84, 0x01, 0x00, 0x00, 0x00, 0x00,       // CMP WORD PTR [EAX+0x184],0x00 ; line 801
-	0x0F, 0x8E, 0x0F, 0x00, 0x00, 0x00,                         // JLE SHORT LABELB ; line 802
-	0x66, 0x81, 0xBA, 0x84, 0x01, 0x00, 0x00, 0x00, 0x00,       // CMP WORD PTR [EDX+0x184],0x00 ; line 803
-	0x0F, 0x8F, 0x11, 0x00, 0x00, 0x00,                         // JG SHORT LABELA ; line 804
+	0x74, 0x25,                                                 // JE SHORT LABELA ; line 800
+	0x66, 0x83, 0xB8, 0x84, 0x01, 0x00, 0x00, 0x00,             // CMP WORD PTR [EAX+0x184],0x00 ; line 801
+	0x7E, 0x0A,                                                 // JLE SHORT LABELB ; line 802
+	0x66, 0x83, 0xBA, 0x84, 0x01, 0x00, 0x00, 0x00,             // CMP WORD PTR [EDX+0x184],0x00 ; line 803
+	0x7F, 0x11,                                                 // JG SHORT LABELA ; line 804
 	0xC7, 0x86, 0x90, 0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x190],0x00000001 ; line 806
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x00,                   // MOV BYTE PTR [ESI+0x194],0x00 ; line 807
 	0x61,                                                       // POPAD ; line 809
@@ -730,30 +730,30 @@ static unsigned char clownpieceMECH_byteCode[] = {
 	0x90,                                                       // NOP ; line 811
 	0x90,                                                       // NOP ; line 812
 	0x90,                                                       // NOP ; line 813
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x28, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x28 ; line 814
-	0x0F, 0x85, 0x22, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL1 ; line 815
-	0x81, 0xBE, 0x10, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, // CMP DWORD PTR [ESI+0x110],0xFFFFFFFF ; line 816
-	0x0F, 0x85, 0x12, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL1 ; line 817
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x28,                   // CMP DWORD PTR [ESI+0x144],0x28 ; line 814
+	0x75, 0x1B,                                                 // JNE SHORT LABEL1 ; line 815
+	0x83, 0xBE, 0x10, 0x01, 0x00, 0x00, 0xFF,                   // CMP DWORD PTR [ESI+0x110],0xFFFFFFFF ; line 816
+	0x75, 0x12,                                                 // JNE SHORT LABEL1 ; line 817
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x01,                   // MOV BYTE PTR [ESI+0x194],0x01 ; line 818
 	0x90,                                                       // NOP ; line 819
 	0xC7, 0x86, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x190],0x00000000 ; line 820
-	0x81, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x04 ; line 822
-	0x0F, 0x84, 0x10, 0x00, 0x00, 0x00,                         // JE SHORT LABEL2 ; line 823
-	0x81, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x08 ; line 824
-	0x0F, 0x85, 0x05, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL3 ; line 825
-	0xE9, 0x40, 0x00, 0x00, 0x00,                               // JMP SHORT EXIT ; line 827
-	0x81, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x00 ; line 829
-	0x0F, 0x84, 0x0A, 0x00, 0x00, 0x00,                         // JE SHORT LABEL4 ; line 830
+	0x83, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x04,                   // CMP DWORD PTR [ESI+0x190],0x04 ; line 822
+	0x74, 0x09,                                                 // JE SHORT LABEL2 ; line 823
+	0x83, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x08,                   // CMP DWORD PTR [ESI+0x190],0x08 ; line 824
+	0x75, 0x02,                                                 // JNE SHORT LABEL3 ; line 825
+	0xEB, 0x29,                                                 // JMP SHORT EXIT ; line 827
+	0x83, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ESI+0x190],0x00 ; line 829
+	0x74, 0x0A,                                                 // JE SHORT LABEL4 ; line 830
 	0x81, 0xAE, 0x10, 0x01, 0x00, 0x00, 0x11, 0x11, 0x11, 0x11, // SUB DWORD PTR [ESI+0x110],0x11111111 ; line 831
-	0x81, 0xBE, 0x10, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x110],0x00000000 ; line 833
-	0x0F, 0x84, 0x07, 0x00, 0x00, 0x00,                         // JE SHORT LABEL5 ; line 834
+	0x83, 0xBE, 0x10, 0x01, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ESI+0x110],0x00000000 ; line 833
+	0x74, 0x04,                                                 // JE SHORT LABEL5 ; line 834
 	0x39, 0xC0,                                                 // CMP EAX,EAX ; line 835
-	0xE9, 0x0A, 0x00, 0x00, 0x00,                               // JMP SHORT LABEL6 ; line 836
-	0x81, 0xBE, 0x10, 0x01, 0x00, 0x00, 0xDD, 0xFF, 0xFF, 0xFF, // CMP DWORD PTR [ESI+0x110],0xFFFFFFDD ; line 838
-	0xE9, 0x00, 0x00, 0x00, 0x00,                               // JMP SHORT EXIT ; line 840
+	0xEB, 0x07,                                                 // JMP SHORT LABEL6 ; line 836
+	0x83, 0xBE, 0x10, 0x01, 0x00, 0x00, 0xDD,                   // CMP DWORD PTR [ESI+0x110],0xFFFFFFDD ; line 838
+	0xEB, 0x00,                                                 // JMP SHORT EXIT ; line 840
 	0x90,                                                       // NOP ; line 842
 };
-static PatchByteCode clownpieceMECH_patchByteCode = { clownpieceMECH_byteCode, 236, nullptr, 0 };
+static PatchByteCode clownpieceMECH_patchByteCode = { clownpieceMECH_byteCode, 164, nullptr, 0 };
 // clownpieceMECH2 declared in clownpiece.asm line 845
 static unsigned char clownpieceMECH2_byteCode[] = {
 	0x60,                                                       // PUSHAD ; line 846
@@ -768,14 +768,14 @@ static unsigned char clownpieceMECH2_byteCode[] = {
 	0x60,                                                       // PUSHAD ; line 855
 	0x8B, 0x86, 0x98, 0x03, 0x00, 0x00,                         // MOV EAX,[ESI+0x398] ; line 856
 	0x85, 0xC0,                                                 // TEST EAX,EAX ; line 857
-	0x0F, 0x84, 0x3D, 0x00, 0x00, 0x00,                         // JE SHORT LABELA ; line 858
+	0x74, 0x2F,                                                 // JE SHORT LABELA ; line 858
 	0x8B, 0x90, 0x70, 0x01, 0x00, 0x00,                         // MOV EDX,[EAX+0x170] ; line 859
 	0x85, 0xD2,                                                 // TEST EDX,EDX ; line 860
-	0x0F, 0x84, 0x2F, 0x00, 0x00, 0x00,                         // JE SHORT LABELA ; line 861
-	0x66, 0x81, 0xB8, 0x84, 0x01, 0x00, 0x00, 0x00, 0x00,       // CMP WORD PTR [EAX+0x184],0x00 ; line 862
-	0x0F, 0x8E, 0x0F, 0x00, 0x00, 0x00,                         // JLE SHORT LABELB ; line 863
-	0x66, 0x81, 0xBA, 0x84, 0x01, 0x00, 0x00, 0x00, 0x00,       // CMP WORD PTR [EDX+0x184],0x00 ; line 864
-	0x0F, 0x8F, 0x11, 0x00, 0x00, 0x00,                         // JG SHORT LABELA ; line 865
+	0x74, 0x25,                                                 // JE SHORT LABELA ; line 861
+	0x66, 0x83, 0xB8, 0x84, 0x01, 0x00, 0x00, 0x00,             // CMP WORD PTR [EAX+0x184],0x00 ; line 862
+	0x7E, 0x0A,                                                 // JLE SHORT LABELB ; line 863
+	0x66, 0x83, 0xBA, 0x84, 0x01, 0x00, 0x00, 0x00,             // CMP WORD PTR [EDX+0x184],0x00 ; line 864
+	0x7F, 0x11,                                                 // JG SHORT LABELA ; line 865
 	0xC7, 0x86, 0x90, 0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x190],0x00000001 ; line 867
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x00,                   // MOV BYTE PTR [ESI+0x194],0x00 ; line 868
 	0x61,                                                       // POPAD ; line 870
@@ -783,33 +783,33 @@ static unsigned char clownpieceMECH2_byteCode[] = {
 	0x90,                                                       // NOP ; line 872
 	0x90,                                                       // NOP ; line 873
 	0x90,                                                       // NOP ; line 874
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x28, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x28 ; line 875
-	0x0F, 0x85, 0x22, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL1 ; line 876
-	0x81, 0xBE, 0x10, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, // CMP DWORD PTR [ESI+0x110],0xFFFFFFFF ; line 877
-	0x0F, 0x85, 0x12, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL1 ; line 878
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x28,                   // CMP DWORD PTR [ESI+0x144],0x28 ; line 875
+	0x75, 0x1B,                                                 // JNE SHORT LABEL1 ; line 876
+	0x83, 0xBE, 0x10, 0x01, 0x00, 0x00, 0xFF,                   // CMP DWORD PTR [ESI+0x110],0xFFFFFFFF ; line 877
+	0x75, 0x12,                                                 // JNE SHORT LABEL1 ; line 878
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x01,                   // MOV BYTE PTR [ESI+0x194],0x01 ; line 879
 	0x90,                                                       // NOP ; line 880
 	0xC7, 0x86, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x190],0x00000000 ; line 881
-	0x81, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x04 ; line 883
-	0x0F, 0x84, 0x10, 0x00, 0x00, 0x00,                         // JE SHORT LABEL2 ; line 884
-	0x81, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x08 ; line 885
-	0x0F, 0x85, 0x05, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL3 ; line 886
-	0xE9, 0x40, 0x00, 0x00, 0x00,                               // JMP EXIT ; line 888
-	0x81, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x00 ; line 890
-	0x0F, 0x84, 0x0A, 0x00, 0x00, 0x00,                         // JE SHORT LABEL4 ; line 891
+	0x83, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x04,                   // CMP DWORD PTR [ESI+0x190],0x04 ; line 883
+	0x74, 0x09,                                                 // JE SHORT LABEL2 ; line 884
+	0x83, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x08,                   // CMP DWORD PTR [ESI+0x190],0x08 ; line 885
+	0x75, 0x05,                                                 // JNE SHORT LABEL3 ; line 886
+	0xE9, 0x29, 0x00, 0x00, 0x00,                               // JMP EXIT ; line 888
+	0x83, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ESI+0x190],0x00 ; line 890
+	0x74, 0x0A,                                                 // JE SHORT LABEL4 ; line 891
 	0x81, 0xAE, 0x10, 0x01, 0x00, 0x00, 0x11, 0x11, 0x11, 0x11, // SUB DWORD PTR [ESI+0x110],0x11111111 ; line 892
-	0x81, 0xBE, 0x10, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x110],0x00000000 ; line 894
-	0x0F, 0x84, 0x07, 0x00, 0x00, 0x00,                         // JE SHORT LABEL5 ; line 895
+	0x83, 0xBE, 0x10, 0x01, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ESI+0x110],0x00000000 ; line 894
+	0x74, 0x04,                                                 // JE SHORT LABEL5 ; line 895
 	0x39, 0xC0,                                                 // CMP EAX,EAX ; line 896
-	0xE9, 0x0A, 0x00, 0x00, 0x00,                               // JMP SHORT LABEL6 ; line 897
-	0x81, 0xBE, 0x10, 0x01, 0x00, 0x00, 0xDD, 0xFF, 0xFF, 0xFF, // CMP DWORD PTR [ESI+0x110],0xFFFFFFDD ; line 899
-	0xE9, 0x00, 0x00, 0x00, 0x00,                               // JMP SHORT EXIT ; line 901
+	0xEB, 0x07,                                                 // JMP SHORT LABEL6 ; line 897
+	0x83, 0xBE, 0x10, 0x01, 0x00, 0x00, 0xDD,                   // CMP DWORD PTR [ESI+0x110],0xFFFFFFDD ; line 899
+	0xEB, 0x00,                                                 // JMP SHORT EXIT ; line 901
 	0x90,                                                       // NOP ; line 903
 };
 static JumpTarget clownpieceMECH2_jumpData[] = {
 	{ 0x007, 0x48CDE0 },
 };
-static PatchByteCode clownpieceMECH2_patchByteCode = { clownpieceMECH2_byteCode, 251, clownpieceMECH2_jumpData, 1 };
+static PatchByteCode clownpieceMECH2_patchByteCode = { clownpieceMECH2_byteCode, 182, clownpieceMECH2_jumpData, 1 };
 // clownpiece5C_SKIP declared in clownpiece.asm line 921
 static unsigned char clownpiece5C_SKIP_byteCode[] = {
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF, // JMP 0x636EE4 ; line 922
@@ -832,18 +832,18 @@ static unsigned char clownpieceA214_byteCode[] = {
 	0x60,                                                       // PUSHAD ; line 936
 	0xC6, 0x86, 0x8C, 0x01, 0x00, 0x00, 0x05,                   // MOV BYTE PTR [ESI+0x18C],0x05 ; line 937
 	0x66, 0x81, 0xBE, 0x3C, 0x01, 0x00, 0x00, 0x0E, 0x02,       // CMP WORD PTR [ESI+0x13C],0x020E ; line 938
-	0x0F, 0x8C, 0x0A, 0x00, 0x00, 0x00,                         // JL SHORT LABEL1 ; line 939
+	0x7C, 0x07,                                                 // JL SHORT LABEL1 ; line 939
 	0xBB, 0x00, 0x00, 0x09, 0x00,                               // MOV EBX,0x00090000 ; line 940
-	0xE9, 0x05, 0x00, 0x00, 0x00,                               // JMP SHORT LABEL2 ; line 941
+	0xEB, 0x05,                                                 // JMP SHORT LABEL2 ; line 941
 	0xBB, 0x00, 0x00, 0x0B, 0x00,                               // MOV EBX,0x000B0000 ; line 943
 	0x39, 0x9E, 0x3E, 0x01, 0x00, 0x00,                         // CMP DWORD PTR [ESI+0x13E],EBX ; line 945
-	0x0F, 0x84, 0x20, 0x00, 0x00, 0x00,                         // JE SHORT LABEL3 ; line 946
+	0x74, 0x18,                                                 // JE SHORT LABEL3 ; line 946
 	0x81, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x01, 0x00, 0x03, 0x00, // CMP DWORD PTR [ESI+0x13E],0x00030001 ; line 947
-	0x0F, 0x84, 0x10, 0x00, 0x00, 0x00,                         // JE SHORT LABEL3 ; line 948
+	0x74, 0x0C,                                                 // JE SHORT LABEL3 ; line 948
 	0x81, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x01, 0x00, 0x07, 0x00, // CMP DWORD PTR [ESI+0x13E],0x00070001 ; line 949
-	0x0F, 0x85, 0x20, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL4 ; line 950
-	0x66, 0x81, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, 0x00,       // CMP WORD PTR [ESI+0x142],0x0000 ; line 952
-	0x0F, 0x85, 0x11, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL4 ; line 953
+	0x75, 0x1B,                                                 // JNE SHORT LABEL4 ; line 950
+	0x66, 0x83, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00,             // CMP WORD PTR [ESI+0x142],0x0000 ; line 952
+	0x75, 0x11,                                                 // JNE SHORT LABEL4 ; line 953
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x01,                   // MOV BYTE PTR [ESI+0x194],0x01 ; line 954
 	0xC7, 0x86, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x190],0x00000000 ; line 955
 	0x61,                                                       // POPAD ; line 957
@@ -852,14 +852,14 @@ static unsigned char clownpieceA214_byteCode[] = {
 	0xD8, 0xC8,                                                 // FMUL ST0,ST0 ; line 960
 	0xD9, 0x9E, 0xF4, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF4] ; line 961
 };
-static PatchByteCode clownpieceA214_patchByteCode = { clownpieceA214_byteCode, 129, nullptr, 0 };
+static PatchByteCode clownpieceA214_patchByteCode = { clownpieceA214_byteCode, 105, nullptr, 0 };
 // clownpieceA214_MAXDUR declared in clownpiece.asm line 965
 static unsigned char clownpieceA214_MAXDUR_byteCode[] = {
 	0x60,                                     // PUSHAD ; line 966
 	0x66, 0x9C,                               // PUSHF ; line 967
 	0x0F, 0xB6, 0x96, 0xA9, 0x06, 0x00, 0x00, // MOVZX EDX,BYTE PTR [ESI+0x6A9] ; line 968
-	0x66, 0x81, 0xC2, 0x03, 0x00,             // ADD DX,0x03 ; line 969
-	0x6B, 0xD2, 0x0C,                         // IMUL DX,DX,0x0C ; line 970
+	0x66, 0x83, 0xC2, 0x03,                   // ADD DX,0x03 ; line 969
+	0x66, 0x6B, 0xD2, 0x0C,                   // IMUL DX,DX,0x0C ; line 970
 	0x66, 0x9D,                               // POPF ; line 971
 	0x66, 0x39, 0x96, 0x44, 0x01, 0x00, 0x00, // CMP WORD PTR [ESI+0x144],DX ; line 972
 	0x61,                                     // POPAD ; line 973
@@ -876,7 +876,7 @@ static PatchByteCode clownpieceSKIP_1_patchByteCode = { clownpieceSKIP_1_byteCod
 // clownpieceA214_Y declared in clownpiece.asm line 982
 static unsigned char clownpieceA214_Y_byteCode[] = {
 	0xD9, 0x9E, 0x1C, 0x01, 0x00, 0x00, // FSTP DWORD PTR [ESI+0x11C] ; line 983
-	0x81, 0xC4, 0x04, 0x00, 0x00, 0x00, // ADD ESP,0x04 ; line 984
+	0x83, 0xC4, 0x04,                   // ADD ESP,0x04 ; line 984
 	0x90,                               // NOP ; line 985
 	0x66, 0x9C,                         // PUSHF ; line 986
 	0x60,                               // PUSHAD ; line 987
@@ -895,9 +895,9 @@ static unsigned char clownpieceA214_Y_byteCode[] = {
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,       // JMP 0x63987F ; line 1000
 };
 static JumpTarget clownpieceA214_Y_jumpData[] = {
-	{ 0x047, 0x63987F },
+	{ 0x044, 0x63987F },
 };
-static PatchByteCode clownpieceA214_Y_patchByteCode = { clownpieceA214_Y_byteCode, 75, clownpieceA214_Y_jumpData, 1 };
+static PatchByteCode clownpieceA214_Y_patchByteCode = { clownpieceA214_Y_byteCode, 72, clownpieceA214_Y_jumpData, 1 };
 // clownpieceA214_ROTDISABLE declared in clownpiece.asm line 1021
 static unsigned char clownpieceA214_ROTDISABLE_byteCode[] = {
 	0xD9, 0x86, 0x2C, 0x01, 0x00, 0x00, // FLD DWORD PTR [ESI+0x12C] ; line 1022
@@ -941,21 +941,21 @@ static unsigned char clownpiece105_byteCode[] = {
 static PatchByteCode clownpiece105_patchByteCode = { clownpiece105_byteCode, 6, nullptr, 0 };
 // clownpieceD214 declared in clownpiece.asm line 1100
 static unsigned char clownpieceD214_byteCode[] = {
-	0x66, 0x9C,                                           // PUSHF ; line 1101
-	0x60,                                                 // PUSHAD ; line 1102
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x14, 0x00, // CMP WORD PTR [ESI+0x140],0x0014 ; line 1103
-	0x0F, 0x85, 0x0D, 0x00, 0x00, 0x00,                   // JNE SHORT LABEL1 ; line 1104
-	0x6A, 0x06,                                           // PUSH 0x06 ; line 1105
-	0x8B, 0x8E, 0x98, 0x03, 0x00, 0x00,                   // MOV ECX,[ESI+0x398] ; line 1106
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x464980 ; line 1107
-	0x61,                                                 // POPAD ; line 1109
-	0x66, 0x9D,                                           // POPF ; line 1110
-	0x0F, 0xBE, 0x8E, 0x04, 0x01, 0x00, 0x00,             // MOVSX ECX,BYTE PTR [ESI+0x104] ; line 1111
+	0x66, 0x9C,                                     // PUSHF ; line 1101
+	0x60,                                           // PUSHAD ; line 1102
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x14, // CMP WORD PTR [ESI+0x140],0x0014 ; line 1103
+	0x75, 0x0D,                                     // JNE SHORT LABEL1 ; line 1104
+	0x6A, 0x06,                                     // PUSH 0x06 ; line 1105
+	0x8B, 0x8E, 0x98, 0x03, 0x00, 0x00,             // MOV ECX,[ESI+0x398] ; line 1106
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x464980 ; line 1107
+	0x61,                                           // POPAD ; line 1109
+	0x66, 0x9D,                                     // POPF ; line 1110
+	0x0F, 0xBE, 0x8E, 0x04, 0x01, 0x00, 0x00,       // MOVSX ECX,BYTE PTR [ESI+0x104] ; line 1111
 };
 static JumpTarget clownpieceD214_jumpData[] = {
-	{ 0x01B, 0x464980 },
+	{ 0x016, 0x464980 },
 };
-static PatchByteCode clownpieceD214_patchByteCode = { clownpieceD214_byteCode, 41, clownpieceD214_jumpData, 1 };
+static PatchByteCode clownpieceD214_patchByteCode = { clownpieceD214_byteCode, 36, clownpieceD214_jumpData, 1 };
 // clownpieceD214_EQ declared in clownpiece.asm line 1122
 static unsigned char clownpieceD214_EQ_byteCode[] = {
 	0xDC, 0x05, 0xC8, 0xBB, 0x85, 0x00, // FADD QWORD PTR [0x85BBC8] ; line 1123
@@ -969,12 +969,12 @@ static unsigned char clownpiece3SCSTAR_byteCode[] = {
 	0x31, 0xD2,                                                 // XOR EDX,EDX ; line 1143
 	0xBB, 0x05, 0x00, 0x00, 0x00,                               // MOV EBX,0x00000005 ; line 1144
 	0xF7, 0xF3,                                                 // DIV EBX ; line 1145
-	0x81, 0xFA, 0x00, 0x00, 0x00, 0x00,                         // CMP EDX,0x00 ; line 1146
-	0x0F, 0x85, 0x11, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL1 ; line 1147
+	0x83, 0xFA, 0x00,                                           // CMP EDX,0x00 ; line 1146
+	0x75, 0x11,                                                 // JNE SHORT LABEL1 ; line 1147
 	0xC7, 0x86, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x190],0x00000000 ; line 1148
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x01,                   // MOV BYTE PTR [ESI+0x194],0x01 ; line 1149
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x00 ; line 1151
-	0x0F, 0x85, 0x0D, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL2 ; line 1152
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ESI+0x144],0x00 ; line 1151
+	0x75, 0x0D,                                                 // JNE SHORT LABEL2 ; line 1152
 	0x8B, 0x8E, 0x98, 0x03, 0x00, 0x00,                         // MOV ECX,[ESI+0x398] ; line 1153
 	0x6A, 0x05,                                                 // PUSH 0x05 ; line 1154
 	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                               // CALL 0x464980 ; line 1155
@@ -983,9 +983,9 @@ static unsigned char clownpiece3SCSTAR_byteCode[] = {
 	0xD9, 0xEE,                                                 // FLDZ ; line 1159
 };
 static JumpTarget clownpiece3SCSTAR_jumpData[] = {
-	{ 0x048, 0x464980 },
+	{ 0x03A, 0x464980 },
 };
-static PatchByteCode clownpiece3SCSTAR_patchByteCode = { clownpiece3SCSTAR_byteCode, 81, clownpiece3SCSTAR_jumpData, 1 };
+static PatchByteCode clownpiece3SCSTAR_patchByteCode = { clownpiece3SCSTAR_byteCode, 67, clownpiece3SCSTAR_jumpData, 1 };
 // clownpiece106 declared in clownpiece.asm line 1169
 static unsigned char clownpiece106_byteCode[] = {
 	0xD8, 0x05, 0xA4, 0x75, 0x85, 0x00, // FADD DWORD PTR [0x8575A4] ; line 1170
@@ -1008,18 +1008,18 @@ static unsigned char clownpiece109_byteCode[] = {
 static PatchByteCode clownpiece109_patchByteCode = { clownpiece109_byteCode, 6, nullptr, 0 };
 // clownpiece200 declared in clownpiece.asm line 1217
 static unsigned char clownpiece200_byteCode[] = {
-	0x66, 0x81, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x02, 0x00, // CMP WORD PTR [ESI+0x13E],0x02 ; line 1218
-	0x0F, 0x8C, 0xDE, 0xAD, 0xBE, 0xEF,                   // JL 0x636EF3 ; line 1219
-	0x66, 0x81, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x06, 0x00, // CMP WORD PTR [ESI+0x13E],0x06 ; line 1220
-	0x0F, 0x8F, 0xDE, 0xAD, 0xBE, 0xEF,                   // JG 0x636EF3 ; line 1221
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x636EE4 ; line 1222
+	0x66, 0x83, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x02, // CMP WORD PTR [ESI+0x13E],0x02 ; line 1218
+	0x0F, 0x8C, 0xDE, 0xAD, 0xBE, 0xEF,             // JL 0x636EF3 ; line 1219
+	0x66, 0x83, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x06, // CMP WORD PTR [ESI+0x13E],0x06 ; line 1220
+	0x0F, 0x8F, 0xDE, 0xAD, 0xBE, 0xEF,             // JG 0x636EF3 ; line 1221
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x636EE4 ; line 1222
 };
 static JumpTarget clownpiece200_jumpData[] = {
-	{ 0x00B, 0x636EF3 },
-	{ 0x01A, 0x636EF3 },
-	{ 0x01F, 0x636EE4 },
+	{ 0x00A, 0x636EF3 },
+	{ 0x018, 0x636EF3 },
+	{ 0x01D, 0x636EE4 },
 };
-static PatchByteCode clownpiece200_patchByteCode = { clownpiece200_byteCode, 35, clownpiece200_jumpData, 3 };
+static PatchByteCode clownpiece200_patchByteCode = { clownpiece200_byteCode, 33, clownpiece200_jumpData, 3 };
 // clownpiece201 declared in clownpiece.asm line 1229
 static unsigned char clownpiece201_byteCode[] = {
 	0xD9, 0x9E, 0xF8, 0x00, 0x00, 0x00, // FSTP DWORD PTR [ESI+0xF8] ; line 1230
@@ -1033,49 +1033,49 @@ static unsigned char clownpiece1SCCRUSH_byteCode[] = {
 	0x60,                                                       // PUSHAD ; line 1241
 	0x8B, 0x9E, 0x40, 0x01, 0x00, 0x00,                         // MOV EBX,[ESI+0x140] ; line 1242
 	0x80, 0xFB, 0x10,                                           // CMP BL,0x10 ; line 1243
-	0x0F, 0x8C, 0x82, 0x00, 0x00, 0x00,                         // JL SHORT LABEL1 ; line 1244
+	0x7C, 0x5B,                                                 // JL SHORT LABEL1 ; line 1244
 	0x80, 0xFB, 0x24,                                           // CMP BL,0x24 ; line 1245
-	0x0F, 0x8F, 0x79, 0x00, 0x00, 0x00,                         // JG SHORT LABEL1 ; line 1246
+	0x7F, 0x56,                                                 // JG SHORT LABEL1 ; line 1246
 	0x80, 0xFB, 0x10,                                           // CMP BL,0x10 ; line 1247
-	0x0F, 0x85, 0x0C, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL2 ; line 1248
+	0x75, 0x0C,                                                 // JNE SHORT LABEL2 ; line 1248
 	0xD9, 0x05, 0x00, 0x9F, 0x85, 0x00,                         // FLD DWORD PTR [0x859F00] ; line 1249
 	0xD9, 0x9E, 0xF4, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF4] ; line 1250
 	0xD9, 0x86, 0xF4, 0x00, 0x00, 0x00,                         // FLD DWORD PTR [ESI+0xF4] ; line 1252
 	0xD8, 0x25, 0x14, 0xCB, 0x85, 0x00,                         // FSUB DWORD PTR [0x85CB14] ; line 1253
 	0xD9, 0x9E, 0xF4, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF4] ; line 1254
 	0x80, 0xFB, 0x10,                                           // CMP BL,0x10 ; line 1255
-	0x0F, 0x84, 0x33, 0x00, 0x00, 0x00,                         // JE SHORT LABEL3 ; line 1256
+	0x74, 0x1B,                                                 // JE SHORT LABEL3 ; line 1256
 	0x80, 0xFB, 0x14,                                           // CMP BL,0x14 ; line 1257
-	0x0F, 0x84, 0x2A, 0x00, 0x00, 0x00,                         // JE SHORT LABEL3 ; line 1258
+	0x74, 0x16,                                                 // JE SHORT LABEL3 ; line 1258
 	0x80, 0xFB, 0x18,                                           // CMP BL,0x18 ; line 1259
-	0x0F, 0x84, 0x21, 0x00, 0x00, 0x00,                         // JE SHORT LABEL3 ; line 1260
+	0x74, 0x11,                                                 // JE SHORT LABEL3 ; line 1260
 	0x80, 0xFB, 0x1C,                                           // CMP BL,0x1C ; line 1261
-	0x0F, 0x84, 0x18, 0x00, 0x00, 0x00,                         // JE SHORT LABEL3 ; line 1262
+	0x74, 0x0C,                                                 // JE SHORT LABEL3 ; line 1262
 	0x80, 0xFB, 0x20,                                           // CMP BL,0x20 ; line 1263
-	0x0F, 0x84, 0x0F, 0x00, 0x00, 0x00,                         // JE SHORT LABEL3 ; line 1264
+	0x74, 0x07,                                                 // JE SHORT LABEL3 ; line 1264
 	0x80, 0xFB, 0x24,                                           // CMP BL,0x24 ; line 1265
-	0x0F, 0x84, 0x06, 0x00, 0x00, 0x00,                         // JE SHORT LABEL3 ; line 1266
-	0x0F, 0x85, 0x11, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL4 ; line 1267
+	0x74, 0x02,                                                 // JE SHORT LABEL3 ; line 1266
+	0x75, 0x11,                                                 // JNE SHORT LABEL4 ; line 1267
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x01,                   // MOV BYTE PTR [ESI+0x194],0x01 ; line 1269
 	0xC7, 0x86, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x190],0x00000000 ; line 1270
-	0xE9, 0x08, 0x00, 0x00, 0x00,                               // JMP SHORT LABEL5 ; line 1272
+	0xEB, 0x08,                                                 // JMP SHORT LABEL5 ; line 1272
 	0xD9, 0xEE,                                                 // FLDZ ; line 1274
 	0xD9, 0x9E, 0xF4, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF4] ; line 1275
 	0x61,                                                       // POPAD ; line 1277
 	0x66, 0x9D,                                                 // POPF ; line 1278
-	0x66, 0x81, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, 0x00,       // CMP WORD PTR [ESI+0x142],0x00 ; line 1279
+	0x66, 0x83, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00,             // CMP WORD PTR [ESI+0x142],0x00 ; line 1279
 };
-static PatchByteCode clownpiece1SCCRUSH_patchByteCode = { clownpiece1SCCRUSH_byteCode, 168, nullptr, 0 };
+static PatchByteCode clownpiece1SCCRUSH_patchByteCode = { clownpiece1SCCRUSH_byteCode, 124, nullptr, 0 };
 // clownpiece1SCCRUSH_FLASH declared in clownpiece.asm line 1283
 static unsigned char clownpiece1SCCRUSH_FLASH_byteCode[] = {
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x04, 0x00, // CMP WORD PTR [ESI+0x140],0x04 ; line 1284
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x04, // CMP WORD PTR [ESI+0x140],0x04 ; line 1284
 };
-static PatchByteCode clownpiece1SCCRUSH_FLASH_patchByteCode = { clownpiece1SCCRUSH_FLASH_byteCode, 9, nullptr, 0 };
+static PatchByteCode clownpiece1SCCRUSH_FLASH_patchByteCode = { clownpiece1SCCRUSH_FLASH_byteCode, 8, nullptr, 0 };
 // clownpiece1SCCRUSH_START declared in clownpiece.asm line 1288
 static unsigned char clownpiece1SCCRUSH_START_byteCode[] = {
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x01, 0x00, // CMP WORD PTR [ESI+0x140],0x01 ; line 1289
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x01, // CMP WORD PTR [ESI+0x140],0x01 ; line 1289
 };
-static PatchByteCode clownpiece1SCCRUSH_START_patchByteCode = { clownpiece1SCCRUSH_START_byteCode, 9, nullptr, 0 };
+static PatchByteCode clownpiece1SCCRUSH_START_patchByteCode = { clownpiece1SCCRUSH_START_byteCode, 8, nullptr, 0 };
 // clownpiece1SCCRUSH_Y declared in clownpiece.asm line 1293
 static unsigned char clownpiece1SCCRUSH_Y_byteCode[] = {
 	0xD8, 0x05, 0xC4, 0xBD, 0x85, 0x00, // FADD DWORD PTR [0x85BDC4] ; line 1294
@@ -1091,21 +1091,21 @@ static unsigned char clownpiece1SCCRUSH_2_byteCode[] = {
 	0x60,                                                 // PUSHAD ; line 1305
 	0x8B, 0x9E, 0x98, 0x03, 0x00, 0x00,                   // MOV EBX,[ESI+0x398] ; line 1306
 	0x8B, 0x83, 0x3C, 0x01, 0x00, 0x00,                   // MOV EAX,[EBX+0x13C] ; line 1307
-	0x66, 0x81, 0xF8, 0x5E, 0x02,                         // CMP AX,0x025E ; line 1308
-	0x0F, 0x85, 0x22, 0x00, 0x00, 0x00,                   // JNE SHORT LABEL1 ; line 1309
+	0x66, 0x3D, 0x5E, 0x02,                               // CMP AX,0x025E ; line 1308
+	0x75, 0x1A,                                           // JNE SHORT LABEL1 ; line 1309
 	0x8B, 0x83, 0x40, 0x01, 0x00, 0x00,                   // MOV EAX,[EBX+0x140] ; line 1310
-	0x66, 0x81, 0xF8, 0x28, 0x00,                         // CMP AX,0x0028 ; line 1311
-	0x0F, 0x8D, 0x11, 0x00, 0x00, 0x00,                   // JNL SHORT LABEL1 ; line 1312
+	0x66, 0x83, 0xF8, 0x28,                               // CMP AX,0x0028 ; line 1311
+	0x7D, 0x0E,                                           // JNL SHORT LABEL1 ; line 1312
 	0x8B, 0x9B, 0x96, 0x01, 0x00, 0x00,                   // MOV EBX,[EBX+0x196] ; line 1313
 	0x89, 0x9E, 0x96, 0x01, 0x00, 0x00,                   // MOV DWORD PTR [ESI+0x196],EBX ; line 1314
-	0xE9, 0x1A, 0x00, 0x00, 0x00,                         // JMP SHORT LABEL2 ; line 1315
+	0xEB, 0x15,                                           // JMP SHORT LABEL2 ; line 1315
 	0x8B, 0x86, 0x40, 0x01, 0x00, 0x00,                   // MOV EAX,[ESI+0x140] ; line 1317
-	0x66, 0x81, 0xF8, 0xFF, 0x00,                         // CMP AX,0x00FF ; line 1318
-	0x0F, 0x8D, 0x09, 0x00, 0x00, 0x00,                   // JNL SHORT LABEL2 ; line 1319
+	0x66, 0x3D, 0xFF, 0x00,                               // CMP AX,0x00FF ; line 1318
+	0x7D, 0x09,                                           // JNL SHORT LABEL2 ; line 1319
 	0x66, 0xC7, 0x86, 0x40, 0x01, 0x00, 0x00, 0xFF, 0x00, // MOV WORD PTR [ESI+0x140],0x00FF ; line 1320
 	0x61,                                                 // POPAD ; line 1322
 };
-static PatchByteCode clownpiece1SCCRUSH_2_patchByteCode = { clownpiece1SCCRUSH_2_byteCode, 105, nullptr, 0 };
+static PatchByteCode clownpiece1SCCRUSH_2_patchByteCode = { clownpiece1SCCRUSH_2_byteCode, 87, nullptr, 0 };
 // clownpiece1SCCRUSH_DELAY declared in clownpiece.asm line 1327
 static unsigned char clownpiece1SCCRUSH_DELAY_byteCode[] = {
 	0x68, 0x68, 0x01, 0x00, 0x00, // PUSH 0x00000168 ; line 1328
@@ -1125,22 +1125,22 @@ static PatchByteCode clownpiece2SCFIELD_1_patchByteCode = { clownpiece2SCFIELD_1
 static unsigned char clownpiece2SCFIELD_2_byteCode[] = {
 	0x66, 0x9C,                                                 // PUSHF ; line 1352
 	0x60,                                                       // PUSHAD ; line 1353
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x00000000 ; line 1354
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ESI+0x144],0x00000000 ; line 1354
 	0x90,                                                       // NOP ; line 1355
-	0x0F, 0x85, 0x12, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL1 ; line 1356
+	0x75, 0x12,                                                 // JNE SHORT LABEL1 ; line 1356
 	0xC7, 0x86, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x190],0x00000000 ; line 1357
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x01,                   // MOV BYTE PTR [ESI+0x194],0x01 ; line 1358
 	0x90,                                                       // NOP ; line 1359
 	0x8B, 0x86, 0x98, 0x03, 0x00, 0x00,                         // MOV EAX,[ESI+0x398] ; line 1362
 	0x0F, 0xB7, 0x80, 0x3C, 0x01, 0x00, 0x00,                   // MOVZX EAX, WORD PTR [EAX+0x13C] ; line 1363
-	0x66, 0x81, 0xF8, 0x31, 0x00,                               // CMP AX,0x0031 ; line 1364
-	0x0F, 0x8E, 0x0B, 0x00, 0x00, 0x00,                         // JLE SHORT LABEL2 ; line 1365
-	0x66, 0x81, 0xF8, 0x96, 0x00,                               // CMP AX,0x0096 ; line 1366
-	0x0F, 0x8C, 0x1D, 0x00, 0x00, 0x00,                         // JL SHORT LABEL3 ; line 1367
+	0x66, 0x83, 0xF8, 0x31,                                     // CMP AX,0x0031 ; line 1364
+	0x7E, 0x06,                                                 // JLE SHORT LABEL2 ; line 1365
+	0x66, 0x3D, 0x96, 0x00,                                     // CMP AX,0x0096 ; line 1366
+	0x7C, 0x12,                                                 // JL SHORT LABEL3 ; line 1367
 	0x80, 0xBE, 0x94, 0x01, 0x00, 0x00, 0x00,                   // CMP BYTE PTR [ESI+0x194],0x00 ; line 1369
-	0x0F, 0x85, 0x22, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL4 ; line 1370
-	0x81, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x08 ; line 1371
-	0x0F, 0x85, 0x00, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL3 ; line 1372
+	0x75, 0x1B,                                                 // JNE SHORT LABEL4 ; line 1370
+	0x83, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x08,                   // CMP DWORD PTR [ESI+0x190],0x08 ; line 1371
+	0x75, 0x00,                                                 // JNE SHORT LABEL3 ; line 1372
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x00,                   // MOV BYTE PTR [ESI+0x194],0x00 ; line 1374
 	0x90,                                                       // NOP ; line 1375
 	0xC7, 0x86, 0x10, 0x01, 0x00, 0x00, 0x55, 0x55, 0x55, 0x55, // MOV DWORD PTR [ESI+0x110],0x55555555 ; line 1376
@@ -1150,20 +1150,20 @@ static unsigned char clownpiece2SCFIELD_2_byteCode[] = {
 	0x66, 0x9D,                                                 // POPF ; line 1381
 	0xD9, 0xE8,                                                 // FLD1 ; line 1382
 };
-static PatchByteCode clownpiece2SCFIELD_2_patchByteCode = { clownpiece2SCFIELD_2_byteCode, 141, nullptr, 0 };
+static PatchByteCode clownpiece2SCFIELD_2_patchByteCode = { clownpiece2SCFIELD_2_byteCode, 113, nullptr, 0 };
 // clownpiece2SCD623_DUR declared in clownpiece.asm line 1389
 static unsigned char clownpiece2SCD623_DUR_byteCode[] = {
-	0x81, 0xF8, 0x1C, 0x02, 0x00, 0x00, // CMP EAX,0x21C ; line 1390
+	0x3D, 0x1C, 0x02, 0x00, 0x00, // CMP EAX,0x21C ; line 1390
 };
-static PatchByteCode clownpiece2SCD623_DUR_patchByteCode = { clownpiece2SCD623_DUR_byteCode, 6, nullptr, 0 };
+static PatchByteCode clownpiece2SCD623_DUR_patchByteCode = { clownpiece2SCD623_DUR_byteCode, 5, nullptr, 0 };
 // clownpieceD22B declared in clownpiece.asm line 1401
 static unsigned char clownpieceD22B_byteCode[] = {
-	0x81, 0xEC, 0x40, 0x00, 0x00, 0x00, // SUB ESP,0x40 ; line 1403
-	0xE8, 0x1E, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1404
-	0xE8, 0x19, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1406
-	0xE8, 0x14, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1408
-	0xE8, 0x0F, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1410
-	0x81, 0xC4, 0x40, 0x00, 0x00, 0x00, // ADD ESP,0x40 ; line 1411
+	0x83, 0xEC, 0x40,                   // SUB ESP,0x40 ; line 1403
+	0xE8, 0x1B, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1404
+	0xE8, 0x16, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1406
+	0xE8, 0x11, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1408
+	0xE8, 0x0C, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1410
+	0x83, 0xC4, 0x40,                   // ADD ESP,0x40 ; line 1411
 	0x66, 0x9C,                         // PUSHF ; line 1412
 	0x66, 0x9D,                         // POPF ; line 1414
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,       // JMP 0x63B6BB ; line 1415
@@ -1173,10 +1173,10 @@ static unsigned char clownpieceD22B_byteCode[] = {
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,       // JMP 0x63B58F ; line 1420
 };
 static JumpTarget clownpieceD22B_jumpData[] = {
-	{ 0x025, 0x63B6BB },
-	{ 0x034, 0x63B58F },
+	{ 0x01F, 0x63B6BB },
+	{ 0x02E, 0x63B58F },
 };
-static PatchByteCode clownpieceD22B_patchByteCode = { clownpieceD22B_byteCode, 56, clownpieceD22B_jumpData, 2 };
+static PatchByteCode clownpieceD22B_patchByteCode = { clownpieceD22B_byteCode, 50, clownpieceD22B_jumpData, 2 };
 // clownpieceD22_1 declared in clownpiece.asm line 1424
 static unsigned char clownpieceD22_1_byteCode[] = {
 	0x68, 0x20, 0x03, 0x00, 0x00, // PUSH 0x00000320 ; line 1425
@@ -1192,21 +1192,21 @@ static PatchByteCode clownpieceD22_2_patchByteCode = { clownpieceD22_2_byteCode,
 // clownpieceD22_3 declared in clownpiece.asm line 1487
 static unsigned char clownpieceD22_3_byteCode[] = {
 	0x80, 0xBE, 0x04, 0x01, 0x00, 0x00, 0xFF, // CMP BYTE PTR [ESI+0x104],0xFF ; line 1488
-	0x0F, 0x84, 0x08, 0x00, 0x00, 0x00,       // JE SHORT LABEL1 ; line 1489
+	0x74, 0x04,                               // JE SHORT LABEL1 ; line 1489
 	0xD9, 0xEE,                               // FLDZ ; line 1490
-	0x0F, 0x85, 0x06, 0x00, 0x00, 0x00,       // JNE SHORT LABEL2 ; line 1491
+	0x75, 0x06,                               // JNE SHORT LABEL2 ; line 1491
 	0xD9, 0x05, 0xF4, 0xB8, 0x85, 0x00,       // FLD DWORD PTR [0x85B8F4] ; line 1493
 	0x90,                                     // NOP ; line 1495
 };
-static PatchByteCode clownpieceD22_3_patchByteCode = { clownpieceD22_3_byteCode, 28, nullptr, 0 };
+static PatchByteCode clownpieceD22_3_patchByteCode = { clownpieceD22_3_byteCode, 20, nullptr, 0 };
 // clownpieceD22C declared in clownpiece.asm line 1501
 static unsigned char clownpieceD22C_byteCode[] = {
-	0x81, 0xEC, 0x40, 0x00, 0x00, 0x00, // SUB ESP,0x40 ; line 1503
-	0xE8, 0x1E, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1504
-	0xE8, 0x19, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1506
-	0xE8, 0x14, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1508
-	0xE8, 0x0F, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1510
-	0x81, 0xC4, 0x40, 0x00, 0x00, 0x00, // ADD ESP,0x40 ; line 1511
+	0x83, 0xEC, 0x40,                   // SUB ESP,0x40 ; line 1503
+	0xE8, 0x1B, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1504
+	0xE8, 0x16, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1506
+	0xE8, 0x11, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1508
+	0xE8, 0x0C, 0x00, 0x00, 0x00,       // CALL LABEL1 ; line 1510
+	0x83, 0xC4, 0x40,                   // ADD ESP,0x40 ; line 1511
 	0x66, 0x9C,                         // PUSHF ; line 1512
 	0x66, 0x9D,                         // POPF ; line 1514
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,       // JMP 0x63B8B0 ; line 1515
@@ -1216,10 +1216,10 @@ static unsigned char clownpieceD22C_byteCode[] = {
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,       // JMP 0x63B77F ; line 1520
 };
 static JumpTarget clownpieceD22C_jumpData[] = {
-	{ 0x025, 0x63B8B0 },
-	{ 0x034, 0x63B77F },
+	{ 0x01F, 0x63B8B0 },
+	{ 0x02E, 0x63B77F },
 };
-static PatchByteCode clownpieceD22C_patchByteCode = { clownpieceD22C_byteCode, 56, clownpieceD22C_jumpData, 2 };
+static PatchByteCode clownpieceD22C_patchByteCode = { clownpieceD22C_byteCode, 50, clownpieceD22C_jumpData, 2 };
 // clownpieceD22C_1 declared in clownpiece.asm line 1524
 static unsigned char clownpieceD22C_1_byteCode[] = {
 	0x68, 0x20, 0x03, 0x00, 0x00, // PUSH 0x00000320 ; line 1525
@@ -1281,24 +1281,24 @@ static unsigned char clownpieceA623_STACK_byteCode[] = {
 	0x66, 0x9C,                                                 // PUSHF ; line 1597
 	0x60,                                                       // PUSHAD ; line 1598
 	0x81, 0xBE, 0x3C, 0x01, 0x00, 0x00, 0x35, 0x03, 0x01, 0x00, // CMP DWORD PTR [ESI+0x13C],0x00010335 ; line 1599
-	0x0F, 0x84, 0x05, 0x00, 0x00, 0x00,                         // JE SHORT LABEL1 ; line 1600
-	0xE9, 0x47, 0x00, 0x00, 0x00,                               // JMP SHORT LABEL2 ; line 1602
+	0x74, 0x02,                                                 // JE SHORT LABEL1 ; line 1600
+	0xEB, 0x35,                                                 // JMP SHORT LABEL2 ; line 1602
 	0x8B, 0x86, 0x98, 0x03, 0x00, 0x00,                         // MOV EAX,[ESI+0x398] ; line 1604
 	0x81, 0xB8, 0x3C, 0x01, 0x00, 0x00, 0x21, 0x02, 0x00, 0x00, // CMP DWORD PTR [EAX+0x13C],0x00000221 ; line 1605
-	0x0F, 0x84, 0x10, 0x00, 0x00, 0x00,                         // JE SHORT LABEL3 ; line 1606
+	0x74, 0x0C,                                                 // JE SHORT LABEL3 ; line 1606
 	0x81, 0xB8, 0x3C, 0x01, 0x00, 0x00, 0x22, 0x02, 0x00, 0x00, // CMP DWORD PTR [EAX+0x13C],0x00000222 ; line 1607
-	0x0F, 0x85, 0xD5, 0xFF, 0xFF, 0xFF,                         // JNE SHORT LABEL4 ; line 1608
-	0x81, 0xB8, 0x42, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [EAX+0x142],0x00000000 ; line 1610
+	0x75, 0xE0,                                                 // JNE SHORT LABEL4 ; line 1608
+	0x83, 0xB8, 0x42, 0x01, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [EAX+0x142],0x00000000 ; line 1610
 	0x90,                                                       // NOP ; line 1611
-	0x0F, 0x85, 0xC4, 0xFF, 0xFF, 0xFF,                         // JNE SHORT LABEL4 ; line 1612
+	0x75, 0xD6,                                                 // JNE SHORT LABEL4 ; line 1612
 	0xC7, 0x86, 0x44, 0x01, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x144],0x000000FF ; line 1613
-	0xE9, 0xB5, 0xFF, 0xFF, 0xFF,                               // JMP SHORT LABEL4 ; line 1614
+	0xEB, 0xCA,                                                 // JMP SHORT LABEL4 ; line 1614
 	0x90,                                                       // NOP ; line 1615
 	0x61,                                                       // POPAD ; line 1617
 	0x66, 0x9D,                                                 // POPF ; line 1618
 	0xBB, 0x03, 0x00, 0x00, 0x00,                               // MOV EBX,0x00000003 ; line 1619
 };
-static PatchByteCode clownpieceA623_STACK_patchByteCode = { clownpieceA623_STACK_byteCode, 103, nullptr, 0 };
+static PatchByteCode clownpieceA623_STACK_patchByteCode = { clownpieceA623_STACK_byteCode, 78, nullptr, 0 };
 // clownpiece4SCBEAM_ANGLE declared in clownpiece.asm line 1625
 static unsigned char clownpiece4SCBEAM_ANGLE_byteCode[] = {
 	0xD9, 0x05, 0x90, 0xB9, 0x85, 0x00, // FLD DWORD PTR [0x85B990] ; line 1626
@@ -1308,36 +1308,36 @@ static PatchByteCode clownpiece4SCBEAM_ANGLE_patchByteCode = { clownpiece4SCBEAM
 static unsigned char clownpiece4SCBEAM_byteCode[] = {
 	0x66, 0x9C,                               // PUSHF ; line 1631
 	0x80, 0xBE, 0x04, 0x01, 0x00, 0x00, 0xFF, // CMP BYTE PTR [ESI+0x104],0xFF ; line 1632
-	0x0F, 0x85, 0x0B, 0x00, 0x00, 0x00,       // JNE SHORT LABEL1 ; line 1633
+	0x75, 0x08,                               // JNE SHORT LABEL1 ; line 1633
 	0xD8, 0x25, 0x48, 0xD6, 0x85, 0x00,       // FSUB DWORD PTR [0x85D648] ; line 1634
-	0xE9, 0x06, 0x00, 0x00, 0x00,             // JMP SHORT LABEL2 ; line 1635
+	0xEB, 0x06,                               // JMP SHORT LABEL2 ; line 1635
 	0xD8, 0x05, 0x48, 0xD6, 0x85, 0x00,       // FADD DWORD PTR [0x85D648] ; line 1637
 	0x66, 0x9D,                               // POPF ; line 1639
 	0xD9, 0x9E, 0xEC, 0x00, 0x00, 0x00,       // FSTP DWORD PTR [ESI+0xEC] ; line 1640
 	0xD9, 0x80, 0xF0, 0x00, 0x00, 0x00,       // FLD DWORD PTR [EAX+0xF0] ; line 1641
 };
-static PatchByteCode clownpiece4SCBEAM_patchByteCode = { clownpiece4SCBEAM_byteCode, 46, nullptr, 0 };
+static PatchByteCode clownpiece4SCBEAM_patchByteCode = { clownpiece4SCBEAM_byteCode, 39, nullptr, 0 };
 // clownpiece4SCBEAM_SOUND declared in clownpiece.asm line 1646
 static unsigned char clownpiece4SCBEAM_SOUND_byteCode[] = {
-	0x66, 0x9C,                                                 // PUSHF ; line 1647
-	0x60,                                                       // PUSHAD ; line 1648
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x4A, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x0000004A ; line 1649
-	0x0F, 0x8F, 0x2C, 0x00, 0x00, 0x00,                         // JG SHORT LABEL1 ; line 1650
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x14, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x00000014 ; line 1651
-	0x0F, 0x8C, 0x1C, 0x00, 0x00, 0x00,                         // JL SHORT LABEL1 ; line 1652
-	0x66, 0x81, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, 0x00,       // CMP WORD PTR [ESI+0x142],0x0000 ; line 1653
-	0x0F, 0x85, 0x0D, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL1 ; line 1654
-	0x6A, 0x05,                                                 // PUSH 0x05 ; line 1655
-	0x8B, 0x8E, 0x98, 0x03, 0x00, 0x00,                         // MOV ECX,[ESI+0x398] ; line 1656
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                               // CALL 0x464980 ; line 1657
-	0x61,                                                       // POPAD ; line 1659
-	0x66, 0x9D,                                                 // POPF ; line 1660
-	0x0F, 0xBE, 0x96, 0x04, 0x01, 0x00, 0x00,                   // MOVSX EDX,BYTE PTR[ESI+0x104] ; line 1661
+	0x66, 0x9C,                                     // PUSHF ; line 1647
+	0x60,                                           // PUSHAD ; line 1648
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x4A,       // CMP DWORD PTR [ESI+0x144],0x0000004A ; line 1649
+	0x7F, 0x20,                                     // JG SHORT LABEL1 ; line 1650
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x14,       // CMP DWORD PTR [ESI+0x144],0x00000014 ; line 1651
+	0x7C, 0x17,                                     // JL SHORT LABEL1 ; line 1652
+	0x66, 0x83, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x142],0x0000 ; line 1653
+	0x75, 0x0D,                                     // JNE SHORT LABEL1 ; line 1654
+	0x6A, 0x05,                                     // PUSH 0x05 ; line 1655
+	0x8B, 0x8E, 0x98, 0x03, 0x00, 0x00,             // MOV ECX,[ESI+0x398] ; line 1656
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                   // CALL 0x464980 ; line 1657
+	0x61,                                           // POPAD ; line 1659
+	0x66, 0x9D,                                     // POPF ; line 1660
+	0x0F, 0xBE, 0x96, 0x04, 0x01, 0x00, 0x00,       // MOVSX EDX,BYTE PTR[ESI+0x104] ; line 1661
 };
 static JumpTarget clownpiece4SCBEAM_SOUND_jumpData[] = {
-	{ 0x03B, 0x464980 },
+	{ 0x028, 0x464980 },
 };
-static PatchByteCode clownpiece4SCBEAM_SOUND_patchByteCode = { clownpiece4SCBEAM_SOUND_byteCode, 73, clownpiece4SCBEAM_SOUND_jumpData, 1 };
+static PatchByteCode clownpiece4SCBEAM_SOUND_patchByteCode = { clownpiece4SCBEAM_SOUND_byteCode, 54, clownpiece4SCBEAM_SOUND_jumpData, 1 };
 // clownpiece5SCLRE_0 declared in clownpiece.asm line 1667
 static unsigned char clownpiece5SCLRE_0_byteCode[] = {
 	0xDC, 0x05, 0x28, 0xC0, 0x85, 0x00, // FADD QWORD PTR [0x85C028] ; line 1668
@@ -1346,42 +1346,42 @@ static PatchByteCode clownpiece5SCLRE_0_patchByteCode = { clownpiece5SCLRE_0_byt
 // clownpiece5SCLRE_1 declared in clownpiece.asm line 1671
 static unsigned char clownpiece5SCLRE_1_byteCode[] = {
 	0x8A, 0x86, 0x13, 0x01, 0x00, 0x00, // MOV AL,[ESI+0x113] ; line 1672
-	0x80, 0xF8, 0x0A,                   // CMP AL,0x0A ; line 1673
+	0x3C, 0x0A,                         // CMP AL,0x0A ; line 1673
 };
-static PatchByteCode clownpiece5SCLRE_1_patchByteCode = { clownpiece5SCLRE_1_byteCode, 9, nullptr, 0 };
+static PatchByteCode clownpiece5SCLRE_1_patchByteCode = { clownpiece5SCLRE_1_byteCode, 8, nullptr, 0 };
 // clownpiece5SCLRE_2 declared in clownpiece.asm line 1675
 static unsigned char clownpiece5SCLRE_2_byteCode[] = {
-	0x80, 0xE8, 0x0A,                   // SUB AL,0x0A ; line 1676
+	0x2C, 0x0A,                         // SUB AL,0x0A ; line 1676
 	0x88, 0x86, 0x13, 0x01, 0x00, 0x00, // MOV [ESI+0x113],AL ; line 1677
 };
-static PatchByteCode clownpiece5SCLRE_2_patchByteCode = { clownpiece5SCLRE_2_byteCode, 9, nullptr, 0 };
+static PatchByteCode clownpiece5SCLRE_2_patchByteCode = { clownpiece5SCLRE_2_byteCode, 8, nullptr, 0 };
 // clownpiece5SCLRE_3 declared in clownpiece.asm line 1679
 static unsigned char clownpiece5SCLRE_3_byteCode[] = {
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x140],0x00 ; line 1680
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x140],0x00 ; line 1680
 };
-static PatchByteCode clownpiece5SCLRE_3_patchByteCode = { clownpiece5SCLRE_3_byteCode, 9, nullptr, 0 };
+static PatchByteCode clownpiece5SCLRE_3_patchByteCode = { clownpiece5SCLRE_3_byteCode, 8, nullptr, 0 };
 // clownpiece5SCLRE declared in clownpiece.asm line 1688
 static unsigned char clownpiece5SCLRE_byteCode[] = {
 	0x66, 0x9C,                                                 // PUSHF ; line 1689
 	0x60,                                                       // PUSHAD ; line 1690
 	0x8B, 0x8E, 0x70, 0x01, 0x00, 0x00,                         // MOV ECX,[ESI+0x170] ; line 1691
-	0x81, 0xB9, 0x54, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ECX+0x754],0x00000000 ; line 1692
-	0x0F, 0x85, 0x4D, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL1 ; line 1693
-	0x81, 0xB9, 0x74, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ECX+0x774],0x00000000 ; line 1694
-	0x0F, 0x85, 0x3D, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL1 ; line 1695
-	0x81, 0xB9, 0x58, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ECX+0x758],0x00000000 ; line 1696
-	0x0F, 0x84, 0x0C, 0x00, 0x00, 0x00,                         // JE SHORT LABEL4 ; line 1697
-	0x0F, 0x8C, 0x43, 0x00, 0x00, 0x00,                         // JL SHORT LABEL6 ; line 1698
-	0x0F, 0x8F, 0x2F, 0x00, 0x00, 0x00,                         // JG SHORT LABEL5 ; line 1699
-	0x81, 0xB9, 0x78, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ECX+0x778],0x00000000 ; line 1701
-	0x0F, 0x84, 0x3F, 0x00, 0x00, 0x00,                         // JE SHORT LABEL3 ; line 1702
-	0x0F, 0x8C, 0x27, 0x00, 0x00, 0x00,                         // JL SHORT LABEL6 ; line 1703
-	0x0F, 0x8F, 0x13, 0x00, 0x00, 0x00,                         // JG SHORT LABEL5 ; line 1704
-	0xE9, 0x2E, 0x00, 0x00, 0x00,                               // JMP SHORT LABEL3 ; line 1705
+	0x83, 0xB9, 0x54, 0x07, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ECX+0x754],0x00000000 ; line 1692
+	0x75, 0x25,                                                 // JNE SHORT LABEL1 ; line 1693
+	0x83, 0xB9, 0x74, 0x07, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ECX+0x774],0x00000000 ; line 1694
+	0x75, 0x1C,                                                 // JNE SHORT LABEL1 ; line 1695
+	0x83, 0xB9, 0x58, 0x07, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ECX+0x758],0x00000000 ; line 1696
+	0x74, 0x04,                                                 // JE SHORT LABEL4 ; line 1697
+	0x7C, 0x27,                                                 // JL SHORT LABEL6 ; line 1698
+	0x7F, 0x1A,                                                 // JG SHORT LABEL5 ; line 1699
+	0x83, 0xB9, 0x78, 0x07, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ECX+0x778],0x00000000 ; line 1701
+	0x74, 0x2E,                                                 // JE SHORT LABEL3 ; line 1702
+	0x7C, 0x1A,                                                 // JL SHORT LABEL6 ; line 1703
+	0x7F, 0x0D,                                                 // JG SHORT LABEL5 ; line 1704
+	0xEB, 0x28,                                                 // JMP SHORT LABEL3 ; line 1705
 	0x66, 0xC7, 0x86, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00,       // MOV WORD PTR [ESI+0x140],0x0000 ; line 1707
-	0xE9, 0x17, 0x00, 0x00, 0x00,                               // JMP SHORT LABEL2 ; line 1708
+	0xEB, 0x14,                                                 // JMP SHORT LABEL2 ; line 1708
 	0x66, 0xC7, 0x86, 0x40, 0x01, 0x00, 0x00, 0x01, 0x00,       // MOV WORD PTR [ESI+0x140],0x0001 ; line 1710
-	0xE9, 0x09, 0x00, 0x00, 0x00,                               // JMP SHORT LABEL2 ; line 1711
+	0xEB, 0x09,                                                 // JMP SHORT LABEL2 ; line 1711
 	0x66, 0xC7, 0x86, 0x40, 0x01, 0x00, 0x00, 0x02, 0x00,       // MOV WORD PTR [ESI+0x140],0x0002 ; line 1713
 	0x66, 0xC7, 0x86, 0x42, 0x01, 0x00, 0x00, 0xC7, 0x00,       // MOV WORD PTR [ESI+0x142],0x00C7 ; line 1715
 	0x61,                                                       // POPAD ; line 1717
@@ -1390,33 +1390,33 @@ static unsigned char clownpiece5SCLRE_byteCode[] = {
 	0x60,                                                       // PUSHAD ; line 1721
 	0x8B, 0x86, 0x98, 0x03, 0x00, 0x00,                         // MOV EAX,[ESI+0x398] ; line 1722
 	0x85, 0xC0,                                                 // TEST EAX,EAX ; line 1723
-	0x0F, 0x84, 0x3D, 0x00, 0x00, 0x00,                         // JE SHORT LABELA ; line 1724
+	0x74, 0x2F,                                                 // JE SHORT LABELA ; line 1724
 	0x8B, 0x90, 0x70, 0x01, 0x00, 0x00,                         // MOV EDX,[EAX+0x170] ; line 1725
 	0x85, 0xD2,                                                 // TEST EDX,EDX ; line 1726
-	0x0F, 0x84, 0x2F, 0x00, 0x00, 0x00,                         // JE SHORT LABELA ; line 1727
-	0x66, 0x81, 0xB8, 0x84, 0x01, 0x00, 0x00, 0x00, 0x00,       // CMP WORD PTR [EAX+0x184],0x00 ; line 1728
-	0x0F, 0x8E, 0x0F, 0x00, 0x00, 0x00,                         // JLE SHORT LABELB ; line 1729
-	0x66, 0x81, 0xBA, 0x84, 0x01, 0x00, 0x00, 0x00, 0x00,       // CMP WORD PTR [EDX+0x184],0x00 ; line 1730
-	0x0F, 0x8F, 0x11, 0x00, 0x00, 0x00,                         // JG SHORT LABELA ; line 1731
+	0x74, 0x25,                                                 // JE SHORT LABELA ; line 1727
+	0x66, 0x83, 0xB8, 0x84, 0x01, 0x00, 0x00, 0x00,             // CMP WORD PTR [EAX+0x184],0x00 ; line 1728
+	0x7E, 0x0A,                                                 // JLE SHORT LABELB ; line 1729
+	0x66, 0x83, 0xBA, 0x84, 0x01, 0x00, 0x00, 0x00,             // CMP WORD PTR [EDX+0x184],0x00 ; line 1730
+	0x7F, 0x11,                                                 // JG SHORT LABELA ; line 1731
 	0xC7, 0x86, 0x90, 0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x190],0x00000001 ; line 1733
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x00,                   // MOV BYTE PTR [ESI+0x194],0x00 ; line 1734
 	0x61,                                                       // POPAD ; line 1736
 	0x66, 0x9D,                                                 // POPF ; line 1737
 	0xBF, 0x01, 0x00, 0x00, 0x00,                               // MOV EDI,0x00000001 ; line 1738
 };
-static PatchByteCode clownpiece5SCLRE_patchByteCode = { clownpiece5SCLRE_byteCode, 237, nullptr, 0 };
+static PatchByteCode clownpiece5SCLRE_patchByteCode = { clownpiece5SCLRE_byteCode, 166, nullptr, 0 };
 // clownpieceD22_FIX declared in clownpiece.asm line 1743
 static unsigned char clownpieceD22_FIX_byteCode[] = {
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x00000000 ; line 1744
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ESI+0x144],0x00000000 ; line 1744
 	0x0F, 0x85, 0xDE, 0xAD, 0xBE, 0xEF,                         // JNE 0x62C40D ; line 1745
 	0xC7, 0x86, 0x90, 0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x190],0x00000001 ; line 1746
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                               // JMP 0x62C40D ; line 1747
 };
 static JumpTarget clownpieceD22_FIX_jumpData[] = {
-	{ 0x00C, 0x62C40D },
-	{ 0x01B, 0x62C40D },
+	{ 0x009, 0x62C40D },
+	{ 0x018, 0x62C40D },
 };
-static PatchByteCode clownpieceD22_FIX_patchByteCode = { clownpieceD22_FIX_byteCode, 31, clownpieceD22_FIX_jumpData, 2 };
+static PatchByteCode clownpieceD22_FIX_patchByteCode = { clownpieceD22_FIX_byteCode, 28, clownpieceD22_FIX_jumpData, 2 };
 // clownpiece132 declared in clownpiece.asm line 1751
 static unsigned char clownpiece132_byteCode[] = {
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF, // JMP 0x637D40 ; line 1752
@@ -1432,26 +1432,26 @@ static unsigned char clownpiece133_byteCode[] = {
 static PatchByteCode clownpiece133_patchByteCode = { clownpiece133_byteCode, 6, nullptr, 0 };
 // clownpieceA214RING_0 declared in clownpiece.asm line 1767
 static unsigned char clownpieceA214RING_0_byteCode[] = {
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00,       // CMP WORD PTR [ESI+0x140],0x00 ; line 1768
-	0x0F, 0x84, 0x05, 0x00, 0x00, 0x00,                         // JE SHORT LABEL1 ; line 1769
-	0xE9, 0x33, 0x00, 0x00, 0x00,                               // JMP LABEL2 ; line 1770
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x00 ; line 1772
-	0x0F, 0x85, 0x07, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL3 ; line 1773
-	0xC6, 0x86, 0x13, 0x01, 0x00, 0x00, 0x00,                   // MOV BYTE PTR [ESI+0x113],0x00 ; line 1774
-	0x60,                                                       // PUSHAD ; line 1776
-	0x8B, 0x86, 0x13, 0x01, 0x00, 0x00,                         // MOV EAX,[ESI+0x113] ; line 1777
-	0x80, 0xF8, 0xE6,                                           // CMP AL,0xE6 ; line 1778
-	0x0F, 0x86, 0x02, 0x00, 0x00, 0x00,                         // JNA SHORT LABEL4 ; line 1779
-	0xB0, 0xE6,                                                 // MOV AL,0xE6 ; line 1780
-	0x80, 0xC0, 0x19,                                           // ADD AL,0x19 ; line 1782
-	0x88, 0x86, 0x13, 0x01, 0x00, 0x00,                         // MOV BYTE PTR [ESI+0x113],AL ; line 1783
-	0x61,                                                       // POPAD ; line 1784
-	0xD9, 0xEE,                                                 // FLDZ ; line 1786
-	0x90,                                                       // NOP ; line 1787
-	0xD9, 0x96, 0x24, 0x01, 0x00, 0x00,                         // FST DWORD PTR [ESI+0x124] ; line 1788
-	0xD9, 0x9E, 0x28, 0x01, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0x128] ; line 1789
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x140],0x00 ; line 1768
+	0x74, 0x05,                                     // JE SHORT LABEL1 ; line 1769
+	0xE9, 0x26, 0x00, 0x00, 0x00,                   // JMP LABEL2 ; line 1770
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00,       // CMP DWORD PTR [ESI+0x144],0x00 ; line 1772
+	0x75, 0x07,                                     // JNE SHORT LABEL3 ; line 1773
+	0xC6, 0x86, 0x13, 0x01, 0x00, 0x00, 0x00,       // MOV BYTE PTR [ESI+0x113],0x00 ; line 1774
+	0x60,                                           // PUSHAD ; line 1776
+	0x8B, 0x86, 0x13, 0x01, 0x00, 0x00,             // MOV EAX,[ESI+0x113] ; line 1777
+	0x3C, 0xE6,                                     // CMP AL,0xE6 ; line 1778
+	0x76, 0x02,                                     // JNA SHORT LABEL4 ; line 1779
+	0xB0, 0xE6,                                     // MOV AL,0xE6 ; line 1780
+	0x04, 0x19,                                     // ADD AL,0x19 ; line 1782
+	0x88, 0x86, 0x13, 0x01, 0x00, 0x00,             // MOV BYTE PTR [ESI+0x113],AL ; line 1783
+	0x61,                                           // POPAD ; line 1784
+	0xD9, 0xEE,                                     // FLDZ ; line 1786
+	0x90,                                           // NOP ; line 1787
+	0xD9, 0x96, 0x24, 0x01, 0x00, 0x00,             // FST DWORD PTR [ESI+0x124] ; line 1788
+	0xD9, 0x9E, 0x28, 0x01, 0x00, 0x00,             // FSTP DWORD PTR [ESI+0x128] ; line 1789
 };
-static PatchByteCode clownpieceA214RING_0_patchByteCode = { clownpieceA214RING_0_byteCode, 86, nullptr, 0 };
+static PatchByteCode clownpieceA214RING_0_patchByteCode = { clownpieceA214RING_0_byteCode, 68, nullptr, 0 };
 // clownpiece110 declared in clownpiece.asm line 1798
 static unsigned char clownpiece110_byteCode[] = {
 	0x80, 0xBE, 0x94, 0x01, 0x00, 0x00, 0x00, // CMP BYTE PTR [ESI+0x194],0x0 ; line 1799
@@ -1491,42 +1491,42 @@ static JumpTarget clownpiece114_jumpData[] = {
 static PatchByteCode clownpiece114_patchByteCode = { clownpiece114_byteCode, 12, clownpiece114_jumpData, 1 };
 // clownpieceA214RING_1A declared in clownpiece.asm line 1838
 static unsigned char clownpieceA214RING_1A_byteCode[] = {
-	0x0F, 0x8C, 0xDE, 0xAD, 0xBE, 0xEF,                   // JL 0x639D59 ; line 1839
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x01, 0x00, // CMP WORD PTR [ESI+0x140],0x01 ; line 1841
-	0x0F, 0x85, 0x2A, 0x00, 0x00, 0x00,                   // JNE SHORT LABEL1 ; line 1842
-	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x00,             // MOV BYTE PTR [ESI+0x194],0x00 ; line 1843
-	0x66, 0x81, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x142],0x00 ; line 1844
-	0x0F, 0x85, 0x14, 0x00, 0x00, 0x00,                   // JNE SHORT LABEL1 ; line 1845
-	0x80, 0xBE, 0x13, 0x01, 0x00, 0x00, 0xA0,             // CMP BYTE PTR [ESI+0x113],0xA0 ; line 1846
-	0x0F, 0x87, 0x07, 0x00, 0x00, 0x00,                   // JA SHORT LABEL1 ; line 1847
-	0xC6, 0x86, 0x13, 0x01, 0x00, 0x00, 0xA0,             // MOV BYTE PTR [ESI+0x113],0xA0 ; line 1848
-	0x8B, 0x8E, 0x5C, 0x03, 0x00, 0x00,                   // MOV ECX,[ESI+0x35C] ; line 1850
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x639D0B ; line 1851
+	0x0F, 0x8C, 0xDE, 0xAD, 0xBE, 0xEF,             // JL 0x639D59 ; line 1839
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x01, // CMP WORD PTR [ESI+0x140],0x01 ; line 1841
+	0x75, 0x21,                                     // JNE SHORT LABEL1 ; line 1842
+	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x00,       // MOV BYTE PTR [ESI+0x194],0x00 ; line 1843
+	0x66, 0x83, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x142],0x00 ; line 1844
+	0x75, 0x10,                                     // JNE SHORT LABEL1 ; line 1845
+	0x80, 0xBE, 0x13, 0x01, 0x00, 0x00, 0xA0,       // CMP BYTE PTR [ESI+0x113],0xA0 ; line 1846
+	0x77, 0x07,                                     // JA SHORT LABEL1 ; line 1847
+	0xC6, 0x86, 0x13, 0x01, 0x00, 0x00, 0xA0,       // MOV BYTE PTR [ESI+0x113],0xA0 ; line 1848
+	0x8B, 0x8E, 0x5C, 0x03, 0x00, 0x00,             // MOV ECX,[ESI+0x35C] ; line 1850
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x639D0B ; line 1851
 };
 static JumpTarget clownpieceA214RING_1A_jumpData[] = {
 	{ 0x002, 0x639D59 },
-	{ 0x046, 0x639D0B },
+	{ 0x038, 0x639D0B },
 };
-static PatchByteCode clownpieceA214RING_1A_patchByteCode = { clownpieceA214RING_1A_byteCode, 74, clownpieceA214RING_1A_jumpData, 2 };
+static PatchByteCode clownpieceA214RING_1A_patchByteCode = { clownpieceA214RING_1A_byteCode, 60, clownpieceA214RING_1A_jumpData, 2 };
 // clownpieceA214RING_1B declared in clownpiece.asm line 1853
 static unsigned char clownpieceA214RING_1B_byteCode[] = {
-	0x0F, 0x8C, 0xDE, 0xAD, 0xBE, 0xEF,                   // JL 0x639FCE ; line 1854
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x01, 0x00, // CMP WORD PTR [ESI+0x140],0x01 ; line 1856
-	0x0F, 0x85, 0x2A, 0x00, 0x00, 0x00,                   // JNE SHORT LABEL1 ; line 1857
-	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x00,             // MOV BYTE PTR [ESI+0x194],0x00 ; line 1858
-	0x66, 0x81, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x142],0x00 ; line 1859
-	0x0F, 0x85, 0x14, 0x00, 0x00, 0x00,                   // JNE SHORT LABEL1 ; line 1860
-	0x80, 0xBE, 0x13, 0x01, 0x00, 0x00, 0xA0,             // CMP BYTE PTR [ESI+0x113],0xA0 ; line 1861
-	0x0F, 0x87, 0x07, 0x00, 0x00, 0x00,                   // JA SHORT LABEL1 ; line 1862
-	0xC6, 0x86, 0x13, 0x01, 0x00, 0x00, 0xA0,             // MOV BYTE PTR [ESI+0x113],0xA0 ; line 1863
-	0x8B, 0x8E, 0x5C, 0x03, 0x00, 0x00,                   // MOV ECX,[ESI+0x35C] ; line 1865
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x639F80 ; line 1866
+	0x0F, 0x8C, 0xDE, 0xAD, 0xBE, 0xEF,             // JL 0x639FCE ; line 1854
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x01, // CMP WORD PTR [ESI+0x140],0x01 ; line 1856
+	0x75, 0x21,                                     // JNE SHORT LABEL1 ; line 1857
+	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x00,       // MOV BYTE PTR [ESI+0x194],0x00 ; line 1858
+	0x66, 0x83, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x142],0x00 ; line 1859
+	0x75, 0x10,                                     // JNE SHORT LABEL1 ; line 1860
+	0x80, 0xBE, 0x13, 0x01, 0x00, 0x00, 0xA0,       // CMP BYTE PTR [ESI+0x113],0xA0 ; line 1861
+	0x77, 0x07,                                     // JA SHORT LABEL1 ; line 1862
+	0xC6, 0x86, 0x13, 0x01, 0x00, 0x00, 0xA0,       // MOV BYTE PTR [ESI+0x113],0xA0 ; line 1863
+	0x8B, 0x8E, 0x5C, 0x03, 0x00, 0x00,             // MOV ECX,[ESI+0x35C] ; line 1865
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x639F80 ; line 1866
 };
 static JumpTarget clownpieceA214RING_1B_jumpData[] = {
 	{ 0x002, 0x639FCE },
-	{ 0x046, 0x639F80 },
+	{ 0x038, 0x639F80 },
 };
-static PatchByteCode clownpieceA214RING_1B_patchByteCode = { clownpieceA214RING_1B_byteCode, 74, clownpieceA214RING_1B_jumpData, 2 };
+static PatchByteCode clownpieceA214RING_1B_patchByteCode = { clownpieceA214RING_1B_byteCode, 60, clownpieceA214RING_1B_jumpData, 2 };
 // clownpieceA214RING_4 declared in clownpiece.asm line 1881
 static unsigned char clownpieceA214RING_4_byteCode[] = {
 	0x0F, 0x85, 0xDE, 0xAD, 0xBE, 0xEF, // JNE 0x62B1A4 ; line 1882
@@ -1572,22 +1572,22 @@ static JumpTarget clownpieceA214RING_4A_jumpData[] = {
 static PatchByteCode clownpieceA214RING_4A_patchByteCode = { clownpieceA214RING_4A_byteCode, 17, clownpieceA214RING_4A_jumpData, 2 };
 // clownpieceA214RING_5A declared in clownpiece.asm line 1906
 static unsigned char clownpieceA214RING_5A_byteCode[] = {
-	0x0F, 0x85, 0xDE, 0xAD, 0xBE, 0xEF,                   // JNE 0x62B7A0 ; line 1907
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x02, 0x00, // CMP WORD PTR [ESI+0x140],0x02 ; line 1908
-	0x0F, 0x85, 0xDE, 0xAD, 0xBE, 0xEF,                   // JNE 0x62BB33 ; line 1909
-	0xDD, 0x05, 0x30, 0x78, 0x86, 0x00,                   // FLD QWORD PTR [0x867830] ; line 1910
-	0x6A, 0x03,                                           // PUSH 0x03 ; line 1911
-	0xB9, 0x04, 0x04, 0x00, 0x00,                         // MOV ECX,0x00000404 ; line 1912
-	0xD9, 0x1C, 0x0C,                                     // FSTP DWORD PTR [ESP+ECX] ; line 1913
-	0x8D, 0x0C, 0x0C,                                     // LEA ECX,[ESP+ECX] ; line 1914
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x62B7D4 ; line 1915
+	0x0F, 0x85, 0xDE, 0xAD, 0xBE, 0xEF,             // JNE 0x62B7A0 ; line 1907
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x02, // CMP WORD PTR [ESI+0x140],0x02 ; line 1908
+	0x0F, 0x85, 0xDE, 0xAD, 0xBE, 0xEF,             // JNE 0x62BB33 ; line 1909
+	0xDD, 0x05, 0x30, 0x78, 0x86, 0x00,             // FLD QWORD PTR [0x867830] ; line 1910
+	0x6A, 0x03,                                     // PUSH 0x03 ; line 1911
+	0xB9, 0x04, 0x04, 0x00, 0x00,                   // MOV ECX,0x00000404 ; line 1912
+	0xD9, 0x1C, 0x0C,                               // FSTP DWORD PTR [ESP+ECX] ; line 1913
+	0x8D, 0x0C, 0x0C,                               // LEA ECX,[ESP+ECX] ; line 1914
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x62B7D4 ; line 1915
 };
 static JumpTarget clownpieceA214RING_5A_jumpData[] = {
 	{ 0x002, 0x62B7A0 },
-	{ 0x011, 0x62BB33 },
-	{ 0x029, 0x62B7D4 },
+	{ 0x010, 0x62BB33 },
+	{ 0x028, 0x62B7D4 },
 };
-static PatchByteCode clownpieceA214RING_5A_patchByteCode = { clownpieceA214RING_5A_byteCode, 45, clownpieceA214RING_5A_jumpData, 3 };
+static PatchByteCode clownpieceA214RING_5A_patchByteCode = { clownpieceA214RING_5A_byteCode, 44, clownpieceA214RING_5A_jumpData, 3 };
 // clownpieceA214RING_ANGLE_0 declared in clownpiece.asm line 1925
 static unsigned char clownpieceA214RING_ANGLE_0_byteCode[] = {
 	0xD9, 0x05, 0x80, 0xBB, 0x85, 0x00, // FLD DWORD PTR [0x85BB80] ; line 1926
@@ -1600,24 +1600,24 @@ static unsigned char clownpieceA214RING_ANGLE_1_byteCode[] = {
 static PatchByteCode clownpieceA214RING_ANGLE_1_patchByteCode = { clownpieceA214RING_ANGLE_1_byteCode, 6, nullptr, 0 };
 // clownpieceA214RING_THISSUCKS declared in clownpiece.asm line 1948
 static unsigned char clownpieceA214RING_THISSUCKS_byteCode[] = {
-	0x80, 0xF8, 0x10,                   // CMP AL,0x10 ; line 1949
+	0x3C, 0x10,                         // CMP AL,0x10 ; line 1949
 	0x0F, 0x82, 0xDE, 0xAD, 0xBE, 0xEF, // JB 0x6365F7 ; line 1950
-	0x80, 0xE8, 0x10,                   // SUB AL,0x10 ; line 1951
+	0x2C, 0x10,                         // SUB AL,0x10 ; line 1951
 };
 static JumpTarget clownpieceA214RING_THISSUCKS_jumpData[] = {
-	{ 0x005, 0x6365F7 },
+	{ 0x004, 0x6365F7 },
 };
-static PatchByteCode clownpieceA214RING_THISSUCKS_patchByteCode = { clownpieceA214RING_THISSUCKS_byteCode, 12, clownpieceA214RING_THISSUCKS_jumpData, 1 };
+static PatchByteCode clownpieceA214RING_THISSUCKS_patchByteCode = { clownpieceA214RING_THISSUCKS_byteCode, 10, clownpieceA214RING_THISSUCKS_jumpData, 1 };
 // clownpieceA22SPLIT declared in clownpiece.asm line 1989
 static unsigned char clownpieceA22SPLIT_byteCode[] = {
 	0x66, 0x9C,                                           // PUSHF ; line 1990
 	0x60,                                                 // PUSHAD ; line 1991
-	0x81, 0xEC, 0x40, 0x00, 0x00, 0x00,                   // SUB ESP,0x40 ; line 1992
-	0xE8, 0x1D, 0x00, 0x00, 0x00,                         // CALL LABELZ ; line 1993
-	0xE8, 0x18, 0x00, 0x00, 0x00,                         // CALL LABELZ ; line 1994
-	0xE8, 0x13, 0x00, 0x00, 0x00,                         // CALL LABELZ ; line 1995
-	0xE8, 0x0E, 0x00, 0x00, 0x00,                         // CALL LABELZ ; line 1996
-	0x81, 0xC4, 0x40, 0x00, 0x00, 0x00,                   // ADD ESP,0x40 ; line 1997
+	0x83, 0xEC, 0x40,                                     // SUB ESP,0x40 ; line 1992
+	0xE8, 0x1A, 0x00, 0x00, 0x00,                         // CALL LABELZ ; line 1993
+	0xE8, 0x15, 0x00, 0x00, 0x00,                         // CALL LABELZ ; line 1994
+	0xE8, 0x10, 0x00, 0x00, 0x00,                         // CALL LABELZ ; line 1995
+	0xE8, 0x0B, 0x00, 0x00, 0x00,                         // CALL LABELZ ; line 1996
+	0x83, 0xC4, 0x40,                                     // ADD ESP,0x40 ; line 1997
 	0x61,                                                 // POPAD ; line 1998
 	0x66, 0x9D,                                           // POPF ; line 1999
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x62CB7C ; line 2000
@@ -1648,16 +1648,16 @@ static unsigned char clownpieceA22SPLIT_byteCode[] = {
 	0xD9, 0x5C, 0x24, 0x1C,                               // FSTP DWORD PTR [ESP+0x1C] ; line 2032
 	0x50,                                                 // PUSH EAX ; line 2033
 	0xD9, 0x44, 0x24, 0x20,                               // FLD DWORD PTR [ESP+0x20] ; line 2034
-	0x81, 0xEC, 0x08, 0x00, 0x00, 0x00,                   // SUB ESP,0x08 ; line 2036
+	0x83, 0xEC, 0x08,                                     // SUB ESP,0x08 ; line 2036
 	0xD9, 0x5C, 0x24, 0x04,                               // FSTP DWORD PTR [ESP+0x04] ; line 2037
 	0x89, 0xF1,                                           // MOV ECX,ESI ; line 2038
-	0xE9, 0x1B, 0x00, 0x00, 0x00,                         // JMP SHORT LABELXX ; line 2039
+	0xEB, 0x11,                                           // JMP SHORT LABELXX ; line 2039
 	0x80, 0xBE, 0x04, 0x01, 0x00, 0x00, 0xFF,             // CMP BYTE PTR [ESI+0x104],0xFF ; line 2042
-	0x0F, 0x85, 0x07, 0x00, 0x00, 0x00,                   // JNE SHORT LABELA ; line 2043
+	0x75, 0x04,                                           // JNE SHORT LABELA ; line 2043
 	0xDE, 0xE9,                                           // FSUBP ST1 ; line 2044
-	0xE9, 0x02, 0x00, 0x00, 0x00,                         // JMP SHORT LABELB ; line 2045
+	0xEB, 0x02,                                           // JMP SHORT LABELB ; line 2045
 	0xDE, 0xC1,                                           // FADDP ; line 2047
-	0xE9, 0x28, 0x00, 0x00, 0x00,                         // JMP SHORT LABELC ; line 2049
+	0xEB, 0x25,                                           // JMP SHORT LABELC ; line 2049
 	0xD9, 0x86, 0xEC, 0x00, 0x00, 0x00,                   // FLD DWORD PTR [ESI+0xEC] ; line 2052
 	0xD9, 0x05, 0x84, 0xB9, 0x85, 0x00,                   // FLD DWORD PTR [0x85B984] ; line 2053
 	0x66, 0x8B, 0x86, 0x42, 0x01, 0x00, 0x00,             // MOV AX,[ESI+0x142] ; line 2054
@@ -1667,10 +1667,10 @@ static unsigned char clownpieceA22SPLIT_byteCode[] = {
 	0x58,                                                 // POP EAX ; line 2058
 	0xDE, 0xC9,                                           // FMULP ST1 ; line 2059
 	0xD8, 0x25, 0x84, 0xB9, 0x85, 0x00,                   // FSUB DWORD PTR [0x85B984] ; line 2061
-	0xE9, 0xBD, 0xFF, 0xFF, 0xFF,                         // JMP SHORT LABELD ; line 2062
+	0xEB, 0xCA,                                           // JMP SHORT LABELD ; line 2062
 	0x66, 0xFF, 0x86, 0x40, 0x01, 0x00, 0x00,             // INC WORD PTR [ESI+0x140] ; line 2064
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x03, 0x00, // CMP WORD PTR [ESI+0x140],0x03 ; line 2065
-	0x0F, 0x8C, 0x10, 0x00, 0x00, 0x00,                   // JL SHORT LABELE ; line 2066
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x03,       // CMP WORD PTR [ESI+0x140],0x03 ; line 2065
+	0x7C, 0x10,                                           // JL SHORT LABELE ; line 2066
 	0x66, 0xC7, 0x86, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00, // MOV WORD PTR [ESI+0x140],0x0000 ; line 2067
 	0x66, 0xFF, 0x86, 0x42, 0x01, 0x00, 0x00,             // INC WORD PTR [ESI+0x142] ; line 2068
 	0xD9, 0x1C, 0x24,                                     // FSTP DWORD PTR [ESP] ; line 2071
@@ -1679,36 +1679,36 @@ static unsigned char clownpieceA22SPLIT_byteCode[] = {
 	0xC3,                                                 // RET ; line 2074
 };
 static JumpTarget clownpieceA22SPLIT_jumpData[] = {
-	{ 0x027, 0x62CB7C },
-	{ 0x11C, 0x46EB30 },
+	{ 0x021, 0x62CB7C },
+	{ 0x0FE, 0x46EB30 },
 };
-static PatchByteCode clownpieceA22SPLIT_patchByteCode = { clownpieceA22SPLIT_byteCode, 289, clownpieceA22SPLIT_jumpData, 2 };
+static PatchByteCode clownpieceA22SPLIT_patchByteCode = { clownpieceA22SPLIT_byteCode, 259, clownpieceA22SPLIT_jumpData, 2 };
 // clownpieceA22SPLIT_1 declared in clownpiece.asm line 2078
 static unsigned char clownpieceA22SPLIT_1_byteCode[] = {
 	0xD9, 0x86, 0x78, 0x03, 0x00, 0x00,                         // FLD DWORD PTR [ESI+0x378] ; line 2079
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x00 ; line 2080
-	0x0F, 0x85, 0x4D, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL3 ; line 2081
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ESI+0x144],0x00 ; line 2080
+	0x75, 0x42,                                                 // JNE SHORT LABEL3 ; line 2081
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x01,                   // MOV BYTE PTR [ESI+0x194],0x01 ; line 2082
 	0xC7, 0x86, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x190],0x00000000 ; line 2083
 	0x60,                                                       // PUSHAD ; line 2085
 	0x8B, 0x86, 0x98, 0x03, 0x00, 0x00,                         // MOV EAX,[ESI+0x398] ; line 2086
 	0x66, 0x81, 0xB8, 0x3C, 0x01, 0x00, 0x00, 0x36, 0x02,       // CMP WORD PTR [EAX+0x13C],0x0236 ; line 2087
-	0x0F, 0x84, 0x15, 0x00, 0x00, 0x00,                         // JE SHORT LABEL1 ; line 2088
+	0x74, 0x0E,                                                 // JE SHORT LABEL1 ; line 2088
 	0x66, 0x81, 0xB8, 0x3C, 0x01, 0x00, 0x00, 0x38, 0x02,       // CMP WORD PTR [EAX+0x13C],0x0238 ; line 2089
-	0x0F, 0x84, 0x06, 0x00, 0x00, 0x00,                         // JE SHORT LABEL1 ; line 2090
+	0x74, 0x03,                                                 // JE SHORT LABEL1 ; line 2090
 	0x61,                                                       // POPAD ; line 2092
-	0xE9, 0x11, 0x00, 0x00, 0x00,                               // JMP SHORT LABEL3 ; line 2093
+	0xEB, 0x11,                                                 // JMP SHORT LABEL3 ; line 2093
 	0xD9, 0x05, 0x30, 0x88, 0x85, 0x00,                         // FLD DWORD PTR [0x858830] ; line 2095
 	0xD9, 0x9E, 0xF4, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF4] ; line 2096
-	0xE9, 0xE9, 0xFF, 0xFF, 0xFF,                               // JMP LABEL2 ; line 2097
+	0xE9, 0xEC, 0xFF, 0xFF, 0xFF,                               // JMP LABEL2 ; line 2097
 	0x90,                                                       // NOP ; line 2099
 };
-static PatchByteCode clownpieceA22SPLIT_1_patchByteCode = { clownpieceA22SPLIT_1_byteCode, 100, nullptr, 0 };
+static PatchByteCode clownpieceA22SPLIT_1_patchByteCode = { clownpieceA22SPLIT_1_byteCode, 82, nullptr, 0 };
 // clownpieceA22SPLIT_ONHIT declared in clownpiece.asm line 2103
 static unsigned char clownpieceA22SPLIT_ONHIT_byteCode[] = {
-	0x81, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x190],0x5 ; line 2104
+	0x83, 0xBE, 0x90, 0x01, 0x00, 0x00, 0x05, // CMP DWORD PTR [ESI+0x190],0x5 ; line 2104
 };
-static PatchByteCode clownpieceA22SPLIT_ONHIT_patchByteCode = { clownpieceA22SPLIT_ONHIT_byteCode, 10, nullptr, 0 };
+static PatchByteCode clownpieceA22SPLIT_ONHIT_patchByteCode = { clownpieceA22SPLIT_ONHIT_byteCode, 7, nullptr, 0 };
 // clownpieceA22SPLIT_3 declared in clownpiece.asm line 2108
 static unsigned char clownpieceA22SPLIT_3_byteCode[] = {
 	0xD9, 0xE8,                               // FLD1 ; line 2109
@@ -1716,9 +1716,9 @@ static unsigned char clownpieceA22SPLIT_3_byteCode[] = {
 	0xD9, 0x9E, 0x20, 0x01, 0x00, 0x00,       // FSTP DWORD PTR [ESI+0x120] ; line 2111
 	0xD9, 0x86, 0xEC, 0x00, 0x00, 0x00,       // FLD DWORD PTR [ESI+0xEC] ; line 2113
 	0x80, 0xBE, 0x04, 0x01, 0x00, 0x00, 0xFF, // CMP BYTE PTR [ESI+0x104],0xFF ; line 2114
-	0x0F, 0x85, 0x0B, 0x00, 0x00, 0x00,       // JNE SHORT LABEL1 ; line 2115
+	0x75, 0x08,                               // JNE SHORT LABEL1 ; line 2115
 	0xD8, 0xA6, 0xF4, 0x00, 0x00, 0x00,       // FSUB DWORD PTR [ESI+0xF4] ; line 2116
-	0xE9, 0x06, 0x00, 0x00, 0x00,             // JMP SHORT LABEL2 ; line 2117
+	0xEB, 0x06,                               // JMP SHORT LABEL2 ; line 2117
 	0xD8, 0x86, 0xF4, 0x00, 0x00, 0x00,       // FADD DWORD PTR [ESI+0xF4] ; line 2119
 	0xD9, 0x9E, 0xEC, 0x00, 0x00, 0x00,       // FSTP DWORD PTR [ESI+0xEC] ; line 2121
 	0x60,                                     // PUSHAD ; line 2140
@@ -1731,32 +1731,32 @@ static unsigned char clownpieceA22SPLIT_3_byteCode[] = {
 	0x61,                                     // POPAD ; line 2147
 	0x0F, 0x85, 0xDE, 0xAD, 0xBE, 0xEF,       // JNE 0x6365F7 ; line 2148
 	0x80, 0xBE, 0x94, 0x01, 0x00, 0x00, 0x01, // CMP BYTE PTR [ESI+0x194],0x01 ; line 2152
-	0x0F, 0x84, 0x18, 0x00, 0x00, 0x00,       // JE SHORT LABEL7 ; line 2153
+	0x74, 0x12,                               // JE SHORT LABEL7 ; line 2153
 	0x8A, 0x86, 0x13, 0x01, 0x00, 0x00,       // MOV AL,[ESI+0x113] ; line 2154
-	0x80, 0xF8, 0x0A,                         // CMP AL,0x0A ; line 2155
-	0x0F, 0x82, 0x09, 0x00, 0x00, 0x00,       // JB SHORT LABEL7 ; line 2156
-	0x80, 0xE8, 0x0A,                         // SUB AL,0x0A ; line 2157
+	0x3C, 0x0A,                               // CMP AL,0x0A ; line 2155
+	0x72, 0x08,                               // JB SHORT LABEL7 ; line 2156
+	0x2C, 0x0A,                               // SUB AL,0x0A ; line 2157
 	0x88, 0x86, 0x13, 0x01, 0x00, 0x00,       // MOV BYTE PTR [ESI+0x113],AL ; line 2158
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,             // JMP 0x63BECF ; line 2160
 };
 static JumpTarget clownpieceA22SPLIT_3_jumpData[] = {
-	{ 0x042, 0x48CE90 },
-	{ 0x04B, 0x6365F7 },
-	{ 0x075, 0x63BECF },
+	{ 0x03B, 0x48CE90 },
+	{ 0x044, 0x6365F7 },
+	{ 0x064, 0x63BECF },
 };
-static PatchByteCode clownpieceA22SPLIT_3_patchByteCode = { clownpieceA22SPLIT_3_byteCode, 121, clownpieceA22SPLIT_3_jumpData, 3 };
+static PatchByteCode clownpieceA22SPLIT_3_patchByteCode = { clownpieceA22SPLIT_3_byteCode, 104, clownpieceA22SPLIT_3_jumpData, 3 };
 // clownpieceA22SPLIT_8 declared in clownpiece.asm line 2165
 static unsigned char clownpieceA22SPLIT_8_byteCode[] = {
 	0x8A, 0x86, 0x13, 0x01, 0x00, 0x00, // MOV AL,[ESI+0x113] ; line 2166
-	0x80, 0xF8, 0x05,                   // CMP AL,0x05 ; line 2167
+	0x3C, 0x05,                         // CMP AL,0x05 ; line 2167
 	0x0F, 0x82, 0xDE, 0xAD, 0xBE, 0xEF, // JB 0x6365F7 ; line 2168
-	0x80, 0xE8, 0x05,                   // SUB AL,0x05 ; line 2169
+	0x2C, 0x05,                         // SUB AL,0x05 ; line 2169
 	0xB3, 0xFB,                         // MOV BL,0xFB ; line 2170
 };
 static JumpTarget clownpieceA22SPLIT_8_jumpData[] = {
-	{ 0x00B, 0x6365F7 },
+	{ 0x00A, 0x6365F7 },
 };
-static PatchByteCode clownpieceA22SPLIT_8_patchByteCode = { clownpieceA22SPLIT_8_byteCode, 20, clownpieceA22SPLIT_8_jumpData, 1 };
+static PatchByteCode clownpieceA22SPLIT_8_patchByteCode = { clownpieceA22SPLIT_8_byteCode, 18, clownpieceA22SPLIT_8_jumpData, 1 };
 // clownpieceA22SPLIT_JMP declared in clownpiece.asm line 2174
 static unsigned char clownpieceA22SPLIT_JMP_byteCode[] = {
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF, // JMP 0x62C859 ; line 2175
@@ -1775,9 +1775,9 @@ static JumpTarget clownpieceA22SPLIT_UNFLDZ_jumpData[] = {
 static PatchByteCode clownpieceA22SPLIT_UNFLDZ_patchByteCode = { clownpieceA22SPLIT_UNFLDZ_byteCode, 5, clownpieceA22SPLIT_UNFLDZ_jumpData, 1 };
 // clownpieceA623USB_DUR declared in clownpiece.asm line 2201
 static unsigned char clownpieceA623USB_DUR_byteCode[] = {
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x29, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x29 ; line 2202
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x29, // CMP DWORD PTR [ESI+0x144],0x29 ; line 2202
 };
-static PatchByteCode clownpieceA623USB_DUR_patchByteCode = { clownpieceA623USB_DUR_byteCode, 10, nullptr, 0 };
+static PatchByteCode clownpieceA623USB_DUR_patchByteCode = { clownpieceA623USB_DUR_byteCode, 7, nullptr, 0 };
 // clownpieceA623USB declared in clownpiece.asm line 2208
 static unsigned char clownpieceA623USB_byteCode[] = {
 	0xD9, 0xEE,                         // FLDZ ; line 2209
@@ -1856,14 +1856,14 @@ static PatchByteCode clownpiece3SCUSB_UNCANCEL_patchByteCode = { clownpiece3SCUS
 // clownpiece3SCUSB_HITS declared in clownpiece.asm line 2285
 static unsigned char clownpiece3SCUSB_HITS_byteCode[] = {
 	0x80, 0xBE, 0x13, 0x01, 0x00, 0x00, 0x7F,             // CMP BYTE PTR [ESI+0x113],0x7F ; line 2286
-	0x0F, 0x86, 0x1D, 0x00, 0x00, 0x00,                   // JNA SHORT LABEL1 ; line 2287
+	0x76, 0x19,                                           // JNA SHORT LABEL1 ; line 2287
 	0x80, 0xBE, 0x94, 0x01, 0x00, 0x00, 0x00,             // CMP BYTE PTR [ESI+0x194],0x00 ; line 2288
-	0x0F, 0x85, 0x10, 0x00, 0x00, 0x00,                   // JNE SHORT LABEL1 ; line 2289
+	0x75, 0x10,                                           // JNE SHORT LABEL1 ; line 2289
 	0xC6, 0x86, 0x13, 0x01, 0x00, 0x00, 0x7F,             // MOV BYTE PTR [ESI+0x113],0x7F ; line 2290
 	0x66, 0xC7, 0x86, 0x40, 0x01, 0x00, 0x00, 0x59, 0x00, // MOV WORD PTR [ESI+0x140],0x0059 ; line 2291
 	0x8B, 0x86, 0x90, 0x01, 0x00, 0x00,                   // MOV EAX,[ESI+0x190] ; line 2293
 };
-static PatchByteCode clownpiece3SCUSB_HITS_patchByteCode = { clownpiece3SCUSB_HITS_byteCode, 48, nullptr, 0 };
+static PatchByteCode clownpiece3SCUSB_HITS_patchByteCode = { clownpiece3SCUSB_HITS_byteCode, 40, nullptr, 0 };
 // clownpiece115 declared in clownpiece.asm line 2308
 static unsigned char clownpiece115_byteCode[] = {
 	0xD8, 0x0D, 0x84, 0xBB, 0x85, 0x00, // FMUL DWORD PTR [0x85BB84] ; line 2309
@@ -1881,18 +1881,18 @@ static unsigned char clownpiece117_byteCode[] = {
 static PatchByteCode clownpiece117_patchByteCode = { clownpiece117_byteCode, 5, nullptr, 0 };
 // clownpiece118 declared in clownpiece.asm line 2328
 static unsigned char clownpiece118_byteCode[] = {
-	0x66, 0x81, 0xBE, 0xD0, 0x07, 0x00, 0x00, 0x14, 0x00, // CMP WORD PTR [ESI+0x7D0],0x0014 ; line 2329
+	0x66, 0x83, 0xBE, 0xD0, 0x07, 0x00, 0x00, 0x14, // CMP WORD PTR [ESI+0x7D0],0x0014 ; line 2329
 };
-static PatchByteCode clownpiece118_patchByteCode = { clownpiece118_byteCode, 9, nullptr, 0 };
+static PatchByteCode clownpiece118_patchByteCode = { clownpiece118_byteCode, 8, nullptr, 0 };
 // clownpiece119 declared in clownpiece.asm line 2334
 static unsigned char clownpiece119_byteCode[] = {
-	0x66, 0x81, 0xBE, 0xD0, 0x07, 0x00, 0x00, 0x09, 0x00, // CMP WORD PTR [ESI+0x7D0],0x09 ; line 2335
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x62E6BC ; line 2336
+	0x66, 0x83, 0xBE, 0xD0, 0x07, 0x00, 0x00, 0x09, // CMP WORD PTR [ESI+0x7D0],0x09 ; line 2335
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x62E6BC ; line 2336
 };
 static JumpTarget clownpiece119_jumpData[] = {
-	{ 0x00A, 0x62E6BC },
+	{ 0x009, 0x62E6BC },
 };
-static PatchByteCode clownpiece119_patchByteCode = { clownpiece119_byteCode, 14, clownpiece119_jumpData, 1 };
+static PatchByteCode clownpiece119_patchByteCode = { clownpiece119_byteCode, 13, clownpiece119_jumpData, 1 };
 // clownpiece1SCRING_FLD declared in clownpiece.asm line 2344
 static unsigned char clownpiece1SCRING_FLD_byteCode[] = {
 	0xDD, 0x05, 0x30, 0x78, 0x86, 0x00, // FLD QWORD PTR [0x867830] ; line 2345
@@ -1900,62 +1900,62 @@ static unsigned char clownpiece1SCRING_FLD_byteCode[] = {
 static PatchByteCode clownpiece1SCRING_FLD_patchByteCode = { clownpiece1SCRING_FLD_byteCode, 6, nullptr, 0 };
 // clownpiece1SCRING_TRANSP0 declared in clownpiece.asm line 2351
 static unsigned char clownpiece1SCRING_TRANSP0_byteCode[] = {
-	0x60,                                                 // PUSHAD ; line 2352
-	0x8B, 0x86, 0x5C, 0x03, 0x00, 0x00,                   // MOV EAX,[ESI+0x35C] ; line 2353
-	0xD9, 0x40, 0x04,                                     // FLD DWORD PTR [EAX+0x04] ; line 2354
-	0xDC, 0x0D, 0x08, 0xC0, 0x85, 0x00,                   // FMUL QWORD PTR [0x85C008] ; line 2355
-	0xD9, 0x58, 0x04,                                     // FSTP DWORD PTR [EAX+0x04] ; line 2356
-	0x61,                                                 // POPAD ; line 2357
-	0x0F, 0x8C, 0xDE, 0xAD, 0xBE, 0xEF,                   // JL 0x63C87F ; line 2358
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x01, 0x00, // CMP WORD PTR [ESI+0x140],0x01 ; line 2360
-	0x0F, 0x85, 0x2A, 0x00, 0x00, 0x00,                   // JNE SHORT LABEL1 ; line 2361
-	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x00,             // MOV BYTE PTR [ESI+0x194],0x00 ; line 2362
-	0x66, 0x81, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x142],0x00 ; line 2363
-	0x0F, 0x85, 0x14, 0x00, 0x00, 0x00,                   // JNE SHORT LABEL1 ; line 2364
-	0x80, 0xBE, 0x13, 0x01, 0x00, 0x00, 0xA0,             // CMP BYTE PTR [ESI+0x113],0xA0 ; line 2365
-	0x0F, 0x87, 0x07, 0x00, 0x00, 0x00,                   // JA SHORT LABEL1 ; line 2366
-	0xC6, 0x86, 0x13, 0x01, 0x00, 0x00, 0xA0,             // MOV BYTE PTR [ESI+0x113],0xA0 ; line 2367
-	0x8B, 0x8E, 0x5C, 0x03, 0x00, 0x00,                   // MOV ECX,[ESI+0x35C] ; line 2369
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x63C82F ; line 2371
+	0x60,                                           // PUSHAD ; line 2352
+	0x8B, 0x86, 0x5C, 0x03, 0x00, 0x00,             // MOV EAX,[ESI+0x35C] ; line 2353
+	0xD9, 0x40, 0x04,                               // FLD DWORD PTR [EAX+0x04] ; line 2354
+	0xDC, 0x0D, 0x08, 0xC0, 0x85, 0x00,             // FMUL QWORD PTR [0x85C008] ; line 2355
+	0xD9, 0x58, 0x04,                               // FSTP DWORD PTR [EAX+0x04] ; line 2356
+	0x61,                                           // POPAD ; line 2357
+	0x0F, 0x8C, 0xDE, 0xAD, 0xBE, 0xEF,             // JL 0x63C87F ; line 2358
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x01, // CMP WORD PTR [ESI+0x140],0x01 ; line 2360
+	0x75, 0x21,                                     // JNE SHORT LABEL1 ; line 2361
+	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x00,       // MOV BYTE PTR [ESI+0x194],0x00 ; line 2362
+	0x66, 0x83, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x142],0x00 ; line 2363
+	0x75, 0x10,                                     // JNE SHORT LABEL1 ; line 2364
+	0x80, 0xBE, 0x13, 0x01, 0x00, 0x00, 0xA0,       // CMP BYTE PTR [ESI+0x113],0xA0 ; line 2365
+	0x77, 0x07,                                     // JA SHORT LABEL1 ; line 2366
+	0xC6, 0x86, 0x13, 0x01, 0x00, 0x00, 0xA0,       // MOV BYTE PTR [ESI+0x113],0xA0 ; line 2367
+	0x8B, 0x8E, 0x5C, 0x03, 0x00, 0x00,             // MOV ECX,[ESI+0x35C] ; line 2369
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x63C82F ; line 2371
 };
 static JumpTarget clownpiece1SCRING_TRANSP0_jumpData[] = {
 	{ 0x016, 0x63C87F },
-	{ 0x05A, 0x63C82F },
+	{ 0x04C, 0x63C82F },
 };
-static PatchByteCode clownpiece1SCRING_TRANSP0_patchByteCode = { clownpiece1SCRING_TRANSP0_byteCode, 94, clownpiece1SCRING_TRANSP0_jumpData, 2 };
+static PatchByteCode clownpiece1SCRING_TRANSP0_patchByteCode = { clownpiece1SCRING_TRANSP0_byteCode, 80, clownpiece1SCRING_TRANSP0_jumpData, 2 };
 // clownpiece1SCRING_N declared in clownpiece.asm line 2377
 static unsigned char clownpiece1SCRING_N_byteCode[] = {
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x00 ; line 2378
-	0x0F, 0x85, 0x07, 0x00, 0x00, 0x00,                         // JNE SHORT LABELA ; line 2379
-	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x01,                   // MOV BYTE PTR [ESI+0x194],0x01 ; line 2380
-	0xD9, 0x86, 0x1C, 0x01, 0x00, 0x00,                         // FLD DWORD PTR [ESI+0x11C] ; line 2382
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00,       // CMP WORD PTR [ESI+0x140],0x00 ; line 2384
-	0x0F, 0x84, 0x05, 0x00, 0x00, 0x00,                         // JE SHORT LABEL1 ; line 2385
-	0xE9, 0x33, 0x00, 0x00, 0x00,                               // JMP LABEL2 ; line 2386
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x00 ; line 2388
-	0x0F, 0x85, 0x07, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL3 ; line 2389
-	0xC6, 0x86, 0x13, 0x01, 0x00, 0x00, 0x00,                   // MOV BYTE PTR [ESI+0x113],0x00 ; line 2390
-	0x60,                                                       // PUSHAD ; line 2392
-	0x8B, 0x86, 0x13, 0x01, 0x00, 0x00,                         // MOV EAX,[ESI+0x113] ; line 2393
-	0x80, 0xF8, 0xE6,                                           // CMP AL,0xE6 ; line 2394
-	0x0F, 0x86, 0x02, 0x00, 0x00, 0x00,                         // JNA SHORT LABEL4 ; line 2395
-	0xB0, 0xE6,                                                 // MOV AL,0xE6 ; line 2396
-	0x80, 0xC0, 0x19,                                           // ADD AL,0x19 ; line 2398
-	0x88, 0x86, 0x13, 0x01, 0x00, 0x00,                         // MOV BYTE PTR [ESI+0x113],AL ; line 2399
-	0x61,                                                       // POPAD ; line 2400
-	0xD9, 0xEE,                                                 // FLDZ ; line 2402
-	0x90,                                                       // NOP ; line 2403
-	0x53,                                                       // PUSH EBX ; line 2405
-	0x89, 0xF1,                                                 // MOV ECX,ESI ; line 2406
-	0xD9, 0x96, 0x24, 0x01, 0x00, 0x00,                         // FST DWORD PTR [ESI+0x124] ; line 2407
-	0xD9, 0x9E, 0x28, 0x01, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0x128] ; line 2408
-	0xD9, 0x9E, 0x20, 0x01, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0x120] ; line 2409
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                               // JMP 0x63C7C8 ; line 2411
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00,       // CMP DWORD PTR [ESI+0x144],0x00 ; line 2378
+	0x75, 0x07,                                     // JNE SHORT LABELA ; line 2379
+	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x01,       // MOV BYTE PTR [ESI+0x194],0x01 ; line 2380
+	0xD9, 0x86, 0x1C, 0x01, 0x00, 0x00,             // FLD DWORD PTR [ESI+0x11C] ; line 2382
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x140],0x00 ; line 2384
+	0x74, 0x05,                                     // JE SHORT LABEL1 ; line 2385
+	0xE9, 0x26, 0x00, 0x00, 0x00,                   // JMP LABEL2 ; line 2386
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00,       // CMP DWORD PTR [ESI+0x144],0x00 ; line 2388
+	0x75, 0x07,                                     // JNE SHORT LABEL3 ; line 2389
+	0xC6, 0x86, 0x13, 0x01, 0x00, 0x00, 0x00,       // MOV BYTE PTR [ESI+0x113],0x00 ; line 2390
+	0x60,                                           // PUSHAD ; line 2392
+	0x8B, 0x86, 0x13, 0x01, 0x00, 0x00,             // MOV EAX,[ESI+0x113] ; line 2393
+	0x3C, 0xE6,                                     // CMP AL,0xE6 ; line 2394
+	0x76, 0x02,                                     // JNA SHORT LABEL4 ; line 2395
+	0xB0, 0xE6,                                     // MOV AL,0xE6 ; line 2396
+	0x04, 0x19,                                     // ADD AL,0x19 ; line 2398
+	0x88, 0x86, 0x13, 0x01, 0x00, 0x00,             // MOV BYTE PTR [ESI+0x113],AL ; line 2399
+	0x61,                                           // POPAD ; line 2400
+	0xD9, 0xEE,                                     // FLDZ ; line 2402
+	0x90,                                           // NOP ; line 2403
+	0x53,                                           // PUSH EBX ; line 2405
+	0x89, 0xF1,                                     // MOV ECX,ESI ; line 2406
+	0xD9, 0x96, 0x24, 0x01, 0x00, 0x00,             // FST DWORD PTR [ESI+0x124] ; line 2407
+	0xD9, 0x9E, 0x28, 0x01, 0x00, 0x00,             // FSTP DWORD PTR [ESI+0x128] ; line 2408
+	0xD9, 0x9E, 0x20, 0x01, 0x00, 0x00,             // FSTP DWORD PTR [ESI+0x120] ; line 2409
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x63C7C8 ; line 2411
 };
 static JumpTarget clownpiece1SCRING_N_jumpData[] = {
-	{ 0x07D, 0x63C7C8 },
+	{ 0x064, 0x63C7C8 },
 };
-static PatchByteCode clownpiece1SCRING_N_patchByteCode = { clownpiece1SCRING_N_byteCode, 129, clownpiece1SCRING_N_jumpData, 1 };
+static PatchByteCode clownpiece1SCRING_N_patchByteCode = { clownpiece1SCRING_N_byteCode, 104, clownpiece1SCRING_N_jumpData, 1 };
 // clownpiece1SCRING_ANGLE declared in clownpiece.asm line 2419
 static unsigned char clownpiece1SCRING_ANGLE_byteCode[] = {
 	0x0F, 0x85, 0xDE, 0xAD, 0xBE, 0xEF, // JNE 0x62E1BB ; line 2420
@@ -1990,15 +1990,15 @@ static JumpTarget clownpiece1SCRING_ANGLEAIR_jumpData[] = {
 static PatchByteCode clownpiece1SCRING_ANGLEAIR_patchByteCode = { clownpiece1SCRING_ANGLEAIR_byteCode, 32, clownpiece1SCRING_ANGLEAIR_jumpData, 2 };
 // clownpiece1SCRING_TRANSP declared in clownpiece.asm line 2444
 static unsigned char clownpiece1SCRING_TRANSP_byteCode[] = {
-	0x80, 0xF8, 0x10,                   // CMP AL,0x10 ; line 2445
+	0x3C, 0x10,                         // CMP AL,0x10 ; line 2445
 	0x0F, 0x82, 0xDE, 0xAD, 0xBE, 0xEF, // JB 0x6365F7 ; line 2446
-	0x80, 0xE8, 0x10,                   // SUB AL,0x10 ; line 2447
+	0x2C, 0x10,                         // SUB AL,0x10 ; line 2447
 	0xB3, 0xF0,                         // MOV BL,0xF0 ; line 2448
 };
 static JumpTarget clownpiece1SCRING_TRANSP_jumpData[] = {
-	{ 0x005, 0x6365F7 },
+	{ 0x004, 0x6365F7 },
 };
-static PatchByteCode clownpiece1SCRING_TRANSP_patchByteCode = { clownpiece1SCRING_TRANSP_byteCode, 14, clownpiece1SCRING_TRANSP_jumpData, 1 };
+static PatchByteCode clownpiece1SCRING_TRANSP_patchByteCode = { clownpiece1SCRING_TRANSP_byteCode, 12, clownpiece1SCRING_TRANSP_jumpData, 1 };
 // clownpiece134 declared in clownpiece.asm line 2461
 static unsigned char clownpiece134_byteCode[] = {
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF, // JMP 0x637CB6 ; line 2462
@@ -2027,9 +2027,9 @@ static PatchByteCode clownpiece136_patchByteCode = { clownpiece136_byteCode, 5, 
 static unsigned char clownpiece3SCDISC_byteCode[] = {
 	0x66, 0x9C,                               // PUSHF ; line 2481
 	0x60,                                     // PUSHAD ; line 2482
-	0x81, 0xEC, 0x40, 0x00, 0x00, 0x00,       // SUB ESP,0x40 ; line 2484
-	0xE8, 0x25, 0x00, 0x00, 0x00,             // CALL LABEL2 ; line 2485
-	0x81, 0xC4, 0x40, 0x00, 0x00, 0x00,       // ADD ESP,0x40 ; line 2486
+	0x83, 0xEC, 0x40,                         // SUB ESP,0x40 ; line 2484
+	0xE8, 0x22, 0x00, 0x00, 0x00,             // CALL LABEL2 ; line 2485
+	0x83, 0xC4, 0x40,                         // ADD ESP,0x40 ; line 2486
 	0x61,                                     // POPAD ; line 2494
 	0x66, 0x9D,                               // POPF ; line 2495
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,             // JMP 0x62EF79 ; line 2497
@@ -2044,10 +2044,10 @@ static unsigned char clownpiece3SCDISC_byteCode[] = {
 	0xC3,                                     // RET ; line 2508
 };
 static JumpTarget clownpiece3SCDISC_jumpData[] = {
-	{ 0x018, 0x62EF79 },
-	{ 0x02F, 0x62EF0C },
+	{ 0x012, 0x62EF79 },
+	{ 0x029, 0x62EF0C },
 };
-static PatchByteCode clownpiece3SCDISC_patchByteCode = { clownpiece3SCDISC_byteCode, 67, clownpiece3SCDISC_jumpData, 2 };
+static PatchByteCode clownpiece3SCDISC_patchByteCode = { clownpiece3SCDISC_byteCode, 61, clownpiece3SCDISC_jumpData, 2 };
 // clownpiece3SCDISC_RET declared in clownpiece.asm line 2512
 static unsigned char clownpiece3SCDISC_RET_byteCode[] = {
 	0xE8, 0xDE, 0xAD, 0xBE, 0xEF, // CALL 0x46EB30 ; line 2513
@@ -2094,18 +2094,18 @@ static PatchByteCode clownpiece3SCDISC_0_patchByteCode = { clownpiece3SCDISC_0_b
 // clownpiece3SCDISC_1 declared in clownpiece.asm line 2550
 static unsigned char clownpiece3SCDISC_1_byteCode[] = {
 	0x66, 0x8B, 0x86, 0x40, 0x01, 0x00, 0x00, // MOV AX,[ESI+0x140] ; line 2551
-	0x66, 0x81, 0xF8, 0x04, 0x00,             // CMP AX,0x0004 ; line 2552
+	0x66, 0x83, 0xF8, 0x04,                   // CMP AX,0x0004 ; line 2552
 	0x0F, 0x8C, 0xDE, 0xAD, 0xBE, 0xEF,       // JL 0x63120A ; line 2553
-	0x66, 0x81, 0xF8, 0x0A, 0x00,             // CMP AX,0x000A ; line 2554
+	0x66, 0x83, 0xF8, 0x0A,                   // CMP AX,0x000A ; line 2554
 	0x0F, 0x8F, 0xDE, 0xAD, 0xBE, 0xEF,       // JG 0x63120A ; line 2555
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,             // JMP 0x62EEFA ; line 2556
 };
 static JumpTarget clownpiece3SCDISC_1_jumpData[] = {
-	{ 0x00E, 0x63120A },
-	{ 0x019, 0x63120A },
-	{ 0x01E, 0x62EEFA },
+	{ 0x00D, 0x63120A },
+	{ 0x017, 0x63120A },
+	{ 0x01C, 0x62EEFA },
 };
-static PatchByteCode clownpiece3SCDISC_1_patchByteCode = { clownpiece3SCDISC_1_byteCode, 34, clownpiece3SCDISC_1_jumpData, 3 };
+static PatchByteCode clownpiece3SCDISC_1_patchByteCode = { clownpiece3SCDISC_1_byteCode, 32, clownpiece3SCDISC_1_jumpData, 3 };
 // clownpiece137 declared in clownpiece.asm line 2562
 static unsigned char clownpiece137_byteCode[] = {
 	0xD9, 0x05, 0x94, 0xAE, 0x85, 0x00, // FLD DWORD PTR [0x85AE94] ; line 2563
@@ -2123,32 +2123,32 @@ static JumpTarget clownpiece3SCDISC_SKIP_jumpData[] = {
 static PatchByteCode clownpiece3SCDISC_SKIP_patchByteCode = { clownpiece3SCDISC_SKIP_byteCode, 14, clownpiece3SCDISC_SKIP_jumpData, 1 };
 // clownpieceA214WALK_5 declared in clownpiece.asm line 2579
 static unsigned char clownpieceA214WALK_5_byteCode[] = {
-	0x66, 0x81, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x03, 0x00, // CMP WORD PTR [ESI+0x13E],0x03 ; line 2580
-	0x0F, 0x8C, 0x08, 0x00, 0x00, 0x00,                   // JL SHORT LABEL1 ; line 2581
-	0xD9, 0xEE,                                           // FLDZ ; line 2582
-	0xD9, 0x9E, 0xF4, 0x00, 0x00, 0x00,                   // FSTP DWORD PTR [ESI+0xF4] ; line 2583
-	0x90,                                                 // NOP ; line 2585
+	0x66, 0x83, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x03, // CMP WORD PTR [ESI+0x13E],0x03 ; line 2580
+	0x7C, 0x08,                                     // JL SHORT LABEL1 ; line 2581
+	0xD9, 0xEE,                                     // FLDZ ; line 2582
+	0xD9, 0x9E, 0xF4, 0x00, 0x00, 0x00,             // FSTP DWORD PTR [ESI+0xF4] ; line 2583
+	0x90,                                           // NOP ; line 2585
 };
-static PatchByteCode clownpieceA214WALK_5_patchByteCode = { clownpieceA214WALK_5_byteCode, 24, nullptr, 0 };
+static PatchByteCode clownpieceA214WALK_5_patchByteCode = { clownpieceA214WALK_5_byteCode, 19, nullptr, 0 };
 // clownpieceA214WALK_6 declared in clownpiece.asm line 2592
 static unsigned char clownpieceA214WALK_6_byteCode[] = {
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x04, 0x00, // CMP WORD PTR [ESI+0x140],0x04 ; line 2593
-	0x0F, 0x8C, 0x07, 0x00, 0x00, 0x00,                   // JL SHORT LABEL1 ; line 2594
-	0x80, 0xBE, 0xF4, 0x07, 0x00, 0x00, 0x00,             // CMP BYTE PTR [ESI+0x7F4],0x00 ; line 2595
-	0x90,                                                 // NOP ; line 2597
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x04, // CMP WORD PTR [ESI+0x140],0x04 ; line 2593
+	0x7C, 0x07,                                     // JL SHORT LABEL1 ; line 2594
+	0x80, 0xBE, 0xF4, 0x07, 0x00, 0x00, 0x00,       // CMP BYTE PTR [ESI+0x7F4],0x00 ; line 2595
+	0x90,                                           // NOP ; line 2597
 };
-static PatchByteCode clownpieceA214WALK_6_patchByteCode = { clownpieceA214WALK_6_byteCode, 23, nullptr, 0 };
+static PatchByteCode clownpieceA214WALK_6_patchByteCode = { clownpieceA214WALK_6_byteCode, 18, nullptr, 0 };
 // clownpieceA22ACURA_0 declared in clownpiece.asm line 2608
 static unsigned char clownpieceA22ACURA_0_byteCode[] = {
-	0xC6, 0x86, 0x8C, 0x01, 0x00, 0x00, 0x0B,             // MOV BYTE PTR [ESI+0x18C],0x0B ; line 2609
-	0x66, 0x81, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x02, 0x00, // CMP WORD PTR [ESI+0x13E],0x02 ; line 2610
-	0x0F, 0x85, 0x12, 0x00, 0x00, 0x00,                   // JNE SHORT LABELA ; line 2611
-	0xD9, 0x86, 0xF8, 0x00, 0x00, 0x00,                   // FLD DWORD PTR [ESI+0xF8] ; line 2612
-	0xD8, 0xA6, 0x00, 0x01, 0x00, 0x00,                   // FSUB DWORD PTR [ESI+0x100] ; line 2613
-	0xD9, 0x9E, 0xF8, 0x00, 0x00, 0x00,                   // FSTP DWORD PTR [ESI+0xF8] ; line 2614
-	0xBB, 0x01, 0x00, 0x00, 0x00,                         // MOV EBX,0x00000001 ; line 2616
+	0xC6, 0x86, 0x8C, 0x01, 0x00, 0x00, 0x0B,       // MOV BYTE PTR [ESI+0x18C],0x0B ; line 2609
+	0x66, 0x83, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x02, // CMP WORD PTR [ESI+0x13E],0x02 ; line 2610
+	0x75, 0x12,                                     // JNE SHORT LABELA ; line 2611
+	0xD9, 0x86, 0xF8, 0x00, 0x00, 0x00,             // FLD DWORD PTR [ESI+0xF8] ; line 2612
+	0xD8, 0xA6, 0x00, 0x01, 0x00, 0x00,             // FSUB DWORD PTR [ESI+0x100] ; line 2613
+	0xD9, 0x9E, 0xF8, 0x00, 0x00, 0x00,             // FSTP DWORD PTR [ESI+0xF8] ; line 2614
+	0xBB, 0x01, 0x00, 0x00, 0x00,                   // MOV EBX,0x00000001 ; line 2616
 };
-static PatchByteCode clownpieceA22ACURA_0_patchByteCode = { clownpieceA22ACURA_0_byteCode, 45, nullptr, 0 };
+static PatchByteCode clownpieceA22ACURA_0_patchByteCode = { clownpieceA22ACURA_0_byteCode, 40, nullptr, 0 };
 // clownpieceA22ACURA_1 declared in clownpiece.asm line 2619
 static unsigned char clownpieceA22ACURA_1_byteCode[] = {
 	0xD9, 0xEE,                         // FLDZ ; line 2620
@@ -2183,46 +2183,46 @@ static PatchByteCode clownpieceA22ACURA_3_patchByteCode = { clownpieceA22ACURA_3
 // clownpieceA22ACURA_CREATION declared in clownpiece.asm line 2638
 static unsigned char clownpieceA22ACURA_CREATION_byteCode[] = {
 	0xD9, 0x86, 0xF8, 0x00, 0x00, 0x00,                         // FLD DWORD PTR [ESI+0xF8] ; line 2640
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x00 ; line 2641
-	0x0F, 0x85, 0x32, 0x00, 0x00, 0x00,                         // JNE LABEL4 ; line 2642
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00,                   // CMP DWORD PTR [ESI+0x144],0x00 ; line 2641
+	0x0F, 0x85, 0x2F, 0x00, 0x00, 0x00,                         // JNE LABEL4 ; line 2642
 	0xD8, 0x0D, 0x28, 0xC2, 0x85, 0x00,                         // FMUL DWORD PTR [0x85C228] ; line 2643
 	0xD9, 0x9E, 0xF8, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF8] ; line 2644
-	0xE9, 0xE0, 0x00, 0x00, 0x00,                               // JMP LABEL3 ; line 2645
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x10 ; line 2647
+	0xE9, 0xD1, 0x00, 0x00, 0x00,                               // JMP LABEL3 ; line 2645
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x10,                   // CMP DWORD PTR [ESI+0x144],0x10 ; line 2647
 	0x0F, 0x8D, 0x11, 0x00, 0x00, 0x00,                         // JNL LABEL4 ; line 2648
 	0xD8, 0x0D, 0x28, 0xC2, 0x85, 0x00,                         // FMUL DWORD PTR [0x85C228] ; line 2649
 	0xD9, 0x9E, 0xF8, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF8] ; line 2650
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                               // JMP 0x62D368 ; line 2652
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x10 ; line 2654
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x10,                   // CMP DWORD PTR [ESI+0x144],0x10 ; line 2654
 	0x0F, 0x85, 0x23, 0x00, 0x00, 0x00,                         // JNE LABEL6 ; line 2655
 	0xD9, 0x9E, 0xF8, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF8] ; line 2656
 	0xD9, 0x05, 0x60, 0xB9, 0x85, 0x00,                         // FLD DWORD PTR [0x85B960] ; line 2657
 	0xD9, 0x9E, 0xF8, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF8] ; line 2658
 	0xD9, 0x05, 0x94, 0xAE, 0x85, 0x00,                         // FLD DWORD PTR [0x85AE94] ; line 2659
 	0xD9, 0x9E, 0xF4, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF4] ; line 2660
-	0xE9, 0xC8, 0xFF, 0xFF, 0xFF,                               // JMP LABEL5 ; line 2661
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x24 ; line 2663
+	0xE9, 0xCB, 0xFF, 0xFF, 0xFF,                               // JMP LABEL5 ; line 2661
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x24,                   // CMP DWORD PTR [ESI+0x144],0x24 ; line 2663
 	0x0F, 0x8D, 0x11, 0x00, 0x00, 0x00,                         // JNL LABEL7 ; line 2664
 	0xD8, 0x0D, 0x28, 0xC2, 0x85, 0x00,                         // FMUL DWORD PTR [0x85C228] ; line 2665
 	0xD9, 0x9E, 0xF8, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF8] ; line 2666
-	0xE9, 0xA7, 0xFF, 0xFF, 0xFF,                               // JMP LABEL5 ; line 2667
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x24 ; line 2669
+	0xE9, 0xAD, 0xFF, 0xFF, 0xFF,                               // JMP LABEL5 ; line 2667
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x24,                   // CMP DWORD PTR [ESI+0x144],0x24 ; line 2669
 	0x0F, 0x85, 0x11, 0x00, 0x00, 0x00,                         // JNE LABEL8 ; line 2670
 	0xD8, 0x0D, 0x0C, 0x15, 0x87, 0x00,                         // FMUL DWORD PTR [0x87150C] ; line 2671
 	0xD9, 0x9E, 0xF8, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF8] ; line 2672
-	0xE9, 0x86, 0xFF, 0xFF, 0xFF,                               // JMP LABEL5 ; line 2673
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x38, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x38 ; line 2675
+	0xE9, 0x8F, 0xFF, 0xFF, 0xFF,                               // JMP LABEL5 ; line 2673
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x38,                   // CMP DWORD PTR [ESI+0x144],0x38 ; line 2675
 	0x0F, 0x8D, 0x11, 0x00, 0x00, 0x00,                         // JNL LABEL9 ; line 2676
 	0xD8, 0x35, 0x28, 0xC2, 0x85, 0x00,                         // FDIV DWORD PTR [0x85C228] ; line 2677
 	0xD9, 0x9E, 0xF8, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF8] ; line 2678
-	0xE9, 0x65, 0xFF, 0xFF, 0xFF,                               // JMP LABEL5 ; line 2679
+	0xE9, 0x71, 0xFF, 0xFF, 0xFF,                               // JMP LABEL5 ; line 2679
 	0xD8, 0x35, 0x38, 0x15, 0x87, 0x00,                         // FDIV DWORD PTR [0x871538] ; line 2681
 	0xD9, 0x05, 0x30, 0x88, 0x85, 0x00,                         // FLD DWORD PTR [0x858830] ; line 2682
 	0xD9, 0x9E, 0xF4, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF4] ; line 2683
 	0xD9, 0x9E, 0xF8, 0x00, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0xF8] ; line 2684
 	0xD9, 0x05, 0x6C, 0xBC, 0x85, 0x00,                         // FLD DWORD PTR [0x85BC6C] ; line 2685
 	0xD9, 0x9E, 0x00, 0x01, 0x00, 0x00,                         // FSTP DWORD PTR [ESI+0x100] ; line 2686
-	0xE9, 0x75, 0x00, 0x00, 0x00,                               // JMP LABEL1 ; line 2687
+	0xE9, 0x72, 0x00, 0x00, 0x00,                               // JMP LABEL1 ; line 2687
 	0xD9, 0xEE,                                                 // FLDZ ; line 2690
 	0x6A, 0x03,                                                 // PUSH 0x03 ; line 2691
 	0xD9, 0x94, 0x24, 0xB8, 0x02, 0x00, 0x00,                   // FST DWORD PTR [ESP+0x2B8] ; line 2692
@@ -2236,7 +2236,7 @@ static unsigned char clownpieceA22ACURA_CREATION_byteCode[] = {
 	0x0F, 0xB6, 0x96, 0x04, 0x01, 0x00, 0x00,                   // MOVZX EDX,BYTE PTR [ESI+0x104] ; line 2700
 	0xD9, 0x86, 0xF0, 0x00, 0x00, 0x00,                         // FLD DWORD PTR [ESI+0xF0] ; line 2701
 	0x52,                                                       // PUSH EDX ; line 2702
-	0x81, 0xEC, 0x08, 0x00, 0x00, 0x00,                         // SUB ESP,0x08 ; line 2703
+	0x83, 0xEC, 0x08,                                           // SUB ESP,0x08 ; line 2703
 	0xD9, 0x5C, 0x24, 0x04,                                     // FSTP DWORD PTR [ESP+0x04] ; line 2704
 	0xD9, 0x86, 0xEC, 0x00, 0x00, 0x00,                         // FLD DWORD PTR [ESI+0xEC] ; line 2705
 	0xD9, 0x1C, 0x24,                                           // FSTP DWORD PTR [ESP] ; line 2706
@@ -2246,16 +2246,16 @@ static unsigned char clownpieceA22ACURA_CREATION_byteCode[] = {
 	0x0F, 0x8C, 0x16, 0x00, 0x00, 0x00,                         // JL LABEL1 ; line 2710
 	0xC7, 0x86, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // MOV DWORD PTR [ESI+0x190],0x00000000 ; line 2711
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x01,                   // MOV BYTE PTR [ESI+0x194],0x01 ; line 2712
-	0xE9, 0xC7, 0xFE, 0xFF, 0xFF,                               // JMP LABEL5 ; line 2714
+	0xE9, 0xD6, 0xFE, 0xFF, 0xFF,                               // JMP LABEL5 ; line 2714
 	0xC6, 0x86, 0x94, 0x01, 0x00, 0x00, 0x00,                   // MOV BYTE PTR [ESI+0x194],0x00 ; line 2716
 	0xE9, 0xEF, 0xFF, 0xFF, 0xFF,                               // JMP LABEL2 ; line 2717
 	0x90,                                                       // NOP ; line 2718
 };
 static JumpTarget clownpieceA22ACURA_CREATION_jumpData[] = {
-	{ 0x044, 0x62D368 },
-	{ 0x155, 0x46EB30 },
+	{ 0x03E, 0x62D368 },
+	{ 0x140, 0x46EB30 },
 };
-static PatchByteCode clownpieceA22ACURA_CREATION_patchByteCode = { clownpieceA22ACURA_CREATION_byteCode, 393, clownpieceA22ACURA_CREATION_jumpData, 2 };
+static PatchByteCode clownpieceA22ACURA_CREATION_patchByteCode = { clownpieceA22ACURA_CREATION_byteCode, 372, clownpieceA22ACURA_CREATION_jumpData, 2 };
 // clownpieceA22ACURA_4 declared in clownpiece.asm line 2723
 static unsigned char clownpieceA22ACURA_4_byteCode[] = {
 	0x8B, 0x8E, 0x98, 0x03, 0x00, 0x00,                   // MOV ECX,[ESI+0x398] ; line 2724
@@ -2267,7 +2267,7 @@ static unsigned char clownpieceA22ACURA_4_byteCode[] = {
 	0x6A, 0x00,                                           // PUSH 0x00 ; line 2730
 	0x89, 0xF1,                                           // MOV ECX,ESI ; line 2731
 	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                         // CALL 0x48CF60 ; line 2732
-	0x66, 0x81, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x02, 0x00, // CMP WORD PTR [ESI+0x13E],0x02 ; line 2733
+	0x66, 0x83, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x02,       // CMP WORD PTR [ESI+0x13E],0x02 ; line 2733
 	0x0F, 0x8C, 0xDE, 0xAD, 0xBE, 0xEF,                   // JL 0x63C40C ; line 2734
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x63C49A ; line 2735
 };
@@ -2275,10 +2275,10 @@ static JumpTarget clownpieceA22ACURA_4_jumpData[] = {
 	{ 0x011, 0x6365F7 },
 	{ 0x020, 0x6365F7 },
 	{ 0x02B, 0x48CF60 },
-	{ 0x03A, 0x63C40C },
-	{ 0x03F, 0x63C49A },
+	{ 0x039, 0x63C40C },
+	{ 0x03E, 0x63C49A },
 };
-static PatchByteCode clownpieceA22ACURA_4_patchByteCode = { clownpieceA22ACURA_4_byteCode, 67, clownpieceA22ACURA_4_jumpData, 5 };
+static PatchByteCode clownpieceA22ACURA_4_patchByteCode = { clownpieceA22ACURA_4_byteCode, 66, clownpieceA22ACURA_4_jumpData, 5 };
 // clownpiece130 declared in clownpiece.asm line 2761
 static unsigned char clownpiece130_byteCode[] = {
 	0x80, 0xBE, 0xAF, 0x06, 0x00, 0x00, 0x02, // CMP BYTE PTR [ESI+0x6AF],0x02 ; line 2762
@@ -2342,38 +2342,38 @@ static unsigned char clownpiece125_byteCode[] = {
 static PatchByteCode clownpiece125_patchByteCode = { clownpiece125_byteCode, 8, nullptr, 0 };
 // clownpiece66B declared in clownpiece.asm line 2838
 static unsigned char clownpiece66B_byteCode[] = {
-	0x66, 0x81, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x01, 0x00, // CMP WORD PTR [ESI+0x13E],0x01 ; line 2839
-	0x0F, 0x8C, 0xDE, 0xAD, 0xBE, 0xEF,                   // JL 0x624E4B ; line 2840
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                         // JMP 0x624E0F ; line 2841
+	0x66, 0x83, 0xBE, 0x3E, 0x01, 0x00, 0x00, 0x01, // CMP WORD PTR [ESI+0x13E],0x01 ; line 2839
+	0x0F, 0x8C, 0xDE, 0xAD, 0xBE, 0xEF,             // JL 0x624E4B ; line 2840
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                   // JMP 0x624E0F ; line 2841
 };
 static JumpTarget clownpiece66B_jumpData[] = {
-	{ 0x00B, 0x624E4B },
-	{ 0x010, 0x624E0F },
+	{ 0x00A, 0x624E4B },
+	{ 0x00F, 0x624E0F },
 };
-static PatchByteCode clownpiece66B_patchByteCode = { clownpiece66B_byteCode, 20, clownpiece66B_jumpData, 2 };
+static PatchByteCode clownpiece66B_patchByteCode = { clownpiece66B_byteCode, 19, clownpiece66B_jumpData, 2 };
 // clownpiece66B_LOOP declared in clownpiece.asm line 2844
 static unsigned char clownpiece66B_LOOP_byteCode[] = {
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x8 ; line 2845
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                               // JMP 0x624F03 ; line 2846
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x08, // CMP DWORD PTR [ESI+0x144],0x8 ; line 2845
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,             // JMP 0x624F03 ; line 2846
 };
 static JumpTarget clownpiece66B_LOOP_jumpData[] = {
-	{ 0x00B, 0x624F03 },
+	{ 0x008, 0x624F03 },
 };
-static PatchByteCode clownpiece66B_LOOP_patchByteCode = { clownpiece66B_LOOP_byteCode, 15, clownpiece66B_LOOP_jumpData, 1 };
+static PatchByteCode clownpiece66B_LOOP_patchByteCode = { clownpiece66B_LOOP_byteCode, 12, clownpiece66B_LOOP_jumpData, 1 };
 // clownpiece66B_SOUND declared in clownpiece.asm line 2849
 static unsigned char clownpiece66B_SOUND_byteCode[] = {
-	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x00 ; line 2850
-	0x0F, 0x85, 0x09, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL1 ; line 2851
-	0x6A, 0x1D,                                                 // PUSH 0x1D ; line 2852
-	0x89, 0xF1,                                                 // MOV ECX,ESI ; line 2853
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                               // CALL 0x439490 ; line 2854
-	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,                               // JMP 0x624F0C ; line 2856
+	0x83, 0xBE, 0x44, 0x01, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0x00 ; line 2850
+	0x75, 0x09,                               // JNE SHORT LABEL1 ; line 2851
+	0x6A, 0x1D,                               // PUSH 0x1D ; line 2852
+	0x89, 0xF1,                               // MOV ECX,ESI ; line 2853
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,             // CALL 0x439490 ; line 2854
+	0xE9, 0xDE, 0xAD, 0xBE, 0xEF,             // JMP 0x624F0C ; line 2856
 };
 static JumpTarget clownpiece66B_SOUND_jumpData[] = {
-	{ 0x015, 0x439490 },
-	{ 0x01A, 0x624F0C },
+	{ 0x00E, 0x439490 },
+	{ 0x013, 0x624F0C },
 };
-static PatchByteCode clownpiece66B_SOUND_patchByteCode = { clownpiece66B_SOUND_byteCode, 30, clownpiece66B_SOUND_jumpData, 2 };
+static PatchByteCode clownpiece66B_SOUND_patchByteCode = { clownpiece66B_SOUND_byteCode, 23, clownpiece66B_SOUND_jumpData, 2 };
 // clownpiece66B_X declared in clownpiece.asm line 2859
 static unsigned char clownpiece66B_X_byteCode[] = {
 	0xD9, 0x05, 0xB0, 0xB3, 0x85, 0x00, // FLD DWORD PTR [0x85B3B0] ; line 2860

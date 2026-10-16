@@ -123,6 +123,20 @@ r_operands_bin = {
 	'CMP': { 'DD': (0x38, 0x39), 'DIm': ((0x80, 0xF8), (0x81, 0xF8)), 'DI': (0x3A, 0x3B), 'IIm': (0x80, 0x81), 'r': 7, 'ESP': (0x83, 0xC4) },
 	'SHL': { 'DD': None,         'DIm': ((0xC1, 0xE0), (0xC1, 0xE0)), 'DI': None,         'IIm': None,         'r': 0, 'ESP': None },
 }
+# ADD/OR/ADC/SBB/AND/SUB/XOR/CMP r/m16/32, imm8 (sign-extended)
+alu_sign_extended_imm8 = {'ADD', 'OR', 'ADC', 'SBB', 'AND', 'SUB', 'XOR', 'CMP'}
+# AL/AX/EAX immediate forms (8-bit opcode, 16/32-bit opcode)
+acc_imm8_32 = {
+	'ADD':  (0x04, 0x05),
+	'OR':   (0x0C, 0x0D),
+	'ADC':  (0x14, 0x15),
+	'SBB':  (0x1C, 0x1D),
+	'AND':  (0x24, 0x25),
+	'SUB':  (0x2C, 0x2D),
+	'XOR':  (0x34, 0x35),
+	'CMP':  (0x3C, 0x3D),
+	'TEST': (0xA8, 0xA9),
+}
 jumps = {
 	'CALL': ((0xE8,),       None,   (0xFF, 0xD0), 2),
 	'JMP':  ((0xE9,),      (0xEB,), (0xFF, 0xE0), 4),
@@ -184,9 +198,64 @@ def emit_warning(message):
 	emit_message(colored('warning', 'magenta'), message)
 
 
+def encode_displacement(value, nbytes):
+	try:
+		return list(value.to_bytes(nbytes, byteorder='little', signed=True))
+	except OverflowError:
+		return list(value.to_bytes(nbytes, byteorder='little', signed=False))
+
+
+def encode_modrm_mem(modrm_reg, extra_ind):
+	has_reg1 = extra_ind[0] is not None
+	has_regM = extra_ind[1] is not None
+	disp = extra_ind[2]['value'] if extra_ind[2] is not None else 0
+	has_disp = extra_ind[2] is not None and extra_ind[2]['value'] != 0
+	reg1 = extra_ind[0]['value'] if has_reg1 else None
+	regM = (extra_ind[1]['valueR'], extra_ind[1]['valueM']) if has_regM else None
+
+	# [EBP] encoding requires a displacement byte.
+	if has_reg1 and reg1 == 5:
+		has_disp = True
+
+	def disp_bytes_and_mod():
+		if not has_disp:
+			return [], 0
+		if -128 <= disp <= 127:
+			return encode_displacement(disp, 1), 1
+		return encode_displacement(disp, 4), 2
+
+	out = []
+	if has_regM:
+		index, scale = regM
+		if has_reg1:
+			db, mod = disp_bytes_and_mod()
+			out.append((mod << 6) | (modrm_reg << 3) | 4)
+			out.append(reg1 | (index << 3) | (scale << 6))
+			out += db
+		else:
+			# [index*scale+disp32] has no base register, so displacement is always 32 bits.
+			out.append((modrm_reg << 3) | 4)
+			out.append(5 | (index << 3) | (scale << 6))
+			out += encode_displacement(disp, 4)
+	elif has_reg1:
+		if reg1 == 4:
+			db, mod = disp_bytes_and_mod()
+			out.append((mod << 6) | (modrm_reg << 3) | 4)
+			out.append(0x24)
+			out += db
+		else:
+			db, mod = disp_bytes_and_mod()
+			out.append((mod << 6) | (modrm_reg << 3) | reg1)
+			out += db
+	else:
+		out.append((modrm_reg << 3) | 5)
+		out += encode_displacement(disp, 4)
+	return out
+
+
 def get_indirect_info(reg, mnemonic):
 	content = reg.split('[')[1].split(']')[0].strip()
-	values = content.replace('-', '+-').split('+')
+	values = [v.strip() for v in content.replace('-', '+-').split('+') if v.strip()]
 	if len(values) > 3:
 		raise AssemblyError(f"Invalid operand to {mnemonic} ({reg}): Invalid syntax")
 	register = [v for v in values if v.startswith('E') and not '*' in v]
@@ -342,7 +411,10 @@ def assemble(line, pos, debug, labels):
 		if len(args) == 2:
 			op1, size1, extra1 = get_reg_size(args[1], mnemonic)
 			if op1 == REG_TYPE_DIRECT:
-				return [0x0F, 0xAF, 0xC0 | extra1 | (dextra << 3)]
+				opcode = [0x0F, 0xAF, 0xC0 | extra1 | (dextra << 3)]
+				if dsize == 16:
+					opcode = [0x66] + opcode
+				return opcode
 			op2, size2, extra2 = op1, size1, extra1
 			op1, size1, extra1 = dop, dsize, dextra
 		else:
@@ -350,6 +422,7 @@ def assemble(line, pos, debug, labels):
 			op2, size2, extra2 = get_reg_size(args[2], mnemonic)
 		if op1 != REG_TYPE_DIRECT:
 			raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Second operand must be a direct register")
+		prefix = [0x66] if dsize == 16 else []
 		if op2 == REG_TYPE_IMMEDIATE:
 			if size2 > dsize:
 				old_value = extra2
@@ -366,12 +439,12 @@ def assemble(line, pos, debug, labels):
 				emit_warning(f'Immediate value truncated')
 			if size2 <= 8:
 				imm_size = 1
-				opcode = [0x6B]
+				opcode = prefix + [0x6B]
 			else:
-				imm_size = 4
-				opcode = [0x69]
+				imm_size = 2 if dsize == 16 else 4
+				opcode = prefix + [0x69]
 			opcode += [0xC0 | (dextra << 3) | extra1]
-			opcode += list(extra2.to_bytes(imm_size, byteorder='little', signed=True))
+			opcode += encode_displacement(extra2, imm_size)
 			return opcode
 
 		if op2 != REG_TYPE_INDIRECT:
@@ -380,15 +453,9 @@ def assemble(line, pos, debug, labels):
 			raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Invalid operand")
 
 		extra_ind = extra2
-		has_reg1 = extra_ind[0] is not None
-		has_regM = extra_ind[1] is not None
-		has_regI = extra_ind[2] is not None
-		reg1 = extra_ind[0]['value'] if has_reg1 else None
-		regM = (extra_ind[1]['valueR'], extra_ind[1]['valueM']) if has_regM else None
-		regI = (extra_ind[2]['value'], extra_ind[2]['size']) if has_regI else (0, 0)
-		if not has_regI or not has_reg1 or has_regM:
-			raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Not implemented")
-		return [0x0F, 0xAF, 0x80 | (dextra << 3) | reg1] + list(regI[0].to_bytes(4, byteorder='little', signed=True))
+		opcode = prefix + [0x0F, 0xAF]
+		opcode += encode_modrm_mem(dextra, extra_ind)
+		return opcode
 
 	# FPU
 	if mnemonic == 'FNSTSW':
@@ -436,13 +503,6 @@ def assemble(line, pos, debug, labels):
 			size = 32
 		if op != REG_TYPE_INDIRECT:
 			raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Invalid operand")
-		has_reg1 = extra_ind[0] is not None
-		has_regM = extra_ind[1] is not None
-		has_regI = extra_ind[2] is not None
-		reg1 = extra_ind[0]['value'] if has_reg1 else None
-		regM = (extra_ind[1]['valueR'], extra_ind[1]['valueM']) if has_regM else None
-		regI = (extra_ind[2]['value'], extra_ind[2]['size']) if has_regI else (0, 0)
-		imm_size = 1
 		if mnemonic == 'FILD':
 			if size == 64:
 				opcode = [opcodes[1]]
@@ -460,38 +520,11 @@ def assemble(line, pos, debug, labels):
 			opcode = [opcodes[1]]
 		else:
 			raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): {size} bits operand not supported")
-		flag_pos = len(opcode)
 		if size == 64 and mnemonic == 'FILD':
-			opcode.append(0x28)
+			modrm_reg = 5
 		else:
-			opcode.append(opcodes[0])
-
-		if reg1 == 5:
-			has_regI = True
-		elif reg1 == 4 and not (has_reg1 and has_regM and not has_regI):
-			opcode.append(0x24)
-		if has_reg1 and has_regM:
-			opcode[flag_pos] |= 0x4
-			opcode.append(reg1 | (regM[0] << 3) | (regM[1] << 6))
-		elif has_regM:
-			has_regI = True
-		elif has_reg1:
-			opcode[flag_pos] |= reg1
-		if has_regI and has_regM:
-			opcode[flag_pos] |= 0x4
-			opcode.append(0x5 | (regM[0] << 3) | (regM[1] << 6))
-			opcode += list(regI[0].to_bytes(4, byteorder='little', signed=True))
-		elif has_regI:
-			if not has_reg1:
-				imm_size = 4
-				opcode[flag_pos] |= 0x5
-			elif regI[1] <= 8:
-				opcode[flag_pos] |= 0x40
-			else:
-				opcode[flag_pos] |= 0x80
-				imm_size = 4
-			opcode += list(regI[0].to_bytes(imm_size, byteorder='little', signed=True))
-		return opcode
+			modrm_reg = opcodes[0] >> 3
+		return opcode + encode_modrm_mem(modrm_reg, extra_ind)
 
 	if mnemonic in no_operands:
 		if len(args) != 0:
@@ -546,42 +579,7 @@ def assemble(line, pos, debug, labels):
 		if op2 == REG_TYPE_DIRECT:
 			return opcode + [0xC0 | extra2 | (extra1 << 3)]
 
-		extra_reg = extra1
-		extra_ind = extra2
-
-		has_reg1 = extra_ind[0] is not None
-		has_regM = extra_ind[1] is not None
-		has_regI = extra_ind[2] is not None
-		reg1 = extra_ind[0]['value'] if has_reg1 else None
-		regM = (extra_ind[1]['valueR'], extra_ind[1]['valueM']) if has_regM else None
-		regI = (extra_ind[2]['value'], extra_ind[2]['size']) if has_regI else (0, 0)
-		imm_size = 1
-		flag_pos = len(opcode)
-		opcode.append(extra_reg << 3)
-
-		if reg1 == 5:
-			has_regI = True
-		elif reg1 == 4:
-			opcode.append(0x24)
-		if has_reg1 and has_regM:
-			opcode[flag_pos] |= 0x4
-			opcode.append(reg1 | (regM['valueR'] << 3) | (regM["valueM"] << 6))
-		elif has_regM:
-			has_regI = True
-		elif has_reg1:
-			opcode[flag_pos] |= reg1
-		if has_regI and has_regM:
-			opcode[flag_pos] |= 0x4
-			opcode.append(0x5 | (regM['valueR'] << 3) | (regM["valueM"] << 6))
-			opcode += list(regI[0].to_bytes(4, byteorder='little', signed=True))
-		elif has_regI:
-			if regI[1] <= 8:
-				opcode[flag_pos] |= 0x40
-			else:
-				opcode[flag_pos] |= 0x80
-				imm_size = 4
-			opcode += list(regI[0].to_bytes(imm_size, byteorder='little', signed=True))
-		return opcode
+		return opcode + encode_modrm_mem(extra1, extra2)
 
 	arr = ['INC', 'DEC', 'PUSH', 'POP']
 	if mnemonic in arr:
@@ -614,53 +612,49 @@ def assemble(line, pos, debug, labels):
 				emit_warning(f'Immediate value truncated')
 			return [0x68] + list(extra.to_bytes(4, byteorder='little', signed=True))
 
-		has_reg1 = extra[0] is not None
-		has_regM = extra[1] is not None
-		has_regI = extra[2] is not None
-		reg1 = extra[0]['value'] if has_reg1 else None
-		regM = (extra[1]['valueR'], extra[1]['valueM']) if has_regM else None
-		regI = (extra[2]['value'], extra[2]['size']) if has_regI else (0, 0)
-
 		if mnemonic == 'PUSH':
 			if size != 32:
 				raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Invalid operand")
-			return [0xFF, 0xB0 | reg1] + list(regI[0].to_bytes(4, byteorder='little', signed=True))
+			return [0xFF] + encode_modrm_mem(6, extra)
 
 		if arr.index(mnemonic) >= 2:
 			raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Invalid operand")
 		if size == 8:
-			return [0xFE, 0x80 | reg1 | (arr.index(mnemonic) << 3)] + list(regI[0].to_bytes(4, byteorder='little', signed=True))
-		elif size == 16:
-			return [0x66, 0xFF, 0x80 | reg1 | (arr.index(mnemonic) << 3)] + list(regI[0].to_bytes(4, byteorder='little', signed=True))
-		return [0xFF, 0x80 | reg1 | (arr.index(mnemonic) << 3)] + list(regI[0].to_bytes(4, byteorder='little', signed=True))
+			return [0xFE] + encode_modrm_mem(arr.index(mnemonic), extra)
+		if size == 16:
+			return [0x66, 0xFF] + encode_modrm_mem(arr.index(mnemonic), extra)
+		return [0xFF] + encode_modrm_mem(arr.index(mnemonic), extra)
 
 	# Branch
 	if mnemonic in jumps:
 		opcodes = jumps[mnemonic]
 		if len(args) != 1:
 			raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Expected 1 operand")
-		if mnemonic == 'JMP' and args == ['DWORD PTR [EAX*0x4+0x5C6B6C]']:
-			return [0xFF, 0x24, 0x85, 0x6C, 0x6B, 0x5C, 0x00]
-		if mnemonic == 'JMP' and args == ['DWORD PTR [EAX*4+0x5C6B6C]']:
-			return [0xFF, 0x24, 0x85, 0x6C, 0x6B, 0x5C, 0x00]
-		args = args[0].split(" ")
-		if args[0] == "SHORT":
-			if len(args[0]) is None:
+		operand = args[0]
+		tokens = operand.split(" ")
+		if tokens[0] == "SHORT":
+			if len(tokens) != 2:
 				raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Expected 1 operand")
-			if opcodes[1] is None:
-				raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Expected 1 operand")
-			args.pop(0)
-			# labels.append([args[1], pos + len(opcodes[1]), 1])
-			# return list(opcodes[1]) + [0xFF]
-		if args[0].startswith('['):
-			raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Indirect JMPs are not implemented")
-		if args[0] in reg_32bits:
+			labels.append([tokens[1], pos + len(opcodes[1]), 1])
+			return list(opcodes[1]) + [0xFF]
+		if '[' in operand:
+			if opcodes[3] is None:
+				raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): {mnemonic} doesn't support indirect mode")
+			op, size, extra = get_reg_size(operand, mnemonic)
+			if op != REG_TYPE_INDIRECT:
+				raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Invalid operand")
+			opcode = [0xFF]
+			if size == 16:
+				opcode = [0x66] + opcode
+			opcode += encode_modrm_mem(opcodes[3], extra)
+			return opcode
+		if operand in reg_32bits:
 			if opcodes[2] is None:
 				raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): {mnemonic} doesn't support indirect mode")
 			l = list(opcodes[2])
-			l[-1] |= reg_32bits.index(args[0])
+			l[-1] |= reg_32bits.index(operand)
 			return l
-		labels.append([args[0], pos + len(opcodes[0]), 4])
+		labels.append([operand, pos + len(opcodes[0]), 4])
 		return list(opcodes[0]) + [0xDE, 0xAD, 0xBE, 0xEF]
 
 	if mnemonic == 'LEA':
@@ -682,53 +676,7 @@ def assemble(line, pos, debug, labels):
 		if size1 != 32:
 			raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Register must be 32bits")
 
-		opcode = [0x8D]
-
-		extra_reg = extra1
-		extra_ind = extra2
-
-		has_reg1 = extra_ind[0] is not None
-		has_regM = extra_ind[1] is not None
-		has_regI = extra_ind[2] is not None and extra_ind[2]['value'] != 0
-		reg1 = extra_ind[0]['value'] if has_reg1 else None
-		regM = (extra_ind[1]['valueR'], extra_ind[1]['valueM']) if has_regM else None
-		regI = (extra_ind[2]['value'], extra_ind[2]['size']) if has_regI else (0, 0)
-		imm_size = 1
-		flag_pos = len(opcode)
-		opcode.append(extra_reg << 3)
-
-		if reg1 == 5:
-			has_regI = True
-		elif reg1 == 4 and not has_regM:
-			opcode.append(0x24)
-		if has_reg1 and has_regM:
-			pass
-		elif has_regM:
-			has_regI = True
-		elif has_reg1:
-			opcode[flag_pos] |= reg1
-		if has_reg1 and has_regM:
-			opcode[flag_pos] |= 0x4
-			opcode.append(reg1 | (regM[0] << 3) | (regM[1] << 6))
-			if has_regI:
-				if regI[1] <= 8:
-					opcode[flag_pos] |= 0x40
-				else:
-					opcode[flag_pos] |= 0x80
-					imm_size = 4
-				opcode += list(regI[0].to_bytes(imm_size, byteorder='little', signed=True))
-		elif has_regI and has_regM:
-			opcode[flag_pos] |= 0x4
-			opcode.append(0x5 | (regM[0] << 3) | (regM[1] << 6))
-			opcode += list(regI[0].to_bytes(4, byteorder='little', signed=True))
-		elif has_regI:
-			if regI[1] <= 8:
-				opcode[flag_pos] |= 0x40
-			else:
-				opcode[flag_pos] |= 0x80
-				imm_size = 4
-			opcode += list(regI[0].to_bytes(imm_size, byteorder='little', signed=True))
-		return opcode
+		return [0x8D] + encode_modrm_mem(extra1, extra2)
 
 	# Bin 2 operands with immediate, direct and indirect values
 	if mnemonic in r_operands_bin:
@@ -776,6 +724,9 @@ def assemble(line, pos, debug, labels):
 			if size1 <= 8 or mnemonic == 'SHL':
 				opcode = list(opcodes['DIm'][0])
 				size = 1
+			elif mnemonic in alu_sign_extended_imm8 and -128 <= extra2 <= 127:
+				opcode = ([0x66] if size1 <= 16 else []) + [0x83, opcodes['DIm'][1][-1]]
+				size = 1
 			elif size1 <= 16:
 				opcode = [0x66] + list(opcodes['DIm'][1])
 				size = 2
@@ -785,7 +736,15 @@ def assemble(line, pos, debug, labels):
 			else:
 				raise AssemblyError(f"Invalid operands to {mnemonic} ({",".join(args)}): Invalid operand")
 			opcode[-1] |= extra1
-			return opcode + list(extra2.to_bytes(size, byteorder='little', signed=True))
+			if extra1 == 0 and mnemonic in acc_imm8_32 and (size1 <= 8 or size > 1):
+				op8, op32 = acc_imm8_32[mnemonic]
+				if size1 <= 8:
+					opcode = [op8]
+				elif size1 <= 16:
+					opcode = [0x66, op32]
+				else:
+					opcode = [op32]
+			return opcode + encode_displacement(extra2, size)
 
 		append_extra = []
 		if op1 == REG_TYPE_DIRECT and op2 == REG_TYPE_INDIRECT:
@@ -823,47 +782,20 @@ def assemble(line, pos, debug, labels):
 				print("INDIRECT IMMEDIATE", extra1)
 			if size1 == 8:
 				opcode = [opcodes['IIm'][0]]
+				append_extra = encode_displacement(extra2, 1)
+			elif mnemonic in alu_sign_extended_imm8 and -128 <= extra2 <= 127:
+				opcode = ([0x66] if size1 == 16 else []) + [0x83]
+				append_extra = encode_displacement(extra2, 1)
 			elif size1 == 16:
 				opcode = [0x66, opcodes['IIm'][1]]
+				append_extra = encode_displacement(extra2, 2)
 			elif size1 == 32:
 				opcode = [opcodes['IIm'][1]]
-			append_extra = list(extra2.to_bytes(size1 // 8, byteorder='little', signed=True))
+				append_extra = encode_displacement(extra2, 4)
 			extra_reg = opcodes['r']
 			extra_ind = extra1
 
-		has_reg1 = extra_ind[0] is not None
-		has_regM = extra_ind[1] is not None
-		has_regI = extra_ind[2] is not None
-		reg1 = extra_ind[0]['value'] if has_reg1 else None
-		regM = (extra_ind[1]['valueR'], extra_ind[1]['valueM']) if has_regM else None
-		regI = (extra_ind[2]['value'], extra_ind[2]['size']) if has_regI else (0, 0)
-		imm_size = 1
-		flag_pos = len(opcode)
-		opcode.append(extra_reg << 3)
-
-		if reg1 == 5:
-			has_regI = True
-		elif reg1 == 4:
-			opcode.append(0x24)
-		if has_reg1 and has_regM:
-			opcode[flag_pos] |= 0x4
-			opcode.append(reg1 | (regM[0] << 3) | (regM[1] << 6))
-		elif has_regM:
-			has_regI = True
-		elif has_reg1:
-			opcode[flag_pos] |= reg1
-		if has_regI and has_regM:
-			opcode[flag_pos] |= 0x4
-			opcode.append(0x5 | (regM[0] << 3) | (regM[1] << 6))
-			opcode += list(regI[0].to_bytes(4, byteorder='little', signed=True))
-		elif has_regI:
-			if regI[1] <= 8:
-				opcode[flag_pos] |= 0x40
-			else:
-				opcode[flag_pos] |= 0x80
-				imm_size = 4
-			opcode += list(regI[0].to_bytes(imm_size, byteorder='little', signed=True))
-		return opcode + append_extra
+		return opcode + encode_modrm_mem(extra_reg, extra_ind) + append_extra
 	raise AssemblyError(f"Unknown mnemonic '{mnemonic}'")
 
 
@@ -1215,7 +1147,7 @@ def main():
 		found = False
 		for low, high in invalid:
 			if low < location['address'] < high:
-				found = False
+				found = True
 				emit_error('Hooking destructors is not supported')
 		if found:
 			continue

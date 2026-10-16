@@ -3,7 +3,7 @@
 #include "code_patches.hpp"
 
 StackedMemory<5256> applyMemory;
-StackedMemory<1428> internalMemory;
+StackedMemory<1344> internalMemory;
 Allocator applyAllocator{applyMemory};
 PatchListAllocator patchListAllocator{internalMemory};
 TrampolineAllocator trampolineAllocator{internalMemory};
@@ -32,7 +32,7 @@ static unsigned char mimaD214_SOUND_ANDHIT_byteCode[] = {
 	0x84, 0xC0,                                                 // TEST AL,AL ; line 26
 	0x0F, 0x85, 0xDE, 0xAD, 0xBE, 0xEF,                         // JNE 0x69EBDB ; line 27
 	0x81, 0xBE, 0x44, 0x01, 0x00, 0x00, 0xB4, 0x00, 0x00, 0x00, // CMP DWORD PTR [ESI+0x144],0xB4 ; line 43
-	0x0F, 0x85, 0x0D, 0x00, 0x00, 0x00,                         // JNE SHORT LABEL1 ; line 44
+	0x75, 0x0D,                                                 // JNE SHORT LABEL1 ; line 44
 	0x6A, 0x01,                                                 // PUSH 0x01 ; line 45
 	0x8B, 0x8E, 0x98, 0x03, 0x00, 0x00,                         // MOV ECX,[ESI+0x398] ; line 46
 	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,                               // CALL 0x464980 ; line 47
@@ -41,35 +41,35 @@ static unsigned char mimaD214_SOUND_ANDHIT_byteCode[] = {
 static JumpTarget mimaD214_SOUND_ANDHIT_jumpData[] = {
 	{ 0x009, 0x48CE90 },
 	{ 0x011, 0x69EBDB },
-	{ 0x02E, 0x464980 },
+	{ 0x02A, 0x464980 },
 };
-static PatchByteCode mimaD214_SOUND_ANDHIT_patchByteCode = { mimaD214_SOUND_ANDHIT_byteCode, 56, mimaD214_SOUND_ANDHIT_jumpData, 3 };
+static PatchByteCode mimaD214_SOUND_ANDHIT_patchByteCode = { mimaD214_SOUND_ANDHIT_byteCode, 52, mimaD214_SOUND_ANDHIT_jumpData, 3 };
 // mimaDIAL1 declared in mima.asm line 54
 static unsigned char mimaDIAL1_byteCode[] = {
-	0x66, 0x9C,                                           // PUSHF ; line 55
-	0x66, 0x81, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x142],0x00 ; line 56
-	0x0F, 0x85, 0x1A, 0x00, 0x00, 0x00,                   // JNE SHORT LABEL1 ; line 57
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x04, 0x00, // CMP WORD PTR [ESI+0x140],0x04 ; line 58
-	0x0F, 0x85, 0x0B, 0x00, 0x00, 0x00,                   // JNE SHORT LABEL1 ; line 59
-	0xD9, 0x05, 0x70, 0xB8, 0x85, 0x00,                   // FLD DWORD PTR [0x85B870] ; line 60
-	0xE9, 0x06, 0x00, 0x00, 0x00,                         // JMP SHORT LABEL2 ; line 61
-	0xD9, 0x86, 0xF4, 0x00, 0x00, 0x00,                   // FLD DWORD PTR [ESI+0xF4] ; line 63
-	0x66, 0x9D,                                           // POPF ; line 65
+	0x66, 0x9C,                                     // PUSHF ; line 55
+	0x66, 0x83, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x142],0x00 ; line 56
+	0x75, 0x12,                                     // JNE SHORT LABEL1 ; line 57
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x04, // CMP WORD PTR [ESI+0x140],0x04 ; line 58
+	0x75, 0x08,                                     // JNE SHORT LABEL1 ; line 59
+	0xD9, 0x05, 0x70, 0xB8, 0x85, 0x00,             // FLD DWORD PTR [0x85B870] ; line 60
+	0xEB, 0x06,                                     // JMP SHORT LABEL2 ; line 61
+	0xD9, 0x86, 0xF4, 0x00, 0x00, 0x00,             // FLD DWORD PTR [ESI+0xF4] ; line 63
+	0x66, 0x9D,                                     // POPF ; line 65
 };
-static PatchByteCode mimaDIAL1_patchByteCode = { mimaDIAL1_byteCode, 51, nullptr, 0 };
+static PatchByteCode mimaDIAL1_patchByteCode = { mimaDIAL1_byteCode, 38, nullptr, 0 };
 // mimaDIAL2 declared in mima.asm line 68
 static unsigned char mimaDIAL2_byteCode[] = {
-	0x66, 0x9C,                                           // PUSHF ; line 69
-	0x66, 0x81, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x142],0x00 ; line 70
-	0x0F, 0x85, 0x1A, 0x00, 0x00, 0x00,                   // JNE SHORT LABEL1 ; line 71
-	0x66, 0x81, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x01, 0x00, // CMP WORD PTR [ESI+0x140],0x01 ; line 72
-	0x0F, 0x85, 0x0B, 0x00, 0x00, 0x00,                   // JNE SHORT LABEL1 ; line 73
-	0xD9, 0x05, 0x70, 0xB8, 0x85, 0x00,                   // FLD DWORD PTR [0x85B870] ; line 74
-	0xE9, 0x06, 0x00, 0x00, 0x00,                         // JMP SHORT LABEL2 ; line 75
-	0xD9, 0x86, 0xF4, 0x00, 0x00, 0x00,                   // FLD DWORD PTR [ESI+0xF4] ; line 77
-	0x66, 0x9D,                                           // POPF ; line 79
+	0x66, 0x9C,                                     // PUSHF ; line 69
+	0x66, 0x83, 0xBE, 0x42, 0x01, 0x00, 0x00, 0x00, // CMP WORD PTR [ESI+0x142],0x00 ; line 70
+	0x75, 0x12,                                     // JNE SHORT LABEL1 ; line 71
+	0x66, 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x01, // CMP WORD PTR [ESI+0x140],0x01 ; line 72
+	0x75, 0x08,                                     // JNE SHORT LABEL1 ; line 73
+	0xD9, 0x05, 0x70, 0xB8, 0x85, 0x00,             // FLD DWORD PTR [0x85B870] ; line 74
+	0xEB, 0x06,                                     // JMP SHORT LABEL2 ; line 75
+	0xD9, 0x86, 0xF4, 0x00, 0x00, 0x00,             // FLD DWORD PTR [ESI+0xF4] ; line 77
+	0x66, 0x9D,                                     // POPF ; line 79
 };
-static PatchByteCode mimaDIAL2_patchByteCode = { mimaDIAL2_byteCode, 51, nullptr, 0 };
+static PatchByteCode mimaDIAL2_patchByteCode = { mimaDIAL2_byteCode, 38, nullptr, 0 };
 // mima5B_0A declared in mima.asm line 84
 static unsigned char mima5B_0A_byteCode[] = {
 	0xD8, 0x25, 0x2C, 0x78, 0x86, 0x00, // FSUB DWORD PTR [0x86782C] ; line 85
@@ -97,33 +97,33 @@ static unsigned char mima5B_1B_byteCode[] = {
 static PatchByteCode mima5B_1B_patchByteCode = { mima5B_1B_byteCode, 6, nullptr, 0 };
 // mima5B_2A declared in mima.asm line 99
 static unsigned char mima5B_2A_byteCode[] = {
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,       // CALL 0x46EB30 ; line 100
-	0x81, 0xC7, 0x04, 0x00, 0x00, 0x00, // ADD EDI,0x04 ; line 101
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF, // CALL 0x46EB30 ; line 100
+	0x83, 0xC7, 0x04,             // ADD EDI,0x04 ; line 101
 };
 static JumpTarget mima5B_2A_jumpData[] = {
 	{ 0x001, 0x46EB30 },
 };
-static PatchByteCode mima5B_2A_patchByteCode = { mima5B_2A_byteCode, 11, mima5B_2A_jumpData, 1 };
+static PatchByteCode mima5B_2A_patchByteCode = { mima5B_2A_byteCode, 8, mima5B_2A_jumpData, 1 };
 // mima5B_2B declared in mima.asm line 103
 static unsigned char mima5B_2B_byteCode[] = {
-	0xE8, 0xDE, 0xAD, 0xBE, 0xEF,       // CALL 0x46EB30 ; line 104
-	0x81, 0xC7, 0x03, 0x00, 0x00, 0x00, // ADD EDI,0x03 ; line 105
+	0xE8, 0xDE, 0xAD, 0xBE, 0xEF, // CALL 0x46EB30 ; line 104
+	0x83, 0xC7, 0x03,             // ADD EDI,0x03 ; line 105
 };
 static JumpTarget mima5B_2B_jumpData[] = {
 	{ 0x001, 0x46EB30 },
 };
-static PatchByteCode mima5B_2B_patchByteCode = { mima5B_2B_byteCode, 11, mima5B_2B_jumpData, 1 };
+static PatchByteCode mima5B_2B_patchByteCode = { mima5B_2B_byteCode, 8, mima5B_2B_jumpData, 1 };
 // mima5B_3A declared in mima.asm line 107
 static unsigned char mima5B_3A_byteCode[] = {
-	0x81, 0xFF, 0x18, 0x00, 0x00, 0x00, // CMP EDI,0x18 ; line 108
-	0x89, 0x7C, 0x24, 0x18,             // MOV [ESP+0x18],EDI ; line 109
+	0x83, 0xFF, 0x18,       // CMP EDI,0x18 ; line 108
+	0x89, 0x7C, 0x24, 0x18, // MOV [ESP+0x18],EDI ; line 109
 };
-static PatchByteCode mima5B_3A_patchByteCode = { mima5B_3A_byteCode, 10, nullptr, 0 };
+static PatchByteCode mima5B_3A_patchByteCode = { mima5B_3A_byteCode, 7, nullptr, 0 };
 // mima5B_3B declared in mima.asm line 111
 static unsigned char mima5B_3B_byteCode[] = {
-	0x81, 0xFF, 0x18, 0x00, 0x00, 0x00, // CMP EDI,0x00000018 ; line 112
+	0x83, 0xFF, 0x18, // CMP EDI,0x00000018 ; line 112
 };
-static PatchByteCode mima5B_3B_patchByteCode = { mima5B_3B_byteCode, 6, nullptr, 0 };
+static PatchByteCode mima5B_3B_patchByteCode = { mima5B_3B_byteCode, 3, nullptr, 0 };
 // mima6C declared in mima.asm line 186
 static unsigned char mima6C_byteCode[] = {
 	0xE9, 0xDE, 0xAD, 0xBE, 0xEF, // JMP 0x68D85A ; line 187

@@ -1,4 +1,4 @@
-// Version 0.8
+// Version 0.9
 
 #include "SokuLib.hpp"
 #include "Mokou.hpp"

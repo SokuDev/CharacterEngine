@@ -6,8 +6,8 @@
 #include "Soku2Patches.hpp"
 
 typedef StackedAllocator<AppliedPatch, 52448> Allocator;
-typedef StackedAllocator<Patch, 94578> TrampolineAllocator;
-typedef StackedAllocator<Patch *, 94578> PatchListAllocator;
+typedef StackedAllocator<Patch, 90741> TrampolineAllocator;
+typedef StackedAllocator<Patch *, 90741> PatchListAllocator;
 extern Allocator applyAllocator;
 extern std::vector<Patch, TrampolineAllocator> compiledPatches;
 extern std::vector<Patch *, PatchListAllocator> objectUpdate_patches;
