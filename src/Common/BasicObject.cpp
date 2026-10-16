@@ -16,15 +16,18 @@ SokuLib::v2::GameObject* BasicObject::createChild(short action, float x, float y
 
 void BasicObject::update()
 {
-	// Update common objects
+	if (this->frameState.actionId == 980)
+		this->updateWeatherDebuffEffect();
 	if (this->frameState.actionId >= 1000)
-		return ((void (__thiscall *)(SokuLib::v2::GameObject *))0x48DB20)(this);
+		return this->updateDefaultObject();
+
 	if (this->advanceFrame())
 		this->lifetime = 0;
 }
 
 void BasicObject::initializeAction()
 {
-	// Init common objects
-	((void (__thiscall *)(SokuLib::v2::GameObject *))0x48D000)(this);
+	if (this->frameState.actionId == 980)
+		return this->initWeatherDebuffEffect();
+	this->initDefaultObject();
 }

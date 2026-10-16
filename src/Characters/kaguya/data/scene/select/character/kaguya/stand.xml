@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animpattern version="5">
+	<animation id="0" index="0" loop="1">
+		<frame image="patchouli000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="patchouli001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="patchouli002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="patchouli003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="patchouli004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="patchouli005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="patchouli006.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="patchouli007.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="patchouli008.bmp" index="8" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="patchouli009.bmp" index="9" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="patchouli010.bmp" index="10" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="patchouli011.bmp" index="11" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+	</animation>
+	<animation id="1" index="0" loop="0">
+		<frame image="patchouliB000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="4" rendergroup="1"/>
+		<frame image="patchouliB001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="4" rendergroup="1"/>
+		<frame image="patchouliB002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+		<frame image="patchouliB003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="4" rendergroup="1"/>
+		<frame image="patchouliB004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="4" rendergroup="1"/>
+		<frame image="patchouliB005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="4" rendergroup="1"/>
+		<frame image="patchouliB006.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="4" rendergroup="1"/>
+		<frame image="patchouliB007.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="4" rendergroup="1"/>
+		<frame image="patchouliB008.bmp" index="8" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="4" rendergroup="1"/>
+		<frame image="patchouliB009.bmp" index="9" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="4" rendergroup="1"/>
+	</animation>
+	<animation id="2" index="0" loop="1">
+		<frame image="patchouliB010.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="128" texheight="160" xoffset="64" yoffset="128" duration="6" rendergroup="1"/>
+	</animation>
+</animpattern>

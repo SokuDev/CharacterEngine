@@ -102,7 +102,7 @@ void SpellTrapHole::update()
 			return;
 		this->advanceFrame();
 		this->position += this->speed;
-		if (this->position.x < -140 || this->position.x > 1420 || this->position.y > 1000)
+		if (this->position.x < -340 || this->position.x > 1620 || this->position.y > 1000)
 			this->lifetime = 0;
 		return;
 	}
@@ -129,8 +129,8 @@ void SpellTrapHole::update()
 
 		if (f % 20 == 0)
 			this->parentPlayerB->playSFX(14);
-		this->renderInfos.scale.x = f / ((float) HOLE_FADE_IN + 1);
-		this->renderInfos.scale.y = f / ((float) HOLE_FADE_IN + 1);
+		this->renderInfos.scale.x = f / (HOLE_FADE_IN + 1.f);
+		this->renderInfos.scale.y = f / (HOLE_FADE_IN + 1.f);
 		this->gpFloat[0] += this->renderInfos.scale.x * 2 + 0.1;
 		while (this->gpFloat[0] > 1) {
 			float params[] = {
@@ -183,10 +183,13 @@ void SpellTrapHole::update()
 		} else
 			this->collisionLimit = 0;
 	} else if (this->collisionType == COLLISION_TYPE_HIT_ENTITY) {
+		this->ignoreOwnerTimestop = 0;
 		this->collisionLimit++;
 		this->collisionType = COLLISION_TYPE_NONE;
-	} else if (this->collisionType || (this->collisionLimit && this->checkTurnIntoCrystals(false, 10, 50, 0, -50)))
+	} else if (this->collisionType || (this->collisionLimit && this->checkTurnIntoCrystals(false, 10, 50, 0, -50))) {
+		this->ignoreOwnerTimestop = 0;
 		this->collisionLimit = 0;
+	}
 	this->advanceFrame();
 	if (this->frameState.poseFrame == 0 && this->collisionLimit)
 		this->collisionLimit--;
@@ -231,12 +234,15 @@ void SpellTrapHole::initializeAction()
 {
 	if (this->customData) {
 		this->setSequence(this->customData[2]);
-		if (this->frameState.sequenceId == 1)
+		if (this->frameState.sequenceId == 1) {
 			this->renderInfos.color.a = 0;
+			this->ignoreOwnerTimestop = 1;
+		}
 		if (this->frameState.sequenceId == 3) {
 			this->speed.x = std::cos(this->customData[0] * M_PI / 180) * this->customData[1];
 			this->speed.y = std::sin(this->customData[0] * M_PI / 180) * this->customData[1];
 			this->collisionLimit = 1;
+			this->ignoreOwnerTimestop = 1;
 		}
 		if (this->frameState.sequenceId == 4) {
 			const auto t = RABBIT_GO_TIME;
@@ -245,7 +251,10 @@ void SpellTrapHole::initializeAction()
 			this->speed.y = (-this->position.y + 0.5f * t * t / 2) / (t * 1.f);
 			this->direction = std::copysign(1, this->speed.x);
 			this->gravity.y = 0.5;
+			this->ignoreOwnerTimestop = 1;
 		}
+		if (this->frameState.sequenceId >= 5)
+			this->ignoreOwnerTimestop = 1;
 		//this->prepareTexture();
 		return;
 	}
@@ -253,6 +262,7 @@ void SpellTrapHole::initializeAction()
 	float params[] = {0, 0, 1};
 	float params2[] = {0, 0, 4};
 
+	this->ignoreOwnerTimestop = 1;
 	*frontHole(this) = this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, 1, params);
 	this->createChild(this->frameState.actionId, SokuLib::camera.leftEdge - 50, 50, this->direction, -1, params2);
 	this->createChild(this->frameState.actionId, SokuLib::camera.rightEdge + 50, 50, this->direction, -1, params2);

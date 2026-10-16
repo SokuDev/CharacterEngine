@@ -35,3 +35,5 @@ target_link_libraries(
 	d3dx9
 	CharacterEngineLibrary
 )
+target_character_assets("${PROJECT_NAME}")
+add_dependencies(Characters "${PROJECT_NAME}")

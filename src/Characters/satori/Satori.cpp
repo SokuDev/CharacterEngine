@@ -4,12 +4,8 @@
 #include "Satori.hpp"
 
 
-#ifndef _DEBUG
 #define puts(...)
 #define printf(...)
-#endif
-
-static_assert(sizeof(AppliedPatch) == 8);
 
 GameObjectList_Satori::GameObjectList_Satori(SokuLib::v2::Player *player) :
 	SokuLib::v2::GameObjectList_Yuyuko(player)

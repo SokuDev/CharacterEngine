@@ -7,8 +7,6 @@
 
 void Rabbit::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->customData[2] != 0 && this->checkTurnIntoCrystals(false, 2, 2)) {
 		this->lifetime = 0;
 		return;

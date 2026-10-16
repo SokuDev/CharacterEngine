@@ -1,0 +1,254 @@
+STEP BY STEP INSTALLATION FOR NEWBIES (go below it for updating)
+
+0) We do not use the same system as the older SOKU2 versions (v2.02c and below). It is recommended that you use a fresh new copy of Touhou Hisoutensoku folder (or your actual Hisoutensoku folder) for this
+1) Copy paste all the contents of the zip you downloaded into your Hisoutensoku folder and make sure everything aligns properly (Hisoutensoku/Modules/SOKU2/SOKU2.dll). Replace everything.
+2+) For troubleshooting, scroll down to the end of this document
+
+FOR UPDATING: you want to delete the SOKU2 folder (Hisoutensoku/Modules/SOKU2), and then do the same as installation
+
+
+
+STEP BY STEP INSTALLATION FOR ADVANCED USERS
+This is an SWRSToys module. You can add the module (SOKU2.dll AND MemoryPatchSOKU2FIX.dll) as you do any SWRSToys module and all is set
+
+---------
+
+Visit our discord server for updates:
+http://discord.gg/Bgxdcav
+
+Website:
+https://soku2.wordpress.com/
+
+
+
+
+----------
+
+Etc notes:
+- Works with sokuroll
+- Works with most SWRSToys Modules
+- Has a little issue with the SWRSToys Module that autoruns SokuRoll (NOT SokuRoll itself), you need to place SOKU2 Module above it in SWRSToys.ini
+
+PROBLEM SWRSToys MODULES THAT MIGHT HAVE ISSUES WITH SOKU2:
+- SokuEngine
+- ReDelay
+
+
+
+----------
+
+SPECIAL THANKS/CREDITS
+All rights remains to their respective authors
+
+Touhou Hisoutensoku Creator:
+- ZUN / Team Shanghai Alice
+- Tasogare Frontier
+
+Dev:
+- FearNagae
+- ModSOKU2 Team
+
+NextSoku Framework Developer:
+- Shinki
+
+ModSOKU2 Framework Developer:
+- Ichirin
+
+Extra Music Composer:
+- AdeleyWolfy
+
+Character Dialogs Writers:
+- AdeleyWolfy
+- HaniwaMaster14
+.. And a few others
+
+SWRSToys & MemoryPatch Creator:
+- Sweetie
+- Anonymous Coward
+
+TH123e (English Patch) Developer:
+- Translators: Akira
+- Translation notes: TMN, Mefidex
+- Script editing, formatting: Mefidex
+- Graphics editing: Halbarad
+- Programming, installer, documentation: mauve
+
+Extra Thanks:
+- Brightmoon Developer
+- Suneo
+
+Extra Musics:
+
+Very Special Thanks:
+- Freudia
+- PinkySmile
+- DPhoenix
+- IkuTronHD
+- Chainsaw114
+- Genki
+- Thiena
+- You and everyone for playing this ! This mod wouldn't be here without you
+
+Touhou Hisoutensoku is copyrighted by Team Shanghai Alice and Tasogare Frontier
+
+Illust. (Note: Most spritesheets has extra edited frames/animations)
+Flandre:
+- Sprite: China Hisoutensoku Modding forum
+- Portrait: Kaoru ( https://www.pixiv.net/users/743845 / http://www.pixiv.net/member.php?id=743845 )
+Mokou: 
+- Sprite: MUGEN by isu ( http://pipeisu.blog97.fc2.com/ )
+- Portrait: PREVIOUS: ideolo ( https://www.pixiv.net/users/61513 )
+	CURRENT: Kaoru ( https://www.pixiv.net/users/743845 / http://www.pixiv.net/member.php?id=743845 )
+Orin:
+- Sprite: MUGEN by hetyo ( https://onedrive.live.com/?cid=2d3df308ea0ee008&id=2D3DF308EA0EE008!104 )
+- Portrait: PREVIOUS: auer ( https://safebooru.org/index.php?page=post&s=view&id=275409 )
+	CURRENT: dairi ( https://www.pixiv.net/artworks/61106524 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=61106524
+		- https://www.pixiv.net/artworks/36921045 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=36921045
+Momiji:
+- Sprite: MUGEN by Kurotsubame & Felicity ( https://onedrive.live.com/?cid=7B5FC6F8C258EC4F&id=7B5FC6F8C258EC4F!401 )
+- Portrait: PREVIOUS: pfalz ( https://www.pixiv.net/users/6539 )
+	CURRENT: dairi ( https://www.pixiv.net/artworks/43259877 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=43259877
+		- https://www.pixiv.net/artworks/43200481 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=43200481
+Sekibanki:
+- Sprite: MUGEN by isu ( http://pipeisu.blog97.fc2.com/ )
+- Portrait: Kaoru ( https://www.pixiv.net/users/743845 / http://www.pixiv.net/member.php?id=743845 )
+Yuuka:
+- Sprite: MUGEN by Oga ( http://sengeki.zouri.jp/download.htm )
+- Portrait: PREVIOUS: Kaoru ( https://www.pixiv.net/users/743845 / http://www.pixiv.net/member.php?id=743845 )
+	CURRENT: dairi ( https://www.pixiv.net/artworks/63974832 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=63974832
+		- https://www.pixiv.net/artworks/63894120 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=63894120
+Murasa:
+- Sprite: MUGEN by Minoo ( http://www.ne.jp/asahi/across/chronicle/m_minoo.html )
+- Portrait: dairi ( https://www.pixiv.net/artworks/46234942 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=46234942
+		- https://www.pixiv.net/en/artworks/46269848 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=46269848
+Mima:
+- Sprite: MUGEN by barai ( http://baramugen.blog60.fc2.com/ )
+- Portrait: dairi ( https://www.pixiv.net/artworks/46144585 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=46144585
+		- https://www.pixiv.net/artworks/59514684 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=59514684
+Kaguya:
+- Sprite: G-Sho (heavily edited) ( http://www.geocities.jp/mugen_abyss/ )
+- Portrait: dairi ( https://www.pixiv.net/artworks/44707668 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=44707668
+		- https://www.pixiv.net/artworks/65473965 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=65473965
+		- https://www.pixiv.net/artworks/44641887 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=44641887
+Shou:
+- Sprite: MUGEN by Minoo ( http://www.ne.jp/asahi/across/chronicle/m_minoo.html )
+- Portrait: PREVIOUS: ideolo ( https://www.pixiv.net/users/61513 )
+	CURRENT: dairi ( https://www.pixiv.net/artworks/68195896 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=68195896
+		- https://www.pixiv.net/artworks/55601331 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=55601331
+Clownpiece:
+- Sprite: FearNagae (uses reference from various other works)
+- Portrait: dairi ( http://seiga.nicovideo.jp/seiga/im5261803 / https://www.pixiv.net/users/4920496
+		- https://www.pixiv.net/artworks/71341280 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=71341280
+		- https://www.pixiv.net/artworks/53033903 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=53033903
+		- https://www.pixiv.net/artworks/52395985 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=52395985
+Satori:
+- Sprite: MUGEN by hetyo ( https://onedrive.live.com/?cid=2d3df308ea0ee008&id=2D3DF308EA0EE008!104 )
+- Portrait: Kaoru ( https://www.pixiv.net/users/743845 / http://www.pixiv.net/member.php?id=743845 )
+Ran:
+- Sprite: MUGEN by barai ( http://baramugen.blog60.fc2.com/ )
+- Portrait: dairi ( https://www.pixiv.net/artworks/44342929 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=44342929
+		- https://www.pixiv.net/artworks/44454912 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=44454912
+Shinki:
+- Sprite: FearNagae (uses reference from various other works)
+- Portrait: dairi ( https://www.pixiv.net/artworks/60102038 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=60102038
+		- https://www.pixiv.net/artworks/60149272 / https://www.pixiv.net/member_illust.php?mode=medium&illust_id=60149272
+
+dairi: https://www.pixiv.net/users/4920496
+Kaoru: https://www.pixiv.net/users/743845 , http://gensoukyou.1000.tv/
+
+
+----------
+
+Troubleshooting: CTRL+F might help to find the issue you're having
+
+A) My character's sprites are weird!
+- This might be caused by one of the below
+
+A1) MSVCP110.dll error OR win-crt-runtime dll error
+- The above file is missing from your PC which causes the codes to not run.
+- Download link to fix it: https://www.microsoft.com/en-us/download/details.aspx?id=48145 (Download Visual C++ Redistributable for Visual Studio 2015)
+- You need to install MAINLY the x86, but just in case you can install x64 as well
+- If download starts automatically, try to find the x86.
+- Also, do not just download standalone .dll files, that doesn't work.
+
+A1a) MSVCR110.dll error
+- Download link to fix it: https://www.microsoft.com/en-us/download/details.aspx?id=5555 (You need to install x86)
+- If the Link is not working you can use the link below
+- Mirror Link: https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe
+
+A2) win-crt-string dll error
+- Same as point 1) but the fix is different.
+- Download link to fix it: https://www.microsoft.com/en-us/download/details.aspx?id=49077
+
+B) It doesn't say SOKU2 on the title screen, but instead says NextSoku/nothing at all, just standard Hisoutensoku title
+- SOKU2 isn't running
+- If it says NextSoku, then you need to replace the Modules folder again with the new one included in the package
+- If it doesn't say anything, did you get error code number 1) ?
+- If not, open your SWRSToys.ini with text editor. Check the last line and see whether there's ";" symbol at the start of the line for NextSoku
+- If it is there, remove the symbol and save the file. Try running it again
+
+C) It says I'm not using 1.10a!
+- This is caused by th123a.dat / th123b.dat modification. Use an original th123a.dat.
+
+D) System.IO.FileNotFound (or there is no error message)
+- This is caused by .NET Framework version being not up to date. You require version 4.5 or above.
+- It can also be caused by incorrect installation, you require the SOKU2 to be on an original Touhou Hisoutensoku folder.
+
+D1) For windows 10:
+- Smartscreen might be blocking the script from running.
+
+D2) For Windows XP:
+- It seems there are issue with some versions of Windows XP. It is likely that it is not possible to solve, I am very sorry for this.
+
+E) ERROR 0xc0000142 cannot get thread context
+- try using the spare d3d9.dll you can do this by renaming the current d3d9.dll into something else, and then rename the d3d9_SPARE.dll_SPARE into d3d9.dll.
+
+F) ERROR 0xc000007b
+- This error just implies it's a graphical error and is quite vague. There's three likely cause:
+F1) It can be caused by either Visual C++ Redistributable not being up to date. You can get a link for C++ Redistributable up in error A1).
+F2) It can be caused by .NET Framework 4.5 not being up to date. You can have your system update it or you can search it online as it's not difficult to find.
+F3) It can be caused by DirectX not being up to date.
+F4) try doing the solution to error E).
+
+G) Yuuka has color error in game, but other characters don't
+- Remove the utsuho cape fix code from configex123.ini. It looks like [etc] limit=1
+
+H) System.UnauthorizedAccessException
+- Possibly one of the files or the folder has Read-Only property by mistake. Try right-clicking, properties, and uncheck Read-Only for the folder and all files inside.
+
+I) It just crashes
+- It's possible that a certain SWRSToys module might not work well with it. If you are using a customized SWRSToys module, do check the SWRSToys.ini file for modules that might be causing it.
+- Specifically the module that autoruns SokuRoll (NOT SokuRoll itself), that is called SWRSokuRoll module, may cause crash at the start of matches. You need to place SOKU2.dll above it in SWRSToys.ini
+- On that note, SokuEngine and ReDelay seem to give problems as well and should be disabled
+
+J) There's a Runtime Error / crash but game just continues playing
+- You might need to update your Discord Integration module with the new one included in the package
+
+K) The extra characters don't show up on netplay
+- Try re-host/joining the game again, it seems that this is an issue for some setups
+
+L) It says "[Error] NextSoku is not found"
+- Download link to fix it: https://www.microsoft.com/en-us/download/details.aspx?id=48145 (Download Visual C++ Redistributable for Visual Studio 2015)
+
+M) It says "failed to load module"
+M1) It can be caused by incorrect pathing. Try opening SWRSToys.ini with notepad/text editor, and see if the path aligns correctly with your files
+M2) It can be caused by antivirus. You might want to add an exception to the Hisoutensoku folder
+
+N) Replay screen crashes
+- it's caused by an issue in the replay parsing. Try renaming the suspected file into something simple like profile1p(sakuya) vs profile2p(remilia).rep
+
+O) It's crashing at the end of matches
+- Please make sure if the Module MemoryPatchSOKU2FIX is running
+
+P) Random character is weird and keep giving me the same characters
+- Please make sure if the Module MemoryPatchSOKU2FIX is running
+
+Q) Cards obtained after matches seems a bit strange
+- Unfortunately that's an issue we haven't been able to fix yet
+
+R) It says SOKU2 and the version on the window title, but nothing else are working
+- Try installing this: https://www.microsoft.com/en-us/download/details.aspx?id=48145 (remember to choose x86)
+
+-------------
+
+

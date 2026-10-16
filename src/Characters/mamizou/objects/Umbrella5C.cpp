@@ -11,8 +11,6 @@
 
 void Umbrella5C::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->advanceFrame())
 		this->lifetime = 0;
 	if (this->frameState.sequenceId == 2 && this->frameState.poseId == 3) {

@@ -8,16 +8,15 @@
 
 void YoukaiShadow::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (
 		this->parentPlayerB->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN &&
 		this->parentPlayerB->frameState.actionId < SokuLib::ACTION_FORWARD_DASH
 	)
 		this->disabled = 1;
-	if (this->parentPlayerB->timeStop)
-		return;
-	if (this->parentPlayerB->hitStop && !this->disabled)
+	if (this->parentPlayerB->hitStop && (
+		this->parentPlayerB->frameState.actionId == SokuLib::ACTION_3A ||
+		this->parentPlayerB->frameState.actionId == SokuLib::ACTION_5AAAA
+	))
 		return;
 	if (this->advanceFrame() || this->frameState.currentFrame == 0) {
 		this->lifetime = 0;

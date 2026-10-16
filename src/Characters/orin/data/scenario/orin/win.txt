@@ -1,0 +1,235 @@
+## =======================================================================
+#Ÿ—˜‘äŒ
+## =======================================================================
+#VS—éå
+#‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X\
+## ‘äŒA==================
+#Label:ƒLƒƒƒ‰–¼+”š‚ÌŒ`‚Å“o˜^@˜A”Ô‚Å‘±‚¢‚Ä‚¢‚éŒÀ‚è‚ÌÅŒã‚Ü‚Å‚ª“o˜^‚³‚êAƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ‚³‚ê‚Ü‚·
+#‰ï˜b‘®‚ÍƒVƒiƒŠƒI‚ÅŒ¾‚¤ƒLƒƒƒ‰–¼‚ÌêŠ‚Éwin(Ÿ—˜ƒLƒƒƒ‰)lose(”s–kƒLƒƒƒ‰)‚Ì”­Œ¾‚É‚È‚è‚Ü‚·
+# Hi-lock: (("\\#.*$"            (0 '((t (:foreground "dark slate gray"))) t))) 
+# Hi-lock: (("^[ \t]*Label.*$"              (0 '((t (:foreground "royal blue"))) t))) 
+# Hi-lock: (("^[ \t]*Face.*$"              (0 '((t (:foreground "cornflower blue"))) t))) 
+# Hi-lock: (("^[ \t]*End.*$"            (0 '((t (:foreground "royal blue"))) t))) 
+# reimuR0  rare
+# reimuU0  usual
+# reimu0   •p”É
+
+Label:reimuU0
+Face:lose,•‰
+Face:win,Šğ
+Hey sisA I hope you can keep an eye on Okuu
+for me while I'm underground. Thanks!\
+End:
+
+
+Label:marisaU0
+Face:lose,•‰
+Face:win,Šğ
+No worriesA I will take good care of your
+bones in the future when you die!\
+End:
+
+
+Label:aliceU0
+Face:lose,•‰
+Face:win,‹Á
+You voice sounds a bit familiar... Ah!
+You were speaking through the crystal back then!\
+End:
+
+
+Label:patchouliU0
+Face:lose,•‰
+Face:win,—]
+Ah! Your body seem a bit frailA sis.
+I'll be sure to keep your name in mind.\
+End:
+
+
+Label:yuyukoU0
+Face:lose,•‰
+Face:win,Š¾
+Wait a minuteA do you really throw spirits
+like that without hesitation!? That's a waste!\
+End:
+
+
+Label:yukariU0
+Face:lose,•‰
+Face:win,Šğ
+Can you throw that attack again?
+I want to spin and jump with Chen this time!\
+End:
+
+
+Label:suikaU0
+Face:lose,•‰
+Face:win,“{
+Will you stop being so noisy everytime
+you do parties!?\
+End:
+
+
+Label:komachiU0
+Face:lose,•‰
+Face:win,Šğ
+If dealing with vengeful spirits is okay
+with youA you can keep them!\
+End:
+
+
+Label:sanaeU0
+Face:lose,•‰
+Face:win,Œˆ
+I'm not really sure what you need Okuu forA
+but you better keep her safe okay!\
+End:
+
+
+Label:sanaeU1
+Face:lose,•‰
+Face:win,Š¾
+Many corpses complained that your miracles were
+useless. Even nowadays they're still cursing...\
+End:
+
+
+Label:utsuhoU0
+Face:lose,•‰
+Face:win,Š¾
+You birdbrain!
+Stop getting us into trouble!\
+End:
+
+
+Label:suwakoU0
+Face:lose,•‰
+Face:win,•
+You seem a bit relaxedA
+despite your companion's shenanigans.\
+End:
+
+
+Label:MomijiU0
+Face:lose,•‰
+Face:win,Šğ
+If you become one of Lady Satori's petsA
+I'm sure we can get along!\
+End:
+
+
+Label:clownpieceU0
+Face:lose,•‰
+Face:win,—]
+I'm not familiar with the New HellA
+but ours will keep burning as long as I'm here.\
+End:
+
+
+Label:flandreU0
+Face:lose,•‰
+Face:win,Š¾
+I heard vampires don't even leave a corpse when
+they die. Is that true?\
+End:
+
+
+Label:orinU0
+Face:lose,•‰
+Face:win,‹Á
+Didn't know there was another Kasha around.
+Perhaps you are a new pet of Lady Satori?\
+End:
+
+
+Label:yuukaU0
+Face:lose,•‰
+Face:win,Œˆ
+I'm sorry miss! I'll make sure not to run
+over your flowers!\
+End:
+
+
+Label:kaguyaU0
+Face:lose,•‰
+Face:win,Šğ
+They said being immortal is also the absence of life.
+That means you're a corpseA right?\
+End:
+
+
+Label:mokouU0
+Face:lose,•‰
+Face:win,Š¾
+UhA that's a weird trick you have.
+I can't take your corpse if you refuse to die...\
+End:
+
+
+Label:mokouU1
+Face:lose,•‰
+Face:win,Š¾
+I'm naturally used to the high temperatures.
+But you're a bit intense...\
+End:
+
+
+Label:mimaU0
+Face:lose,•‰
+Face:win,‹Á
+Are you perchance one of the vengeful spirits
+that escaped the underground?\
+End:
+
+
+Label:shouU0
+Face:lose,•‰
+Face:win,Šğ
+I'm taking some of the temple's corpes nowA You
+better stay quiet and don't tell the priestessA okay?\
+End:
+
+
+Label:murasaU0
+Face:lose,•‰
+Face:win,Šğ
+TechnicallyA we also have an ocean around!
+Ocean of flamesA though!\
+End:
+
+
+Label:sekibankiU0
+Face:lose,•‰
+Face:win,—]
+Cat's are by nature creature of the night.
+I don't think youre techniques are effective.\
+End:
+
+
+Label:satoriU0
+Face:lose,•‰
+Face:win,Š¾
+I've been just doing some workA
+not getting into troubleA definitely!\
+End:
+
+
+Label:shinkiU0
+Face:lose,•‰
+Face:win,˜f
+So... can you make corpses?\
+End:
+
+
+Label:common0
+Face:win,Šğ
+Hop in the cart! I'm taking you for a spin!\
+End:
+
+Label:common1
+Face:win,Šğ
+No worriesA there's a lot more people underground
+to keep you company!\
+End:
+
+×

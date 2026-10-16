@@ -15,7 +15,7 @@ void RegularSmoke::update()
 	this->renderInfos.zRotation += this->gpFloat[0];
 	this->renderInfos.scale.x += 0.02;
 	this->renderInfos.scale.y = this->renderInfos.scale.x;
-	if ((int)this->frameState.currentFrame >= 0) {
+	if (static_cast<int>(this->frameState.currentFrame) >= 0) {
 		if (this->renderInfos.color.a < 6) {
 			this->lifetime = 0;
 			return;

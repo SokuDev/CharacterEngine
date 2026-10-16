@@ -4,12 +4,8 @@
 #include "Clownpiece.hpp"
 
 
-#ifndef _DEBUG
 #define puts(...)
 #define printf(...)
-#endif
-
-static_assert(sizeof(AppliedPatch) == 8);
 
 GameObjectList_Clownpiece::GameObjectList_Clownpiece(SokuLib::v2::Player *player) :
 	SokuLib::v2::GameObjectList_Udonge(player)

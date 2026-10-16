@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animpattern version="5">
+	<animation id="0" index="0" loop="1">
+		<frame image="youmu000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="43" texheight="95" xoffset="27" yoffset="88" duration="6" rendergroup="1"/>
+		<frame image="youmu001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="43" texheight="96" xoffset="27" yoffset="89" duration="6" rendergroup="1"/>
+		<frame image="youmu002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="44" texheight="97" xoffset="29" yoffset="90" duration="6" rendergroup="1"/>
+		<frame image="youmu003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="47" texheight="97" xoffset="31" yoffset="90" duration="6" rendergroup="1"/>
+		<frame image="youmu004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="98" xoffset="34" yoffset="91" duration="6" rendergroup="1"/>
+		<frame image="youmu005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="54" texheight="98" xoffset="36" yoffset="91" duration="6" rendergroup="1"/>
+		<frame image="youmu006.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="52" texheight="98" xoffset="33" yoffset="91" duration="6" rendergroup="1"/>
+		<frame image="youmu007.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="51" texheight="97" xoffset="33" yoffset="90" duration="6" rendergroup="1"/>
+	</animation>
+	<animation id="1" index="0" loop="0">
+		<frame image="youmuB000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="42" texheight="98" xoffset="26" yoffset="91" duration="4" rendergroup="1"/>
+		<frame image="youmuB001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="51" texheight="98" xoffset="33" yoffset="91" duration="4" rendergroup="1"/>
+		<frame image="youmuB002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="51" texheight="97" xoffset="31" yoffset="90" duration="4" rendergroup="1"/>
+		<frame image="youmuB003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="59" texheight="97" xoffset="31" yoffset="90" duration="4" rendergroup="1"/>
+	</animation>
+	<animation id="2" index="0" loop="1">
+		<frame image="youmuB004.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="61" texheight="97" xoffset="28" yoffset="90" duration="4" rendergroup="1"/>
+		<frame image="youmuB005.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="61" texheight="100" xoffset="28" yoffset="93" duration="4" rendergroup="1"/>
+	</animation>
+</animpattern>

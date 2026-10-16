@@ -6,8 +6,6 @@
 
 void UBRabbit::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->frameState.sequenceId != 0) {
 		if (this->renderInfos.color.a <= 15) {
 			this->lifetime = 0;

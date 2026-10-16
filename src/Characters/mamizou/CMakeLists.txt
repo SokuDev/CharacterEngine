@@ -33,6 +33,8 @@ add_library(
 	objects/YoukaiShadow2.hpp
 	objects/FrogShadow.cpp
 	objects/FrogShadow.hpp
+	objects/Gui/Timer1SCGui.cpp
+	objects/Gui/Timer1SCGui.hpp
 	objects/Gui/TimerDebuffGui.cpp
 	objects/Gui/TimerDebuffGui.hpp
 	objects/Gui/TimerSpellGui.cpp
@@ -65,6 +67,14 @@ add_library(
 	objects/Gui/CardSelect.hpp
 	objects/DemonGate.cpp
 	objects/DemonGate.hpp
+	objects/DemonsGate.cpp
+	objects/DemonsGate.hpp
+	objects/YoumuClone.cpp
+	objects/YoumuClone.hpp
+	objects/UdongeClone.cpp
+	objects/UdongeClone.hpp
+	objects/WallYoukai.cpp
+	objects/WallYoukai.hpp
 )
 target_compile_options("${PROJECT_NAME}" PRIVATE /Zi)
 target_compile_definitions("${PROJECT_NAME}" PRIVATE OBJECT_MEMORY_SIZE=8)
@@ -75,3 +85,5 @@ target_link_libraries(
 	d3dx9
 	CharacterEngineLibrary
 )
+target_character_assets("${PROJECT_NAME}")
+add_dependencies(Characters "${PROJECT_NAME}")

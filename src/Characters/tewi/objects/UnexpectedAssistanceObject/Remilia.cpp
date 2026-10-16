@@ -18,13 +18,19 @@ void UnexpectedAssistance::Remilia::update()
 	case 0:
 		break;
 	case 1:
-		if (this->frameState.poseId == 1 && this->frameState.poseFrame == 0)
-			this->parentPlayerB->playSFX(25);
+		this->parentPlayerB->playSFX(25);
+		this->nextSequence();
+		this->lifetime = 0;
+		params[0] = fmod(atan2(this->gameData.opponent->position.y + 75 - this->position.y, this->gameData.opponent->position.x - this->position.x) * 180 / M_PI + 360, 360);
+		params[1] = 100;
+		params[2] = 2;
+		this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, 1, params);
+		params[2] = 4;
+		this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, 1, params);
+		params[2] = 5;
+		this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, 1, params);
 		break;
 	case 2:
-		if (this->frameState.currentFrame == 0) {
-			this->customData[0] = fmod(atan2(this->gameData.opponent->position.y + 75 - this->position.y, this->gameData.opponent->position.x - this->position.x) * 180 / M_PI + 360, 360);
-		}
 		this->checkGrazed(0);
 		this->speed.x = cos(this->customData[0] * M_PI / 180) * this->customData[1] * this->direction;
 		this->speed.y = sin(this->customData[0] * M_PI / 180) * this->customData[1];
@@ -117,7 +123,7 @@ void UnexpectedAssistance::Remilia::update()
 		this->lifetime = 0;
 	if (this->frameState.currentFrame == 0 && this->frameState.poseFrame == 0 && this->frameState.poseId == 0 && this->frameState.sequenceId == 2) {
 		this->lifetime = 0;
-		params[0] = 0;
+		params[0] = this->customData[0] = fmod(atan2(this->gameData.opponent->position.y + 75 - this->position.y, this->gameData.opponent->position.x - this->position.x) * 180 / M_PI + 360, 360);
 		params[1] = 100;
 		params[2] = 2;
 		this->createObject(this->frameState.actionId, this->position.x, this->position.y, this->direction, 1, params);
@@ -150,9 +156,6 @@ void UnexpectedAssistance::Remilia::initializeAction()
 		}
 	}
 	this->setSequence(this->customData[2]);
-	if (this->frameState.sequenceId == 0 || this->frameState.sequenceId == 1) {
-		this->unknown360 = 1;
-	}
 	if (this->frameState.sequenceId == 2) {
 		this->renderInfos.zRotation = -this->customData[0];
 		this->collisionLimit = 5;

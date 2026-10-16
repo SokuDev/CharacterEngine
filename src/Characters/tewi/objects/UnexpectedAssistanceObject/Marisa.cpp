@@ -144,19 +144,19 @@ namespace UnexpectedAssistance
 			this->parentPlayerB->playSFX(0);
 			this->position.x = SokuLib::rand(1280);
 			this->position.y = 1280;
-			this->speed.x = (SokuLib::rand(10) - 5.f);
+			this->speed.x = SokuLib::rand(10) - 5.f;
 			this->speed.x += std::copysign(5, this->speed.x);
 			this->isActive = true;
-			this->unknown138 = -6.0;
+			this->shadowOffset = -6.0;
 		} else {
 			this->setSequence(this->customData[2]);
 			if (this->customData[2] == 1)
 				this->collisionLimit = 1;
 			if (this->customData[2] != 2)
 				return;
-			this->renderInfos.scale.x = (SokuLib::rand() % 100) * 0.01 + 1.0;
+			this->renderInfos.scale.x = SokuLib::rand() % 100 * 0.01 + 1.0;
 			this->renderInfos.scale.y = this->renderInfos.scale.x;
-			this->renderInfos.zRotation = (SokuLib::rand() % 360);
+			this->renderInfos.zRotation = SokuLib::rand() % 360;
 		}
 	}
 }

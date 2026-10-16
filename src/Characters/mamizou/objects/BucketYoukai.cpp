@@ -9,8 +9,6 @@
 
 void BucketYoukai::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	this->advanceFrame();
 	this->renderInfos.zRotation -= this->angularVelocity;
 	this->angularAcceleration *= 0.99;
@@ -19,13 +17,18 @@ void BucketYoukai::update()
 	else
 		this->angularVelocity -= this->angularAcceleration;
 	this->checkGrazed(0);
-	this->checkProjectileHit(2);
-	if (
-		this->parentPlayer->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN &&
-		this->parentPlayer->frameState.actionId < SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN
-	)
-		this->collisionLimit = 0;
-	if (this->renderInfos.zRotation < -180)
+	if (this->checkProjectileHit(2)) {
+		this->lifetime = 0;
+		return;
+	}
+	if (this->renderInfos.zRotation < -180) {
+		this->lifetime = 0;
+		return;
+	}
+
+	auto off = SokuLib::Vector2f{-500, 0}.rotate(-this->renderInfos.zRotation * M_PI / 180, {0, 0});
+
+	if (this->checkTurnIntoCrystals(false, 1, 4, off.x, off.y) || this->renderInfos.zRotation < -180)
 		this->lifetime = 0;
 }
 

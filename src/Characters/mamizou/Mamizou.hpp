@@ -2,8 +2,8 @@
 // Created by PinkySmile on 08/05/24.
 //
 
-#ifndef CHARACTERENGINE_TEWI_HPP
-#define CHARACTERENGINE_TEWI_HPP
+#ifndef CHARACTERENGINE_MAMIZOU_HPP
+#define CHARACTERENGINE_MAMIZOU_HPP
 
 
 #include <SokuLib.hpp>
@@ -12,7 +12,22 @@
 #include <deque>
 #include "Memory.hpp"
 
+#define CLONE_BUFFERING_DELAY 12
+
+
 class Mamizou : public SokuLib::v2::Player {
+public:
+	struct State {
+		SokuLib::v2::CharacterFrameData *frameData;
+		SokuLib::Vector2f pos;
+		SokuLib::Vector2f center;
+		SokuLib::RenderInfo infos;
+		bool resetHit;
+		char dir;
+		unsigned char hitCount;
+		bool transformed;
+	};
+
 private:
 	static constexpr unsigned MAX_STACKS = 8;
 	static constexpr unsigned STACK_PER_LEVEL = 2;
@@ -21,10 +36,12 @@ private:
 	static constexpr unsigned TIMER_MAX = 450;
 	static constexpr unsigned TIMER_DELAY = 150;
 	static constexpr unsigned SPELL_TIMER_MAX = 900;
-	static constexpr unsigned DEBUFF_TIMER_MAX = 600;
+	static constexpr unsigned DEBUFF_TIMER_MAX = 450;
+	static constexpr unsigned SMALL_SPELL_TIMER_MAX = 1800;
 
 	friend class TimerDebuffGui;
 	friend class TimerSpellGui;
+	friend class Timer1SCGui;
 	friend class TimerGui;
 	friend class StackGui;
 	friend class CardSelect;
@@ -35,7 +52,9 @@ private:
 		KIND_STACK,
 		KIND_FULL_MOVE,
 		KIND_SPELL_TIMER,
-		KIND_DEBUFF_TIMER
+		KIND_DEBUFF_TIMER,
+		KIND_SPELL_LEVEL_UP,
+		KIND_SMALL_SPELL_TIMER,
 	};
 
 	struct SpellCard {
@@ -49,18 +68,21 @@ private:
 	std::vector<unsigned char> _selectedCards;
 	std::vector<SpellCard> _allOpponentSpellCards;
 	std::vector<std::pair<unsigned, int>> _opponentSpellCards;
+	std::map<unsigned, int> _opponentSkillCardsByInput;
+	std::array<unsigned, 5> _opponentSkillsOffset;
 	unsigned _transformTimerDelay = TIMER_DELAY;
 	unsigned _transformTimer = TIMER_MAX;
 	unsigned _transformStacks = 0;
 	unsigned _transformStackCharge = 0;
+	float _extraAttackPower = 1;
+	char opSkilledSkillLevel[32];
 	unsigned char _spellCost = 0;
 	unsigned char _currentCard = 0;
 	unsigned char _currentSelection = 0;
 	unsigned char _currentAnimal = 0;
+	unsigned char _learnedCommand = UINT8_MAX;
 	bool _transformedCooldown = false;
 	bool _transformed = false;
-	bool _init = false;
-	bool _forward = true;
 	bool _neverTransformed = true;
 	bool _stayTransformed = true;
 	TransformKind _transformKind = KIND_TIMER;
@@ -70,6 +92,15 @@ private:
 	SokuLib::Map<int, SokuLib::v2::CharacterSequenceData *> _spellMelees;
 	std::deque<SokuLib::v2::CharacterSequenceData> _spellMeleesStorage;
 	std::set<std::pair<unsigned short, unsigned short>> _restingActions;
+	std::vector<unsigned char> _characterBuffer;
+	Player *_dummyCharacter;
+	FrameState *_frameStateBuffer;
+	size_t _bufferSize;
+	SokuLib::v2::CharacterSequenceData *_back;
+	std::vector<unsigned> _whiteListedActions;
+
+	State _data[CLONE_BUFFERING_DELAY + 1];
+	unsigned _dataPointer = 0;
 
 	static constexpr float BACKDASH_DECEL = 2;
 	static constexpr float BACKDASH_IMPULSE = -10.0;
@@ -101,8 +132,8 @@ private:
 
 	static constexpr float INITIAL_DASH_SPEED = 12;
 	static constexpr float TOP_DASH_SPEED = 9;
-	static constexpr float INITIAL_BE6_SPEED = 5;
-	static constexpr float TOP_BE6_SPEED = 3;
+	static constexpr float INITIAL_BE6_SPEED = 9;
+	static constexpr float TOP_BE6_SPEED = 5;
 	static constexpr float DASH_RECOVERY_DECEL = 0.5;
 
 	static constexpr float FLIGHT_TURN = 3.5;
@@ -117,24 +148,28 @@ private:
 	static constexpr float BAD_SPEED_Y = 3.5;
 	static constexpr float BAD_GRAVITY = 0.35;
 
+	void _fillCharacterBuffer();
+
+	bool _tryDoTransformedMove();
 	bool _tryDoUntransformedMove(bool cardsOnly, bool spellsOnly);
 
 	bool _processAGrounded();
 	bool _processBGrounded();
 	bool _processCGrounded();
 	bool _processSkillsGrounded();
-	void _processInputsGrounded();
+	bool _processInputsGrounded();
 
 	bool _processAAirborne();
 	bool _processBAirborne();
 	bool _processCAirborne();
 	bool _processSkillsAirborne();
-	void _processInputsAirborne();
+	bool _processInputsAirborne();
 
 	virtual bool _canUseCard(int id);
 	bool _useSkillCard(int id);
 	bool _useSpellCard(int id);
-	bool _useTransformedCard(int id);
+	bool _useTransformedSkillCard(int id);
+	bool _useTransformedSpellCard(int id);
 
 	void _onSkillUpgrade(int id, int oldLevel);
 	bool _useSkill(bool input, unsigned char id, unsigned short action);
@@ -153,14 +188,17 @@ private:
 	void _addDebuffGui();
 	void _addTimerGui();
 	void _addStackGui();
+	void _add1SCGui();
 
 	void _fillHand();
+	bool _tryDoTransformedBOrCAttack(bool isBAttack);
+	bool _tryDoTransformedCard();
 
 	void _setupOpponentDebuff();
 	void _cleanupOpponentDebuff();
-
 	void _updateOpponentDebuffed();
 	void _transformCard(SokuLib::Card &card);
+	void _transformSkillCard(SokuLib::Card &card);
 
 public:
 	enum Moves {
@@ -178,13 +216,20 @@ public:
 
 		ACTION_d236b = SokuLib::ACTION_DEFAULT_SKILL4_B,
 		ACTION_d236c = SokuLib::ACTION_DEFAULT_SKILL4_C,
-		ACTION_jd236b = SokuLib::ACTION_DEFAULT_SKILL4_AIR_B,
-		ACTION_jd236c = SokuLib::ACTION_DEFAULT_SKILL4_AIR_C,
+
+		ACTION_a1_623b = SokuLib::ACTION_ALT1_SKILL1_B,
+		ACTION_a1_623c = SokuLib::ACTION_ALT1_SKILL1_C,
 
 		ACTION_a1_22b = SokuLib::ACTION_ALT1_SKILL2_B,
 		ACTION_a1_22b_UNTRANSFORM = SokuLib::ACTION_ALT1_SKILL2_C,
 		ACTION_ja1_22b = SokuLib::ACTION_ALT1_SKILL2_AIR_B,
 		ACTION_ja1_22b_UNTRANSFORM = SokuLib::ACTION_ALT1_SKILL2_AIR_C,
+
+		ACTION_a1_214b = SokuLib::ACTION_ALT1_SKILL3_B,
+		ACTION_a1_214c = SokuLib::ACTION_ALT1_SKILL3_C,
+
+		ACTION_a1_236b = SokuLib::ACTION_ALT1_SKILL4_B,
+		ACTION_a1_236c = SokuLib::ACTION_ALT1_SKILL4_C,
 
 		ACTION_a2_22b = SokuLib::ACTION_ALT2_SKILL2_B,
 		ACTION_a2_22c = SokuLib::ACTION_ALT2_SKILL2_C,
@@ -225,9 +270,13 @@ public:
 
 	bool isTransformed() const;
 	SokuLib::v2::Player *getTransformPlayer() const;
+	const State &getCurrentCloneFrame() const;
 
+	friend class UdongeClone;
+	friend class YoumuClone;
 	friend class MamizouGameObjectList;
+	friend void __fastcall __fake_initializeAction(SokuLib::v2::Player *This);
 };
 
 
-#endif //CHARACTERENGINE_TEWI_HPP
+#endif //CHARACTERENGINE_MAMIZOU_HPP

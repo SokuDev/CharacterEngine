@@ -12,7 +12,12 @@ void StackGui::update()
 {
 	auto mamizou = (Mamizou *)this->parentPlayerB;
 
-	if (mamizou->_transformKind == Mamizou::KIND_SPELL_TIMER || mamizou->_transformKind == Mamizou::KIND_TIMER || mamizou->skilledSkillLevel[9] < 0)
+	if (
+		mamizou->_transformKind == Mamizou::KIND_SMALL_SPELL_TIMER ||
+		mamizou->_transformKind == Mamizou::KIND_SPELL_TIMER ||
+		mamizou->_transformKind == Mamizou::KIND_TIMER ||
+		mamizou->skilledSkillLevel[9] < 0
+	)
 		this->renderInfos.color.a = 0;
 	else
 		this->renderInfos.color.a = SokuLib::v2::InfoManagerBase::instance->unknown494 == 0 ? 255 : 0;
@@ -33,6 +38,7 @@ void StackGui::update()
 
 void StackGui::initializeAction()
 {
+	this->ignoreOwnerTimestop = 1;
 	this->isGui = true;
 	if (!this->parentB)
 		this->createChild(this->frameState.actionId, this->position.x + 3, this->position.y - 3, this->direction, this->layer);

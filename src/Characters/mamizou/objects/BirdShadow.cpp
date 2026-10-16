@@ -16,9 +16,7 @@ void BirdShadow::update()
 		} else if (this->frameState.sequenceId != 3)
 			this->lifetime = 0;
 	}
-	if (this->parentPlayerB->timeStop)
-		return;
-	if (this->parentPlayerB->hitStop && this->frameState.sequenceId != 3)
+	if (this->parentPlayerB->timeStop && this->parentPlayerB->frameState.actionId == SokuLib::ACTION_j8A)
 		return;
 	if (this->frameState.sequenceId == 1 && this->frameState.currentFrame == 0) {
 		float params[1] = {2};

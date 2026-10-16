@@ -44,8 +44,8 @@ void HotPot::update()
 	case 2:
 		if (this->frameState.sequenceId == 0)
 			for (int i = 0; i < RING_SIZE * this->renderInfos.scale.x; i++) {
-				int j = (int)(this->position.x + WALL_X * this->renderInfos.scale.x - i);
-				int k = (int)(this->position.x - WALL_X * this->renderInfos.scale.x + i);
+				auto j = static_cast<int>(this->position.x + WALL_X * this->renderInfos.scale.x - i);
+				auto k = static_cast<int>(this->position.x - WALL_X * this->renderInfos.scale.x + i);
 
 				if (j >= 0 && j < 1280)
 					SokuLib::v2::groundHeight[j] = 0;
@@ -90,8 +90,8 @@ void HotPot::update()
 		}
 		if (this->frameState.sequenceId == 0)
 			for (int i = 0; i < RING_SIZE * this->renderInfos.scale.x; i++) {
-				int j = (int)(this->position.x + WALL_X * this->renderInfos.scale.x - i);
-				int k = (int)(this->position.x - WALL_X * this->renderInfos.scale.x + i);
+				auto j = static_cast<int>(this->position.x + WALL_X * this->renderInfos.scale.x - i);
+				auto k = static_cast<int>(this->position.x - WALL_X * this->renderInfos.scale.x + i);
 
 				if (j >= 0 && j < 1280)
 					SokuLib::v2::groundHeight[j] = HITBOX_Y * this->renderInfos.scale.y;
@@ -224,6 +224,9 @@ void HotPot::update()
 			if (
 				this->gameData.opponent->frameState.actionId >= SokuLib::ACTION_STAND_GROUND_HIT_SMALL_HITSTUN &&
 				this->gameData.opponent->frameState.actionId < SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN &&
+				this->gameData.opponent->frameState.actionId != SokuLib::ACTION_KNOCKED_DOWN &&
+				this->gameData.opponent->frameState.actionId != SokuLib::ACTION_KNOCKED_DOWN_STATIC &&
+				this->gameData.opponent->realLimit < 100 &&
 				!this->gameData.opponent->hitStop &&
 				!this->parentPlayerB->timeStop
 			) {

@@ -10,8 +10,6 @@
 
 void SpinningSmoke::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->frameState.sequenceId != 0)
 		return;
 

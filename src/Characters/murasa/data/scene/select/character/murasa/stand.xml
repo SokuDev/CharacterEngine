@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animpattern version="5">
+	<animation id="0" index="0" loop="1">
+		<frame image="suika000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="65" texheight="95" xoffset="37" yoffset="92" duration="8" rendergroup="1"/>
+		<frame image="suika001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="65" texheight="96" xoffset="37" yoffset="93" duration="8" rendergroup="1"/>
+		<frame image="suika002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="65" texheight="96" xoffset="37" yoffset="93" duration="8" rendergroup="1"/>
+		<frame image="suika003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="65" texheight="95" xoffset="37" yoffset="92" duration="8" rendergroup="1"/>
+		<frame image="suika004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="65" texheight="94" xoffset="37" yoffset="91" duration="8" rendergroup="1"/>
+		<frame image="suika005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="65" texheight="94" xoffset="37" yoffset="91" duration="8" rendergroup="1"/>
+	</animation>
+	<animation id="1" index="0" loop="0">
+		<frame image="suikaB000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="65" texheight="95" xoffset="42" yoffset="92" duration="4" rendergroup="1"/>
+		<frame image="suikaB001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="73" texheight="92" xoffset="41" yoffset="90" duration="4" rendergroup="1"/>
+		<frame image="suikaB002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="103" texheight="85" xoffset="72" yoffset="81" duration="4" rendergroup="1"/>
+		<frame image="suikaB003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="103" texheight="83" xoffset="74" yoffset="78" duration="4" rendergroup="1"/>
+		<frame image="suikaB004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="146" texheight="89" xoffset="47" yoffset="84" duration="4" rendergroup="1"/>
+	</animation>
+	<animation id="2" index="0" loop="1">
+		<frame image="suikaB005.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="152" texheight="161" xoffset="47" yoffset="156" duration="4" rendergroup="1"/>
+		<frame image="suikaB006.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="149" texheight="162" xoffset="47" yoffset="157" duration="4" rendergroup="1"/>
+		<frame image="suikaB007.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="152" texheight="162" xoffset="47" yoffset="157" duration="4" rendergroup="1"/>
+		<frame image="suikaB008.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="149" texheight="162" xoffset="47" yoffset="157" duration="4" rendergroup="1"/>
+	</animation>
+</animpattern>

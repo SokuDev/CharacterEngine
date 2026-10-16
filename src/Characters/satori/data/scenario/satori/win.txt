@@ -1,0 +1,261 @@
+## =======================================================================
+#Ÿ—˜‘äŒ
+## =======================================================================
+#VS—éå
+#‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X\
+## ‘äŒA==================
+#Label:ƒLƒƒƒ‰–¼+”š‚ÌŒ`‚Å“o˜^@˜A”Ô‚Å‘±‚¢‚Ä‚¢‚éŒÀ‚è‚ÌÅŒã‚Ü‚Å‚ª“o˜^‚³‚êAƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ‚³‚ê‚Ü‚·
+#‰ï˜b‘®‚ÍƒVƒiƒŠƒI‚ÅŒ¾‚¤ƒLƒƒƒ‰–¼‚ÌêŠ‚Éwin(Ÿ—˜ƒLƒƒƒ‰)lose(”s–kƒLƒƒƒ‰)‚Ì”­Œ¾‚É‚È‚è‚Ü‚·
+# Hi-lock: (("\\#.*$"            (0 '((t (:foreground "dark slate gray"))) t))) 
+# Hi-lock: (("^[ \t]*Label.*$"              (0 '((t (:foreground "royal blue"))) t))) 
+# Hi-lock: (("^[ \t]*Face.*$"              (0 '((t (:foreground "cornflower blue"))) t))) 
+# Hi-lock: (("^[ \t]*End.*$"            (0 '((t (:foreground "royal blue"))) t))) 
+# reimuR0  rare
+# reimuU0  usual
+# reimu0   •p”É
+
+Label:reimuU0
+Face:lose,•‰
+Face:win,Š¾
+NoA I don't have tea for youA
+and stop thinking ways to exterminate me.\
+
+Face:win,•
+That's not the way a shrine maiden is supposed to beA
+right? And stop insulting me!\
+End:
+
+
+Label:marisaU0
+Face:lose,•‰
+Face:win,“{
+NoA you can't take my pets with youA get out.\
+End:
+
+
+Label:marisaU1
+Face:lose,•‰
+Face:win,•
+So that's where you get your stealing hobbies.\
+End:
+
+
+Label:sakuyaU0
+Face:lose,•‰
+Face:win,Šğ
+Don't worryA your secret is safe with me.\
+End:
+
+
+Label:aliceU0
+Face:lose,•‰
+Face:win,•
+It's really interesting the way you gave life
+to lifeless objects like dolls.\
+
+Face:win,Šğ
+I can't wait to see what's inside their heart.\
+End:
+
+
+Label:patchouliU0
+Face:lose,•‰
+Face:win,Š¾
+I know how you feelA I have to deal with constant stress
+too and that doesn't let me sleep very well either.\
+End:
+
+
+Label:yukariU0
+Face:lose,•‰
+Face:win,•
+Ever since the shrine maiden came undergroundA
+I've been wondering what's on your heart.\
+
+
+Face:win,‹Á
+Now that I got the chance to see itA
+I must say I'm even more puzzled.\
+End:
+
+
+Label:suikaU0
+Face:lose,•‰
+Face:win,Š¾
+Everyone hates satoris because of our abilityA
+but nobody ever talks how noisy Onis are.\
+End:
+
+
+Label:ayaU0
+Face:lose,•‰
+Face:win,•
+Such one-track mind. But there's no
+interesting gossip for you to find here.\
+End:
+
+
+Label:ayaU1
+Face:lose,•‰
+Face:win,Šğ
+No need to interview meA I already have the answer
+for your entire interviewA the answer is no!\
+End:
+
+
+Label:sanaeU0
+Face:lose,•‰
+Face:win,˜f
+Goddesses are generally full of themselves.
+How about you?\
+End:
+
+
+Label:chirnoU0
+Face:lose,•‰
+Face:win,Š¾
+A simple mind for a simple lifeform.
+Even soA your aspirations seem a bit big for you.\
+End:
+
+
+Label:meirinU0
+Face:lose,•‰
+Face:win,‹Á
+I already saw all your moves before the match.
+Yet you managed to adapt accordingly!\
+End:
+
+
+Label:utsuhoU0
+Face:lose,•‰
+Face:win,Š¾
+I would like to know what's on your mind sometimes...
+But there's really not much to go about.\
+End:
+
+
+Label:utsuhoU1
+Face:lose,•‰
+Face:win,“{
+Maybe I let you had too much freedom for so long and
+you became really naughty. Let's go home.\
+End:
+
+
+Label:momijiU0
+Face:lose,•‰
+Face:win,Šğ
+I'd like to have a dog pet that can play shogi with my
+other petsA feel free to join in whenever you want.\
+End:
+
+
+Label:clownpieceU0
+Face:lose,•‰
+Face:win,‹Á
+I've seen unimaginable levels of madness beforeA yet you
+definitely surprised me with the white noise your mind gives.\
+End:
+
+
+Label:flandreU0
+Face:lose,•‰
+Face:win,Š¾
+I don't think I want you as a pet.\
+End:
+
+
+Label:orinU0
+Face:lose,•‰
+Face:win,•
+I don't see the point of trying so hard to clear your mind.
+Of course I would know you're hiding something if you do that.\
+End:
+
+
+Label:yuukaU0
+Face:lose,•‰
+Face:win,Œˆ
+You will find difficult to faze me when I
+already know all your intentions.\
+End:
+
+
+Label:yuukaU1
+Face:lose,•‰
+Face:win,Š¾
+You're silentA but I can clearly hear all your
+disturbing words whenever you take damage.\
+End:
+
+
+Label:shouU0
+Face:lose,•‰
+Face:win,Œˆ
+A Buddhist tiger who is also a disciple of a god?
+That is a rare specimen.\
+End:
+
+
+Label:shouU1
+Face:lose,•‰
+Face:win,Œˆ
+You can be more honestA there's plenty of onis around
+my home. They would be pleased to share alcohol with you.\
+End:
+
+
+Label:murasaU0
+Face:lose,•‰
+Face:win,Šğ
+Perhaps a tour with boat can relieve me of my stress?
+I'm very thankful of the offer.\
+End:
+
+Label:murasaU1
+Face:lose,•‰
+Face:win,•
+NoA just because I'm from the underworld doesn't mean
+I will cause troubles.\
+End:
+
+
+Label:sekibankiU0
+Face:lose,•‰
+Face:win,Œˆ
+Every little head seems to have its own thoughts.\
+End:
+
+
+Label:satoriU0
+Face:lose,•‰
+Face:win,Š¾
+I've not had this weird feeling ever since Koishi closed her eye.\
+
+Face:win,Š¾
+Trying to read the mind of someone that
+also tries to read yours is quite unsettling.\
+End:
+
+
+Label:shinkiU0
+Face:lose,•‰
+Face:win,•
+I guess on the insideA demons aren't that much
+different after all.\
+End:
+
+
+Label:common0
+Face:win,•
+It's rare to find someone who doesn't turn
+away at the sight of a Satori.\
+End:
+
+Label:common1
+Face:win,Œˆ
+Your tricks were already useless.\
+End:
+
+‰

@@ -10,6 +10,7 @@ void TimerGui::update()
 	auto mamizou = (Mamizou *)this->parentPlayerB;
 
 	if (mamizou->_transformKind != Mamizou::KIND_TIMER && (
+		mamizou->_transformKind == Mamizou::KIND_SMALL_SPELL_TIMER ||
 		mamizou->_transformKind == Mamizou::KIND_DEBUFF_TIMER ||
 		mamizou->_transformKind == Mamizou::KIND_SPELL_TIMER ||
 		mamizou->_transformKind == Mamizou::KIND_STACK ||
@@ -96,6 +97,7 @@ void TimerGui::update()
 
 void TimerGui::initializeAction()
 {
+	this->ignoreOwnerTimestop = 1;
 	this->isGui = true;
 	this->setSequence(this->customData[2]);
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animpattern version="5">
+	<animation id="0" index="0" loop="1">
+		<frame image="aya000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="35" yoffset="97" duration="6" rendergroup="1"/>
+		<frame image="aya001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="37" yoffset="98" duration="6" rendergroup="1"/>
+		<frame image="aya002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="41" yoffset="98" duration="6" rendergroup="1"/>
+		<frame image="aya003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="48" yoffset="100" duration="6" rendergroup="1"/>
+		<frame image="aya004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="52" yoffset="100" duration="6" rendergroup="1"/>
+		<frame image="aya005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="49" yoffset="100" duration="6" rendergroup="1"/>
+		<frame image="aya006.bmp" index="6" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="42" yoffset="98" duration="6" rendergroup="1"/>
+		<frame image="aya007.bmp" index="7" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="35" yoffset="97" duration="6" rendergroup="1"/>
+	</animation>
+	<animation id="1" index="0" loop="0">
+		<frame image="ayaB000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="36" yoffset="98" duration="4" rendergroup="1"/>
+		<frame image="ayaB001.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="36" yoffset="100" duration="4" rendergroup="1"/>
+		<frame image="ayaB002.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="40" yoffset="99" duration="4" rendergroup="1"/>
+		<frame image="ayaB003.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="54" yoffset="99" duration="4" rendergroup="1"/>
+		<frame image="ayaB004.bmp" index="4" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="56" yoffset="94" duration="4" rendergroup="1"/>
+		<frame image="ayaB005.bmp" index="5" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="50" yoffset="93" duration="4" rendergroup="1"/>
+	</animation>
+	<animation id="2" index="0" loop="1">
+		<frame image="ayaB006.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="52" yoffset="94" duration="4" rendergroup="1"/>
+		<frame image="ayaB007.bmp" index="1" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="53" yoffset="93" duration="4" rendergroup="1"/>
+		<frame image="ayaB008.bmp" index="2" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="54" yoffset="94" duration="4" rendergroup="1"/>
+		<frame image="ayaB009.bmp" index="3" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="120" texheight="120" xoffset="50" yoffset="93" duration="4" rendergroup="1"/>
+	</animation>
+</animpattern>

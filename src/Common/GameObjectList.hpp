@@ -49,7 +49,7 @@ public:
 		obj->textures = this->_player->textures;
 		obj->gameData.patternMap = this->_player->gameData.patternMap;
 		if (parentObj)
-			((void (__thiscall *)(void *, void *))0x74C890)(obj, parentObj);
+			obj->setParentB(parentObj);
 		obj->position.x = x;
 		obj->position.y = y;
 		obj->direction = dir;
@@ -82,8 +82,8 @@ public:
 			return;
 		for (const auto &object : this->_list) {
 			if (object->hitStop)
-				object->hitStop--;
-			else
+				--object->hitStop;
+			else if (!this->_player->timeStop || object->ignoreOwnerTimestop)
 				object->update();
 		}
 
@@ -100,13 +100,13 @@ public:
 		for (auto o : this->_list) {
 			if (o->layer != layer)
 				continue;
-			if (o->unknown154 != nullptr)
-				((void (__thiscall *)(void *))0x4389D0)(o->unknown154);
+			if (o->clipMask)
+				reinterpret_cast<void (__thiscall *)(void *)>(0x4389D0)(o->clipMask);
 			if (o->tail)
 				o->tail->render();
 			o->render();
-			if (o->unknown154 != nullptr)
-				((void (__thiscall *)(void *))0x438B90)(o->unknown154);
+			if (o->clipMask)
+				reinterpret_cast<void (__thiscall *)(void *)>(0x438B90)(o->clipMask);
 		}
 	}
 
@@ -119,7 +119,7 @@ public:
 	void updateCamera() override
 	{
 		for (auto o : this->_list)
-			((void (*)(void *))0x46A780)(o);
+			reinterpret_cast<void (__thiscall *)(void *)>(0x46A780)(o);
 	}
 
 	void replaceOpponent(SokuLib::v2::Player *a0, SokuLib::v2::Player *a1) override

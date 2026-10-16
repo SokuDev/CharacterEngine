@@ -6,8 +6,6 @@
 
 void IllusionRabbit::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->frameState.sequenceId > 1) {
 		if (this->renderInfos.color.a <= 5) {
 			this->lifetime = 0;

@@ -4,12 +4,8 @@
 #include "Ran.hpp"
 
 
-#ifndef _DEBUG
 #define puts(...)
 #define printf(...)
-#endif
-
-static_assert(sizeof(AppliedPatch) == 8);
 
 GameObjectList_Ran::GameObjectList_Ran(SokuLib::v2::Player *player) :
 	SokuLib::v2::GameObjectList_Sakuya(player)

@@ -146,6 +146,8 @@ void UnexpectedAssistance::Youmu::update()
 			if (this->renderInfos.zRotation < 30)
 				this->renderInfos.zRotation = 30;
 			this->gpShort[0] = 1;
+			this->collisionLimit = 0;
+			this->collisionType = COLLISION_TYPE_HIT;
 		} else if (this->gpShort[0] == 1) {
 			this->renderInfos.zRotation += 2;
 			if (this->renderInfos.zRotation > 360)

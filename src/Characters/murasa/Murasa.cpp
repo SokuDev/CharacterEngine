@@ -4,12 +4,8 @@
 #include "Murasa.hpp"
 
 
-#ifndef _DEBUG
 #define puts(...)
 #define printf(...)
-#endif
-
-static_assert(sizeof(AppliedPatch) == 8);
 
 GameObjectList_Murasa::GameObjectList_Murasa(SokuLib::v2::Player *player) :
 	SokuLib::v2::GameObjectList_Suika(player)

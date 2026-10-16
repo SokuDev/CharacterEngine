@@ -4,12 +4,8 @@
 #include "Kaguya.hpp"
 
 
-#ifndef _DEBUG
 #define puts(...)
 #define printf(...)
-#endif
-
-static_assert(sizeof(AppliedPatch) == 8);
 
 GameObjectList_Kaguya::GameObjectList_Kaguya(SokuLib::v2::Player *player) :
 	SokuLib::v2::GameObjectList_Patchouli(player)

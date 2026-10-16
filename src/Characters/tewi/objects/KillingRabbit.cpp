@@ -9,8 +9,6 @@
 
 void KillingRabbit::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->checkTurnIntoCrystals(false, 5, 15)) {
 		this->lifetime = 0;
 		return;

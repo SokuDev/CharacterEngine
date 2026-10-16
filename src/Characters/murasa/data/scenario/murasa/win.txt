@@ -1,0 +1,279 @@
+## =======================================================================
+#Ÿ—˜‘äŒ
+## =======================================================================
+#VS—éå
+#‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X\
+## ‘äŒA==================
+#Label:ƒLƒƒƒ‰–¼+”š‚ÌŒ`‚Å“o˜^@˜A”Ô‚Å‘±‚¢‚Ä‚¢‚éŒÀ‚è‚ÌÅŒã‚Ü‚Å‚ª“o˜^‚³‚êAƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ‚³‚ê‚Ü‚·
+#‰ï˜b‘®‚ÍƒVƒiƒŠƒI‚ÅŒ¾‚¤ƒLƒƒƒ‰–¼‚ÌêŠ‚Éwin(Ÿ—˜ƒLƒƒƒ‰)lose(”s–kƒLƒƒƒ‰)‚Ì”­Œ¾‚É‚È‚è‚Ü‚·
+# Hi-lock: (("\\#.*$"            (0 '((t (:foreground "dark slate gray"))) t))) 
+# Hi-lock: (("^[ \t]*Label.*$"              (0 '((t (:foreground "royal blue"))) t))) 
+# Hi-lock: (("^[ \t]*Face.*$"              (0 '((t (:foreground "cornflower blue"))) t))) 
+# Hi-lock: (("^[ \t]*End.*$"            (0 '((t (:foreground "royal blue"))) t))) 
+# reimuR0  rare
+# reimuU0  usual
+# reimu0   •p”É
+
+Label:reimuU0
+Face:lose,•‰
+Face:win,Šğ
+Your point of view seems a bit skewed.
+Most people can't help being Humans or Youkai.\
+End:
+
+
+Label:marisaU0
+Face:lose,•‰
+Face:win,Šğ
+HeyA want to race? I'll move in water and you in
+the airA I bet I can beat you!\
+End:
+
+
+Label:marisaU1
+Face:lose,•‰
+Face:win,Šğ
+It's no use. I'm more familiar with water
+techniques than you.\
+End:
+
+
+Label:sakuyaU0
+Face:lose,•‰
+Face:win,“{
+It's okay to live just to serve someoneA but sooner
+or later you might want to find your own path.\
+End:
+
+
+Label:aliceU0
+Face:lose,•‰
+Face:win,Šğ
+I heard you're a pretty nice person who helps other people
+in trouble. That's amazing!\
+
+Face:win,Š¾
+I used to be ship-sinking phantomA
+but nowadays I'm trying to be helpful.\
+End:
+
+
+Label:patchouliU0
+Face:lose,•‰
+Face:win,‹Á
+You can't just throw water like that.
+I almost feel insulted!\
+End:
+
+
+Label:remiliaU0
+Face:lose,•‰
+Face:win,Š¾
+Are you sure about this? I heard vampires
+are weak to water.\
+End:
+
+
+Label:yuyukoU0
+Face:lose,•‰
+Face:win,—]
+Ah yesA the ethereal worldA I know that feeling too.
+Maybe we can play hide and seek.\
+End:
+
+
+Label:yukariU0
+Face:lose,•‰
+Face:win,˜f
+So you saw me when I first met Lady Hijiri?
+That's interestingA maybe you and her can have a nice chat.\
+End:
+
+
+Label:suikaU0
+Face:lose,•‰
+Face:win,‹Á
+I seeA so you can break the skies.\
+
+Face:win,Œˆ
+Lets see if you can break the seas as well!\
+End:
+
+
+Label:udongeU0
+Face:lose,•‰
+Face:win,•
+WellA due to my religious training I'm quite tough
+mentally. So your attacks don't seem to be as effective.\
+End:
+
+
+Label:ayaU0
+Face:lose,•‰
+Face:win,Š¾
+I've met your ancestors. They would definitely be ashamed
+of seeing you and what tengus have become nowadays.\
+End:
+
+
+Label:komachiU0
+Face:lose,•‰
+Face:win,•
+I think it's a bit late trying to ferry me to the other side.
+Not that i would need your help by now anyway.\
+End:
+
+
+Label:komachiU1
+Face:lose,•‰
+Face:win,—]
+Trying to take the souls of immortal beings might get you
+in a lot of trouble.\
+End:
+
+
+Label:ikuU0
+Face:lose,•‰
+Face:win,Šğ
+It's okay to wish for an easier lifeA our master Hijiri also
+does sometimes. But it's all part of the path to enlightenment!\
+End:
+
+
+Label:tenshiU0
+Face:lose,•‰
+Face:win,“{
+Being bored is one thingA but intentionally damaging other
+people's lives is an entirely different thing!\
+End:
+
+
+Label:tenshiU1
+Face:lose,•‰
+Face:win,Š¾
+HonestlyA I don't think you deserve the status of celestial.\
+End:
+
+
+Label:sanaeU0
+Face:lose,•‰
+Face:win,•
+You don't take much responsibility in your role.
+I can try not minding itA but someone else might punish you.\
+End:
+
+
+Label:sanaeU1
+Face:lose,•‰
+Face:win,Œˆ
+Exterminate me? just because I'm a ghost?
+Let's see how long you can hold your breath underwater.\
+End:
+
+
+Label:chirnoU0
+Face:lose,•‰
+Face:win,Š¾
+Trying to freeze the raging seas seems like a
+futile endeavour for a little fairy.\
+End:
+
+
+Label:utsuhoU0
+Face:lose,•‰
+Face:win,˜f
+I saw people praying to the sun a few times before.
+I wonder if you would be some sort of goddess for them.\
+End:
+
+
+Label:clownpieceU0
+Face:lose,•‰
+Face:win,‹Á
+To be honestA I can't picture there being
+an ocean in the moon.\
+End:
+
+
+Label:flandreU0
+Face:lose,•‰
+Face:win,Š¾
+Vampires are weak to water? More like vampires
+are slightly inconvenienced by water.\
+End:
+
+
+Label:orinU0
+Face:lose,•‰
+Face:win,Š¾
+It's not really my job to extinguish the flames
+of that hell you came fromA so please leave me alone.\
+End:
+
+
+Label:kaguyaU0
+Face:lose,•‰
+Face:win,Šğ
+I see. Your existence might be way older than mine.\
+End:
+
+
+Label:mokouU0
+Face:lose,•‰
+Face:win,˜f
+Being perpetually dead and eternally undying are total
+oppositesA yet seem so alike at the same time.\
+End:
+
+
+Label:shouU0
+Face:lose,•‰
+Face:win,Œˆ
+It's your turn to do the chores tonight.
+Have fun!\
+End:
+
+
+Label:murasaU0
+Face:lose,•‰
+Face:win,Š¾
+Well... that's NueA right?\
+End:
+
+
+Label:murasaU1
+Face:lose,•‰
+Face:win,Š¾
+Next time you better think a better trickA Nue.
+You will get a punishment when we go back home.\
+End:
+
+
+Label:sekibankiU0
+Face:lose,•‰
+Face:win,•
+I woundn't call a Rokurokubi so much as scary.
+Perhaps uncanny is the correct term.\
+End:
+
+
+Label:shinkiU0
+Face:lose,•‰
+Face:win,˜f
+Would you be interested in another tour?
+PerhapsA with a ship this time?\
+End:
+
+
+Label:common0
+Face:win,Œˆ
+If you fight backA you will only sink deeper!\
+End:
+
+Label:common1
+Face:win,Šğ
+Set the sailsA clean the deckA it's time
+for another trip with your favorite captain!\
+End:
+
+Ä

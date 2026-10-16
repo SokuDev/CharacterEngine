@@ -9,9 +9,12 @@
 
 void CrabYoukai::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
-	if (this->parentPlayerB->hitStop && this->parentPlayerB->frameState.actionId == SokuLib::ACTION_j2A)
+	if (this->parentPlayerB->hitStop && (
+		this->parentPlayerB->frameState.actionId == Mamizou::ACTION_d214b ||
+		this->parentPlayerB->frameState.actionId == Mamizou::ACTION_d214c ||
+		this->parentPlayerB->frameState.actionId == Mamizou::ACTION_jd214b ||
+		this->parentPlayerB->frameState.actionId == Mamizou::ACTION_jd214c
+	))
 		return;
 	if (this->frameState.sequenceId == 0) {
 		if (this->renderInfos.scale.x == 1)

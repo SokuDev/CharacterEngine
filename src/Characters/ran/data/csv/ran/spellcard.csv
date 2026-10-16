@@ -1,0 +1,30 @@
+#スペカナンバー,スペカ名,"タイプ
+255 敵カード
+2 スペルカード
+1 スキルカード
+0 システムカード",消費,"カード説明テキスト
+デッキ構築画面でカードを選択すると出る説明文","出現ステージ
+数字のステージ以降から出現する
+0は初期所持
+1～6　EASY
+11～16　NORMAL
+21～26　HARD
+31～36　LUNA","レアリティ
+0　コモン
+1　アンコモン
+2　レア
+取得抽選で
+コモン60％
+アンコ30％
+レア10％",,,,,,,,sort
+100,"Eight Roadless Path",1,2,"Portrudes eight tails into different directions. It's a short ranged attack that covers all directions.",0,1,104,1,108,1,0,0,2,110
+101,"Unbinding Chains",1,1,"Spins a bunch of kunais in place. After a short moment\, they will fire to the direction of the opponent.",0,1,105,1,109,1,0,0,2,120
+102,"Lotus Scatter",1,0,"Scatters Lotus in front of her. They don't float for a long time\, but it has good coverage.",0,1,106,1,110,1,207,2,2,100
+103,"Fox Dive",1,4,"Makes a high-speed dive into the ground. It has limited angle\, but it's a very fast grazing attack.",0,1,107,1,111,1,0,0,2,140
+200,"Shikigami \"Protection of Zenki and Goki\"",2,1,"Summons two projectiles that attacks in succession. It is possible to hold the button until the desired timing.",0,3,203,5,0,0,0,0,2,200
+201,"Shikigami \"Serpent of Virupaksa\"",2,3,"A spellcard that gets stronger over time as it lies dormant looking for the perfect timing to strike. It is possible to hold the button until the desired timing.",0,3,204,5,0,0,0,0,2,220
+202,"3SC WIP",2,8,"IR",1,2,205,4,0,0,0,0,2,232
+203,"Shiki Shot \"Ultimate Buddhist\"",2,5,"Spins everything. Tails\, projectiles\, and the opponent.",0,5,0,0,0,0,0,0,2,240
+206,"Superhuman \"Soaring En no Ozunu\"",2,3,"Spins and charges in. It's a technique that raises her physical ability by imaging a certain individual.",1,3,0,0,0,0,0,0,2,222
+210,"4SC WIP",2,8,"CR",1,4,0,0,0,0,0,0,2,233
+

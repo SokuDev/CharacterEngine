@@ -7,6 +7,6 @@
     "skill_sprite_sheet": "sheet_skill.png",
     "short_name": "Mamizou",
     "full_name": "Mamizou Futatsuiwa",
-    "skill_inputs": [623, 236, 214, 421],
+    "skill_inputs": [623, 22, 236, 214],
     "enabled": true
 }

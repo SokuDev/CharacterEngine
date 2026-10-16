@@ -1,0 +1,264 @@
+## =======================================================================
+#Ÿ—˜‘äŒ
+## =======================================================================
+#VS—éå
+#‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚X\
+## ‘äŒA==================
+#Label:ƒLƒƒƒ‰–¼+”š‚ÌŒ`‚Å“o˜^@˜A”Ô‚Å‘±‚¢‚Ä‚¢‚éŒÀ‚è‚ÌÅŒã‚Ü‚Å‚ª“o˜^‚³‚êAƒ‰ƒ“ƒ_ƒ€‚Å‘I‘ğ‚³‚ê‚Ü‚·
+#‰ï˜b‘®‚ÍƒVƒiƒŠƒI‚ÅŒ¾‚¤ƒLƒƒƒ‰–¼‚ÌêŠ‚Éwin(Ÿ—˜ƒLƒƒƒ‰)lose(”s–kƒLƒƒƒ‰)‚Ì”­Œ¾‚É‚È‚è‚Ü‚·
+# Hi-lock: (("\\#.*$"            (0 '((t (:foreground "dark slate gray"))) t))) 
+# Hi-lock: (("^[ \t]*Label.*$"              (0 '((t (:foreground "royal blue"))) t))) 
+# Hi-lock: (("^[ \t]*Face.*$"              (0 '((t (:foreground "cornflower blue"))) t))) 
+# Hi-lock: (("^[ \t]*End.*$"            (0 '((t (:foreground "royal blue"))) t))) 
+# reimuR0  rare
+# reimuU0  usual
+# reimu0   •p”É
+
+Label:reimuU0
+Face:lose,•‰
+Face:win,—]
+Don't worryA even a sinner can reach enlightenment.
+HoweverA be careful with your actions from now on.\
+End:
+
+
+Label:marisaU0
+Face:lose,•‰
+Face:win,Š¾
+A Thief like you is barely allowed to be saved
+from being reborn in Naraka.\
+End:
+
+
+Label:youmuU0
+Face:lose,•‰
+Face:win,˜f
+Maybe you need proper training. Stop doing fake martial arts!
+And you definitely need a lesson in humility!\
+End:
+
+
+Label:remiliaU0
+Face:lose,•‰
+Face:win,“{
+Something like you deserves nothing but a punishment in the
+realms of RauravaA may a curse turn you into ashes now!\
+End:
+
+
+Label:yuyukoU0
+Face:lose,•‰
+Face:win,•
+OhA concepts so plain like life or death are just a part of Samsara.\
+
+Face:win,Šğ
+its okay for mortals to be worried of deathA
+and immortals to be worried by reincarnation.\
+
+Face:win,Šğ
+If we can free your body from that eternal state of death,
+you can try and meditate to reach enlightenment!\
+End:
+
+
+Label:yukariU0
+Face:lose,•‰
+Face:win,‹Á
+What kind of paradox in reality are you!?\
+End:
+
+
+Label:suikaU0
+Face:lose,•‰
+Face:win,Š¾
+Alcohol? parties? U-uhh no thanks! I-I can't do that.
+I must not fall into that kind of temptation!\
+End:
+
+
+Label:ayaU0
+Face:lose,•‰
+Face:win,•
+What happened to tengus nowadays!?
+You need a really big correction now!\
+End:
+
+Label:ayaU1
+Face:lose,•‰
+Face:win,“{
+Your lies will only lead you to a sad destinyA better
+let go of that camera and start straightening your path.\
+End:
+
+
+Label:komachiU0
+Face:lose,•‰
+Face:win,—]
+None of us are able to die at this pointA
+we all surpassed the concept of time and death.\
+
+Face:win,Œˆ
+there's no reason why you keep stressing out
+trying to take the souls of those who seek enlightenment.\
+End:
+
+
+Label:sanaeU0
+Face:lose,•‰
+Face:win,•
+You're still not strong enough for a goddess.
+You should train yourself more.\
+End:
+
+
+Label:chirnoU0
+Face:lose,•‰
+Face:win,•
+Start controlling your antics or I will have to start
+punishing you.\
+End:
+
+
+Label:meirinU0
+Face:lose,•‰
+Face:win,Š¾
+Martial arts is a way to cleanse one's mindA
+and thus one way to reach enlightenment.\
+End:
+
+
+Label:meirinU1
+Face:lose,•‰
+Face:win,Š¾
+Impressive Tai chi! HoweverA perhaps you can focus
+more on movements and not on throwing excessive Qi.\
+End:
+
+
+Label:utsuhoU0
+Face:lose,•‰
+Face:win,—]
+Your heart is pure and harmlessA but you
+need more guidance to the path of enlightenment.\
+End:
+
+
+Label:suwakoU0
+Face:lose,•‰
+Face:win,—]
+Your priestess is not giving a good enough exampleA
+you should try to correct her a little!\
+End:
+
+
+Label:suwakoU1
+Face:lose,•‰
+Face:win,—]
+We can share some stories laterA Lady Hijiri
+will be so happy to talk with you as well!\
+End:
+
+
+Label:MomijiU0
+Face:lose,•‰
+Face:win,Š¾
+WaitA what do you mean you can see me from the distance!?
+don't tell the others what I do when nobody is watching!\
+End:
+
+
+Label:clownpieceU0
+Face:lose,•‰
+Face:win,˜f
+PurificationA in a religious senseA is different from
+the purification your honorable friend is capable of.\
+End:
+
+
+Label:flandreU0
+Face:lose,•‰
+Face:win,Œˆ
+You may be younger than your demonic sisterA
+but that won't save you from being purified!\
+End:
+
+
+Label:orinU0
+Face:lose,•‰
+Face:win,—]
+For the last time! No! You can't take away those who are
+resting. They're resting very well there. Now go away!\
+End:
+
+
+Label:kaguyaU0
+Face:lose,•‰
+Face:win,Œˆ
+Let your suffering from your own Elixir
+be the punishment of your sins!\
+End:
+
+
+Label:mokouU0
+Face:lose,•‰
+Face:win,•
+Inmortality can be a curse in one's perspectiveA
+I can respect that idea.
+
+Face:win,“{
+HoweverA if you wanna make it a curse yourselfA
+that's your decision.\
+End:
+
+
+Label:mimaU0
+Face:lose,•‰
+Face:win,Š¾
+I don't particularly like rejecting to offer helpA
+but you strayed too far from the path of enlightenment.\
+End:
+
+
+Label:shouU0
+Face:lose,•‰
+Face:win,•
+You have my gratitude for the sparring session.\
+End:
+
+
+Label:shouU1
+Face:lose,•‰
+Face:win,Šğ
+Recognizing one's limits sure becomes
+easier with the help of a bake-danuki.\
+End:
+
+
+Label:murasaU0
+Face:lose,•‰
+Face:win,“{
+Do your own chores for onceA please!\
+End:
+
+
+Label:sekibankiU0
+Face:lose,•‰
+Face:win,Šğ
+If you ever change your mindA you're still
+welcome to join us at the temple at any time.\
+End:
+
+
+Label:common0
+Face:win,—]
+Meditation is a good way to start a dayA
+and a good way to finish it and reflect on your actions.\
+End:
+
+Label:common1
+Face:win,Šğ
+Another dayA another lesson learned,
+I think I can rest a little for now.\
+End:
+
+ó

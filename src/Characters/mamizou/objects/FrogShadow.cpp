@@ -8,8 +8,6 @@
 
 void FrogShadow::update()
 {
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->parentPlayerB->hitStop && this->parentPlayerB->frameState.actionId == SokuLib::ACTION_j2A)
 		return;
 	this->advanceFrame();

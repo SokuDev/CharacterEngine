@@ -38,6 +38,8 @@ public:
 	void load();
 	void unload();
 	void registerGR() const;
+	size_t getObjectSize() const;
+	size_t getCharacterSize() const;
 	SokuLib::v2::Player *build(SokuLib::PlayerInfo &p) const;
 
 	[[nodiscard]] const std::string &getInternalName() const;

@@ -1,0 +1,46 @@
+#スペカナンバー,スペカ名,"タイプ
+255 敵カード
+2 スペルカード
+1 スキルカード
+0 システムカード",消費,"カード説明テキスト
+デッキ構築画面でカードを選択すると出る説明文","出現ステージ
+数字のステージ以降から出現する
+0は初期所持
+1～6　EASY
+11～16　NORMAL
+21～26　HARD
+31～36　LUNA","レアリティ
+0　コモン
+1　アンコモン
+2　レア
+取得抽選で
+コモン60％
+アンコ30％
+レア10％",,,,,,,,sort
+100,"Entangling Roots",1,2,"Entangles the opponent's legs with roots. It can keep the opponent locked for a moment.",0,1,104,1,108,1,0,0,18,110
+101,"Reflowering of Gensokyo",1,0,"Grows flowers across the stage. The flowers will grow and finally fire powerful beams.",0,1,105,1,109,1,0,0,18,100
+102,"Static Spark",1,4,"Fires a short-ranged laser attack. The consumption is low\, so the attack can be held for a long time.",0,1,106,1,110,1,212,4,18,140
+103,"Rain Call",1,1,"Flies away while summoning rain on her wake. The rain however is dangerous to touch.",0,1,107,1,111,1,0,0,18,120
+104,"Parasol Ram",1,2,"Spins forward with her parasol. It requires recovery after use\, however it's a fast grazing attack\, so it need to be taken into account.",1,1,209,3,0,0,0,0,18,111
+105,"Roses are Red\, Violets are Blue",1,0,"Creates a flower patch that grows into different flower depending on the button pressed. They will scatter and attack the opponent after they finished growing.",1,1,207,3,0,0,0,0,18,101
+106,"Goldenrose",1,4,"Grows a golden rose. After some time\, they will scatter\, and they are extremely damaging.",1,1,205,3,0,0,0,0,18,141
+107,"Guardian Fairy",1,1,"Summons a guardian fairy. They do not attack the opponent\, however they are good protection against enemy danmaku.",1,1,203,2,0,0,0,0,18,121
+108,"Demonic Tendencies",1,2,"Pins down the enemy and fires point-blank laser at the enemy. The move is a kind  of throw\, so can't be blocked; the  enemy is at Yuuka's mercy.",1,1,211,2,0,0,0,0,18,112
+109,"Palm Tree",1,0,"Disappears from vision while dashing forward. After the opponent is reached\, she opens her palm and fires an energy blast from it.",1,1,208,2,0,0,0,0,18,102
+110,"Garden Frenzy",1,4,"Grants power to flowers currently on the area\, Hasting their growth to quickly reach blooming point.",1,1,200,3,0,0,0,0,18,142
+111,"Flower Cannon",1,1,"The B button places a floating flower. The C button unleashes a wave of short-ranged attack directed at the opponent.",1,1,213,2,0,0,0,0,18,122
+200,"Parasol \"Parasol Wave\"",2,2,"Fires an energy attack with her parasol. She's strong so the attack is bigger than the parasol actually is.",0,3,201,4,0,0,0,0,18,210
+201,"\"Dual Spark\"",2,5,"Summons a double which then fires a full power Master Spark together. If it's impossible to survive one\, there is no hope with two.",0,4,0,0,0,0,0,0,18,240
+203,"Flower Sign \"Sun Flower\"",2,3,"Throws a ring of bullet at the oppoennt. It looks like a giant sunflower\, but it really isn't.",1,2,204,4,0,0,0,0,18,221
+204,"Flower Sign \"Entangling Roots\"",2,1,"Entangles the opponent with roots. It's not a strong attack but if the opponent is caught it can hurt.",0,4,0,0,0,0,0,0,18,200
+205,"Demon Sign \"Vile Spark\"",2,4,"Fires down a huge laser attack. Due to the amount of power she has\, the attack has very high coverage despite being aimed downward.",1,3,0,0,0,0,0,0,18,235
+206,"\"Master Spark\"",2,3,"Fires her giant laser attack. Depending on how much energy is spent\, this can be a very powerful attack.",1,5,0,0,0,0,0,0,18,225
+207,"\"Garden of the Sun\"",2,5,"Grows flowers across the stage. Once they're done growing\, they fire extremely powerful beam each comparable to an attack of a strong youkai.",1,3,0,0,0,0,0,0,18,241
+208,"Flower Sign \"Flower On Your Hand\"",2,3,"Dashes to the opponent quickly\, disappearing from vision. As she reach the opponent she fires a huge energy blast from her hand. It's a fast\, counter attack.",0,2,0,0,0,0,0,0,18,223
+209,"Energy \"Power Dive Kick\"",2,2,"Executes a diving kick. She infused energy into the kick\, so it's quite potent.",0,3,210,4,0,0,0,0,18,212
+210,"Parasol \"Unlimited Parasol\"",2,3,"Spins forward with her parasol\, ramming the opponent while flying over the screen several times.",0,4,0,0,0,0,0,0,18,224
+211,"Parasol \"Parasol Flight\"",2,4,"Prepares the parasol and put it on standby. During this state\, whenever she grazes she spins with her parasol. It's not a danmaku and it's hard to dodge.",1,2,214,5,0,0,0,0,18,230
+212,"Flower Sign \"Yggdrasil\"",2,4,"Summons a giant tree that absorbs everything nearby. After it's done absorbing\, it fires a giant laser downward.",0,4,0,0,0,0,0,0,18,234
+213,"Flower Sign \"Flower Spark\"",2,2,"Summons a floating flower that will fire a beam after it's done growing. Although the flower is small\, the beam should not be underestimated.",0,2,206,5,0,0,0,0,18,211
+214,"Energy \"Photosynthesis Reaction\"",2,4,"Enteres Photosynthesis state in which she absorbs sunlight from surrounding. After the requirement has been met\, she lets loose a powerful shockwave.",0,5,0,0,0,0,0,0,18,231
+@
