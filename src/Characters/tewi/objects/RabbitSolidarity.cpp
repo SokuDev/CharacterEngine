@@ -93,20 +93,6 @@ void RabbitSolidarity::_hammerlessUpdate()
 		this->direction = this->parentPlayerB->direction;
 		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 100 * this->direction, this->gameData.opponent->position.y - 20, this->direction, 2, params);
 	}
-	/*
-	if (this->frameState.currentFrame == 200) { // T j.5A
-		params[2] = 8;
-		this->parentPlayerB->direction = -this->parentPlayerB->direction;
-		this->direction = this->parentPlayerB->direction;
-		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 150 * this->direction, this->gameData.opponent->position.y + 20, this->direction, 2, params);
-	}
-	if (this->frameState.currentFrame == 225) { // R j.5A
-		params[2] = 7;
-		this->parentPlayerB->direction = -this->parentPlayerB->direction;
-		this->direction = this->parentPlayerB->direction;
-		this->createObject(this->frameState.actionId, this->gameData.opponent->position.x - 100 * this->direction, this->gameData.opponent->position.y - 20, this->direction, 2, params);
-	}
-	*/
 	if (this->frameState.currentFrame == 200) { // T Dive Kick
 		params[2] = 9;
 		this->parentPlayerB->direction = -this->parentPlayerB->direction;

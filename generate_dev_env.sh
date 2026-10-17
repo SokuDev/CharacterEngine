@@ -38,11 +38,14 @@ export NO_ZIP=1
 ./generate_build.sh "$CMAKE_OUT" || exit
 rm -rf "$SOKU2_OUT" || exit
 cp -r "$CMAKE_OUT/Soku2_full" "$SOKU2_OUT" || exit
+rm -f "$SHADY_OUT/common" || exit
+ln -s "$(realpath $CMAKE_OUT/common_assets)" "$SHADY_OUT/common" || exit
 CONFIG="[Options]
 autoUpdate=0
 useLoadLock=0
 enableLua=1
-[Packages]"
+[Packages]
+common=1"
 for character in `ls src/Characters/`; do
 	setup_dev_character "$character"
 done

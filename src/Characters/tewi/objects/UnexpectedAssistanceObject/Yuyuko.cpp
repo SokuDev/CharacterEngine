@@ -8,13 +8,7 @@ void UnexpectedAssistance::Yuyuko::update()
 {
 	float params[3];
 
-	if (this->hitStop) {
-		this->hitStop--;
-		return;
-	}
-	if (this->parentPlayerB->timeStop)
-		return;
-	if (this->collisionType == 5) {
+	if (this->collisionType == COLLISION_TYPE_BULLET_ABSORBED) {
 		this->lifetime = 0;
 		return;
 	}

@@ -140,7 +140,7 @@ void Flandre::handleInputs()
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Flandre::VUnknown58()
+void Flandre::computerInputs()
 {
 	DWORD old;
 
@@ -148,17 +148,17 @@ void Flandre::VUnknown58()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown58_patches));
-	for (auto &patch : VUnknown58_patches)
+	appliedPatches.reserve(std::size(computerInputs_patches));
+	for (auto &patch : computerInputs_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Flandre::VUnknown58()");
-	SokuLib::v2::PlayerRemilia::VUnknown58();
-	puts("<- Flandre::VUnknown58()");
+	puts("-> Flandre::computerInputs()");
+	SokuLib::v2::PlayerRemilia::computerInputs();
+	puts("<- Flandre::computerInputs()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Flandre::VUnknown5C()
+void Flandre::updateStory()
 {
 	DWORD old;
 
@@ -166,17 +166,17 @@ void Flandre::VUnknown5C()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown5C_patches));
-	for (auto &patch : VUnknown5C_patches)
+	appliedPatches.reserve(std::size(updateStory_patches));
+	for (auto &patch : updateStory_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Flandre::VUnknown5C()");
-	SokuLib::v2::PlayerRemilia::VUnknown5C();
-	puts("<- Flandre::VUnknown5C()");
+	puts("-> Flandre::updateStory()");
+	SokuLib::v2::PlayerRemilia::updateStory();
+	puts("<- Flandre::updateStory()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-bool Flandre::VUnknown60(int a)
+bool Flandre::setCustomScenarioAction(int a)
 {
 	DWORD old;
 
@@ -184,12 +184,12 @@ bool Flandre::VUnknown60(int a)
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown60_patches));
-	for (auto &patch : VUnknown60_patches)
+	appliedPatches.reserve(std::size(setCustomScenarioAction_patches));
+	for (auto &patch : setCustomScenarioAction_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Flandre::VUnknown60()");
-	auto b = SokuLib::v2::PlayerRemilia::VUnknown60(a);
-	puts("<- Flandre::VUnknown60()");
+	puts("-> Flandre::setCustomScenarioAction()");
+	auto b = SokuLib::v2::PlayerRemilia::setCustomScenarioAction(a);
+	puts("<- Flandre::setCustomScenarioAction()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;

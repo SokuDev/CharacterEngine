@@ -125,16 +125,16 @@ public:
 		T::initialize();
 	}
 
-	bool VUnknown48() override
+	bool handleGroundMovement() override
 	{
-		log("VUnknown48()\n");
-		return T::VUnknown48();
+		log("handleGroundMovement()\n");
+		return T::handleGroundMovement();
 	}
 
-	bool VUnknown4C(int a) override
+	bool setScenarioAction(int a) override
 	{
-		log("VUnknown4C(%i)\n", a);
-		return T::VUnknown4C(a);
+		log("setScenarioAction(%i)\n", a);
+		return T::setScenarioAction(a);
 	}
 
 	void handleInputs() override
@@ -149,22 +149,22 @@ public:
 		T::checkAllMotionInputs();
 	}
 
-	void VUnknown58() override
+	void computerInputs() override
 	{
-		log("VUnknown58()\n");
-		T::VUnknown58();
+		log("computerInputs()\n");
+		T::computerInputs();
 	}
 
-	void VUnknown5C() override
+	void updateStory() override
 	{
-		log("VUnknown5C()\n");
-		T::VUnknown5C();
+		log("updateStory()\n");
+		T::updateStory();
 	}
 
-	bool VUnknown60(int a) override
+	bool setCustomScenarioAction(int a) override
 	{
-		log("VUnknown60(%i)\n", a);
-		return T::VUnknown60();
+		log("setCustomScenarioAction(%i)\n", a);
+		return T::setCustomScenarioAction();
 	}
 };
 

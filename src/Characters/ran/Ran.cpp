@@ -140,7 +140,7 @@ void Ran::handleInputs()
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Ran::VUnknown58()
+void Ran::computerInputs()
 {
 	DWORD old;
 
@@ -148,17 +148,17 @@ void Ran::VUnknown58()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown58_patches));
-	for (auto &patch : VUnknown58_patches)
+	appliedPatches.reserve(std::size(computerInputs_patches));
+	for (auto &patch : computerInputs_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Ran::VUnknown58()");
-	SokuLib::v2::PlayerSakuya::VUnknown58();
-	puts("<- Ran::VUnknown58()");
+	puts("-> Ran::computerInputs()");
+	SokuLib::v2::PlayerSakuya::computerInputs();
+	puts("<- Ran::computerInputs()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Ran::VUnknown5C()
+void Ran::updateStory()
 {
 	DWORD old;
 
@@ -166,17 +166,17 @@ void Ran::VUnknown5C()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown5C_patches));
-	for (auto &patch : VUnknown5C_patches)
+	appliedPatches.reserve(std::size(updateStory_patches));
+	for (auto &patch : updateStory_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Ran::VUnknown5C()");
-	SokuLib::v2::PlayerSakuya::VUnknown5C();
-	puts("<- Ran::VUnknown5C()");
+	puts("-> Ran::updateStory()");
+	SokuLib::v2::PlayerSakuya::updateStory();
+	puts("<- Ran::updateStory()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-bool Ran::VUnknown60(int a)
+bool Ran::setCustomScenarioAction(int a)
 {
 	DWORD old;
 
@@ -184,12 +184,12 @@ bool Ran::VUnknown60(int a)
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown60_patches));
-	for (auto &patch : VUnknown60_patches)
+	appliedPatches.reserve(std::size(setCustomScenarioAction_patches));
+	for (auto &patch : setCustomScenarioAction_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Ran::VUnknown60()");
-	auto b = SokuLib::v2::PlayerSakuya::VUnknown60(a);
-	puts("<- Ran::VUnknown60()");
+	puts("-> Ran::setCustomScenarioAction()");
+	auto b = SokuLib::v2::PlayerSakuya::setCustomScenarioAction(a);
+	puts("<- Ran::setCustomScenarioAction()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;

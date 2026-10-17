@@ -147,7 +147,7 @@ void Satori::handleInputs()
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Satori::VUnknown58()
+void Satori::computerInputs()
 {
 	DWORD old;
 
@@ -155,17 +155,17 @@ void Satori::VUnknown58()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown58_patches));
-	for (auto &patch : VUnknown58_patches)
+	appliedPatches.reserve(std::size(computerInputs_patches));
+	for (auto &patch : computerInputs_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Satori::VUnknown58()");
-	SokuLib::v2::PlayerYuyuko::VUnknown58();
-	puts("<- Satori::VUnknown58()");
+	puts("-> Satori::computerInputs()");
+	SokuLib::v2::PlayerYuyuko::computerInputs();
+	puts("<- Satori::computerInputs()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Satori::VUnknown5C()
+void Satori::updateStory()
 {
 	DWORD old;
 
@@ -173,17 +173,17 @@ void Satori::VUnknown5C()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown5C_patches));
-	for (auto &patch : VUnknown5C_patches)
+	appliedPatches.reserve(std::size(updateStory_patches));
+	for (auto &patch : updateStory_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Satori::VUnknown5C()");
-	SokuLib::v2::PlayerYuyuko::VUnknown5C();
-	puts("<- Satori::VUnknown5C()");
+	puts("-> Satori::updateStory()");
+	SokuLib::v2::PlayerYuyuko::updateStory();
+	puts("<- Satori::updateStory()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-bool Satori::VUnknown60(int a)
+bool Satori::setCustomScenarioAction(int a)
 {
 	DWORD old;
 
@@ -191,12 +191,12 @@ bool Satori::VUnknown60(int a)
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown60_patches));
-	for (auto &patch : VUnknown60_patches)
+	appliedPatches.reserve(std::size(setCustomScenarioAction_patches));
+	for (auto &patch : setCustomScenarioAction_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Satori::VUnknown60()");
-	auto b = SokuLib::v2::PlayerYuyuko::VUnknown60(a);
-	puts("<- Satori::VUnknown60()");
+	puts("-> Satori::setCustomScenarioAction()");
+	auto b = SokuLib::v2::PlayerYuyuko::setCustomScenarioAction(a);
+	puts("<- Satori::setCustomScenarioAction()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;

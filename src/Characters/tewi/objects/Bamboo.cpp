@@ -7,6 +7,10 @@
 
 void Bamboo::update()
 {
+	if (this->collisionType == COLLISION_TYPE_BULLET_ABSORBED) {
+		this->lifetime = 0;
+		return;
+	}
 	this->advanceFrame();
 	this->checkGrazed(0);
 	if (this->frameState.sequenceId == 0) {

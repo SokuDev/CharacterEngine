@@ -9,12 +9,6 @@
 
 void UnexpectedAssistance::Suika::update()
 {
-	if (this->hitStop) {
-		this->hitStop--;
-		return;
-	}
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->frameState.sequenceId == 1) {
 		if (!this->parentB || this->parentB->collisionType != COLLISION_TYPE_NONE) {
 			if (this->renderInfos.color.a < 5) {

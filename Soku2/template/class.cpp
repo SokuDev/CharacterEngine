@@ -140,7 +140,7 @@ void {{ClassName}}::handleInputs()
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void {{ClassName}}::VUnknown58()
+void {{ClassName}}::computerInputs()
 {
 	DWORD old;
 
@@ -148,17 +148,17 @@ void {{ClassName}}::VUnknown58()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown58_patches));
-	for (auto &patch : VUnknown58_patches)
+	appliedPatches.reserve(std::size(computerInputs_patches));
+	for (auto &patch : computerInputs_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> {{ClassName}}::VUnknown58()");
-	SokuLib::v2::Player{{BaseName}}::VUnknown58();
-	puts("<- {{ClassName}}::VUnknown58()");
+	puts("-> {{ClassName}}::computerInputs()");
+	SokuLib::v2::Player{{BaseName}}::computerInputs();
+	puts("<- {{ClassName}}::computerInputs()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void {{ClassName}}::VUnknown5C()
+void {{ClassName}}::updateStory()
 {
 	DWORD old;
 
@@ -166,17 +166,17 @@ void {{ClassName}}::VUnknown5C()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown5C_patches));
-	for (auto &patch : VUnknown5C_patches)
+	appliedPatches.reserve(std::size(updateStory_patches));
+	for (auto &patch : updateStory_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> {{ClassName}}::VUnknown5C()");
-	SokuLib::v2::Player{{BaseName}}::VUnknown5C();
-	puts("<- {{ClassName}}::VUnknown5C()");
+	puts("-> {{ClassName}}::updateStory()");
+	SokuLib::v2::Player{{BaseName}}::updateStory();
+	puts("<- {{ClassName}}::updateStory()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-bool {{ClassName}}::VUnknown60(int a)
+bool {{ClassName}}::setCustomScenarioAction(int a)
 {
 	DWORD old;
 
@@ -184,12 +184,12 @@ bool {{ClassName}}::VUnknown60(int a)
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown60_patches));
-	for (auto &patch : VUnknown60_patches)
+	appliedPatches.reserve(std::size(setCustomScenarioAction_patches));
+	for (auto &patch : setCustomScenarioAction_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> {{ClassName}}::VUnknown60()");
-	auto b = SokuLib::v2::Player{{BaseName}}::VUnknown60(a);
-	puts("<- {{ClassName}}::VUnknown60()");
+	puts("-> {{ClassName}}::setCustomScenarioAction()");
+	auto b = SokuLib::v2::Player{{BaseName}}::setCustomScenarioAction(a);
+	puts("<- {{ClassName}}::setCustomScenarioAction()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;

@@ -5,17 +5,23 @@
 #include <cmath>
 #include "AnglableObject.hpp"
 
+#define grazeResist(t) *((unsigned char *)&t->data[0])
+#define density(t) *((unsigned char *)&t->data[1])
+#define crystalsSpawn(t) (*((std::pair<char, char> *)&t->data[2]))
+
 AnglableObject::AnglableObject(std::pair<char, char> crystalsSpawn, unsigned char grazeResist, unsigned char density)
 {
-	this->crystalsSpawn = crystalsSpawn;
-	this->grazeResist = grazeResist;
-	this->density = density;
+	crystalsSpawn(this) = crystalsSpawn;
+	grazeResist(this) = grazeResist;
+	density(this) = density;
 }
 
 void AnglableObject::update()
 {
-	if (this->parentPlayerB->timeStop)
+	if (this->collisionType == COLLISION_TYPE_BULLET_ABSORBED) {
+		this->lifetime = 0;
 		return;
+	}
 	this->position += this->speed;
 	this->advanceFrame();
 	if (this->frameState.sequenceId == 0) {
@@ -23,15 +29,15 @@ void AnglableObject::update()
 			this->lifetime = 0;
 			return;
 		}
-		if (this->checkTurnIntoCrystals(false, this->crystalsSpawn.first, this->crystalsSpawn.second)) {
+		if (this->checkTurnIntoCrystals(false, crystalsSpawn(this).first, crystalsSpawn(this).second)) {
 			this->lifetime = 0;
 			return;
 		}
-		if (this->checkGrazed(this->grazeResist)) {
+		if (this->checkGrazed(grazeResist(this))) {
 			this->nextSequence();
 			return;
 		}
-		if (this->checkProjectileHit(this->density)) {
+		if (this->checkProjectileHit(density(this))) {
 			this->nextSequence();
 			return;
 		}

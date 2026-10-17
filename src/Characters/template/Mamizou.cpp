@@ -1245,15 +1245,15 @@ void Mamizou::handleInputs()
 		this->_processInputsAirborne();
 }
 
-void Mamizou::VUnknown58()
+void Mamizou::computerInputs()
 {
 }
 
-void Mamizou::VUnknown5C()
+void Mamizou::updateStory()
 {
 }
 
-bool Mamizou::VUnknown60(int a)
+bool Mamizou::setCustomScenarioAction(int a)
 {
 	return false;
 }

@@ -140,7 +140,7 @@ void Murasa::handleInputs()
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Murasa::VUnknown58()
+void Murasa::computerInputs()
 {
 	DWORD old;
 
@@ -148,17 +148,17 @@ void Murasa::VUnknown58()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown58_patches));
-	for (auto &patch : VUnknown58_patches)
+	appliedPatches.reserve(std::size(computerInputs_patches));
+	for (auto &patch : computerInputs_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Murasa::VUnknown58()");
-	SokuLib::v2::PlayerSuika::VUnknown58();
-	puts("<- Murasa::VUnknown58()");
+	puts("-> Murasa::computerInputs()");
+	SokuLib::v2::PlayerSuika::computerInputs();
+	puts("<- Murasa::computerInputs()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Murasa::VUnknown5C()
+void Murasa::updateStory()
 {
 	DWORD old;
 
@@ -166,17 +166,17 @@ void Murasa::VUnknown5C()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown5C_patches));
-	for (auto &patch : VUnknown5C_patches)
+	appliedPatches.reserve(std::size(updateStory_patches));
+	for (auto &patch : updateStory_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Murasa::VUnknown5C()");
-	SokuLib::v2::PlayerSuika::VUnknown5C();
-	puts("<- Murasa::VUnknown5C()");
+	puts("-> Murasa::updateStory()");
+	SokuLib::v2::PlayerSuika::updateStory();
+	puts("<- Murasa::updateStory()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-bool Murasa::VUnknown60(int a)
+bool Murasa::setCustomScenarioAction(int a)
 {
 	DWORD old;
 
@@ -184,12 +184,12 @@ bool Murasa::VUnknown60(int a)
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown60_patches));
-	for (auto &patch : VUnknown60_patches)
+	appliedPatches.reserve(std::size(setCustomScenarioAction_patches));
+	for (auto &patch : setCustomScenarioAction_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Murasa::VUnknown60()");
-	auto b = SokuLib::v2::PlayerSuika::VUnknown60(a);
-	puts("<- Murasa::VUnknown60()");
+	puts("-> Murasa::setCustomScenarioAction()");
+	auto b = SokuLib::v2::PlayerSuika::setCustomScenarioAction(a);
+	puts("<- Murasa::setCustomScenarioAction()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;

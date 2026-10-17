@@ -8,12 +8,6 @@ void UnexpectedAssistance::Remilia::update()
 {
 	float params[3];
 
-	if (this->hitStop) {
-		this->hitStop--;
-		return;
-	}
-	if (this->parentPlayerB->timeStop)
-		return;
 	switch(this->frameState.sequenceId) {
 	case 0:
 		break;

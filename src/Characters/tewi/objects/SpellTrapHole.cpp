@@ -160,7 +160,7 @@ void SpellTrapHole::update()
 			if (f > HOLE_FADE_IN_OFFSET)
 				SokuLib::v2::groundHeight[x] = HOLE_DEPTH * (f - HOLE_FADE_IN_OFFSET) / -(float) (HOLE_FADE_IN - HOLE_FADE_IN_OFFSET);
 		}
-	} else if (this->collisionType == COLLISION_TYPE_HIT || this->collisionType == COLLISION_TYPE_BLOCKED) {
+	} else if (this->collisionType == COLLISION_TYPE_HIT || this->collisionType == COLLISION_TYPE_ARMORED || this->collisionType == COLLISION_TYPE_BLOCKED) {
 		if (this->parentPlayerB->timeStop)
 			return;
 		this->rabbitShootTimer++;

@@ -22,7 +22,7 @@ fi
 
 if ! type jq; then
 	function jq() {
-		grep "$(echo $1 | cut -d . -f 2-)" | cut -f 2 -d : | sed -r 's/^\s*([^,\s]*)\s*,?\s*$/\1/g'
+		grep "$(echo $2 | cut -d . -f 2-)" | cut -f 2 -d : | sed -r 's/^\s*([^,\s]*)\s*,?\s*$/\1/g'
 	}
 fi
 
@@ -33,7 +33,7 @@ generate_character() {
 	echo "Checking $1"
 	OUT="$OUTPUT/$1"
 	IN="src/Characters/$1"
-	if [ $(cat "$IN/character.json" | jq .enabled) '==' false ]; then
+	if [ $(cat "$IN/character.json" | jq -r .enabled) '==' false ]; then
 		echo "Disabled"
 	else
 		DLL="$(cat "$IN/character.json" | jq -r .character_dll)"

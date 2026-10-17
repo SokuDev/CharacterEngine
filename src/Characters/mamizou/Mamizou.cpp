@@ -468,8 +468,8 @@ void Mamizou::_updateOpponentDebuffed()
 			break;
 		}
 		if (op->frameState.currentFrame == 0) {
-			op->speed.x = -op->unknown1A4;
-			op->speed.y = op->unknown1A8;
+			op->speed.x = -op->hitLaunchSpeed.x;
+			op->speed.y = op->hitLaunchSpeed.y;
 		}
 		if (op->advanceFrame())
 			op->setAction(op->frameState.actionId - 1);
@@ -2661,12 +2661,11 @@ bool Mamizou::setAction(short action)
 				this->frameState.actionId >= SokuLib::ACTION_RIGHTBLOCK_HIGH_SMALL_BLOCKSTUN
 			) && this->_transformKind == KIND_STACK)
 				this->_transformStacks--;
-			this->_transformPlayer->unknown1A4 = this->unknown1A4;
-			this->_transformPlayer->unknown1A8 = this->unknown1A8;
+			this->_transformPlayer->hitLaunchSpeed = this->hitLaunchSpeed;
 
 			bool b = this->_transformPlayer->setAction(action);
 
-			return SokuLib::v2::Player::setAction(action) && b;
+			return Player::setAction(action) && b;
 		}
 		this->_transformPlayer->setAction(action);
 		this->_unTransform();
@@ -2773,7 +2772,6 @@ void Mamizou::initializeAction()
 			this->speed.y = 3;
 		if (this->speed.y < -3)
 			this->speed.y = -3;
-		this->gravity.y = FALLING_GRAVITY;
 		break;
 	case SokuLib::ACTION_5B:
 	case SokuLib::ACTION_5AAAAA:
@@ -4202,34 +4200,23 @@ void Mamizou::handleInputs()
 		this->_processInputsAirborne();
 }
 
-void Mamizou::VUnknown58()
+void Mamizou::computerInputs()
 {
 	if (this->_transformed) {
 		this->_preTransformCall();
-		this->_transformPlayer->VUnknown58();
+		this->_transformPlayer->computerInputs();
 		this->_postTransformCall();
 		return;
 	}
+	// TODO:
 }
 
-void Mamizou::VUnknown5C()
+void Mamizou::updateStory()
 {
-	if (this->_transformed) {
-		this->_preTransformCall();
-		this->_transformPlayer->VUnknown5C();
-		this->_postTransformCall();
-		return;
-	}
 }
 
-bool Mamizou::VUnknown60(int a)
+bool Mamizou::setCustomScenarioAction(int a)
 {
-	if (this->_transformed) {
-		this->_preTransformCall();
-		bool b = this->_transformPlayer->VUnknown60(a);
-		this->_postTransformCall();
-		return b;
-	}
 	return false;
 }
 
@@ -4676,6 +4663,7 @@ void Mamizou::initialize()
 	Player::initialize();
 	if (!this->_transformPlayer)
 		return;
+	this->_opponentSkillsOffset.fill(0);
 	this->_back = (*this->gameData.patternMap)[5];
 	this->_transformPlayer->gameData.opponent = this->gameData.opponent;
 	this->_transformPlayer->initialize();
@@ -5008,26 +4996,15 @@ void Mamizou::_addDebuffGui()
 	}
 }
 
-bool Mamizou::VUnknown48()
+bool Mamizou::handleGroundMovement()
 {
 	if (this->_transformed) {
 		this->_preTransformCall();
-		bool b = this->_transformPlayer->VUnknown48();
+		bool b = this->_transformPlayer->handleGroundMovement();
 		this->_postTransformCall();
 		return b;
 	} else
-		return Player::VUnknown48();
-}
-
-bool Mamizou::VUnknown4C(int a)
-{
-	if (this->_transformed) {
-		this->_preTransformCall();
-		bool b = this->_transformPlayer->VUnknown4C(a);
-		this->_postTransformCall();
-		return b;
-	} else
-		return Player::VUnknown4C(a);
+		return Player::handleGroundMovement();
 }
 
 void Mamizou::_fillHand()
@@ -5185,6 +5162,8 @@ void Mamizou::_preTransformCall()
 
 void Mamizou::_postTransformCall()
 {
+	unsigned act = this->_transformPlayer->frameState.actionId;
+
 	if (this->_transformKind == KIND_SPELL_TIMER) {
 		if (this->_transformTimer != 0)
 			this->frameState.actionId = this->_transformPlayer->frameState.actionId;
@@ -5274,21 +5253,17 @@ void Mamizou::_postTransformCall()
 			this->handInfo.hand.clear();
 			this->handInfo.cardCount = 0;
 		}
-	} else if (this->_transformKind == KIND_DEBUFF_TIMER || (
-		this->_transformPlayer->frameState.actionId != this->frameState.actionId &&
-		(this->_transformPlayer->frameState.actionId < SokuLib::ACTION_USING_SC_ID_200 || (
-			this->_transformPlayer->frameState.actionId + 50 != this->frameState.actionId &&
-			this->_transformPlayer->frameState.actionId != this->frameState.actionId + 50
-		))
-	)) {
-		auto act = this->_transformPlayer->frameState.actionId;
-
-		this->_unTransform();
-		if (
-			act < SokuLib::ACTION_5A &&
-			this->gameData.patternMap->find(act) != this->gameData.patternMap->end()
-		)
-			this->setAction(act);
+	} else if (this->_transformKind == KIND_DEBUFF_TIMER) {
+		this->_unTransformAnReset();
+	} else if (act != this->frameState.actionId) {
+		if (SokuLib::ACTION_USING_SC_ID_200 <= act && act < SokuLib::ACTION_SKILL_CARD) {
+			if (act + 50 != this->frameState.actionId && act != this->frameState.actionId + 50)
+				this->_unTransformAnReset();
+		} else if (SokuLib::ACTION_DEFAULT_SKILL1_B <= act && act < SokuLib::ACTION_USING_SC_ID_200) {
+			if (act / 5 != this->frameState.actionId / 5)
+				this->_unTransformAnReset();
+		} else if (act < SokuLib::ACTION_DEFAULT_SKILL1_B)
+			this->_unTransformAnReset();
 	}
 
 	this->attackPower = this->_transformPlayer->attackPower;
@@ -5565,6 +5540,20 @@ void Mamizou::_unTransform()
 		this->createObject(802, x, y, SokuLib::rand(100) < 50 ? -1 : 1, 1, params);
 	}
 	this->playSFX(0);
+}
+
+void Mamizou::_unTransformAnReset()
+{
+	auto act = this->_transformPlayer->frameState.actionId;
+
+	this->_unTransform();
+	if (
+		act < SokuLib::ACTION_5A &&
+		this->gameData.patternMap->find(act) != this->gameData.patternMap->end()
+	)
+		this->setAction(act);
+	else
+		this->setAction(SokuLib::ACTION_IDLE);
 }
 
 bool Mamizou::isTransformed() const

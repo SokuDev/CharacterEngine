@@ -140,7 +140,7 @@ void Mima::handleInputs()
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Mima::VUnknown58()
+void Mima::computerInputs()
 {
 	DWORD old;
 
@@ -148,17 +148,17 @@ void Mima::VUnknown58()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown58_patches));
-	for (auto &patch : VUnknown58_patches)
+	appliedPatches.reserve(std::size(computerInputs_patches));
+	for (auto &patch : computerInputs_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Mima::VUnknown58()");
-	SokuLib::v2::PlayerIku::VUnknown58();
-	puts("<- Mima::VUnknown58()");
+	puts("-> Mima::computerInputs()");
+	SokuLib::v2::PlayerIku::computerInputs();
+	puts("<- Mima::computerInputs()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Mima::VUnknown5C()
+void Mima::updateStory()
 {
 	DWORD old;
 
@@ -166,17 +166,17 @@ void Mima::VUnknown5C()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown5C_patches));
-	for (auto &patch : VUnknown5C_patches)
+	appliedPatches.reserve(std::size(updateStory_patches));
+	for (auto &patch : updateStory_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Mima::VUnknown5C()");
-	SokuLib::v2::PlayerIku::VUnknown5C();
-	puts("<- Mima::VUnknown5C()");
+	puts("-> Mima::updateStory()");
+	SokuLib::v2::PlayerIku::updateStory();
+	puts("<- Mima::updateStory()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-bool Mima::VUnknown60(int a)
+bool Mima::setCustomScenarioAction(int a)
 {
 	DWORD old;
 
@@ -184,12 +184,12 @@ bool Mima::VUnknown60(int a)
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown60_patches));
-	for (auto &patch : VUnknown60_patches)
+	appliedPatches.reserve(std::size(setCustomScenarioAction_patches));
+	for (auto &patch : setCustomScenarioAction_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Mima::VUnknown60()");
-	auto b = SokuLib::v2::PlayerIku::VUnknown60(a);
-	puts("<- Mima::VUnknown60()");
+	puts("-> Mima::setCustomScenarioAction()");
+	auto b = SokuLib::v2::PlayerIku::setCustomScenarioAction(a);
+	puts("<- Mima::setCustomScenarioAction()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;

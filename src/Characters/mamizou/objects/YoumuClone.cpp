@@ -20,7 +20,7 @@ void YoumuClone::update()
 	this->renderInfos.shaderType = 1;
 	this->refreshSprite();
 
-	if (!y->youmuCloneTimeLeft) {
+	if (y->cloneTimer == 0) {
 		this->renderInfos.color.a = 0x00;
 		this->collisionLimit = 0;
 	} else if (!m->isTransformed() || !current.transformed) {

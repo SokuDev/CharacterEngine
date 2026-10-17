@@ -6,12 +6,6 @@
 
 void UnexpectedAssistance::Yukari::update()
 {
-	if (this->hitStop) {
-		this->hitStop--;
-		return;
-	}
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->frameState.sequenceId == 0) {
 		float f[1] = {1.f + (this->speed.x != 0)};
 
@@ -26,7 +20,7 @@ void UnexpectedAssistance::Yukari::update()
 				this->position.y = this->gameData.opponent->position.y + 100;
 
 			unsigned char options = 1;
-			unsigned time = (this->position.y - this->gameData.opponent->position.y - 100) / -(float)this->speed.y;
+			unsigned time = (this->position.y - this->gameData.opponent->position.y - 100) / -this->speed.y;
 			unsigned travel = time * -this->speed.y;
 
 			this->parentPlayerB->playSFX(29);

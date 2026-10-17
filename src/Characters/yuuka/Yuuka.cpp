@@ -140,7 +140,7 @@ void Yuuka::handleInputs()
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Yuuka::VUnknown58()
+void Yuuka::computerInputs()
 {
 	DWORD old;
 
@@ -148,17 +148,17 @@ void Yuuka::VUnknown58()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown58_patches));
-	for (auto &patch : VUnknown58_patches)
+	appliedPatches.reserve(std::size(computerInputs_patches));
+	for (auto &patch : computerInputs_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Yuuka::VUnknown58()");
-	SokuLib::v2::PlayerUtsuho::VUnknown58();
-	puts("<- Yuuka::VUnknown58()");
+	puts("-> Yuuka::computerInputs()");
+	SokuLib::v2::PlayerUtsuho::computerInputs();
+	puts("<- Yuuka::computerInputs()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Yuuka::VUnknown5C()
+void Yuuka::updateStory()
 {
 	DWORD old;
 
@@ -166,17 +166,17 @@ void Yuuka::VUnknown5C()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown5C_patches));
-	for (auto &patch : VUnknown5C_patches)
+	appliedPatches.reserve(std::size(updateStory_patches));
+	for (auto &patch : updateStory_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Yuuka::VUnknown5C()");
-	SokuLib::v2::PlayerUtsuho::VUnknown5C();
-	puts("<- Yuuka::VUnknown5C()");
+	puts("-> Yuuka::updateStory()");
+	SokuLib::v2::PlayerUtsuho::updateStory();
+	puts("<- Yuuka::updateStory()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-bool Yuuka::VUnknown60(int a)
+bool Yuuka::setCustomScenarioAction(int a)
 {
 	DWORD old;
 
@@ -184,12 +184,12 @@ bool Yuuka::VUnknown60(int a)
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown60_patches));
-	for (auto &patch : VUnknown60_patches)
+	appliedPatches.reserve(std::size(setCustomScenarioAction_patches));
+	for (auto &patch : setCustomScenarioAction_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Yuuka::VUnknown60()");
-	auto b = SokuLib::v2::PlayerUtsuho::VUnknown60(a);
-	puts("<- Yuuka::VUnknown60()");
+	puts("-> Yuuka::setCustomScenarioAction()");
+	auto b = SokuLib::v2::PlayerUtsuho::setCustomScenarioAction(a);
+	puts("<- Yuuka::setCustomScenarioAction()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;

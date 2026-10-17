@@ -183,6 +183,7 @@ private:
 	void _postUntransformCall();
 	void _transform(bool spawnEffects = true, bool resetTransformee = true);
 	void _unTransform();
+	void _unTransformAnReset();
 
 	void _addRainbowGui();
 	void _addDebuffGui();
@@ -243,9 +244,9 @@ public:
 	void update() override;
 	void initializeAction() override;
 	void handleInputs() override;
-	void VUnknown58() override;
-	void VUnknown5C() override;
-	bool VUnknown60(int a) override;
+	void computerInputs() override;
+	void updateStory() override;
+	bool setCustomScenarioAction(int a) override;
 	bool setAction(short action) override;
 
 	void render2() override;
@@ -262,8 +263,7 @@ public:
 	void applyTransform() override;
 	void updatePhysics() override;
 	void initialize() override;
-	bool VUnknown48() override;
-	bool VUnknown4C(int a) override;
+	bool handleGroundMovement() override;
 
 	static void hook();
 	static void unhook();

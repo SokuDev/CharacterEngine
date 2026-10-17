@@ -44262,7 +44262,6 @@
 				<fflag23AFTER_IMAGE/>
 				<isbullet/>
 				<fflag24LOOP_ANIMATION/>
-				<fflag25ATTACK_OBJECT/>
 			</traits>
 			<hit>
 				<box left="-68" up="-57" right="27" down="-9"/>
@@ -44533,7 +44532,6 @@
 				<fflag23AFTER_IMAGE/>
 				<isbullet/>
 				<fflag24LOOP_ANIMATION/>
-				<fflag25ATTACK_OBJECT/>
 			</traits>
 			<attack>
 				<box left="-59" up="-50" right="22" down="-13"/>
@@ -44567,7 +44565,6 @@
 				<fflag23AFTER_IMAGE/>
 				<isbullet/>
 				<fflag24LOOP_ANIMATION/>
-				<fflag25ATTACK_OBJECT/>
 			</traits>
 			<hit>
 				<box left="-68" up="-57" right="27" down="-9"/>
@@ -44600,7 +44597,6 @@
 				<fflag23AFTER_IMAGE/>
 				<isbullet/>
 				<fflag24LOOP_ANIMATION/>
-				<fflag25ATTACK_OBJECT/>
 			</traits>
 			<hit>
 				<box left="-68" up="-57" right="27" down="-9"/>
@@ -44633,7 +44629,6 @@
 				<fflag23AFTER_IMAGE/>
 				<isbullet/>
 				<fflag24LOOP_ANIMATION/>
-				<fflag25ATTACK_OBJECT/>
 			</traits>
 			<hit>
 				<box left="-68" up="-57" right="27" down="-9"/>
@@ -45148,7 +45143,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 	</move>
-	<move id="807" index="0" loop="1" movelock="0" actionlock="0">
+	<move id="807" index="0" loop="1" movelock="30" actionlock="0">
 		<frame image="objectAa001.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="10" texheight="11" xoffset="12" yoffset="14" duration="60" rendergroup="0">
 			<traits damage="500" proration="800" chipdamage="400" spiritdamage="0" untech="120" power="100" limit="100" onhitplayerstun="0" onhitenemystun="10" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="100" onblockcardgain="0" onairhitsetsequence="71" ongroundhitsetsequence="71" xspeed="1200" yspeed="1200" onhitsfx="2" onhiteffect="2" attacklevel="2">
 				<liftmodifier/>
@@ -47429,7 +47424,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 	</move>
-	<move id="819" index="0" loop="1" movelock="0" actionlock="0">
+	<move id="819" index="0" loop="1" movelock="20" actionlock="0">
 		<frame image="yukari/hitSpin001.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="0" texheight="0" xoffset="180" yoffset="133" duration="2" rendergroup="0">
 			<traits damage="2000" proration="800" chipdamage="500" spiritdamage="300" untech="60" power="100" limit="80" onhitplayerstun="0" onhitenemystun="0" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="0" onblockcardgain="0" onairhitsetsequence="74" ongroundhitsetsequence="74" xspeed="2450" yspeed="1250" onhitsfx="4" onhiteffect="4" attacklevel="3">
 				<smashmodifier/>
@@ -48660,7 +48655,7 @@
 			<effect xpivot="0" ypivot="0" xpositionextra="0" ypositionextra="0" xposition="0" yposition="0" unknown02="0" xspeed="0" yspeed="0"/>
 		</frame>
 	</move>
-	<move id="824" index="0" loop="1" movelock="0" actionlock="0">
+	<move id="824" index="0" loop="1" movelock="20" actionlock="0">
 		<frame image="tenshi/bulletGa000.bmp" index="0" unknown="0" xtexoffset="0" ytexoffset="0" texwidth="122" texheight="30" xoffset="121" yoffset="29" duration="2" rendergroup="0">
 			<traits damage="200" proration="970" chipdamage="50" spiritdamage="25" untech="45" power="100" limit="5" onhitplayerstun="0" onhitenemystun="5" onblockplayerstun="0" onblockenemystun="0" onhitcardgain="20" onblockcardgain="20" onairhitsetsequence="71" ongroundhitsetsequence="0" xspeed="300" yspeed="1250" onhitsfx="8" onhiteffect="7" attacklevel="2">
 				<aflag01STAGGER/>
@@ -52221,6 +52216,7 @@
 				<highrightblock/>
 				<lowrightblock/>
 				<airblockable/>
+				<unblockable/>
 				<inducecounterhit/>
 				<skillattacktype/>
 				<objectattacktype/>

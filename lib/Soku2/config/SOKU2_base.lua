@@ -6,7 +6,7 @@ set_language("en")
 -- it is not recommended to change anything below this line
 -- =========================================
 
-set_nextsoku_path("./NextSoku.dll")
+set_nextsoku_path("./NextSoku.dat")
 set_characters_dir("./characters")
 set_debug_mode(false)
 
@@ -36,7 +36,7 @@ Random   = 20
 Namazu   = 21
 
 -- SOKU2 version
-set_version("2.30h")
+set_version("2.30i")
 -- add custom characters
 --{{EXTRA_CHARACTERS}}
 

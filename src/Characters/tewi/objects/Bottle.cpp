@@ -12,11 +12,12 @@ void Bottle::update()
 {
 	this->advanceFrame();
 	if (this->frameState.sequenceId == 0) {
-		if ((this->collisionType != COLLISION_TYPE_NONE || (
+		if ((
+			this->collisionType != COLLISION_TYPE_NONE ||
 			this->position.y <= this->getGroundHeight() ||
 			this->position.x <= 40 ||
 			this->position.x >= 1240
-		)) && this->speed.x != 0 && this->frameState.currentFrame > 5) {
+		) && this->speed.x != 0 && this->frameState.currentFrame > 5) {
 			if (this->customData[4] != 0) {
 				float params[3] = {this->customData[0], 0, 3};
 
@@ -44,12 +45,16 @@ void Bottle::update()
 			this->renderInfos.color.a = 0;
 		else
 			this->renderInfos.color.a -= 35;
-		if (this->collisionType == COLLISION_TYPE_HIT || this->collisionType == COLLISION_TYPE_BLOCKED) {
+		if (
+			this->collisionType == COLLISION_TYPE_HIT ||
+			this->collisionType == COLLISION_TYPE_ARMORED ||
+			this->collisionType == COLLISION_TYPE_BLOCKED
+		) {
 			this->position = this->gameData.opponent->position;
 			this->position.y += 25;
 		}
 		if (this->customData[4] == 0) {
-			if (this->collisionType == COLLISION_TYPE_HIT)
+			if (this->collisionType == COLLISION_TYPE_HIT || this->collisionType == COLLISION_TYPE_ARMORED)
 				distance = 0;
 			else if (this->collisionType == COLLISION_TYPE_BLOCKED)
 				distance = 50;
@@ -59,7 +64,7 @@ void Bottle::update()
 				distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
 			}
 		} else {
-			if (this->collisionType == COLLISION_TYPE_HIT)
+			if (this->collisionType == COLLISION_TYPE_HIT || this->collisionType == COLLISION_TYPE_ARMORED)
 				distance = 0;
 			else if (this->collisionType == COLLISION_TYPE_BLOCKED)
 				distance = 50;

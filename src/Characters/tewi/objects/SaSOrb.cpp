@@ -6,7 +6,7 @@
 #include "../Tewi.hpp"
 #include "SaSOrb.hpp"
 
-#define nbCollision gpShort[0]
+#define collisionTimer gpShort[0]
 #define rotationSpeed gpFloat[0]
 
 void SaSOrb::_checkCollisionWithOwner()
@@ -77,12 +77,14 @@ void SaSOrb::update()
 		return;
 	}
 	this->_checkCollisionWithOwner();
-	if (this->collisionType) {
-		if (this->nbCollision == 0)
-			this->nbCollision = 4;
+	if (this->collisionType == COLLISION_TYPE_BULLET_ABSORBED) {
+		this->collisionType = COLLISION_TYPE_NONE;
+	} else if (this->collisionType) {
+		if (this->collisionTimer == 0)
+			this->collisionTimer = 4;
 		else
-			this->nbCollision--;
-		if (this->nbCollision == 0)
+			this->collisionTimer--;
+		if (this->collisionTimer == 0)
 			this->collisionType = COLLISION_TYPE_NONE;
 	}
 	if (this->frameState.currentFrame % 4 == 0)

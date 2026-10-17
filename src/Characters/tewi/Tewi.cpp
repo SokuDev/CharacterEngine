@@ -1978,6 +1978,7 @@ void Tewi::update()
 			this->_hammerPickTimer = 20;
 			this->_hammer = this->createObject(800, (this->direction * 40) + this->position.x, this->position.y + 150, this->direction, 1, hammerParams);
 			this->_hammer->setSequence(13);
+			this->_hammer->hp = 10000;
 			this->_hammer->skillIndex = 3;
 			this->_hammer->gravity.y = 0;
 			if (this->position.y <= 100)
@@ -2310,6 +2311,7 @@ void Tewi::update()
 			this->_hammer->skillIndex = 7;
 			this->_hammer->collisionLimit = 1;
 			this->_hammer->collisionType = COLLISION_TYPE_NONE;
+			this->_hammer->hp = 1000 + 250 * this->effectiveSkillLevel[7];
 			this->_hammer->setSequence(11);
 			this->consumeSpirit(200 / (this->skillCancelCount + 1), 120);
 			this->addCardMeter(70);
@@ -4884,15 +4886,16 @@ void Tewi::handleInputs()
 		this->_processInputsAirborne();
 }
 
-void Tewi::VUnknown58()
+void Tewi::computerInputs()
+{
+	// TODO:
+}
+
+void Tewi::updateStory()
 {
 }
 
-void Tewi::VUnknown5C()
-{
-}
-
-bool Tewi::VUnknown60(int a)
+bool Tewi::setCustomScenarioAction(int a)
 {
 	return false;
 }

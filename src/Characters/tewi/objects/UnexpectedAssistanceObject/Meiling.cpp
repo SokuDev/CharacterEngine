@@ -6,14 +6,6 @@
 
 void UnexpectedAssistance::Meiling::update()
 {
-	auto FUN_0048c750 = (void (__thiscall *)(void *, int))0x48c750;
-
-	if (this->hitStop) {
-		this->hitStop--;
-		return;
-	}
-	if (this->parentPlayerB->timeStop)
-		return;
 	switch (this->frameState.sequenceId) {
 	case 0:
 		this->customData[0] += 1.0;
@@ -24,7 +16,7 @@ void UnexpectedAssistance::Meiling::update()
 			this->layer = 1;
 		else
 			this->layer = -1;
-		FUN_0048c750(this, this->customData[0] + this->frameState.currentFrame);
+		this->updateRainbowColor(this->customData[0] + this->frameState.currentFrame);
 		if (this->gpShort[0] == 0) {
 			this->renderInfos.scale.x += 0.05;
 			if (this->renderInfos.scale.x >= 1.0)

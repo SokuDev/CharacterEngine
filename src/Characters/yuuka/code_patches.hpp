@@ -16,9 +16,9 @@ extern std::vector<Patch *, PatchListAllocator> update_patches;
 extern std::vector<Patch *, PatchListAllocator> initializeAction_patches;
 extern std::vector<Patch *, PatchListAllocator> initialize_patches;
 extern std::vector<Patch *, PatchListAllocator> handleInputs_patches;
-extern std::vector<Patch *, PatchListAllocator> VUnknown58_patches;
-extern std::vector<Patch *, PatchListAllocator> VUnknown5C_patches;
-extern std::vector<Patch *, PatchListAllocator> VUnknown60_patches;
+extern std::vector<Patch *, PatchListAllocator> computerInputs_patches;
+extern std::vector<Patch *, PatchListAllocator> updateStory_patches;
+extern std::vector<Patch *, PatchListAllocator> setCustomScenarioAction_patches;
 
 void initPatches();
 void clearPatches();

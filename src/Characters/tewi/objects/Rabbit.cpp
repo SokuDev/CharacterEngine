@@ -7,6 +7,10 @@
 
 void Rabbit::update()
 {
+	if (this->collisionType == COLLISION_TYPE_BULLET_ABSORBED) {
+		this->lifetime = 0;
+		return;
+	}
 	if (this->customData[2] != 0 && this->checkTurnIntoCrystals(false, 2, 2)) {
 		this->lifetime = 0;
 		return;

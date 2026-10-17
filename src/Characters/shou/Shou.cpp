@@ -140,7 +140,7 @@ void Shou::handleInputs()
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Shou::VUnknown58()
+void Shou::computerInputs()
 {
 	DWORD old;
 
@@ -148,17 +148,17 @@ void Shou::VUnknown58()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown58_patches));
-	for (auto &patch : VUnknown58_patches)
+	appliedPatches.reserve(std::size(computerInputs_patches));
+	for (auto &patch : computerInputs_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Shou::VUnknown58()");
-	SokuLib::v2::PlayerTenshi::VUnknown58();
-	puts("<- Shou::VUnknown58()");
+	puts("-> Shou::computerInputs()");
+	SokuLib::v2::PlayerTenshi::computerInputs();
+	puts("<- Shou::computerInputs()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Shou::VUnknown5C()
+void Shou::updateStory()
 {
 	DWORD old;
 
@@ -166,17 +166,17 @@ void Shou::VUnknown5C()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown5C_patches));
-	for (auto &patch : VUnknown5C_patches)
+	appliedPatches.reserve(std::size(updateStory_patches));
+	for (auto &patch : updateStory_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Shou::VUnknown5C()");
-	SokuLib::v2::PlayerTenshi::VUnknown5C();
-	puts("<- Shou::VUnknown5C()");
+	puts("-> Shou::updateStory()");
+	SokuLib::v2::PlayerTenshi::updateStory();
+	puts("<- Shou::updateStory()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-bool Shou::VUnknown60(int a)
+bool Shou::setCustomScenarioAction(int a)
 {
 	DWORD old;
 
@@ -184,12 +184,12 @@ bool Shou::VUnknown60(int a)
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown60_patches));
-	for (auto &patch : VUnknown60_patches)
+	appliedPatches.reserve(std::size(setCustomScenarioAction_patches));
+	for (auto &patch : setCustomScenarioAction_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Shou::VUnknown60()");
-	auto b = SokuLib::v2::PlayerTenshi::VUnknown60(a);
-	puts("<- Shou::VUnknown60()");
+	puts("-> Shou::setCustomScenarioAction()");
+	auto b = SokuLib::v2::PlayerTenshi::setCustomScenarioAction(a);
+	puts("<- Shou::setCustomScenarioAction()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;

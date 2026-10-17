@@ -140,7 +140,7 @@ void Sekibanki::handleInputs()
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Sekibanki::VUnknown58()
+void Sekibanki::computerInputs()
 {
 	DWORD old;
 
@@ -148,17 +148,17 @@ void Sekibanki::VUnknown58()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown58_patches));
-	for (auto &patch : VUnknown58_patches)
+	appliedPatches.reserve(std::size(computerInputs_patches));
+	for (auto &patch : computerInputs_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Sekibanki::VUnknown58()");
-	SokuLib::v2::PlayerYoumu::VUnknown58();
-	puts("<- Sekibanki::VUnknown58()");
+	puts("-> Sekibanki::computerInputs()");
+	SokuLib::v2::PlayerYoumu::computerInputs();
+	puts("<- Sekibanki::computerInputs()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Sekibanki::VUnknown5C()
+void Sekibanki::updateStory()
 {
 	DWORD old;
 
@@ -166,17 +166,17 @@ void Sekibanki::VUnknown5C()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown5C_patches));
-	for (auto &patch : VUnknown5C_patches)
+	appliedPatches.reserve(std::size(updateStory_patches));
+	for (auto &patch : updateStory_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Sekibanki::VUnknown5C()");
-	SokuLib::v2::PlayerYoumu::VUnknown5C();
-	puts("<- Sekibanki::VUnknown5C()");
+	puts("-> Sekibanki::updateStory()");
+	SokuLib::v2::PlayerYoumu::updateStory();
+	puts("<- Sekibanki::updateStory()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-bool Sekibanki::VUnknown60(int a)
+bool Sekibanki::setCustomScenarioAction(int a)
 {
 	DWORD old;
 
@@ -184,12 +184,12 @@ bool Sekibanki::VUnknown60(int a)
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown60_patches));
-	for (auto &patch : VUnknown60_patches)
+	appliedPatches.reserve(std::size(setCustomScenarioAction_patches));
+	for (auto &patch : setCustomScenarioAction_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Sekibanki::VUnknown60()");
-	auto b = SokuLib::v2::PlayerYoumu::VUnknown60(a);
-	puts("<- Sekibanki::VUnknown60()");
+	puts("-> Sekibanki::setCustomScenarioAction()");
+	auto b = SokuLib::v2::PlayerYoumu::setCustomScenarioAction(a);
+	puts("<- Sekibanki::setCustomScenarioAction()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;

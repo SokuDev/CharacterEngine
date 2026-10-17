@@ -140,7 +140,7 @@ void Momiji::handleInputs()
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Momiji::VUnknown58()
+void Momiji::computerInputs()
 {
 	DWORD old;
 
@@ -148,17 +148,17 @@ void Momiji::VUnknown58()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown58_patches));
-	for (auto &patch : VUnknown58_patches)
+	appliedPatches.reserve(std::size(computerInputs_patches));
+	for (auto &patch : computerInputs_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Momiji::VUnknown58()");
-	SokuLib::v2::PlayerReimu::VUnknown58();
-	puts("<- Momiji::VUnknown58()");
+	puts("-> Momiji::computerInputs()");
+	SokuLib::v2::PlayerReimu::computerInputs();
+	puts("<- Momiji::computerInputs()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Momiji::VUnknown5C()
+void Momiji::updateStory()
 {
 	DWORD old;
 
@@ -166,17 +166,17 @@ void Momiji::VUnknown5C()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown5C_patches));
-	for (auto &patch : VUnknown5C_patches)
+	appliedPatches.reserve(std::size(updateStory_patches));
+	for (auto &patch : updateStory_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Momiji::VUnknown5C()");
-	SokuLib::v2::PlayerReimu::VUnknown5C();
-	puts("<- Momiji::VUnknown5C()");
+	puts("-> Momiji::updateStory()");
+	SokuLib::v2::PlayerReimu::updateStory();
+	puts("<- Momiji::updateStory()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-bool Momiji::VUnknown60(int a)
+bool Momiji::setCustomScenarioAction(int a)
 {
 	DWORD old;
 
@@ -184,12 +184,12 @@ bool Momiji::VUnknown60(int a)
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown60_patches));
-	for (auto &patch : VUnknown60_patches)
+	appliedPatches.reserve(std::size(setCustomScenarioAction_patches));
+	for (auto &patch : setCustomScenarioAction_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Momiji::VUnknown60()");
-	auto b = SokuLib::v2::PlayerReimu::VUnknown60(a);
-	puts("<- Momiji::VUnknown60()");
+	puts("-> Momiji::setCustomScenarioAction()");
+	auto b = SokuLib::v2::PlayerReimu::setCustomScenarioAction(a);
+	puts("<- Momiji::setCustomScenarioAction()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;

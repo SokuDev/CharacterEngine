@@ -2143,9 +2143,9 @@ static std::array<unsigned, 154> skeletonsForUpdate = {
 static std::array<unsigned, 4> skeletonsForInitializeAction = { 1, 8, 23, 26 };
 static std::vector<unsigned> skeletonsForInitialize;
 static std::array<unsigned, 3> skeletonsForHandleInputs = { 247, 248, 254 };
-static std::vector<unsigned> skeletonsForVUnknown58;
-static std::vector<unsigned> skeletonsForVUnknown5C;
-static std::vector<unsigned> skeletonsForVUnknown60;
+static std::vector<unsigned> skeletonsForComputerInputs;
+static std::vector<unsigned> skeletonsForUpdateStory;
+static std::vector<unsigned> skeletonsForSetCustomScenarioAction;
 static std::array<unsigned, 99> skeletonsForObjectUpdate = {
 	  41,  42,  43,  44,  66,  67,  68,  70,  71,  72,  73,  74,  75,  76,  77,  78,
 	  79,  80,  81,  82,  83,  84,  85,  94, 101, 102, 103, 114, 115, 116, 117, 118,
@@ -2166,9 +2166,9 @@ std::vector<Patch *, PatchListAllocator> update_patches{patchListAllocator};
 std::vector<Patch *, PatchListAllocator> initializeAction_patches{patchListAllocator};
 std::vector<Patch *, PatchListAllocator> initialize_patches{patchListAllocator};
 std::vector<Patch *, PatchListAllocator> handleInputs_patches{patchListAllocator};
-std::vector<Patch *, PatchListAllocator> VUnknown58_patches{patchListAllocator};
-std::vector<Patch *, PatchListAllocator> VUnknown5C_patches{patchListAllocator};
-std::vector<Patch *, PatchListAllocator> VUnknown60_patches{patchListAllocator};
+std::vector<Patch *, PatchListAllocator> computerInputs_patches{patchListAllocator};
+std::vector<Patch *, PatchListAllocator> updateStory_patches{patchListAllocator};
+std::vector<Patch *, PatchListAllocator> setCustomScenarioAction_patches{patchListAllocator};
 
 static Patch compilePatch(const PatchSkeleton &skeleton)
 {
@@ -2213,9 +2213,9 @@ void initPatches()
 	getPatchList(skeletonsForInitializeAction, initializeAction_patches);
 	getPatchList(skeletonsForInitialize, initialize_patches);
 	getPatchList(skeletonsForHandleInputs, handleInputs_patches);
-	getPatchList(skeletonsForVUnknown58, VUnknown58_patches);
-	getPatchList(skeletonsForVUnknown5C, VUnknown5C_patches);
-	getPatchList(skeletonsForVUnknown60, VUnknown60_patches);
+	getPatchList(skeletonsForComputerInputs, computerInputs_patches);
+	getPatchList(skeletonsForUpdateStory, updateStory_patches);
+	getPatchList(skeletonsForSetCustomScenarioAction, setCustomScenarioAction_patches);
 	printf("Internal memory used %zu/%zu\n", internalMemory.getIndex(), internalMemory.size());
 
 	VirtualProtect(internalMemory.getBufferStart(), internalMemory.size(), PAGE_EXECUTE_READWRITE, &old);
@@ -2231,7 +2231,7 @@ void clearPatches()
 	initializeAction_patches.clear();
 	initialize_patches.clear();
 	handleInputs_patches.clear();
-	VUnknown58_patches.clear();
-	VUnknown5C_patches.clear();
-	VUnknown60_patches.clear();
+	computerInputs_patches.clear();
+	updateStory_patches.clear();
+	setCustomScenarioAction_patches.clear();
 }

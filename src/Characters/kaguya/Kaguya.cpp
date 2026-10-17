@@ -140,7 +140,7 @@ void Kaguya::handleInputs()
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Kaguya::VUnknown58()
+void Kaguya::computerInputs()
 {
 	DWORD old;
 
@@ -148,17 +148,17 @@ void Kaguya::VUnknown58()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown58_patches));
-	for (auto &patch : VUnknown58_patches)
+	appliedPatches.reserve(std::size(computerInputs_patches));
+	for (auto &patch : computerInputs_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Kaguya::VUnknown58()");
-	SokuLib::v2::PlayerPatchouli::VUnknown58();
-	puts("<- Kaguya::VUnknown58()");
+	puts("-> Kaguya::computerInputs()");
+	SokuLib::v2::PlayerPatchouli::computerInputs();
+	puts("<- Kaguya::computerInputs()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Kaguya::VUnknown5C()
+void Kaguya::updateStory()
 {
 	DWORD old;
 
@@ -166,17 +166,17 @@ void Kaguya::VUnknown5C()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown5C_patches));
-	for (auto &patch : VUnknown5C_patches)
+	appliedPatches.reserve(std::size(updateStory_patches));
+	for (auto &patch : updateStory_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Kaguya::VUnknown5C()");
-	SokuLib::v2::PlayerPatchouli::VUnknown5C();
-	puts("<- Kaguya::VUnknown5C()");
+	puts("-> Kaguya::updateStory()");
+	SokuLib::v2::PlayerPatchouli::updateStory();
+	puts("<- Kaguya::updateStory()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-bool Kaguya::VUnknown60(int a)
+bool Kaguya::setCustomScenarioAction(int a)
 {
 	DWORD old;
 
@@ -184,12 +184,12 @@ bool Kaguya::VUnknown60(int a)
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown60_patches));
-	for (auto &patch : VUnknown60_patches)
+	appliedPatches.reserve(std::size(setCustomScenarioAction_patches));
+	for (auto &patch : setCustomScenarioAction_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Kaguya::VUnknown60()");
-	auto b = SokuLib::v2::PlayerPatchouli::VUnknown60(a);
-	puts("<- Kaguya::VUnknown60()");
+	puts("-> Kaguya::setCustomScenarioAction()");
+	auto b = SokuLib::v2::PlayerPatchouli::setCustomScenarioAction(a);
+	puts("<- Kaguya::setCustomScenarioAction()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;

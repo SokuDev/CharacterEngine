@@ -293,9 +293,9 @@ public:
 	void update() override;
 	void initializeAction() override;
 	void handleInputs() override;
-	void VUnknown58() override;
-	void VUnknown5C() override;
-	bool VUnknown60(int a) override;
+	void computerInputs() override;
+	void updateStory() override;
+	bool setCustomScenarioAction(int a) override;
 	bool setAction(short action) override;
 
 	SokuLib::v2::GameObject *getHammer() const;

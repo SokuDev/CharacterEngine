@@ -140,7 +140,7 @@ void Orin::handleInputs()
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Orin::VUnknown58()
+void Orin::computerInputs()
 {
 	DWORD old;
 
@@ -148,17 +148,17 @@ void Orin::VUnknown58()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown58_patches));
-	for (auto &patch : VUnknown58_patches)
+	appliedPatches.reserve(std::size(computerInputs_patches));
+	for (auto &patch : computerInputs_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Orin::VUnknown58()");
-	SokuLib::v2::PlayerChirno::VUnknown58();
-	puts("<- Orin::VUnknown58()");
+	puts("-> Orin::computerInputs()");
+	SokuLib::v2::PlayerChirno::computerInputs();
+	puts("<- Orin::computerInputs()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-void Orin::VUnknown5C()
+void Orin::updateStory()
 {
 	DWORD old;
 
@@ -166,17 +166,17 @@ void Orin::VUnknown5C()
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown5C_patches));
-	for (auto &patch : VUnknown5C_patches)
+	appliedPatches.reserve(std::size(updateStory_patches));
+	for (auto &patch : updateStory_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Orin::VUnknown5C()");
-	SokuLib::v2::PlayerChirno::VUnknown5C();
-	puts("<- Orin::VUnknown5C()");
+	puts("-> Orin::updateStory()");
+	SokuLib::v2::PlayerChirno::updateStory();
+	puts("<- Orin::updateStory()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 }
 
-bool Orin::VUnknown60(int a)
+bool Orin::setCustomScenarioAction(int a)
 {
 	DWORD old;
 
@@ -184,12 +184,12 @@ bool Orin::VUnknown60(int a)
 
 	std::vector<AppliedPatch, Allocator> appliedPatches{applyAllocator};
 
-	appliedPatches.reserve(std::size(VUnknown60_patches));
-	for (auto &patch : VUnknown60_patches)
+	appliedPatches.reserve(std::size(setCustomScenarioAction_patches));
+	for (auto &patch : setCustomScenarioAction_patches)
 		appliedPatches.emplace_back(patch);
-	puts("-> Orin::VUnknown60()");
-	auto b = SokuLib::v2::PlayerChirno::VUnknown60(a);
-	puts("<- Orin::VUnknown60()");
+	puts("-> Orin::setCustomScenarioAction()");
+	auto b = SokuLib::v2::PlayerChirno::setCustomScenarioAction(a);
+	puts("<- Orin::setCustomScenarioAction()");
 	appliedPatches.clear();
 	VirtualProtect(reinterpret_cast<LPVOID>(TEXT_SECTION_OFFSET), TEXT_SECTION_SIZE, old, &old);
 	return b;

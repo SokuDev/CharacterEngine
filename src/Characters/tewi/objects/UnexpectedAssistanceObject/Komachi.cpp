@@ -7,14 +7,6 @@
 void UnexpectedAssistance::Komachi::update()
 {
 	float params[3];
-	const auto FUN_00439020 = (void (__thiscall *)(void *, float, float))0x439020;
-
-	if (this->hitStop) {
-		this->hitStop--;
-		return;
-	}
-	if (this->parentPlayerB->timeStop)
-		return;
 
 	if (this->collisionType == COLLISION_TYPE_BULLET_ABSORBED) {
 		this->lifetime = 0;
@@ -72,7 +64,7 @@ void UnexpectedAssistance::Komachi::update()
 	case 2:
 		this->gpFloat[0] += 2;
 		this->gpFloat[0] += (1.0 - this->renderInfos.scale.x) * 10.0;
-		FUN_00439020(this, 0, this->gpFloat[0]);
+		this->setTextureOffset(0, this->gpFloat[0]);
 		if (0x167 < this->frameState.currentFrame || this->gameData.opponent->hp < 1)
 			this->gpShort[0] = 1;
 		if (this->gpShort[0] == 0) {
@@ -90,7 +82,7 @@ void UnexpectedAssistance::Komachi::update()
 	case 3:
 		this->gpFloat[0] += 8;
 		this->gpFloat[0] += (1.0 - this->renderInfos.scale.x) * 30.0;
-		FUN_00439020(this, 0, this->gpFloat[0]);
+		this->setTextureOffset(0, this->gpFloat[0]);
 		if (0xb3 < this->frameState.currentFrame) {
 			if (this->renderInfos.color.a < 5) {
 				this->lifetime = 0;

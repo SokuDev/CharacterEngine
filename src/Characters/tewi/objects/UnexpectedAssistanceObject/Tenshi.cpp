@@ -8,13 +8,11 @@ void UnexpectedAssistance::Tenshi::update()
 {
 	float params[3];
 
-	if (this->hitStop) {
-		this->hitStop--;
-		return;
-	}
-	if (this->parentPlayerB->timeStop)
-		return;
 	if (this->frameState.sequenceId == 0) {
+		if (this->collisionType == COLLISION_TYPE_BULLET_ABSORBED) {
+			this->lifetime = 0;
+			return;
+		}
 		if (this->frameState.currentFrame == 5) {
 			SokuLib::weatherCounter = 999;
 			if (SokuLib::activeWeather == SokuLib::WEATHER_CLEAR)

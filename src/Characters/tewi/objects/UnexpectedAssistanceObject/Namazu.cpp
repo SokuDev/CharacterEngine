@@ -6,12 +6,6 @@
 
 void UnexpectedAssistance::Namazu::update()
 {
-	if (this->hitStop) {
-		this->hitStop--;
-		return;
-	}
-	if (this->parentPlayerB->timeStop)
-		return;
 	switch (this->frameState.sequenceId) {
 	case 0:
 		this->speed.y -= 0.25;

@@ -23,9 +23,9 @@ public:
 	void initializeAction() override;
 	void initialize() override;
 	void handleInputs() override;
-	void VUnknown58() override;
-	void VUnknown5C() override;
-	bool VUnknown60(int a) override;
+	void computerInputs() override;
+	void updateStory() override;
+	bool setCustomScenarioAction(int a) override;
 
 	static void hook();
 	static void unhook();

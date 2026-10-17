@@ -10,12 +10,6 @@ void UnexpectedAssistance::Youmu::update()
 	double angle;
 	float params[3];
 
-	if (this->hitStop) {
-		this->hitStop--;
-		return;
-	}
-	if (this->parentPlayerB->timeStop)
-		return;
 	switch(this->frameState.sequenceId) {
 	case 0:
 		if (this->gpShort[1] == 0) {

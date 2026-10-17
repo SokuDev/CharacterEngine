@@ -9,15 +9,15 @@
 #include <SokuLib.hpp>
 #include "Memory.hpp"
 
+#if defined(OBJECT_MEMORY_SIZE) && OBJECT_MEMORY_SIZE > 4
+#define FINAL_OBJECT_MEMORY_SIZE OBJECT_MEMORY_SIZE
+#else
+#define FINAL_OBJECT_MEMORY_SIZE 4
+#endif
+
 class BasicObject : public SokuLib::v2::GameObject {
 protected:
-	unsigned char grazeResist;
-	unsigned char density;
-	std::pair<char, char> crystalsSpawn;
-	std::tuple<unsigned char, unsigned char, unsigned char> offsetY;
-#if defined(OBJECT_MEMORY_SIZE) && OBJECT_MEMORY_SIZE > 0
-	char data[OBJECT_MEMORY_SIZE];
-#endif
+	char data[FINAL_OBJECT_MEMORY_SIZE];
 
 public:
 	BasicObject() = default;
